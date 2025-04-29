@@ -1,0 +1,244 @@
+{% block body %}
+{% load static %}
+
+<!-- 드림 사용 소스 -->
+<head>
+
+  <meta charset="utf-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+
+  <title>땡큐토큰 - 우리금융그룹</title>
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="땡큐토큰">
+  <meta property="og:url" content="https://thankyoutoken.co.kr">
+
+  <meta name="description" content="우리금융그룹 직원전용 칭찬 커뮤니티">
+  <meta property="og:description" content="우리금융그룹 직원전용 칭찬 커뮤니티">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet"> -->
+
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/apex-charts.css' %}"> -->
+  <!-- <link rel="stylesheet" href="https://cdn.wooriwbn.com/thb/wooribank/2024/03/01/cdn/css/dream/apex-charts.css"> -->
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/bootstrap-datepicker.css' %}"> -->
+  <!-- <link rel="stylesheet" href="https://cdn.wooriwbn.com/thb/wooribank/2024/03/01/cdn/css/previous/bootstrap-datepicker.js">   -->
+  <!-- <link rel="stylesheet" href="../assets/css/boxicons.css"> -->
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/core.css' %}"> -->
+  <!-- <link rel="stylesheet" href="https://cdn.wooriwbn.com/thb/wooribank/2024/03/01/cdn/css/dream/core.css"> -->
+  
+
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/datatables.bootstrap5.css' %}"> -->
+  <!-- <link rel="stylesheet" href="https://cdn.wooriwbn.com/thb/wooribank/2024/03/01/cdn/css/dream/datatables.bootstrap5.css"> -->
+
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/datatables.checkboxes.css' %}"> -->
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/demo.css' %}"> -->
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/flag-icons.css' %}"> -->
+  <!-- <link rel="stylesheet" href="https://cdn.wooriwbn.com/thb/wooribank/2024/03/01/cdn/css/dream/flag-icons.css"> -->
+  
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/fontawesome.css' %}"> -->
+  <!-- <link rel="stylesheet" href="https://cdn.wooriwbn.com/thb/wooribank/2024/03/01/cdn/css/dream/fontawesome.css"> -->
+  
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/perfect-scrollbar.css' %}"> -->
+  <!-- <link rel="stylesheet" href="../assets/css/Pretendard.css"> -->
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/responsive.bootstrap5.css' %}"> -->
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/select2.css' %}"> -->
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/spinkit.css' %}"> -->
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/sweetalert2.css' %}"> -->
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/theme-default.css' %}"> -->
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/typeahead.css' %}"> -->
+
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
+
+</head>
+<!-- 드림 사용 소스 끝 -->
+<style>
+.mobile-navigation button .icon_home {
+  -webkit-mask: url(../img/icon_menu_01_01.svg) no-repeat center/auto 100%;
+  mask: url(../img/icon_menu_01_01.svg) no-repeat center/auto 100%;
+}
+
+.mobile-navigation button .icon_myThank {
+  -webkit-mask: url(../img/icon_menu_02_01.svg) no-repeat center/auto 100%;
+  mask: url(../img/icon_menu_02_01.svg) no-repeat center/auto 100%;
+}
+
+.mobile-navigation button .icon_sendThank {
+  -webkit-mask: url(../img/icon_menu_03_01.svg) no-repeat center/auto 100%;
+  mask: url(../img/icon_menu_03_01.svg) no-repeat center/auto 100%;
+}
+
+.mobile-navigation button .icon_best {
+  -webkit-mask: url(../img/icon_menu_04_01.svg) no-repeat center/auto 100%;
+  mask: url(../img/icon_menu_04_01.svg) no-repeat center/auto 100%;
+}
+
+.mobile-navigation button .icon_myToken {
+  -webkit-mask: url(../img/icon_menu_05_01.svg) no-repeat center/auto 100%;
+  mask: url(../img/icon_menu_05_01.svg) no-repeat center/auto 100%;
+}
+
+#profile_modal .modal-content {
+  max-width: 400px;
+  margin: 0 auto;
+  background: url(../img/profile_bg.jpg) no-repeat top/cover;
+  overflow: hidden;
+}
+
+/* 공통 레이아웃 CSS 끝 */
+
+
+
+/* #signManager CSS 시작 */
+body {
+  background: #f3f3f3 !important;
+}
+
+#signManager .loginWrap {
+  max-width: 700px;
+  width: 95%;
+}
+
+#signManager .loginWrap.card {
+  box-shadow: none;
+}
+
+#signManager .loginWrap .icon_token02 {
+  top: -4%;
+  right: 33%;
+  min-width: 30px;
+  width: 8.4%;
+}
+
+#signManager .loginWrap .icon_token03 {
+  right: 15%;
+  min-width: 50px;
+  width: 14%;
+}
+
+#signManager .loginWrap .enterBtn {
+  background: #006ed5;
+}
+
+#signManager #search_notice_wrap {
+  /* z-index: 2 !important; */
+}
+
+#signManager .mobile-navigation {
+  display: none !important;
+}
+
+/* #signManager CSS 끝 */
+
+</style>
+
+    <!-- Content -->
+
+    <div id="signManager" class="allPage layout-container flex-column">
+		<div class="loginWrap card mx-auto mt-4 p-4 position-relative" style="z-index: 0; transform:translateY(10px);">
+			<span class="icon_token02 d-block position-absolute"><img class="w-100"	src="{% static 'assets/img/icon_token03.png' %}"></span>
+			<span class="icon_token03 d-block position-absolute"><img class="w-100"	src="{% static 'assets/img/icon_token02.png' %}"></span>
+			<div class="pt-3 mt-3">
+				<div class="mx-auto" style="width:42%; min-width: 150px;">
+					<img src="{% static 'assets/img/icon_token.png' %}" class="w-100">
+				</div>
+				<div class="mx-4 mt-3" style="margin-bottom:16%">
+					<h2 class="px-1 mx-auto" style="width:70%; max-width:408px;"><img class="w-100" src="{% static 'assets/img/text_thanku.png' %}"></h2>
+				</div>
+			</div>
+
+			<!-- 계정 정보 확인 후 HOME(메인) 페이지로 이동 시작 -->
+			<div>
+				<form id="formAuthentication" class="mb-3" action="{% url 'signin' %}" method="POST">
+				{% csrf_token %}
+					<button class="btn w-100 enterBtn text-white py-3 fs-3 fw-medium" type="submit">시작하기</button>
+				</form>
+			</div>
+			<!-- 계정 정보 확인 후 HOME(메인) 페이지로 이동 시작 -->
+		</div>
+		    <div id="footer"><div class="footer w-100 text-center fw-med fs-6" style="color:#418dd4; padding:30px 0;">ⓒ 2024, made 땡큐토큰</div></div>
+	</div>
+<!-- / Content -->	
+
+
+<!--
+                <form id="formAuthentication" class="mb-3" action="{% url 'signin' %}" method="POST">
+                <div class="mb-3">
+                  <input
+                    type="text"
+                     class="form-control"
+                    id="email"
+                    name="username"
+                    placeholder="사번ID"
+                    autofocus
+                    onfocusin="this.style.borderColor='#EB5C32'"
+                    onfocusout="this.style.borderColor=''"
+                  />
+                </div>
+                <div class="mb-3 form-password-toggle">
+                  <div class="d-flex justify-content-between">                      
+                  </div>
+                  <div class="input-group input-group-merge">
+                    <input
+                      type="password"
+                      id="password"
+                       class="form-control"
+                      name="password"
+                      placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                      aria-describedby="password"
+                      onfocusin="this.style.borderColor='#EB5C32'"
+                      onfocusout="this.style.borderColor=''"
+                    />
+                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="remember-me" />
+                    <label class="form-check-label" for="remember-me"> 자동 로그인 </label> {{user.username}}
+                  </div>
+                </div>
+              -->
+<!--
+              <p class="text-center">
+                <span>처음 방문 하셨나요?</span>
+                <a href="{% url 'signup' %}">
+                  <span>회원가입</span>
+                </a> /
+                    <a href="" data-bs-toggle="modal" data-bs-target="#noticeModal">
+                      비밀번호 찾기
+                    </a>
+              </p>
+              -->
+
+   
+<!-- storyModal view modal -->
+<div class="modal fade animate__animated animate__slideInDown" id="noticeModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+			<div class="modal-body pt-0 col-12 ">
+                <div class="text-dark text-start" id="viewStory" >
+                    <dl class="row mt-2">
+                        <dt class="col-sm-12 card mt-3 py-2 bg-info">문의안내</dt>
+                        <dd class="col-sm-12 pre-wrap" style="font-size: 13px;">
+                            </br>
+                            비밀번호 초기화는 관리자에게 문의 주시면 됩니다. (문의 : 백숙진 프로)
+                        </dd>
+
+                        
+                    </dl>    
+
+                    <div class="modal-footer p-1">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                    </div>
+                        
+                </div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- storyModal view modal -->
+
+
+{% endblock %}

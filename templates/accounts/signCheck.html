@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+
+  
+    <!-- Content -->
+
+    <div class="container-xxl">
+      <div class="authentication-wrapper authentication-basic">
+        <div class="authentication-inner">
+            
+          <!-- Register -->
+          <div class="card">
+            <div class="card-body">
+                
+              <!-- Logo -->
+              <div class="app-brand justify-content-center">
+                  <span class="mt-3 app-brand-text demo text-body fw-bolder">승인 대기중</span>
+              </div>
+              <p class="mt-4 text-center">
+                <span><mark>관리자 검토 후 30분이내 이용가능 합니다.</mark></span><br>
+                <span>( 승인문의 : 백숙진 프로 )</span>
+              </p>
+                
+              <!-- /Logo -->
+                
+            </div>
+          </div>
+          <!-- /Register -->
+            
+        </div>
+      </div>
+    </div>
+
+    <!-- / Content -->
+
+{% endblock %}

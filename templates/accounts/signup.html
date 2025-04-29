@@ -1,0 +1,576 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+<style>
+	.pre-wrap {
+		white-space: pre-wrap;
+	}
+
+	.bg-success {
+		--bs-bg-opacity: 1;
+		background: #F7D9C4 !important;
+	}
+    
+    .container-xxl{
+        width: auto;
+    }
+
+    @media (max-width: 767px) {
+        .container-xxl {
+            width: 100%;
+        }
+    }
+    
+</style>
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/sweetalert2/sweetalert2.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/select2/select2.css' %}" />
+
+<!-- Content -->
+<div class="container-xxl">
+<div class="authentication-wrapper authentication-basic">
+	<div class="authentication-inner">
+		<!-- Register Card -->
+		<div class="card">
+			<div class="card-body">
+			  <!-- Logo -->
+			  <div class="app-brand justify-content-center">                 
+				  <span class="app-brand-text demo text-body fw-bolder">회원가입</span>
+			  </div>
+			  <!-- /Logo -->
+			  <br>
+			{% if error %}
+			<div class="alert alert-danger" role="alert">
+			  {{ error }}
+			</div>
+			{% endif %}
+			  <form id="formAuthentication" class="mb-3" action="{% url 'signup'%}" method="POST">
+			  {% csrf_token %}
+                  
+                  
+				<div class="mb-3">
+				  <label for="company_id" class="form-label text-dark fs-6">계열사</label>
+                  <select name="company_id" id="company_id" class="form-select">
+                    <option value="20">우리은행</option>
+                    <option value="95">우리카드</option>
+                    <option value="B1">우리에프아이에스</option>
+                    <option value="B3">우리금융지주</option>
+                    <option value="C1">우리프라이빗에퀴티자산운용</option>
+                    <option value="C7">우리펀드서비스</option>
+                    <option value="C9">우리신용정보</option>
+                    <option value="D1">우리금융경영연구소</option>
+                    <option value="D2">우리종합금융</option>
+                    <option value="E1">우리자산운용</option>
+                    <option value="E3">우리자산신탁</option>
+                    <option value="E4">우리글로벌자산운용</option>
+                    <option value="E5">우리금융캐피탈</option>
+                    <option value="E6">우리금융저축은행</option>
+                    <option value="E7">우리금융에프앤아이</option>
+                    <option value="E8">우리벤처파트너스</option>
+                    <option value="W5">베트남우리은행</option>
+                  </select>
+                </div>
+                  
+				<div class="mb-3">
+				  <label for="username" class="form-label text-dark fs-6">사번ID(행번) <small class="fs-7 text-lowercase text-secondary">(반드시 사번을 입력해 주세요)</small></label>
+				  <input
+					type="text"
+					class="form-control"
+					id="username"
+					name="username"
+					placeholder="ex 20999999"
+					autofocus
+                    onfocusin="this.style.borderColor='#EB5C32'"
+                    onfocusout="this.style.borderColor=''"
+				  />
+				</div>
+				 
+				<div class="mb-3">
+				  <label for="employee_name" class="form-label text-dark fs-6">이름</label>
+				  <input type="text" class="form-control" id="employee_name" name="employee_name" placeholder="ex 홍길동" required 
+                         onfocusin="this.style.borderColor='#EB5C32'"
+                         onfocusout="this.style.borderColor=''"
+                         />
+				</div>
+				
+                <!--  
+				<div class="mb-3">
+				  <label for="employee_id" class="form-label">사번</label>
+				  <input type="text" class="form-control" id="employee_id" name="employee_id" placeholder="Enter your 사번" />
+				</div>
+				-->
+                  
+				<div class="mb-3">
+                    <label for="department_name" class="form-label text-dark fs-6">부서명 <small><mark>(검색 후 선택해 주세요)</mark></small></label>
+					<input type="hidden" id="department_id" name="department_id"  />
+                    <!--
+				    <input type="text" class="form-control typeahead" id="department_name" name="department_name" placeholder="ex 수신외환부" required
+                           onfocusin="this.style.borderColor='#EB5C32'"
+                           onfocusout="this.style.borderColor=''"
+                           />
+                    -->
+                    <select 
+                            id="select2Basic_dept" 
+                            class="select2 form-select" 
+                            data-allow-clear="true" 
+                            style="display: none;"
+                            ></select>
+				</div>
+                  
+				<div class="mb-3">
+                    <label for="position_name" class="form-label text-dark fs-6">직위명 <small><mark>(검색 후 선택해 주세요)</mark></small></label>
+					<input type="hidden" id="position_id" name="position_id"  />
+
+                    <select 
+                            id="select2Basic_posi" 
+                            class="select2 form-select" 
+                            data-allow-clear="true" 
+                            style="display: none;"
+                            ></select>
+				</div>
+                  
+				<!--  
+				<div class="mb-3">
+				  <label for="email" class="form-label text-dark fs-6">메일</label>
+				  <input type="email" class="form-control" id="email" name="email" placeholder="ex abc@woorifis.com" 
+                         onfocusin="this.style.borderColor='#EB5C32'"
+                         onfocusout="this.style.borderColor=''"
+                         />
+				</div>
+				-->					
+                  <!--
+				<div class="mb-3">
+				  <label for="birth_date" class="form-label">생년월일</label>
+				  <input type="text" class="form-control" id="birth_date" name="birth_date" placeholder="Enter your 생년월일" />
+				</div>
+				  -->
+				<div class="mb-3 form-password-toggle">
+				  <label class="form-label text-dark fs-6" for="password1">Password 입력</label>
+				  <div class="input-group input-group-merge">
+					<input
+					  type="password"
+					  id="password1"
+					  class="form-control"
+					  name="password1"
+					  placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+					  aria-describedby="password"
+                      required    
+                      onfocusin="this.style.borderColor='#EB5C32'"
+                      onfocusout="this.style.borderColor=''"
+					/>
+					<span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+				  </div>
+				</div>
+				  
+				<div class="mb-3 form-password-toggle">
+				  <label class="form-label text-dark fs-6" for="password2">Password 재입력</label>
+				  <div class="input-group input-group-merge">
+					<input
+					  type="password"
+					  id="password2"
+					  class="form-control"
+					  name="password2"
+					  placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+					  aria-describedby="password"
+                      required
+                      onfocusin="this.style.borderColor='#EB5C32'"
+                      onfocusout="this.style.borderColor=''"
+					/>
+					<span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+				  </div>
+				</div>
+
+				<div class="mb-3">
+				  <div class="form-check">
+					<input class="form-check-input" type="checkbox" id="terms-conditions" name="terms"  data-bs-toggle="modal" data-bs-target="#noticeModal" required />
+                        <label class="form-check-label" for="terms-conditions">
+					        동의 합니다. (개인정보동의 및 이용약관)
+					    </label>
+				  </div>
+				</div>
+                  
+                  
+				<button id="submitBtn" type="submit" class="btn btn-danger d-grid w-100">회원가입</button>
+			  </form>
+
+			</div>
+		</div>
+		<!-- Register Card -->
+	</div>
+</div>
+</div>
+<!-- / Content -->
+
+<!-- storyModal view modal -->
+<div class="modal fade animate__animated animate__slideInDown" id="noticeModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+			<div class="modal-header" >
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>    
+			<div class="modal-body pt-0 col-12 ">
+                <div class="text-dark text-start" id="viewStory" >
+                    <span class="text-dark fs-6 fw-bold">"본 이용약관은 <땡큐토큰>의 서비스와 지침, 기타 정책, 개인정보 보호정책을 포함합니다."</span>
+                    <dl class="row mt-2">
+                        <dt class="col-sm-12 card py-2 bg-success"><칭찬을 통해 우리의 힘이 되는 공간, 땡큐토큰></dt>
+                        <dd class="col-sm-12 pre-wrap" style="font-size: 13px;">
+땡큐토큰은 칭찬과 감사를 통해 우리의 마음을 공유하고, 한데 모으는 디지털 공간입니다.
+평소 동료에게 하지 못했던 고마운 마음을 보다 쉽고, 센스있게 전할수 있는 플랫폼을 만들고자 합니다. 
+우리FIS의 임직원을 대상으로 서비스를 제공하며 우리FIS가 만든 소중한 자산입니다.
+
+우리의 <땡큐토큰>은 모바일, 웹, PC 등 인터넷 연결이 가능한 모든 기기에서 접속이 가능합니다.
+첫 사용은 프로필 등록(멤버십 등록)을 통해 가능합니다. 
+플랫폼의 운영자는 가입자(멤버)의 요건을 지정하고, 플랫폼 내 권한, 규정등을 제어합니다.
+로그인을 통한 접근만 가능합니다.
+                        </dd>
+
+                        <dt class="col-sm-12 card py-2 bg-success"><땡큐토큰>은 평소 마음을 나누고 싶은 사람들과 최대한 쉽게 소통할수 있도록 설계되었습니다.
+</dt>
+                        <dd class="col-sm-12 pre-wrap" style="font-size: 13px;">
+º 로그인 후 HOME(메인화면)에 나타나는 칭찬 글은 작성된 순서에 따라 표시됩니다.
+º 글쓰기(칭찬하기)는 대상을 선택하여 원하는 카드 등록후 상대에 전하는 마음을 글(50자 이상)로 작성하여 등록합니다.
+º 순위(랭킹)는 해당 분기별로 가장 많은 칭찬을 받은 대상을 순위에 따라 리스트로 표현합니다.
+º 나의토큰은 분기별 토큰 개수(사용,잔여 등) 와 대상을 확인할수 있습니다. 나의 칭찬을 종합&요약한 스토리북이 제공됩니다.
+º 토큰은 특정기간 한정된 개수가 제공됩니다. 
+                        </dd>
+                        
+                        <hr>
+                        
+                        <span class="my-2 text-dark fs-6 fw-bold">"개인정보 보호정책은 <땡큐토큰>을 통해 개인정보를 어떻게 사용하고, 보호하고, 공유하는지를 설명합니다."</span>
+                        
+
+                        <dt class="col-sm-12 card py-2 bg-success"><땡큐토큰>이 수집하는 정보</dt>
+                        <dd class="col-sm-12 pre-wrap" style="font-size: 13px;">
+º계정정보. 이름, 사번, 부서명, 메일, PASSWORD, 사진(선택가능)을 수집합니다. 경우에 따라 계정을 인증하거나 계정에 추가정보를 제공해야 할 수 있습니다.
+ PASSWORD의 경우 해당 값은 암호화하여 보관합니다.
+ º사용자의 콘텐츠. 여기에는 사용자가 서비스에 업로드하는 모든 콘텐츠가 포함됩니다. 또한 플랫폼 내 활동에 대한 정보를 수집합니다.
+ 칭찬하기를 통한 상대방에 대한 칭찬 내용, 업로드한 파일, 좋아요나 부가 댓글 등 기타 관련 활동등이 포함됩니다.
+ º자동으로 수집하는 기타정보. 서비스를 언제 어떻게 사용하는지와 관련된 로그 등 기타 정보를 수집합니다.
+ 제삼자가 제공하는 웹사이트, open api 등 더나은 서비스 제공을 위해 칭찬 콘텐츠등의 내역을 제공하고 제삼자가 제공하는 데이터를 플랫폼의 다른 정보와 결합할수 있습니다.
+                        </dd>
+
+                        <dt class="col-sm-12 card py-2 bg-success"><땡큐토큰> 정보 사용 방식</dt>
+                        <dd class="col-sm-12 pre-wrap" style="font-size: 13px;">
+ º칭찬을 활성화 하는 공간 제공. 우리의 사용자에게 칭찬내용을 공유하기 위해 사용자의 정보를 사용합니다. 
+ 서로에게 전한 땡큐 토큰의 정보를 활성화 하고 공유하는 목적입니다. 
+ º 안전한 커뮤니티를 지키기 위한 목적. 안전하고 긍정적이며 포용적인 공간이 될수 있도록 노력하겠습니다. 
+ 이를 위해 운영자는 사용자의 정보를 이용하여 이용 약관, 기타 정책등을 위반하는 사용자 또는 콘텐츠가 있는지 모니터링하고 적절한 조처를 취할것입니다.
+ º서비스 개선을 위한 목적. 우리의 목적(한결 가까운 칭찬문화 조성)이 이루어 지고 있는지를 이해하고 개선하고자 사용자의 정보를 사용합니다. 
+ 서로의 칭찬이 어떻게 상호작용하는지, 또한 원할 가능성이 있는 서비스 혹은 흥미를 끄는 콘텐츠 등 심도있는 이해를 위해 활용할수 있습니다.
+ 땡큐토큰의 사용 내역과 정보로 기본 지표를 추적하고, 보고를 수행할수 있습니다.
+                        </dd>
+
+                        <dt class="col-sm-12 card py-2 bg-success"><땡큐토큰>의 보존 및 파기</dt>
+                        <dd class="col-sm-12 pre-wrap" style="font-size: 13px;">
+ 땡큐토큰 서비스를 위하여 수집 및 보존한 개인정보를 처리목적 또는 법적 준수를 위해 더 이상 필요하지 않다고 판단될 때까지 보존합니다.
+ 계정에 관한 정보를 삭제하고자 하는 경우 자세한 방법은 운영자에게 확인할수 있습니다.
+                        </dd>
+
+                        <dt class="col-sm-12 card py-2 bg-success">개인정보 보호정책에 대한 문의</dt>
+                        <dd class="col-sm-12 pre-wrap" style="font-size: 13px;">
+개인정보 보호정책에 대한 문의는 다음과 같이 할 수 있습니다.
+
+* 이메일 : kimdy@woorifis.com
+* 전화 : 02-3151-5524
+                        </dd>
+
+                        <dt class="col-sm-12 card py-2 bg-success">기타</dt>
+                        <dd class="col-sm-12 pre-wrap" style="font-size: 13px;">
+이용자의 개인정보 보호정책에 대한 의견이나 문의사항이 있으면 언제든지 연락해 주시기 바랍니다.
+                        </dd>
+                        
+                    </dl>    
+
+                    <div class="modal-footer p-1">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                    </div>
+                        
+                </div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- storyModal view modal -->
+
+
+<script>
+	$(document).ready(function(){
+        
+        ///////////////////////////////
+		// 부서정보 호출
+        ///////////////////////////////
+		$("#select2Basic_dept").select2({
+			ajax: {
+				allowClear: false,
+				type: "POST",
+				url: "/apis/search_dept/",
+				delay: 250,
+				dataType: 'json',
+				data: function (params) {
+					var query = {
+						dept_name: params.term,
+                        company_id: $('#company_id').val()
+					}
+					return query;
+				},
+				processResults: function (data) {
+					var resultData = data.data_list.map(function(obj){
+						return {
+							id: obj.dept_id,
+							text: obj.dept_name
+                            
+						}
+					});
+					return {
+						results: resultData
+					};
+				},
+			},
+			//allowClear: true,
+			placeholder: {
+					id: "the_predefined_value",
+					text: ""
+			},
+			//minimumInputLength: 1,
+			language: {
+				noResults: function() {
+					return "검색 결과가 없습니다.";
+				},
+				searching: function(){
+					return "검색중..";
+				},
+				errorLoading: function(){
+					return "";
+				}
+			}
+		});
+		$("#select2Basic_dept").css("display", "");
+		$(document).on('select2:open', () => {
+			document.querySelector('.select2-container--open .select2-search__field').focus();
+			// $(".select2-search__field").trigger('focus');
+			document.querySelector('.select2-container--open .select2-search__field').setAttribute("placeholder", "검색어를 입력해주세요.");
+		});
+        
+        ///////////////////////////////
+		// 직위정보 호출
+        ///////////////////////////////
+		$("#select2Basic_posi").select2({
+			ajax: {
+				allowClear: false,
+				type: "POST",
+				url: "/apis/search_posi/",
+				delay: 250,
+				dataType: 'json',
+				data: function (params) {
+					var query = {
+						posi_name: params.term,
+                        company_id: $('#company_id').val()
+					}
+					return query;
+				},
+				processResults: function (data) {
+					var resultData = data.data_list.map(function(obj){
+						return {
+							id: obj.posi_id,
+							text: obj.posi_name
+                            
+						}
+					});
+					return {
+						results: resultData
+					};
+				},
+			},
+			//allowClear: true,
+			placeholder: {
+					id: "the_predefined_value",
+					text: ""
+			},
+			//minimumInputLength: 1,
+			language: {
+				noResults: function() {
+					return "검색 결과가 없습니다.";
+				},
+				searching: function(){
+					return "검색중..";
+				},
+				errorLoading: function(){
+					return "";
+				}
+			}
+		});
+		$("#select2Basic_posi").css("display", "");
+		$(document).on('select2:open', () => {
+			document.querySelector('.select2-container--open .select2-search__field').focus();
+			// $(".select2-search__field").trigger('focus');
+			document.querySelector('.select2-container--open .select2-search__field').setAttribute("placeholder", "검색어를 입력해주세요.");
+		});
+        
+        ///////////////////////////////
+		// 자동완성 초기화 (참고용)
+        ///////////////////////////////
+		$("#department_name").typeahead(
+			{
+				minLength: 1,	// 검색시작 최소 입력 글자
+			},
+			{
+				source: function (query, syncResults, asyncResults) {
+					return $.ajax({
+						type: "POST",
+						url: "/apis/search_dept/",
+						delay: 250,
+						data: {
+							dept_name: query,
+                            company_id: $('#company_id').val()
+						},
+						success: function (response) {
+							// console.log(response.data_list);
+							return asyncResults(response.data_list);  //asyncResults 에 배열을 넘기면 된다.
+						}
+					});
+				},
+				limit: 9999,
+				display: 'dept_name',	// 보여질 컬럼명
+				val: 'dept_id',	//value 컬럼명
+			}
+		);
+		
+		// 자동완성 선택 시 이벤트 생성하여 value 셋팅
+		$("#department_name").on('typeahead:select', function(event, suggestion) {
+			$("#department_id").val(suggestion.dept_id);
+		});
+        
+        // 엔터 키를 눌렀을 때 선택 이벤트 실행
+        $("#department_name").keypress(function(event) {
+            if (event.which === 13) { // 엔터 키 코드값은 13입니다.
+                var selected = $(".tt-selectable:first");
+                if (selected.length) {
+                    selected.trigger('click');
+                }
+                event.preventDefault(); // 기본 엔터 키 동작 방지
+            }
+        });
+        
+        
+        // 커서 아웃 시 이벤트 생성
+        $("#department_name").on("blur", function() {
+            var value = $(this).val();
+            if (value) {
+                // 검색 결과가 있는지 확인
+                $.ajax({
+                    type: "POST",
+                    url: "/apis/search_dept/",
+                    data: {
+                        dept_name: value,
+                        company_id: $('#company_id').val()
+                    },
+                    success: function(response) {
+                        // 검색 결과가 있으면 선택
+                        if (response.data_list.length > 0) {
+                            $("#department_name").val(response.data_list[0].dept_name);
+                            $("#department_id").val(response.data_list[0].dept_id);
+                        }
+                    }
+                });
+            }
+        });
+        
+	});
+	
+// WARNING ALERT
+function Warning(_title, _text) {
+  Swal.fire({
+    title: _title,
+    text: _text,
+    type: 'warning',
+    customClass: {
+      confirmButton: 'btn btn-primary'
+    },
+    buttonsStyling: false
+  })
+}
+    
+
+    
+function checkInput() {
+
+    
+  var input = document.getElementById("username");
+  var value = input.value;
+    
+  /*  
+  if (value.substring(0, 2) !== "20") {
+      //alert("사번ID는 20~으로 시작해야 합니다.");
+      Warning("사번ID","사번ID는 20~으로 시작해야 합니다.");
+      input.focus();
+      return false;
+  }
+  */
+    
+  /*  
+  if (value.length > 8) {
+      //alert("사번은 8자리를 초과할 수 없습니다.");
+      Warning("사번ID","사번은 8자리를 초과할 수 없습니다.");
+      input.focus();
+      return false;
+  }
+    
+  if (value.length < 8) {
+      //alert("사번은 8자리를 모두 입력 해야 합니다.");
+      Warning("사번ID","사번은 8자리를 모두 입력 해야 합니다.");
+      input.focus();
+      return false;
+  }
+  */
+    
+  var department_id = document.getElementById("department_id");
+  if (department_id.value == "") {
+      //alert("department_id를 입력하세요.");
+      Warning("부서명","부서명은 정확하게 입력 및 선택해야 합니다.");
+	  input.focus();
+      return false;
+  }
+    
+  var password1 = document.getElementById("password1").value;
+  var password2 = document.getElementById("password2").value;
+
+  var regex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{10,}$/;
+    
+  /*
+  if (!regex.test(password1)) {
+      alert("비밀번호가 유효하지 않습니다.\n영어, 숫자, 특수문자가 포함된 10자리여야 합니다.");
+      return false;
+  }
+  */
+    
+  if (password1 !== password2) {
+      //alert("패스워드가 불일치 합니다.");
+      Warning("패스워드","패스워드를 정확하게 입력 및 선택해야 합니다.");
+      input.focus();
+      return false;
+  }
+    
+  return true;
+}
+    
+
+$(function() {
+    $("#submitBtn").click(function() {
+        
+        // 부서코드 반영
+        $("#department_id").val($("#select2Basic_dept").val());
+        
+        // 직위코드 반영
+        $("#position_id").val($("#select2Basic_posi").val());
+        //console.log($("#select2Basic_dept").val());
+        
+        return checkInput();
+    });
+});
+
+    
+</script>
+
+<script src="{% static 'assets/vendor/libs/sweetalert2/sweetalert2.js' %}"></script>
+      <script src="{% static 'assets/vendor/libs/select2/select2.js' %}"></script>
+      
+{% endblock %}

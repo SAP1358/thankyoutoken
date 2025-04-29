@@ -1,0 +1,309 @@
+{% block body %}
+{% load static %}
+
+  <!-- 드림 사용 소스 -->
+  <!--
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+</script>
+<!--<script src="{% static 'assets/js/main.js' %}"></script> -->
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/apex-charts.css' %}" /> -->
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/bootstrap-datepicker.css' %}" /> -->
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/boxicons.css' %}" /> -->
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/core.css' %}" /> -->
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/datatables.bootstrap5.css' %}" /> -->
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/datatables.checkboxes.css' %}" /> -->
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/demo.css' %}" /> -->
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/flag-icons.css' %}" /> -->
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/fontawesome.css' %}" /> -->
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/perfect-scrollbar.css' %}" /> -->
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/responsive.bootstrap5.css' %}" /> -->
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/select2.css' %}" /> -->
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/spinkit.css' %}" /> -->
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/sweetalert2.css' %}" /> -->
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/theme-default.css' %}" /> -->
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/typeahead.css' %}" /> -->
+  <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet"> -->
+  <!-- 드림 사용 소스 끝 -->
+
+    <!-- Content -->
+
+    <div id="header" class="w-100 p-3 py-4 position-relative">
+<span class="allBg"></span>
+
+</div>
+    <div class="container-xxl" style=" max-width: 980px;" >
+      <div class="authentication-wrapper authentication-basic" >
+        <div class="authentication-inner">
+          <!-- Register -->
+          <div class="card">
+            <div class="pt-3 mt-3">
+				<div class="mx-auto" style="width:42%; min-width: 150px;">
+					<img src="/static/assets/img/icon_token.png" class="w-100">
+				</div>
+				<div class="mx-4 my-3">
+					<h2 class="px-1 mx-auto" style="width:70%; max-width:408px;"><img class="w-100" src="/static/assets/img/text_thanku.png"></h2>
+				</div>
+			</div>
+        
+              
+            <div class="card-body pt-0">
+              <!-- Logo -->
+
+              <!-- /Logo -->
+                
+              {% if error %}
+              <br>
+              <div class="alert alert-danger" role="alert">
+                {{ error }}
+              </div>
+              {% endif %}
+                
+			  <br>
+              <form id="formAuthentication" class="mb-3" action="{% url 'signin' %}" method="POST">
+              {% csrf_token %}
+              <!--
+                <form id="formAuthentication" class="mb-3" action="{% url 'signin' %}" method="POST">
+              -->
+                <div class="mb-3">
+                  <input
+                    type="text"
+                     class="form-control"
+                    id="email"
+                    name="username"
+                    placeholder="사번ID"
+                    autofocus
+                    onfocusin="this.style.borderColor='#00367f'"
+                    onfocusout="this.style.borderColor=''"
+                  />
+                </div>
+                <div class="mb-3 form-password-toggle">
+                  <div class="d-flex justify-content-between">
+                      
+                      
+
+                      
+                  </div>
+                  <div class="input-group input-group-merge">
+                    <input
+                      type="password"
+                      id="password"
+                       class="form-control"
+                      name="password"
+                      placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                      aria-describedby="password"
+                      onfocusin="this.style.borderColor='#00367f'"
+                      onfocusout="this.style.borderColor=''"
+                    />
+                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="remember-me" />
+                    <label class="form-check-label" for="remember-me"> 자동 로그인 </label> {{user.username}}
+                  </div>
+                </div>
+                <div class="my-3">
+                  <button class="logBtn btn btn-danger d-grid w-100" type="submit" style="background-color: #006ed5; border-color: #006ed5;">로그인</button>
+                  <style>
+                    .logBtn.btn-danger{box-shadow: 0 0.125rem 0.25rem 0 #9fc4e7 !important;}
+                  .logBtn.btn-danger:hover {background-color:#14a8ea !important; border-color: #14a8ea !important; box-shadow: 0 0.125rem 0.25rem 0 #9fc4e7 !important;}
+                  </style>
+                </div>
+              </form>
+              <!--
+              <p class="text-center">
+                <span>처음 방문 하셨나요?</span>
+                <a href="{% url 'signup' %}">
+                  <span>회원가입</span>
+                </a> /
+                    <a href="" data-bs-toggle="modal" data-bs-target="#noticeModal">
+                      비밀번호 찾기
+                    </a>
+              </p>
+              -->
+            </div>
+          </div>
+          <!-- /Register -->
+        </div>
+      </div>
+    </div>
+
+    <!-- / Content -->
+
+<!-- storyModal view modal -->
+<div class="modal fade animate__animated animate__slideInDown" id="noticeModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+			<div class="modal-body pt-0 col-12 ">
+                <div class="text-dark text-start" id="viewStory" >
+                    <dl class="row mt-2">
+
+                        <dt class="col-sm-12 card mt-3 py-2 bg-info">문의안내</dt>
+                        <dd class="col-sm-12 pre-wrap" style="font-size: 13px;">
+                            </br>
+                            비밀번호 초기화는 관리자에게 문의 주시면 됩니다. (문의 : 백숙진 프로)
+                        </dd>
+
+                        
+                    </dl>    
+
+                    <div class="modal-footer p-1">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                    </div>
+                        
+                </div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- storyModal view modal -->
+<style>
+      /* 지마켓 폰트 추가 시작 - 240219 */
+    @font-face {
+      font-weight: light;
+      font-family: 'gm-light';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff') format('woff');
+      font-style: light;
+    }
+
+    @font-face {
+      font-weight: normal;
+      font-family: 'gm-med';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+      font-style: normal;
+    }
+
+    @font-face {
+      font-weight: bold;
+      font-family: 'gm-bold';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff') format('woff');
+      font-style: bold;
+    }
+
+    /* 지마켓 폰트 추가 끝 - 240219 */
+
+    * {
+      letter-spacing: -0.02em;
+      /* font-family: 'Pretendard', sans-serif; */
+      font-family: 'Noto Sans KR', sans-serif;
+    }
+
+    .gm-med {
+      font-family: 'gm-light', 'Noto Sans KR', sans-serif !important;
+    }
+
+    .gm-med {
+      font-family: 'gm-med', 'Noto Sans KR', sans-serif !important;
+    }
+
+    .gm-bold {
+      font-family: 'gm-bold', 'Noto Sans KR', sans-serif !important;
+    }
+
+    .fw-med {
+      font-weight: 500 !important;
+    }
+
+    .colorCustom_01 {
+      color: #222 !important;
+    }
+
+    .colorCustom_02 {
+      color: #00367f !important;
+    }
+
+    .colorCustom_03 {
+      color: #006ed5 !important;
+    }
+
+    .colorCustom_04 {
+      color: #85b3de !important;
+    }
+
+    .colorCustom_05 {
+      color: #9fc4e7 !important;
+    }
+
+    .colorCustom_06 {
+      color: #14a8ea !important;
+    }
+
+   .colorCustom_07 {
+      color: #dde7f1 !important;
+    }
+
+   .colorCustom_08 {
+      color: #62c8fa !important;
+    }
+
+    body {
+      background: #fbfbfb;
+    }
+
+
+    /* 공통 헤더 #layout-header CSS 시작 */
+    #header {
+      background: #006ed5;
+    }
+
+    #header .allBg {
+      position: absolute;
+      top: 90%;
+      left: 0;
+      width: 100%;
+      height: 200%;
+      background: #006ed5;
+    }
+
+    #header .departBox span {
+      color: #62c8fa;
+      word-break: keep-all;
+    }
+
+    #header .layout-navbar {
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
+    }
+
+    #header .navbar-nav li>a.navBtn {
+      display: block;
+      width: clamp(25px, 5.3vw, 35px);
+      height: clamp(25px, 5.3vw, 35px);
+      padding: 0;
+    }
+
+    #header .navbar-nav li>a.navBtn:has(.avatar) {
+      width: clamp(60px, 10vw, 80px);
+      height: clamp(60px, 10vw, 80px);
+    }
+
+    #header .navbar-nav .search {
+      background: #fff;
+      -webkit-mask: url(/static/assets/img/icon_search.svg) no-repeat center/contain;
+      mask: url(/static/assets/img/icon_search.svg) no-repeat center/contain;
+    }
+
+    #header .navbar-nav .notice {
+      background: #fff;
+      -webkit-mask: url(/static/assets/img/icon_notice01.svg) no-repeat center/contain;
+      mask: url(/static/assets/img/icon_notice01.svg) no-repeat center/contain;
+    }
+
+    #header .navbar-nav li>a.navBtn span {
+      width: 100%;
+      height: 100%;
+    }
+
+    #footer {
+      margin-top: 20px;
+    }
+
+    /* 헤더 프로필 아이콘 css 수정 끝 - 240220 */
+</style>
+
+{% endblock %}
