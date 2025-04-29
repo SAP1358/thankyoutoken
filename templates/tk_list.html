@@ -1,0 +1,676 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+
+<head>
+
+<!-- Page CSS -->
+<link rel="stylesheet" href="{% static 'assets/vendor/css/pages/page-profile.css' %}" />
+
+{% comment %} <link href="https://webfontworld.github.io/pretendard/Pretendard.css" rel="stylesheet"> {% endcomment %}
+
+<!-- 드림 사용 소스 -->
+{% comment %} <link rel="stylesheet" href="{% static 'assets/css/apex-charts.css' %}" /> {% endcomment %}
+<link rel="stylesheet" href="{% static 'assets/css/bootstrap-datepicker.css' %}" />
+<!-- 드림 사용 소스 끝 -->
+
+</head>
+
+<body>
+  <!-- 전체 태그 감싸기 시작 -->
+  <!-- 컨텐츠 시작 -->
+  <input type="hidden" id="SuccessCount" value="1">
+  <div id="myThankPage" class="allPage layout-container flex-column">
+    <div id="tk_con" class="container-xxl mt-2" style="visibility: hidden;">
+      <div class="row">
+        <div class="skeleton-container">
+          <!-- jQuery will inject skeleton items here -->
+        </div>
+        <!-- Posts will be loaded here dynamically -->
+      </div>
+    </div>
+
+    <div class = "text-center">
+      <a href="javascript:viewPage();" id = "viewAddEvent" class="badge badge-danger text-dark text-center fs-3 mb-4">더보기</a>
+    </div>
+
+    <!-- 컨텐츠 종료 -->
+    <div id="footer"><div class="footer w-100 text-center fw-med fs-6" style="color:#418dd4;">ⓒ 2024, made 땡큐토큰</div></div>
+    <script>
+        window.onload = function () {
+  // 하단 내비게이션 높잇값 만큼 모든 페이지 높이조절 시작
+      const moNav_h = document.querySelector('.mobile-navigation').clientHeight;
+      const layoutPage = document.querySelector('.layout-page');
+      layoutPage.style.paddingBottom = moNav_h + 40 + 'px';
+  // 하단 내비게이션 높잇값 만큼 모든 페이지 높이조절 끝 
+  }
+
+    </script>
+  </div>
+  <!-- 전체 태그 감싸기 종료 -->
+  <!-- </div> -->
+  
+
+  <script>
+	window.addEventListener("scroll", (event) => {
+		let scroll = this.scrollY;
+		let windowscroll = document.querySelector('.layout-container');
+		
+		if (document.body.scrollHeight - 30 <= window.scrollY + window.innerHeight)
+		{
+			if ("{{addPage}}" === "N") 
+			{
+				$('#viewAddEvent').hide();
+				//console.log("연속조회 대상이 없습니다.");
+			}
+			else{
+				//console.log("viewpage 실행댐.");
+				viewPage(); // 10개 단위로 땡큐 기록 불러오기
+			}
+		}
+	});
+
+    $(document).ready(function() {
+      loadPosts();
+
+		// 페이지 로딩이 완료되면 실행될 코드
+		// top nav 와 mobile nav 높이값을 감지해 화면 크기별 #tk_con 의 패딩 top,bottom 값 조절
+		//const chk_top_nav_h = document.querySelector('#top_nav').clientHeight;
+		//const chk_mo_nav_h = document.querySelector('.mobile-navigation').clientHeight;
+		//const con = document.querySelector('#tk_con');
+		//con.style.paddingTop = chk_top_nav_h + 10 + 'px'
+		//con.style.paddingBottom = chk_mo_nav_h + 10 + 'px'
+
+		// 페이지 로딩시 읽지 않은 토큰톡이 있을 경우 CSS style 적용 없을경우 style - display:none 처리
+		const new_tk_num = document.querySelectorAll('.new_tk_num span');
+		new_tk_num.forEach(item => {
+		  if (item.textContent.trim() === "") {
+			item.style.display = 'none';
+		  } else {
+			item.style.display = 'block';
+		  }
+		});
+    setTimeout(loaddivpage, 30);
+    });
+
+    // 토큰마크 화면 크기별 자동 조절
+    function tk_left_H() {
+      const tk_left = document.querySelectorAll('.tkBox .tk_left');
+      tk_left.forEach(item => {
+        const tk_left_w = tk_left[0].clientWidth;
+        item.style.paddingBottom = tk_left_w + 'px';
+      });
+    }
+    tk_left_H();
+
+    window.addEventListener("resize", () => {
+      tk_left_H();
+    })
+
+    function loaddivpage()
+	{
+		document.getElementById("tk_con").style.visibility = 'visible';
+		document.getElementById("header").style.visibility = 'visible';
+	}
+
+  function viewTkTalk(sendId) {
+    window.location.href = `/tk_talk?sendId=${sendId}`;
+  }
+
+  function loadPosts() {
+    $.ajax({
+      url: '/apis/tk_list/get_praise_posts',
+      method: 'GET',
+      beforeSend: function () {
+        renderSkeletons();
+      },
+      success: function(response) {
+        if (!response.data || response.data.length === 0) {
+          // Show the no message view
+          renderNoMessage();
+        } else {
+          // Render the posts
+          renderPosts(response.data);
+        }
+      },
+      error: function(xhr, status, error) {
+        console.error('Error fetching posts:', error);
+      },
+      complete: function() {
+        $('#tk_con > .row > .skeleton-container').empty();
+      }
+    });
+  }
+
+  function renderNoMessage() {
+    const noMessageHtml = `
+      <style>
+        body:has(#myThankPage .noMessage) {
+          background: url(/static/assets/img/tkTalk_bg.jpg) no-repeat top/cover;
+        }
+      </style>
+      <div class="noMessage">
+        <div class="col-12">
+          <div class="position-relative">
+            <img style="width:100%; max-width:640px; margin:0 auto; display:block;" src="/static/assets/img/bg_noMessage.png">
+            <button onclick="window.location.href='/praiseRegedit'" style="position: absolute; max-width:400px; width:62.5%; bottom:5%; left:50%; transform: translateX(-50%); border:0; background: none;">
+              <img style="width:100%;" src="/static/assets/img/btn_goToTk.png">
+            </button>
+          </div>
+        </div>
+      </div>`;
+    
+    $('#postsContainer').html(noMessageHtml);
+  }
+
+  function renderPosts(posts) {
+    const postsHtml = posts.map((part, index) => {
+      const isHidden = index >= 10;
+      const companyNameAbbr = getCompanyAbbreviation(part.user_company_name);
+      
+      return `
+        <div class="col-12 position-relative" style="z-index: 0;">
+          <div class="card-body">
+            <div class="${isHidden ? 'hiddendata' : ''}" ${isHidden ? 'style="display: none;"' : ''}>
+              <div class="tkList border rounded d-flex align-items-center" style="cursor: pointer; margin-bottom:10px; padding:20px 2% 15px;"
+                onclick="viewTkTalk(${part.temp_user_id})">
+                <div class="tk_right position-absolute" style="right:2%; top:5px;">
+                  <div class="last_tk_date colorCustom_04" style="font-size: 14px;">${part.reg_date}</div>
+                  ${part.notice_count !== null ? `<div class="new_tk_num"><span>${part.notice_count}</span></div>` : ''}
+                </div>
+                <div class="overflow-hidden me-3 customSize" style="border:1px solid #d3f1ff; width: 60px; height: 60px; overflow: hidden; border-radius: 100%;">
+                  <img src="${part.user_image_yn === 'Y' ? part.user_image : '/static/assets/img/profile_icon.png'}" 
+                       alt="Avatar" style="width: 100%; height:100%; object-fit: cover;" />
+                </div>
+                <span id="chk_send_id" class="visually-hidden">${part.temp_user_id}</span>
+                <div class="overflow-hidden" style="width: 75%; margin-right:10%;">
+                  <div class="d-flex align-items-end mb-2 mt-2">
+                    <p class="mb-0 colorCustom_01 fw-med me-1" style="word-break: keep-all; line-height: 1; font-size: 18px;">
+                      ${part.user_employee_name}
+                    </p>
+                    <p class="mb-0 colorCustom_02 fw-med" style="word-break: keep-all; line-height: 1; font-size: 14px;">
+                      ${companyNameAbbr} ${part.user_department_name.slice(0, 8)}
+                    </p>
+                  </div>
+                  <p style="text-overflow: ellipsis; word-wrap: break-word; font-size: 16px; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;"
+                     class="card-text mb-0 colorCustom_01">${part.content}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+    
+    $('#tk_con > .row').html(postsHtml);
+  }
+
+  function getCompanyAbbreviation(companyName) {
+    const companyMap = {
+      "우리에프아이에스": "FIS",
+      "우리은행": "은행",
+      "우리카드": "카드",
+      "우리금융지주": "지주",
+      "우리프라이빗에퀴티자산운용": "PE",
+      "우리펀드서비스": "펀드",
+      "우리신용정보": "신용정보",
+      "우리금융경영연구소": "연구소",
+      "우리투자증권": "우투",
+      "우리자산운용": "자산운용",
+      "우리자산신탁": "자산신탁",
+      "우리글로벌자산운용": "글로벌",
+      "우리금융캐피탈": "캐피탈",
+      "우리금융저축은행": "저축은행",
+      "우리금융에프앤아이": "F&I",
+      "우리벤처파트너스": "벤처"
+    };
+    
+    return companyMap[companyName] || companyName;
+  }
+
+  function renderSkeletons() {
+    const container = $('#tk_con > .row > .skeleton-container');
+    container.empty(); // Clear existing content
+
+    // Create and append the specified number of skeleton items
+    for (let i = 0; i < 5; i++) {
+        container.append(`
+          <div class="col-12 position-relative" style="z-index: 0;">
+            <div class="card-body">
+              <div>
+                <div class="tkList border rounded d-flex align-items-center" style="margin-bottom:10px; padding:20px 2% 15px;">
+                  <div class="tk_right position-absolute" style="right:2%; top:5px;">
+                    <div class="last_tk_date colorCustom_04 skeleton-timestamp" style="font-size: 14px;"></div>
+                  </div>
+                  <div class="overflow-hidden me-3 customSize" style="width: 60px; height: 60px; overflow: hidden; border-radius: 100%;">
+                    <div class="skeleton-avatar"></div>
+                  </div>
+                  <div class="overflow-hidden" style="width: 75%; margin-right:10%;">
+                    <div class="d-flex align-items-end mb-2 mt-2 skeleton-line">
+                      <p class="mb-0 colorCustom_01 fw-med me-1" style="word-break: keep-all; line-height: 1; font-size: 18px;">
+                      </p>
+                      <p class="mb-0 colorCustom_02 fw-med" style="word-break: keep-all; line-height: 1; font-size: 14px;">
+                      </p>
+                    </div>
+                    <p style="text-overflow: ellipsis; word-wrap: break-word; font-size: 16px; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;"
+                      class="card-text mb-0 colorCustom_01 skeleton-line"></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `);
+    }
+}
+
+  </script>
+
+  <script>
+  //2024.02
+
+  //페이지 처리
+  /*
+	const waypoint = new Waypoint({
+	element: document.querySelector('.layout-container'),
+	offset: 'bottom-in-view',
+	handler: function(direction) {
+	//alert('스크롤이 마지막 위치에 도달했습니다!');
+		console.log(direction);
+		if (direction === 'down' && waypointstarted == 1) 
+		{
+			console.log("addPage = " + "{{addPage}}" );  
+			if ("{{addPage}}" === "N") 
+			{
+				$('#viewAddEvent').hide();
+				console.log("연속조회 대상이 없습니다.");
+			}
+			else{
+				viewPage(); // 10개 단위로 땡큐 기록 불러오기
+				//document.querySelector('.infinite-more-link').click();  
+			}
+		}
+	},
+	continuous: true // continuous를 true로 설정하여 여러번 실행되도록 합니다. 
+
+}); */
+
+
+function viewPage() {    
+	//console.log('### my thankyou 마이땡큐 viewPage CALL ###');
+  // main page의 viewPage() 는 전체 유저의 땡큐 data를 API 에서 가져오고 여기에서는 본인 것만 나눠서 보여주는 기능이기 때문에
+  // 깔금하게 날리고 다시 만들었습니다
+
+  var elements = document.querySelectorAll("#hiddendata");
+  var hiddencount = 0;
+  for (var i = 0; i < elements.length; i++) {
+    var element = elements[i]; // 현재 요소
+    // 더보기 기능 (show 로 변경)
+    var style = window.getComputedStyle(element);
+    if (style.display === 'none' && hiddencount < 5) {
+        // Return the first hidden element found
+        element.style.display = 'block';
+        hiddencount = hiddencount + 1;
+
+    }
+  }
+  
+}
+
+
+
+  </script>
+
+<script>
+    // 신규 떙큐 톡이 있을 시 숫자 + 원형 배경 아이콘 생성 시작 - 240221
+    const new_tk_num = document.querySelectorAll('.new_tk_num span');
+    new_tk_num.forEach(item => {
+      if (item.textContent.trim() === "") {
+        item.style.display = 'none';
+      } else {
+        item.style.display = 'block';
+      }
+    });
+    // 신규 떙큐 톡이 있을 시 숫자 + 원형 배경 아이콘 생성 끝 - 240221
+
+    //console.log("scriptStart");
+    // 공통 js 시작 - 240222
+    var doc = document;
+
+    function chkHiddenInput() {
+      //부서, 직위 서브 찾기 탭 생성 시작
+      const chkHiddenInputs = document.querySelectorAll('.chkHiddenInput');
+      document.addEventListener('click', (event) => {
+        const clickedElement = event.target;
+        const isChkHiddenInput = clickedElement.classList.contains('chkHiddenInput') || clickedElement.closest(
+          '.chkHiddenInput');
+
+        chkHiddenInputs.forEach((item, index) => {
+          const editSearchBox = item.querySelector('.editSearchBox');
+
+          if (!isChkHiddenInput || item !== clickedElement.closest('.chkHiddenInput')) {
+            editSearchBox.classList.add('d-none');
+          } else {
+            editSearchBox.classList.remove('d-none');
+          }
+        });
+      });
+      //부서, 직위 서브 찾기 탭 생성 끝
+    }
+    chkHiddenInput();
+
+    // 검색 아이콘 클릭시 검색 서브 input 탭 닫기 끝
+
+
+
+  </script>
+
+
+  <style>
+.select2.select2-container {position: absolute; left:0; width:calc(100% - 99px) !important;}
+    button.searchChkBtn {position: absolute !important; right:0;}
+
+    .allPage .sendMeCard>div {
+      background: #c8edff;
+    }
+
+    /* 카드 - 지점 명칭 */
+    .allPage .card-title {
+      font-size: 0.7rem;
+    }
+
+    /* 카드 - 사람 > 직위 명칭 */
+    .allPage .card-text span {
+      font-size: 0.8rem;
+    }
+
+    /* 카드 - 해쉬태그 */
+    .allPage .hash>span {
+      border-radius: 17px;
+      background: #e8f7ff;
+    }
+
+    .allPage .icon_right_arrow {
+      width: 25px;
+      height: 25px;
+      background: url(../img/icon_arrow.svg) no-repeat center/100% auto;
+    }
+
+    .allPage .heartBtn,
+    .allPage .commentBtn {
+      width: 100%;
+      height: 100%;
+    }
+
+    .allPage .heartBtn i {
+      width: 100%;
+      height: 100%;
+      /* background: #222; */
+      /* -webkit-mask: url(../img/icon_heart_01.svg) no-repeat center/contain; */
+      /* mask: url(../img/icon_heart_01.svg) no-repeat center/contain; */
+      background: no-repeat center/100% auto;
+      background-image: url(../img/icon_heart_01.svg);
+    }
+
+    .allPage .heartBtn i.clicked {
+      background-image: url(../img/icon_heart_02.svg);
+    }
+
+    .allPage .commentBtn i {
+      width: 100%;
+      height: 100%;
+      /* background: #222; */
+      /* -webkit-mask: url(../img/icon_comment_01.svg) no-repeat center/contain; */
+      /* mask: url(../img/icon_comment_01.svg) no-repeat center/contain; */
+      background: no-repeat center/100% auto;
+      background-image: url(../img/icon_comment_01.svg);
+    }
+
+    .allPage .commentBtn i.clicked {
+      background-image: url(../img/icon_comment_02.svg);
+    }
+
+    .allPage .heartBtn i,
+    .allPage .commentBtn i {
+      min-width: 20px;
+    }
+
+    .allPage .editBtn {
+      height: 100%;
+    }
+
+    .allPage .editBtn span {
+      width: 10px;
+      height: 150%;
+      background: #006ed5;
+      -webkit-mask: url(../img/icon_edit.svg) no-repeat center/auto 100%;
+      mask: url(../img/icon_edit.svg) no-repeat center/auto 100%;
+    }
+
+    .comment_modal .typing_comment:focus {
+      border-color: #14a8ea;
+    }
+
+    .comment_modal .typing_comment+button {
+      border: 1px solid #14a8ea !important;
+      background: #14a8ea !important;
+      box-shadow: none;
+    }
+
+    .allPage .modal-dialog {
+      top: 3%;
+      max-width: 450px;
+    }
+
+
+    /* MY땡큐 페이지 CSS 추가 시작 - 240219*/
+    #myThankPage .tkList {
+      position: relative;
+      background: #fff;
+    }
+
+    #myThankPage .new_tk_num {
+      position: relative;
+    }
+
+    #myThankPage .new_tk_num span {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: clamp(20px, 2.7vw, 25px);
+      height: 0;
+      margin-top: 5px;
+      padding-bottom: clamp(20px, 2.7vw, 25px);
+      border-radius: 100%;
+      background: #f14823;
+      color: #fff;
+      font-size: clamp(13px, 1.35vw, 16px);
+      line-height: clamp(20px, 2.7vw, 25px);
+      text-align: center;
+    }
+
+    /* MY땡큐 - list 페이지 CSS 추가 끝 - 240219*/
+
+    /* MY땡큐 - talk 페이지 CSS 추가 시작 - 240219*/
+    #myThankPage.tkTalkPage {
+      background: url(../img/tkTalk_bg.jpg) no-repeat top/cover;
+    }
+
+    #myThankPage.tkTalkPage .talkSendBox {
+      max-width: 70%;
+    }
+
+    #myThankPage.tkTalkPage .tkTalkInner {
+      position: relative;
+      background: #fff;
+    }
+
+    #myThankPage.tkTalkPage .tkTalkInner .leftTale {
+      top: -7px;
+      left: -7px;
+      width: 15px;
+    }
+
+    #myThankPage.tkTalkPage .tkTalkInner .rightTale {
+      top: -7px;
+      right: -7px;
+      width: 15px;
+    }
+
+    #myThankPage.tkTalkPage .hash span {
+      margin-top: 5px;
+      margin-right: 10px;
+      font-size: clamp(10px, 2.5vw, 16px);
+    }
+
+
+    /* MY땡큐 - talk 페이지 CSS 추가 끝 - 240219*/
+
+
+    @media (max-width:576px) {
+
+      #mainPage .card>div {
+        justify-content: space-between !important;
+      }
+
+      .allPage .forPc {
+        display: block !important;
+      }
+
+
+
+      #porfileUplaodBox {
+        align-items: center !important;
+      }
+
+
+      /* MY땡큐 - talk 페이지 CSS 추가 시작 - 240219*/
+      #myThankPage.tkTalkPage .talkSendBox {
+        max-width: 100%;
+      }
+
+      #myThankPage.tkTalkPage .hash {
+        flex-wrap: wrap;
+      }
+
+      #myThankPage.tkTalkPage .hash span {
+        width: 35%;
+        margin-right: 5px;
+      }
+
+      /* MY땡큐 - talk 페이지 CSS 추가 끝 - 240219*/
+    }
+
+    .mobile-navigation button .icon_home {
+      -webkit-mask: url(/static/assets/img/icon_menu_01_01.svg) no-repeat center/auto 100%;
+      mask: url(/static/assets/img/icon_menu_01_01.svg) no-repeat center/auto 100%;
+    }
+
+    .mobile-navigation button .icon_myThank {
+      -webkit-mask: url(/static/assets/img/icon_menu_02_02.svg) no-repeat center/auto 100%;
+      mask: url(/static/assets/img/icon_menu_02_02.svg) no-repeat center/auto 100%;
+    }
+
+    .mobile-navigation button .icon_sendThank {
+      -webkit-mask: url(/static/assets/img/icon_menu_03_01.svg) no-repeat center/auto 100%;
+      mask: url(/static/assets/img/icon_menu_03_01.svg) no-repeat center/auto 100%;
+    }
+
+    .mobile-navigation button .icon_best {
+      -webkit-mask: url(/static/assets/img/icon_menu_04_01.svg) no-repeat center/auto 100%;
+      mask: url(/static/assets/img/icon_menu_04_01.svg) no-repeat center/auto 100%;
+    }
+
+    .mobile-navigation button .icon_myToken {
+      -webkit-mask: url(/static/assets/img/icon_menu_05_01.svg) no-repeat center/auto 100%;
+      mask: url(/static/assets/img/icon_menu_05_01.svg) no-repeat center/auto 100%;
+    }
+
+    @media (max-width:440px) {
+      .adminPage .totalNum>div span {
+        font-size: 20px !important;
+      }
+
+      .adminPage .totalNum>div p {
+        font-size: 12px;
+      }
+
+      .adminPage table.tableCustom01 thead th,
+      .adminPage table.tableCustom01 tbody td {
+        width: calc(70%/3);
+      }
+
+      .adminPage table.tableCustom01 thead th:first-child,
+      .adminPage table.tableCustom01 tbody th {
+        width: 30%;
+        padding-left: 2%;
+        padding-right: 0;
+      }
+
+      .adminPage table.tableCustom03 thead th,
+      .adminPage table.tableCustom03 tbody td {
+        width: calc(70%/3);
+      }
+
+      .adminPage table.tableCustom03 thead th:nth-child(3),
+      .adminPage table.tableCustom03 tbody td:nth-child(3) {
+        width: 30%;
+      }
+
+      .allPage .todayThank .todayHeader {
+        top: -25px;
+        max-width: 250px;
+      }
+
+      .allPage .modal-dialog {
+        max-width: 350px;
+        margin: 0 auto;
+      }
+    }
+
+    .skeleton-avatar {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+    }
+
+    .skeleton-line {
+      height: 16px;
+      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+      border-radius: 4px;
+      margin-bottom: 8px;
+    }
+
+    .skeleton-line:last-child {
+      width: 20%;
+    }
+
+    .skeleton-timestamp {
+      width: 125px;
+      height: 16px;
+      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+      border-radius: 4px;
+    }
+
+    @keyframes shimmer {
+      0% {
+        background-position: 200% 0;
+      }
+      100% {
+        background-position: -200% 0;
+      }
+    }
+  </style>
+
+
+</body>
+
+</html>
+
+{% endblock %}

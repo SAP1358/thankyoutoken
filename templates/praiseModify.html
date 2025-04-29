@@ -1,0 +1,216 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+<head>
+ 
+<!-- Vendors CSS -->
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/quill/katex.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/quill/editor.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/quill/typography.css' %}" />
+
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/select2/select2.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/tagify/tagify.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/bootstrap-select/bootstrap-select.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/typeahead-js/typeahead.css' %}" />
+
+<!-- Page CSS -->
+<style>
+.swiper-container{
+    width: 80%;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+.select2.select2-container {position: absolute; left:0; width:calc(100% - 99px) !important;}
+    button.searchChkBtn {position: absolute !important; right:0;}
+</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script>
+    $(function() {
+        $("#submitBtn").click(function() {
+            var input_Contents = $("#content-editor .ql-editor").html();
+            $("<input>").attr({
+              type: "hidden",
+              name: "input_Contents",
+              value: input_Contents
+            }).appendTo("#formAuthentication");
+            
+            var formData = $("#formAuthentication").serializeArray();
+            var alertMsg = "";
+            $.each(formData, function(i, field) {
+                alertMsg += field.name + ": " + field.value + "\n";
+            });
+        });
+    });
+
+</script>
+    
+</head>
+<!-- Content wrapper -->
+<div class="content-wrapper">
+<!-- Content -->
+<div id="con" class="container-xxl flex-grow-1 container-p-y" style="visibility: hidden;">
+	<div class="row">
+	
+
+        <div class="col-12">
+         
+            <!-- HTML5 Inputs -->
+            <div class="card mb-2">
+                <h5 class="card-header">칭찬 수정하기</h5>
+
+                {% if error %}
+                <div class="alert alert-danger" role="alert">
+                  {{ error }}
+                </div>
+                {% endif %}
+
+                <div class="card-body">
+                <form id="formAuthentication" class="mb-3" action="{% url 'praiseModify' info.compliment_id %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}   
+                    
+					<div class="mb-3 row">
+						<label for="input_compliment_type" class="form-label col-md-2">칭찬유형</label>
+                        
+                        <div class="col-md-10">                        
+                          <select class="form-select" id="input_compliment_type" name="input_compliment_type" aria-label="Default select example">
+                            <option value="1" {% if info.compliment_type == '1' %}selected{% endif %}>칭찬</option>
+                            <option value="2" {% if info.compliment_type == '2' %}selected{% endif %}>축하</option>
+                            <option value="3" {% if info.compliment_type == '3' %}selected{% endif %}>감사</option>
+                          </select>
+                        </div>
+
+                        
+					</div>
+
+					<div class="mb-3 row">
+						<label for="input_PraiseId" class="form-label col-md-2">칭찬대상 (수정불가)</label>
+						<div class="col-md-10">
+						  <input class="form-control border border-primary" type="text" value="{{info.praise_employee_name}}" id="input_PraiseId" name="input_PraiseId" required readonly/>
+
+						</div>
+					</div>
+					
+					<div class="mb-3 row">
+                        <!-- Custom Option Radio Im6ge -->
+                        <label for="input_employee_name" class="col-12 form-label col-md-2">칭찬카드</label>
+                        <div class="col-12 row">
+                            {% for part in posts %}       
+                              <div class="col-6 form-check custom-option custom-option-icon">
+                                <label class="form-check-label custom-option-content" for="customRadioImg{{part.id}}">
+                                  <span class="custom-option-body">
+                                    <img class="img-fluid w-50" src="{{part.image_path}}" alt="radioImg">
+                                  </span>
+                                  <input name="input_images_id" class="form-check-input" type="radio" value="{{part.id}}" id="customRadioImg{{part.id}}">
+                                </label>
+                              </div>
+                            {% endfor %}         
+                         </div>	
+                         <!-- /Custom Option Radio Image -->
+					</div>
+				  
+			
+					<!-- Full Editor -->            
+					<div class="card mb-2">
+						<label for="input_text" class="col-md-2 col-form-label">내용</label>
+						<div class="col-md-10 border border-primary" id="content-editor" >
+							{{info.content|safe}}
+						</div>
+					</div>
+					<!-- /Full Editor -->
+                    
+                      
+                    <div class="mt-3 row">
+                        <label for="input_Tag" class="col-md-2 col-form-label">공개여부</label>
+                        <div class="col-md-10">
+                            <label class="switch">
+                                <input type="hidden" name="input_active" value="N">
+                                <input type="checkbox" class="switch-input" name="input_active" value="Y" {% if info.is_active == 'Y' %}checked{% endif %} />
+                                <span class="switch-toggle-slider">
+                                    <span class="switch-on"></span>
+                                    <span class="switch-off"></span>
+                                </span>
+                                <span class="switch-label">공개</span>
+                            </label>
+                        </div>
+                    </div>
+
+					<div class="pt-4">
+						<div class="row justify-content-end">
+						  <div class="col-sm-9">
+							<button id="submitBtn" type="submit" class="btn btn-primary me-sm-2 me-1">수정하기</button>
+							<button type="reset" class="btn btn-label-secondary">취소하기</button>
+						  </div>
+						</div>
+					</div>
+                    
+				</form>
+                </div>
+				
+            </div>
+        </div>
+   
+	</div>
+</div>
+</div>
+
+
+
+<!-- Vendors JS -->
+<script src="{% static 'assets/vendor/libs/quill/katex.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/quill/quill.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/select2/select2.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/tagify/tagify.js' %}"></script>
+
+<script src="{% static 'assets/vendor/libs/bootstrap-select/bootstrap-select.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/typeahead-js/typeahead.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/bloodhound/bloodhound.js' %}"></script>
+
+<!-- Page JS -->
+<script src="{% static 'assets/js/forms-editors.js' %}"></script>
+<script src="{% static 'assets/js/forms-selects.js' %}"></script>
+<script src="{% static 'assets/js/forms-tagify.js' %}"></script>
+<script src="{% static 'assets/js/forms-typeahead.js' %}"></script>
+
+<script>
+$(document).ready(function() {
+	setTimeout(loaddivpage, 300);
+});
+
+function loaddivpage()
+{
+	document.getElementById("con").style.visibility = 'visible';
+	document.getElementById("header").style.visibility = 'visible';
+}
+    
+  // Quill 모듈 초기화
+  var quill = new Quill('#content-editor', {
+    theme: 'snow',
+    modules: {
+      toolbar: [
+
+  ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+  ['blockquote', 'code-block'],
+  /*
+  [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+  [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+  [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+  [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+  [{ 'direction': 'rtl' }],                         // text direction
+
+  [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+  [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+  */
+  [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+  [{ 'font': [] }],
+  [{ 'align': [] }],
+
+  ['clean']                                         // remove formatting button
+          
+      ]
+    }
+  });
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,1227 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+
+<head>
+<script>
+    window.Promise ||
+    document.write(
+      '<script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js"><\/script>'
+    )
+    window.Promise ||
+    document.write(
+      '<script src="https://cdn.jsdelivr.net/npm/eligrey-classlist-js-polyfill@1.2.20171210/classList.min.js"><\/script>'
+    )
+    window.Promise ||
+    document.write(
+      '<script src="https://cdn.jsdelivr.net/npm/findindex_polyfill_mdn"><\/script>'
+    )
+</script>
+
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/quill/katex.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/quill/editor.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/quill/typography.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/sweetalert2/sweetalert2.css' %}" />
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/toastr/toastr.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/animate-css/animate.css' %}" />
+
+<script src="{% static 'assets/vendor/libs/clipboard/clipboard.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/moment/moment.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/idletimer/idletimer.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/numeral/numeral.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/toastr/toastr.js' %}"></script>
+
+<script src="{% static 'assets/js/extended-ui-misc-clipboardjs.js' %}"></script>
+<script src="{% static 'assets/js/extended-ui-misc-idle-timer.js' %}"></script>
+<script src="{% static 'assets/js/extended-ui-misc-numeraljs.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/sweetalert2/sweetalert2.js' %}"></script>
+
+<script>
+    
+    function copyLink(_bbsId) {
+      const textToCopy = 'https://thankyou.run.goorm.app/praiseDetail/' + _bbsId;
+      const tempInput = document.createElement('input');
+      tempInput.setAttribute('value', textToCopy);
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempInput);
+      toastr['success']('', '링크가 복사 되었습니다.');
+    }
+    
+    // WARNING ALERT
+    function Warning(_title, _text) {
+        Swal.fire({
+        title: _title,
+        text: _text,
+        type: 'warning',
+        customClass: {
+            confirmButton: 'btn btn-primary'
+        },
+        buttonsStyling: false
+        })
+    }
+    
+</script>
+    
+<style>
+
+.select2.select2-container {position: absolute; left:0; width:calc(100% - 99px) !important;}
+    button.searchChkBtn {position: absolute !important; right:0;}
+</style>	
+	
+</head>
+
+<!-- Content wrapper -->
+<div class="content-wrapper">
+<!-- Content -->
+<div class="container-xxl flex-grow-1 container-p-y">
+    
+    
+    <div class="row mb-5">
+    {% for part in posts %}           
+                
+		<!-- Shared Event -->
+		<div class="col-md-6 col-lg-4 mb-4" id="viewCard{{part.compliment_id}}">
+			
+		    <div class="card">
+				<div class="card-header flex-grow-0">
+				    <div class="d-flex">
+                    <div class="avatar flex-shrink-0 me-3">
+                      <img src="{% static 'assets/img/avatars/20.png' %}" alt="User" class="rounded-circle" />
+                    </div>
+					<div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-1">
+						<div class="me-2">
+							<h4 class="mb-0">{{part.user_employee_name}}</h4>
+							<small class="text-muted">{{part.reg_date}}</small>
+						</div>
+						<div class="dropdown">
+							<button
+							  class="btn p-0"
+							  type="button"
+							  id="conversionRate"
+							  data-bs-toggle="dropdown"
+							  aria-haspopup="true"
+							  aria-expanded="false"
+							>
+							  <i class="bx bx-dots-vertical-rounded"></i>
+							</button>
+							<div class="dropdown-menu dropdown-menu-end" aria-labelledby="conversionRate">
+							  <a class="dropdown-item" href="javascript:void(0);" onclick="praiseModifyPop( '{{part.compliment_id}}' );">수정하기</a>
+							</div>
+						</div>
+					</div>
+				    </div>
+				</div>
+				<a href="javascript:void(0);" onclick="praiseDetail( '{{part.compliment_id}}' );">
+				    <img class="img-fluid w-100" src="{{part.image_path}}" id="focusImg{{part.compliment_id}}" alt="Card image cap" />
+                </a>
+                <div class="featured-date mt-n4 ms-4 bg-white rounded w-px-50 shadow text-center p-1">
+                  <h5 class="mb-0 text-dark">21</h5>
+                  <span class="text-primary">May</span>
+                </div>
+				<div class="card-body">
+				 
+					<div class="d-flex gap-2 mb-2">
+					   {{part.praise_employee_name}}님, {{part.short_content}}  
+					</div>
+					<div id="viewTag{{ forloop.counter }}"></div>
+					<script>
+						$(document).ready(function() {
+							viewTag("{{ forloop.counter }}", "{{part.praise_id}}");
+						});
+					</script>
+				    <div class="d-flex align-items-center justify-content-between">
+						<div class="card-actions">
+                            <a href="javascript:clickLike('{{ forloop.counter }}','{{part.compliment_id}}');" class="text-muted me-3"><i class="bx bx-heart me-1"></i> <span id="clickLike{{ forloop.counter }}">{{part.likes_count}}</span></a>
+						    <a href="javascript:void(0);" onclick="praiseCommentPop( '{{part.compliment_id}}','{{part.praise_id}}' );" class="text-muted"><i class="bx bx-message me-1"></i> {{part.comment_count}}</a>
+						</div>
+						<div class="">
+							 <a class="text-muted" href="javascript:void(0);" onclick="copyLink( '{{part.compliment_id}}' );"><i class='bx bx-share me-1' style="font-size: 24px;" ></i></a>
+						</div>
+				    </div>
+				</div>
+		    </div>
+		</div>
+		<!--/ Shared Event -->
+          
+    {% endfor %}         
+    </div>
+    <div class = 'container'>
+		{% if posts.has_previous %}
+		<a href="?page=1&item_code=">First</a>
+		<a href="?page={{posts.previous_page_number}}&item_code=">Previous</a>
+		{% endif %}
+		<span>{{posts.number}}</span>
+		<span>of</span>
+		<span>{{posts.paginator.num_pages}}</span>
+		{% if posts.has_next %}
+		<a href="?page={{posts.next_page_number}}&item_code=">Next</a>
+		<a href="?page={{posts.paginator.num_pages}}&item_code=">Last</a>
+		{% endif %}
+		<br>
+		<br>
+    </div>
+
+    <div class="buy-now">
+        <a href="javascript:void(0);" onclick="praiseRegeditPop( '{{part.compliment_id}}' );" class="btn rounded-pill btn-icon btn-primary btn-buy-now"><i class="bx bx-edit-alt"></i></a>
+    </div>
+    
+</div>
+</div>
+<input type="hidden" id="compliment_id" name="compliment_id">
+<input type="hidden" id="employee_id" name="employee_id">
+<!-- 칭찬 상세보기 -->
+<div class="modal fade" id="modalPraiseDetail" tabindex="-1" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-scrollable" role="document">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h5 class="modal-title" id="modalPraiseDetail_title">김대영 과장을 칭찬합니다.</h5>
+		  <button
+			type="button"
+			class="btn-close"
+			data-bs-dismiss="modal"
+			aria-label="Close"
+		  ></button>
+		</div>
+		<div class="modal-body" id="modalPraiseDetail_content">
+		  <p>업무 문의에 고객의 입장에서 상세히 설명과 사후 관리까지 잘 처리해주셔서 칭창합니다.</p>
+		  <p>가나다라마바사</p>
+		  <p>칭찬글 입력합니다.</p>
+		  <p>테스트 내용 작성 합니다.</p>
+		</div>
+		<div class="modal-footer">
+		  <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">닫기</button>
+		</div>
+	  </div>
+	</div>
+</div>
+
+<!-- 칭찬 등록하기 -->
+<div class="modal fade" id="modalPraiseRegedit" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+	<div class="modal-content">
+	  <div class="modal-header">
+		<h5 class="modal-title" id="modalCenterTitle">칭찬 등록하기</h5>
+		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
+	  </div>
+	  <div class="modal-body">
+		<div class="row">
+		  <div class="col mb-3">
+          <form id="formAuthentication" class="browser-default-validation mb-3" action="{% url 'praiseRegedit' %}" method="POST" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="exampleFormControlSelect1" class="form-label">칭찬유형</label>
+                <select class="form-select" id="modalPraiseRegedit_type" aria-label="Default select example">
+                    <option selected>선택</option>
+                    <option value="1">칭찬</option>
+                    <option value="2">축하</option>
+                    <option value="3">감사</option>
+                </select>
+            </div>
+            <div class="mb-3 row">
+                <label for="input_employee_name" class="form-label col-md-2">칭찬대상</label>
+                <div class="input-group input-group-merge">
+                    <span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search"></i></span>
+                    <input
+                        type="text"
+                        name="input_employee_name"
+                        id="input_employee_name"
+                        class="form-control"
+                        placeholder="직원명 입력"
+                        aria-label="직원명 입력"
+                        aria-describedby="basic-addon-search31"
+                        onkeydown="if (event.keyCode === 13) { searchMember(); return false; }"
+                    />
+                    <button type="button" class="btn btn-secondary " onclick="searchMember()">검색</button>
+                </div>        
+
+                <div class="mb-3" id="div_praise_member">
+                </div>
+            </div>
+            <!-- Full Editor -->
+            <div class="card mb-2">
+                <label for="input_text" class="col-md-2 col-form-label">내용</label>
+                <div class="col-md-10 border border-primary w-100" id="modalPraiseRegedit_content">
+                    <span id="divContents"></span>
+                </div>
+            </div>    
+            <!-- /Full Editor -->
+            <div class="mb-3">
+                <label for="input_employee_name" class="col-12 form-label col-md-2">칭찬카드</label>
+                <div class="col-12 row">
+                    {% for part in images %}       
+                    <div class="col-6 form-check custom-option custom-option-icon">
+                        <label class="form-check-label custom-option-content" for="customRadioImg{{part.id}}">
+                        <span class="custom-option-body">
+                            <img class="img-fluid w-50" src="{{part.image_path}}" alt="radioImg">
+                        </span>
+                        <input name="input_images_id" class="form-check-input" type="radio" value="{{part.id}}" id="modalPraiseRegedit_img{{part.id}}">
+                        </label>
+                    </div>
+                    {% endfor %}         
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="input_Tag" class="col-md-2 col-form-label">공개여부</label>
+                <div class="col-md-10">
+                      <label class="switch">
+                          <input type="hidden" name="reg_input_active" value="N">
+                        <input type="checkbox" class="switch-input" name="reg_input_active" value="Y" checked />
+                        <span class="switch-toggle-slider">
+                          <span class="switch-on"></span>
+                          <span class="switch-off"></span>
+                        </span>
+                        <span class="switch-label">공개</span>
+                      </label>
+                </div>
+            </div>
+          </form>
+		  </div>
+		</div>
+	  </div>
+	  <div class="modal-footer">
+		<button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">닫기</button>
+		<button type="button" class="btn btn-primary" onclick="praiseRegeditAct()">저장</button>
+	  </div>
+	</div>
+  </div>
+</div>
+
+<!-- 칭찬 수정하기 -->
+<div class="modal fade" id="modalPraiseModify" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+	<div class="modal-content">
+	  <div class="modal-header">
+		<h5 class="modal-title" id="modalCenterTitle">칭찬 수정하기</h5>
+		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
+	  </div>
+	  <div class="modal-body">
+		<div class="row">
+		  <div class="col mb-3">
+			<div class="mb-3">
+				<label for="exampleFormControlSelect1" class="form-label">유형</label>
+				<select class="form-select" id="modalPraiseModify_type" aria-label="Default select example">
+				  <option value="" selected>선택</option>
+				  <option value="1">칭찬</option>
+				  <option value="2">축하</option>
+				  <option value="3">감사</option>
+				</select>
+			  </div>
+                <!-- Full Editor -->
+                <div class="card mb-2">
+                    <label for="input_text" class="col-md-2 col-form-label">내용</label>
+                    <div class="col-md-10 border border-primary w-100" id="modalPraiseModify_content">
+                        <span id="divContents"></span>
+                    </div>
+                </div>    
+				<!-- /Full Editor -->
+			  <div class="mb-3">
+				<label for="input_employee_name" class="col-12 form-label col-md-2">칭찬카드</label>
+                <div class="col-12 row">
+                    {% for part in images %}       
+                      <div class="col-6 form-check custom-option custom-option-icon" id="praiseCard">
+                        <label class="form-check-label custom-option-content" for="customRadioImg{{part.id}}">
+                          <span class="custom-option-body">
+                            <img class="img-fluid w-50" src="{{part.image_path}}" alt="radioImg" id="modalPraiseModify_image_path{{part.id}}">
+                          </span>
+                          <input name="modalPraiseModify_images" class="form-check-input" type="radio" value="{{part.id}}" id="modalPraiseModify_images{{part.id}}">
+                        </label>
+                      </div>
+                    {% endfor %}         
+                 </div>
+			  </div>
+			  <div class="mb-3 row">
+                <label for="input_Tag" class="col-md-2 col-form-label">공개여부</label>
+                <div class="col-md-10">
+                    <label class="switch">
+                        <input type="hidden" name="input_active" value="N">
+                        <input type="checkbox" class="switch-input" name="input_active" value="Y" checked />
+                        <span class="switch-toggle-slider">
+                        <span class="switch-on"></span>
+                        <span class="switch-off"></span>
+                        </span>
+                        <span class="switch-label">공개</span>
+                    </label>
+                </div>
+			  </div>
+              
+		  </div>
+		</div>
+	  </div>
+	  <div class="modal-footer">
+		<button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">닫기</button>
+        <button type="button" class="btn btn-primary" onclick="praiseModifyAct()">저장</button>
+	  </div>
+	</div>
+  </div>
+</div>
+
+
+<!-- 댓글 보기 -->
+<div class="modal fade" id="modalPraiseComment" tabindex="-1" aria-labelledby="modalScrollableTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+	<div class="modal-content">
+	  <div class="modal-header">
+		<h5 class="modal-title" id="modalScrollableTitle">댓글 보기</h5>
+		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	  </div>
+	  <div class="modal-body">
+		<div class="row">
+		  <div class="col mb-3" id="divCommentList">
+		  </div>
+		</div>
+	  </div>
+	  <div class="modal-footer">
+        <input type="text" id="comment_content" name="comment_content" class="form-control" placeholder="댓글 작성" /><br>
+		<button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">닫기</button>
+		<button type="button" class="btn btn-primary" onclick="praiseCommentRegedit()">저장</button>
+	  </div>
+	</div>
+  </div>
+</div>
+
+
+<script>
+function viewTag(idx, json_data){
+        
+    console.log('viewTag =========');
+    //var data = JSON.parse(json_data.replace(/&quot;/g, '"'));
+
+    var highHtml = '';
+    var midhHtml = '';
+    var lowHtml = '';
+    var highCount = 0;
+    var midCount = 0;
+    var lowCount = 0;
+    
+    // compIdx에 따라 데이터 분류
+    for (var i = 0; i < 3; i++) {
+        highHtml += '<span class="badge bg-label-primary">' + json_data + '</span>';
+    }
+
+    var setHtml = '<div class="d-flex gap-2 mb-4">';
+    setHtml += highHtml;
+    setHtml += '</div>';
+    
+    // tbody 엘리먼트 선택
+    var viewTagHtml = document.querySelector('#viewTag'+idx);
+    // tbody 내용 변경
+    viewTagHtml.innerHTML = setHtml;
+
+}
+    
+    
+function clickLike(idx,_compliment_id) {    // 좋아요 클릭 이벤트
+    var inputData = {
+        compliment_id: _compliment_id
+        //value2: input2,
+        //value3: input3
+        
+    };
+    
+     try {
+        $.ajax({
+            type: "POST",
+            url: "/apis/praise_like/",
+            data: inputData,
+            success: function (data) {
+                console.log('### clickLike success');
+                console.log(data);
+                console.log(data.likes_count);
+                
+                // 엘리먼트 선택
+                var clickLikeHtml = document.querySelector('#clickLike'+idx);
+				
+                // tbody 내용 변경
+                clickLikeHtml.innerHTML = data.likes_count;
+                
+            },
+            error: function (e) {
+                console.log("### clickLike ERROR : ", e);
+                //alert("fail");
+            }
+      })
+      .done(function() {
+        // AJAX 요청 완료 후 처리할 작업
+      })
+      .fail(function() {
+        // AJAX 요청 실패 시 처리할 작업
+      });
+    } catch (e) {
+        alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+    }	
+	
+	//testAPI();
+}
+
+function praiseDetail(idx) {    // 칭찬하기 상세 데이터 이벤트
+    var inputData = {
+        compliment_id : idx
+    };
+
+     try {
+        $.ajax({
+            type: "POST",
+            url: "/apis/praise_detail/",
+            data: inputData,
+            success: function (data) {
+                console.log('### clickLike success');
+                console.log(data);
+/*
+                // 엘리먼트 선택
+                var detail_compliment_id = document.querySelector('#detail_compliment_id');
+                var detail_praise_id = document.querySelector('#detail_praise_id);
+                var detail_user_id = document.querySelector('#detail_user_id');
+                var detail_compliment_type = document.querySelector('#detail_compliment_type');
+                var detail_title = document.querySelector('#detail_title');
+                var detail_content = document.querySelector('#detail_content');
+                var detail_image = document.querySelector('#detail_image');
+				
+                // tbody 내용 변경
+                clickLikeHtml.innerHTML = data.likes_count;
+                modalPraiseDetail_Title
+*/
+                var modal = document.getElementById("modalPraiseDetail");
+                var pdTitle = document.getElementById("modalPraiseDetail_title");
+                var pdContent = document.getElementById("modalPraiseDetail_content");
+                
+                pdTitle.textContent = data.title;
+                pdContent.innerHTML = data.content;
+                var bsModal = new bootstrap.Modal(modal);
+                bsModal.show();
+            },
+            error: function (e) {
+                console.log("### clickLike ERROR : ", e);
+                //alert("fail");
+            }
+      })
+      .done(function() {
+        // AJAX 요청 완료 후 처리할 작업
+      })
+      .fail(function() {
+        // AJAX 요청 실패 시 처리할 작업
+      });
+    } catch (e) {
+        alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+    }	
+}
+    
+function praiseRegeditPop(idx) {    // 칭찬하기 등록 팝업 이벤트
+    var modal = document.getElementById("modalPraiseRegedit");
+    var bsModal = new bootstrap.Modal(modal);
+    bsModal.show();
+}
+    
+function praiseRegeditAct() {    // 칭찬하기 등록 처리 이벤트
+    var _input_employee_id = $("#input_employee_id option:selected").val();
+    if (!_input_employee_id) {
+        Warning('필수입력 오류','직원을 선택해 주세요.')
+        $.unblockUI();  
+        return false;
+    }
+
+    var _input_images_id = $("input[name='input_images_id']:checked").val();
+    if (!_input_images_id) {
+        Warning('필수입력 오류','칭찬카드를 선택해 주세요.')
+        $.unblockUI();  
+        return false;
+    }
+
+    var input_Contents_chk = $("#modalPraiseRegedit_content .ql-editor").text();
+    if (!input_Contents_chk) {
+        Warning('필수입력 오류','내용을 입력해 주세요.')
+        $.unblockUI();  
+        return false;
+    }
+
+    var input_Contents = $("#modalPraiseRegedit_content .ql-editor").html();
+    $("<input>").attr({
+      type: "hidden",
+      name: "input_Contents",
+      value: input_Contents
+    }).appendTo("#formAuthentication");
+
+    var formData = $("#formAuthentication").serializeArray();
+    var alertMsg = "";
+    $.each(formData, function(i, field) {
+        alertMsg += field.name + ": " + field.value + "\n";
+    });
+}
+
+function praiseRegedit(idx) {    // 칭찬하기 등록 처리 이벤트
+    var compliment_id = document.querySelector('#compliment_id'+idx);  // 칭찬 ID
+    var praise_id = document.querySelector('#praise_id'+idx);  // 칭찬받는사람 사번
+    var user_id = document.querySelector('#user_id'+idx);  // 칭찬글 등록자 사번
+    var title = document.querySelector('#title'+idx);  // 칭찬 제목
+    var compliment_type = document.querySelector('#compliment_type'+idx);  // 칭찬종류 (1:칭찬, 2:축하,3:감사)
+    var content = document.querySelector('#content'+idx);  // 칭찬 내용
+    var image = document.querySelector('#image'+idx);  // 배경이미지 ID
+    var token_yn = document.querySelector('#token_yn'+idx);  // 토큰 선물 여부
+    var inputData = {
+        compliment_id : compliment_id,
+        praise_id : praise_id,
+        user_id : user_id,
+        title : title,
+        compliment_type : compliment_type,
+        content : content,
+        image : image,
+        token_yn : token_yn
+    };
+
+     try {
+        $.ajax({
+            type: "POST",
+            url: "/apis/praise_regedit/",
+            data: inputData,
+            success: function (data) {
+                console.log('### clickLike success');
+                console.log(data);
+            },
+            error: function (e) {
+                console.log("### clickLike ERROR : ", e);
+                //alert("fail");
+            }
+      })
+      .done(function() {
+        // AJAX 요청 완료 후 처리할 작업
+      })
+      .fail(function() {
+        // AJAX 요청 실패 시 처리할 작업
+      });
+    } catch (e) {
+        alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+    }	
+}
+
+function praiseModifyPop(idx) {    // 칭찬하기 수정 팝업 이벤트'
+    var compliment_id = document.querySelector('#compliment_id');  // 칭찬 ID
+    compliment_id.value = idx;
+    var inputData = {
+        compliment_id : idx
+    };
+    
+    console.log('### praiseModifyPop 변수값 확인 ###');
+    console.log("### idx : "+idx);
+
+     try {
+        $.ajax({
+            type: "POST",
+            url: "/apis/praise_detail/",
+            data: inputData,
+            success: function (data) {
+                console.log('### clickLike success');
+                console.log(data);
+                
+                var modal = document.getElementById("modalPraiseModify");
+                var pdType = document.getElementById("modalPraiseModify_type");
+                var pdImg = document.getElementById("modalPraiseModify_images"+data.images_id);
+                //var pMContent = document.getElementById("modalPraiseModify_content");
+                
+                pdType.value = data.compliment_type;
+                pdImg.checked = true;
+                //pMContent.innerHTML = data.content;
+                
+                var bsModal = new bootstrap.Modal(modal);
+                bsModal.show();
+                
+                //2023-05-15 KDY 에디터창 수정
+                $('#modalPraiseModify_content .ql-editor').html(data.content);
+                
+            },
+            error: function (e) {
+                console.log("### clickLike ERROR : ", e);
+                //alert("fail");
+            }
+      })
+      .done(function() {
+        // AJAX 요청 완료 후 처리할 작업
+      })
+      .fail(function() {
+        // AJAX 요청 실패 시 처리할 작업
+      });
+    } catch (e) {
+        alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+    }	
+}
+    
+function praiseModifyAct(idx) {    // 칭찬하기 수정 처리 이벤트
+    var compliment_id = document.querySelector('#compliment_id');  // 칭찬 ID
+    var compliment_type = document.querySelector('#modalPraiseModify_type');  // 칭찬 유형
+    var content = $("#modalPraiseModify_content .ql-editor").html();
+    var inputsActive = document.getElementsByName('input_active');
+    var is_active = '';
+    var inputsImage = document.getElementsByName('modalPraiseModify_images');
+    var images_id = '';
+
+    for (var i = 0; i < inputsActive.length; i++) {
+        if (inputsActive[i].checked) {
+            is_active = "Y";
+            break;
+        }else{
+            is_active = "N";
+        }
+    }
+    
+    for (var i = 0; i < inputsImage.length; i++) {
+        if (inputsImage[i].checked) {
+            images_id = inputsImage[i].value;
+            break;
+        }
+    }
+
+    if (!compliment_type.value) {
+        Warning('필수입력 오류','칭찬유형을 선택해 주세요.');
+        $.unblockUI();  
+        return false;
+    }
+    
+    var inputData = {
+        compliment_id : compliment_id.value,
+        compliment_type : compliment_type.value,
+        content : content,
+        images_id : images_id,
+        is_active : is_active
+    };
+/*    
+    console.log("### 값 확인  ###");
+    console.log("### compliment_id : "+compliment_id.value);
+    console.log("### compliment_type : "+compliment_type.value);
+    console.log("### content : "+content);
+    console.log("### images_id : "+images_id);
+    console.log("### is_active : "+is_active);
+*/
+     try {
+        $.ajax({
+            type: "POST",
+            url: "/apis/praise_modify/",
+            data: inputData,
+            success: function (data) {
+                console.log('### clickLike success');
+                console.log(data);
+                var modal = document.getElementById("modalPraiseModify");
+                var bsModal = bootstrap.Modal.getInstance(modal);
+                bsModal.hide();
+                
+                //location.href="/praiseList/";
+                
+                //var focusImg = document.getElementById("focusImg32");
+                //focusImg.scrollIntoView();
+                console.log('### compliment_id.value');
+                console.log(compliment_id.value);
+                var changeImagePath = document.getElementById("focusImg"+compliment_id.value);
+                var changeViewCard = document.getElementById("viewCard"+compliment_id.value);
+                if(data.is_active=="N"){
+                    changeViewCard.style.display = "none";
+                }                
+                console.log('### 변경전 이미지 경로');
+                console.log(changeImagePath.src);
+                changeImagePath.src = data.image_path;
+                console.log('### 변경후 이미지 경로');
+                console.log(changeImagePath.src);
+            },
+            error: function (e) {
+                console.log("### clickLike ERROR : ", e);
+                //alert("fail");
+            }
+      })
+      .done(function() {
+        // AJAX 요청 완료 후 처리할 작업
+      })
+      .fail(function() {
+        // AJAX 요청 실패 시 처리할 작업
+      });
+    } catch (e) {
+        alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+    }
+}
+    
+function praiseCommentPop(idx, employeeId) {    // 칭찬하기 댓글 팝업 이벤트
+    var inputData = {
+        compliment_id : idx
+    };
+    var compliment_id = document.querySelector('#compliment_id');  // 칭찬 ID
+    var employee_id = document.querySelector("#employee_id"); // 칭찬 대상자
+    compliment_id.value = idx;
+    employee_id.value = employeeId;
+    
+    praiseCommentData(idx);
+    var modal = document.getElementById("modalPraiseComment");
+    var bsModal = new bootstrap.Modal(modal);
+    bsModal.show();
+    
+/*
+     try {
+        $.ajax({
+            type: "POST",
+            url: "/apis/praise_comment_list/",
+            data: inputData,
+            success: function (data) {
+                console.log('### clickLike success');
+                console.log(data);
+
+                var modal = document.getElementById("modalPraiseComment");
+                var divCommentList = document.getElementById("divCommentList");
+                var divCommentDesc = "";
+                //var pdTitle = document.getElementById("modalPraiseDetail_title");
+                //var pdContent = document.getElementById("modalPraiseDetail_content");
+                
+                //pdTitle.textContent = data.title;
+                //pdContent.innerHTML = data.content;
+
+                var list = data.data_list;
+
+                // list를 사용하여 원하는 처리 수행
+                for (var i = 0; i < list.length; i++) {
+                    var item = list[i];
+                    // 각 항목에 대한 처리
+                    console.log('### 배열 이름 확인');
+                    console.log(item);
+                    console.log(item.user_employee_name);
+
+                    divCommentDesc += `
+                        <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+                            <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="${item.user_employee_name}">
+                                <img src="../static/assets/img/avatars/5.png" alt="${item.user_employee_name}" class="rounded-circle" />
+                            </li>
+                            <b>${item.user_employee_name}</b>
+                        </ul>
+                        &nbsp;&nbsp;&nbsp;${item.comment_content}
+				        <small class="text-muted mb-0" style="display: flex; justify-content: space-between; align-items: center;">
+                            &nbsp;&nbsp;&nbsp;${item.reg_date}
+                            ${ {{user.id}} === item.user_id ? '<div><button type="button" class="btn btn-xs rounded-pill me-2 btn-label-primary" onclick="praiseCommentModifyView(\''+item.compliment_id+'\',\''+item.comment_id+'\')">수정</button><button type="button" class="btn btn-xs rounded-pill me-2 btn-label-danger" onclick="praiseCommentDelete(\''+item.compliment_id+'\',\''+item.comment_id+'\')">삭제</button></div>' : ''}
+                        </small>
+                        <br>
+                    `;
+                }
+                //<button type="button" class="btn btn-primary" onclick="praiseCommentRegedit()">저장</button>
+                divCommentList.innerHTML = divCommentDesc;
+                var bsModal = new bootstrap.Modal(modal);
+                bsModal.show();
+            },
+            error: function (e) {
+                console.log("### clickLike ERROR : ", e);
+                //alert("fail");
+            }
+      })
+      .done(function() {
+        // AJAX 요청 완료 후 처리할 작업
+      })
+      .fail(function() {
+        // AJAX 요청 실패 시 처리할 작업
+      });
+    } catch (e) {
+        alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+    }
+*/
+}
+    
+function praiseCommentRegedit() {    // 칭찬하기 댓글 신규 등록 이벤트
+    var compliment_id = document.querySelector('#compliment_id');  // 칭찬 ID
+    var employee_id = document.querySelector('#employee_id');  // 칭찬 대상자
+    var comment_content = document.querySelector('#comment_content');  // 댓글 내용
+    if (!comment_content.value) {
+        Warning('필수입력 오류','댓글을 작성해 주세요.');
+        $.unblockUI();  
+        return false;
+    }
+    
+    var inputData = {
+        compliment_id : compliment_id.value,
+        employee_id : employee_id.value,
+        comment_content : comment_content.value,
+        is_active : "Y"
+    };
+  
+    console.log("### 값 확인  ###");
+    console.log("### compliment_id : "+compliment_id.value);
+    console.log("### employee_id : "+employee_id.value);
+    console.log("### comment_content : "+comment_content.value);
+
+     try {
+        $.ajax({
+            type: "POST",
+            url: "/apis/praise_comment_regedit/",
+            data: inputData,
+            success: function (data) {
+                console.log('### clickLike success');
+                console.log(data);
+
+                praiseCommentData(compliment_id.value);
+            },
+            error: function (e) {
+                console.log("### clickLike ERROR : ", e);
+                //alert("fail");
+            }
+      })
+      .done(function() {
+        // AJAX 요청 완료 후 처리할 작업
+      })
+      .fail(function() {
+        // AJAX 요청 실패 시 처리할 작업
+      });
+    } catch (e) {
+        alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+    } 
+}
+    
+function praiseCommentData(idx) {    // 칭찬하기 댓글 데이터 불러와서 그리는 이벤트
+    var inputData = {
+        compliment_id : idx
+    };
+
+    try {
+        $.ajax({
+            type: "POST",
+            url: "/apis/praise_comment_list/",
+            data: inputData,
+            success: function (data) {
+                console.log('### praiseCommentData success');
+                console.log(data);
+
+                var divCommentList = document.getElementById("divCommentList");
+                var divCommentDesc = "";
+                var list = data.data_list;
+
+                // list를 사용하여 원하는 처리 수행
+                for (var i = 0; i < list.length; i++) {
+                    var item = list[i];
+                    // 각 항목에 대한 처리
+                    console.log('### 배열 이름 확인');
+                    console.log(item);
+                    console.log(item.user_employee_name);
+
+                    divCommentDesc += `
+                        <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+                            <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="${item.user_employee_name}">
+                                <img src="../static/assets/img/avatars/5.png" alt="${item.user_employee_name}" class="rounded-circle" />
+                            </li>
+                            <b>${item.user_employee_name}</b>
+                        </ul>
+                        &nbsp;&nbsp;&nbsp;<span id="spanComment${item.comment_id}">${item.comment_content}</span>
+				        <small class="text-muted mb-0" style="display: flex; justify-content: space-between; align-items: center;">
+                            &nbsp;&nbsp;&nbsp;${item.reg_date}
+                            ${ {{user.id}} === item.user_id ? '<div><button type="button" id="buttonComment'+item.comment_id+'" class="btn btn-xs rounded-pill me-2 btn-label-primary" onclick="praiseCommentModifyView(\''+item.compliment_id+'\',\''+item.comment_id+'\')">수정</button><button type="button" class="btn btn-xs rounded-pill me-2 btn-label-danger" onclick="praiseCommentDelete(\''+item.compliment_id+'\',\''+item.comment_id+'\')">삭제</button></div>' : ''}
+                        </small>
+                        <br>
+                    `;
+                }
+                divCommentList.innerHTML = divCommentDesc;
+                comment_content.value = "";
+            },
+            error: function (e) {
+                console.log("### clickLike ERROR : ", e);
+                //alert("fail");
+            }
+      })
+      .done(function() {
+        // AJAX 요청 완료 후 처리할 작업
+      })
+      .fail(function() {
+        // AJAX 요청 실패 시 처리할 작업
+      });
+    } catch (e) {
+        alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+    }
+}
+    
+function praiseCommentDelete(compliment_id, comment_id) {    // 칭찬하기 댓글 삭제 이벤트
+    var inputData = {
+        compliment_id : compliment_id,
+        comment_id : comment_id
+    };
+
+    console.log("### praiseCommentDelete 값 확인  ###");
+    console.log("### compliment_id : "+compliment_id);
+    console.log("### comment_id : "+comment_id);
+
+    try {
+        $.ajax({
+            type: "POST",
+            url: "/apis/praise_comment_delete/",
+            data: inputData,
+            success: function (data) {
+                console.log('### clickLike success');
+                console.log(data);
+
+                praiseCommentData(compliment_id);
+            },
+            error: function (e) {
+                console.log("### clickLike ERROR : ", e);
+                //alert("fail");
+            }
+      })
+      .done(function() {
+        // AJAX 요청 완료 후 처리할 작업
+      })
+      .fail(function() {
+        // AJAX 요청 실패 시 처리할 작업
+      });
+    } catch (e) {
+        alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+    } 
+}
+    
+function praiseCommentModifyView(compliment_id, comment_id) {    // 칭찬하기 댓글 수정 화면 이벤트
+    console.log("### praiseCommentModifyView 값 확인  ###");
+    console.log("### compliment_id : "+compliment_id);
+    console.log("### comment_id : "+comment_id);
+
+    var commentButton = document.getElementById('buttonComment'+comment_id);
+    var commentText = document.getElementById('spanComment'+comment_id);
+    var input = document.createElement('input');
+    input.type = 'text';
+    input.id = 'commentText'+comment_id;
+    input.name = 'commentText';
+    input.value = commentText.textContent;
+    input.style.marginBottom = '5px';
+    input.classList.add("form-control");
+    commentText.parentNode.replaceChild(input, commentText);
+    
+    // 버튼의 텍스트 변경
+    commentButton.textContent = "저장";
+
+    // onclick 이벤트 처리 함수 변경
+    commentButton.onclick = function() {
+      praiseCommentModifyAct(compliment_id, comment_id);
+    };
+}
+
+function praiseCommentModifyAct(compliment_id, comment_id) {    // 칭찬하기 댓글 수정 처리 이벤트
+    var commentText = document.getElementById('commentText'+comment_id);
+
+    console.log("### praiseCommentModifyAct 값 확인  ###");
+    console.log("### compliment_id : "+compliment_id);
+    console.log("### comment_id : "+comment_id);
+    console.log("### commentText1 : "+commentText);
+    console.log("### commentText2 : "+commentText.value);
+
+    var inputData = {
+        compliment_id : compliment_id,
+        comment_id : comment_id,
+        comment_content : commentText.value,
+        is_active : 'Y'
+    };
+
+    try {
+        $.ajax({
+            type: "POST",
+            url: "/apis/praise_comment_modify/",
+            data: inputData,
+            success: function (data) {
+                console.log('### clickLike success');
+                console.log(data);
+
+                praiseCommentData(compliment_id);
+            },
+            error: function (e) {
+                console.log("### clickLike ERROR : ", e);
+                //alert("fail");
+            }
+      })
+      .done(function() {
+        // AJAX 요청 완료 후 처리할 작업
+      })
+      .fail(function() {
+        // AJAX 요청 실패 시 처리할 작업
+      });
+    } catch (e) {
+        alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+    }
+}
+    
+function searchMember() {    
+    /*************************************************
+     * 입력값 검증
+     *************************************************/  
+    var _employee_name      = $( 'input#input_employee_name' ).val();
+
+    if (!_employee_name) {
+		Warning('필수입력 오류','칭찬직원 입력해 주세요.')
+		$.unblockUI();  
+        return false;
+    }
+    
+    var inputData = {
+        employee_name: _employee_name
+        //value2: input2,
+        //value3: input3
+        
+    };
+    
+     try {
+        $.ajax({
+            type: "POST",
+            url: "/apis/praise_member/",
+            data: inputData,
+            success: function (data) {
+                console.log('### praise_member success');
+                console.log(data);
+                
+                console.log(data.data_list.length);
+                console.log(data.data_list[0].employee_name);
+                
+                var select = document.createElement('select');
+                //select.setAttribute('multiple', '');
+                select.setAttribute('class', 'form-select');
+                select.setAttribute('id', 'input_employee_id');
+                select.setAttribute('name', 'input_employee_id');
+                select.setAttribute('aria-label', 'Multiple select example');
+
+                for (var i = 0; i < data.data_list.length; i++) {
+                  var option = document.createElement('option');
+                  option.value = data.data_list[i].id;
+                  option.text = data.data_list[i].department_name + ' ' + data.data_list[i].employee_name + ' 프로';
+                  select.appendChild(option);
+                }
+
+                var divHtml = document.querySelector('#div_praise_member');
+                divHtml.innerHTML = '';
+                divHtml.appendChild(select);
+            },
+            error: function (e) {
+                console.log("### praise_member ERROR : ", e);
+                //alert("fail");
+            }
+      })
+      .done(function() {
+        // AJAX 요청 완료 후 처리할 작업
+      })
+      .fail(function() {
+        // AJAX 요청 실패 시 처리할 작업
+      });
+    } catch (e) {
+        alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+    }
+}
+    
+function testAPI() {    
+	console.log('### testAPI CALL');
+	
+	var inputData = {
+		compliment_id      : '5',
+		title          : '333333'
+
+        
+    };
+    
+     try {
+        $.ajax({
+            type: "POST",
+            url: "/apis/praise_list/",
+            data: inputData,
+            success: function (data) {
+                console.log('### testAPI success');
+                console.log(data);                
+            },
+            error: function (e) {
+                console.log("### testAPI ERROR : ", e);
+                //alert("fail");
+            }
+      })
+      .done(function() {
+        // AJAX 요청 완료 후 처리할 작업
+      })
+      .fail(function() {
+        // AJAX 요청 실패 시 처리할 작업
+      });
+    } catch (e) {
+        alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+    }	
+}
+    
+</script>        
+
+
+<!-- Vendors JS -->
+<script src="{% static 'assets/vendor/libs/cleavejs/cleave.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/cleavejs/cleave-phone.js' %}"></script>
+
+<script src="{% static 'assets/vendor/libs/apex-charts/apexcharts.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/formvalidation/dist/js/FormValidation.min.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js' %}"></script>
+
+<script src="{% static 'assets/vendor/libs/quill/katex.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/quill/quill.js' %}"></script>
+
+<!-- Page JS -->
+<script src="{% static 'assets/js/cards-advance.js' %}"></script>
+<script src="{% static 'assets/js/modal-add-new-cc.js' %}"></script>
+
+<script>
+// Quill 모듈 초기화
+var quill = new Quill('#modalPraiseModify_content', {
+    theme: 'snow',
+    modules: {
+      toolbar: [
+
+  ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+  ['blockquote', 'code-block'],
+  /*
+  [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+  [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+  [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+  [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+  [{ 'direction': 'rtl' }],                         // text direction
+
+  [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+  [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+  */
+  [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+  [{ 'font': [] }],
+  [{ 'align': [] }],
+
+  ['clean']                                         // remove formatting button
+          
+      ]
+    }
+});
+    
+// Quill 모듈 초기화
+var quill = new Quill('#modalPraiseRegedit_content', {
+    theme: 'snow',
+    modules: {
+      toolbar: [
+
+  ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+  ['blockquote', 'code-block'],
+  /*
+  [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+  [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+  [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+  [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+  [{ 'direction': 'rtl' }],                         // text direction
+
+  [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+  [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+  */
+  [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+  [{ 'font': [] }],
+  [{ 'align': [] }],
+
+  ['clean']                                         // remove formatting button
+          
+      ]
+    }
+});
+    
+var divs = document.querySelectorAll('#praiseCard');
+
+divs.forEach(function(div) {
+  div.addEventListener('click', function() {
+    var radio = this.querySelector('input[type="radio"]');
+    radio.checked = true;
+  });
+});
+</script>
+{% endblock %}
+                                                          
+                                                          
+                                                          
+                                                          
+                                                          
+                                                          
+                                                          

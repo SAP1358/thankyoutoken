@@ -1,0 +1,1088 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+{% load humanize %}
+
+<style>
+
+    .modal-dialog-scrollable {
+        max-height: calc(100% - var(--bs-modal-margin) * 2);
+        height: auto;
+    }
+
+	.nav-pills .nav-link.active, .nav-pills .nav-link.active:hover, .nav-pills .nav-link.active:focus {
+		background-color: rgba(246, 115, 105);
+	}
+	
+	.token{
+		background: linear-gradient(0deg, rgba(251,221,102,1) 0%, rgba(250,160,13,1) 50%, rgba(251,221,102,1) 100%);
+		width:60px; 
+		height:60px;
+		cursor:pointer;
+	}
+	
+	.token .token-line{
+		border: 2px solid #ffffd0ed;
+		width:50px;
+		height:50px;
+	}
+    
+    .top_img {
+        margin-top: -1.25rem;
+    }
+    
+    .container-xxl {
+        width: auto;
+    }
+    
+    @media (min-width: 576px) {
+        .modal-content {
+            width: 350px;
+            margin: 0 auto;
+        }
+    }
+    
+    .gradiColor {
+      background: linear-gradient(to bottom, #ffffff 00%, #00ff99 100%);
+    }
+    .mobile-navigation button .icon_home {
+      -webkit-mask: url(/static/assets/img/icon_menu_01_01.svg) no-repeat center/auto 100%;
+      mask: url(/static/assets/img/icon_menu_01_01.svg) no-repeat center/auto 100%;
+    }
+
+    .mobile-navigation button .icon_myThank {
+      -webkit-mask: url(/static/assets/img/icon_menu_02_01.svg) no-repeat center/auto 100%;
+      mask: url(/static/assets/img/icon_menu_02_01.svg) no-repeat center/auto 100%;
+    }
+
+    .mobile-navigation button .icon_sendThank {
+      -webkit-mask: url(/static/assets/img/icon_menu_03_02.svg) no-repeat center/auto 100%;
+      mask: url(/static/assets/img/icon_menu_03_02.svg) no-repeat center/auto 100%;
+    }
+
+    .mobile-navigation button .icon_best {
+      -webkit-mask: url(/static/assets/img/icon_menu_04_01.svg) no-repeat center/auto 100%;
+      mask: url(/static/assets/img/icon_menu_04_01.svg) no-repeat center/auto 100%;
+    }
+
+    .mobile-navigation button .icon_myToken {
+      -webkit-mask: url(/static/assets/img/icon_menu_05_01.svg) no-repeat center/auto 100%;
+      mask: url(/static/assets/img/icon_menu_05_01.svg) no-repeat center/auto 100%;
+    }
+  .all_ .hash>span {
+    border-radius: 10px;
+    background: #e8f7ff;
+  }
+</style>
+
+<!-- Content wrapper -->
+<div class="content-wrapper">
+<!-- Content -->
+<div id="con" class="container-xxl flex-grow-1 py-1" style="max-width: 500px; visibility: hidden;">
+	
+		<!-- Main elements -->
+		<div class="card px-2" style="max-width: 500px;">
+			<div class="top_img text-center mb-2">
+				<img src="{% static 'assets/img/coin_icon_02.png' %}" alt="Avatar" class="w-50" />
+			</div>
+
+			{% if info.compliment_id %}
+			<div class="col-12 ">
+				<div class="card border mx-4 py-2 mb-2 shadow-none">
+					<div class="d-flex justify-content-center align-items-center text-dark">
+
+						<span id="hiddenUserId" class="visually-hidden">{{info.user_id}}</span>
+						<!--답장 2024.02-->
+						<div class="d-flex align-items-center">
+							{% if info.user_image_yn == 'Y' %}
+							<img style="width: 32px; height: 32px; border-radius: 100%; object-fit: cover; border:1px solid #d3f1ff;" src="{{ info.user_image }}"
+								class="img-fluid me-2" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#profile_modal"
+								onclick='javascript:viewProfile("{{info.user_id}}", "{{info.user_image_yn}}", "{{info.user_image}}", "{{info.user_employee_id}}", "{{info.user_employee_name}}", "{{info.user_department_name}}","{{ info.user_position_name }}","{{ info.user_company_name }}")' />
+							{% else %}
+							<img style="width: 32px; height: 32px; border-radius: 100%; object-fit: cover; border:1px solid #d3f1ff;"
+								src="{% static 'assets/img/profile_bee_01.png' %}" class="img-fluid me-2" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#profile_modal"
+								onclick='javascript:viewProfile("{{info.user_id}}", "{{info.user_image_yn}}", "{{info.user_image}}", "{{info.user_employee_id}}", "{{info.user_employee_name}}", "{{info.user_department_name}}","{{ info.user_position_name }}","{{ info.user_company_name }}")' />
+							{% endif %}
+
+
+							<p class="m-0 fw-med fs-5 colorCustom_01" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#profile_modal"
+								onclick='javascript:viewProfile("{{info.user_id}}", "{{info.user_image_yn}}", "{{info.user_image}}", "{{info.user_employee_id}}", "{{info.user_employee_name}}", "{{info.user_department_name}}","{{ info.user_position_name }}","{{ info.user_company_name }}")'>
+								{{ info.user_employee_name }}</p>
+						</div>
+
+
+						<span style="width: 25px; height: 25px; margin-left: 1rem; margin-right: 1rem;"><img
+								src="/static/assets/img/icon_arrow.svg"></span>
+
+						<div class="d-flex align-items-center">
+							{% if info.praise_image_yn == 'Y' %}
+							<img style="width: 32px; height: 32px; border-radius: 100%; object-fit: cover; border:1px solid #d3f1ff;" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#profile_modal"
+								src="{{ info.praise_image }}" class="img-fluid me-2"
+								onclick='javascript:viewProfile("{{info.praise_id}}", "{{info.praise_image_yn}}", "{{info.praise_image}}", "{{info.praise_employee_id}}", "{{info.praise_employee_name}}", "{{info.praise_department_name}}","{{ info.praise_position_name }}","{{ info.praise_company_name }}")' />
+							{% else %}
+							<img style="width: 32px; height: 32px; border-radius: 100%; object-fit: cover; border:1px solid #d3f1ff;"
+								src="{% static 'assets/img/profile_bee_01.png' %}" class="img-fluid me-2" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#profile_modal"
+								onclick='javascript:viewProfile("{{info.praise_id}}", "{{info.praise_image_yn}}", "{{info.praise_image}}", "{{info.praise_employee_id}}", "{{info.praise_employee_name}}", "{{info.praise_department_name}}","{{ info.praise_position_name }}","{{ info.praise_company_name }}")' />
+							{% endif %}
+							<p class="m-0 fw-med fs-5 colorCustom_01" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#profile_modal"
+								onclick='javascript:viewProfile("{{info.praise_id}}", "{{info.praise_image_yn}}", "{{info.praise_image}}", "{{info.praise_employee_id}}", "{{info.praise_employee_name}}", "{{info.praise_department_name}}","{{ info.praise_position_name }}","{{ info.praise_company_name }}")'>
+								{{ info.praise_employee_name }}
+						</div>
+					</div>
+				</div>
+
+				<div class="mx-0 mt-0 mb-3 px-4">
+					<img class="img-fluid w-100 rounded" id="focusImg{{info.compliment_id}}" src="{{info.image_path}}"
+						alt="Card image cap" />
+				</div>
+			</div>
+
+			<div class=" px-4">
+				<div class="card mx-0 lex-grow-0 p-3 border border-1 shadow-none">
+					<div class="text-dark text-center" id="token_content">
+						{{info.content}}
+					</div>
+				</div>
+			</div>
+
+      <!-- 해시태그 자리 -->
+      <div id="viewTag{{ info.compliment_id }}" class="hash d-flex mx-4 mt-2">
+	  <!-- <script>
+		$(document).ready(function() {
+			viewTag("{{ info.compliment_id }}", "{{info.tag}}");
+		});
+	</script> -->
+      </div>
+      <!-- 해시태그 자리 -->
+
+			<div class="p-0 mx-4 my-3 d-flex justify-content-between">
+				<div id="card_d_flex" class="d-flex">
+					<a href="javascript:void(0);" onclick="clickLike('{{info.compliment_id}}');" class="d-flex heartBtn btn p-0 me-2">
+						{% if info.like_yn == 1 %}
+						<i class="me-1 clicked" id="clickIconLike{{ info.compliment_id }}"></i>
+						{% else %}
+						<i class="me-1" id="clickIconLike{{ info.compliment_id }}"></i>
+						{% endif %}
+						<span id="clickLike{{ info.compliment_id }}" class="fw-med colorCustom_01">{{info.likes_count}}</span>
+					</a>
+					<a href="javascript:void(0);" class="d-flex commentBtn btn p-0 me-2" data-bs-toggle="modal"
+                    data-bs-target="#modalPraiseComment"
+                    onclick="praiseCommentPop(0,{{info.compliment_id}},{{info.praise_id}});">
+						{% if info.comment_count >= 1 %}
+						<i id="clickIconComment{{info.compliment_id}}" class="me-1 clicked">
+						</i>
+						{% else %}
+						<i id="clickIconComment{{info.compliment_id}}" class="me-1">
+						</i>
+						{% endif %}
+
+						<span id="clickComment{{ info.compliment_id }}" class="fw-med colorCustom_01">{{info.comment_count}}</span>
+					</a>
+
+					<input type="hidden" id="hiddenLikeYn{{info.compliment_id}}" value="{{info.like_yn}}" />
+					<input type="hidden" id="hiddenLikesCount{{info.compliment_id}}" value="{{info.likes_count}}" />
+					<input type="hidden" id="hiddenCommentCount{{info.compliment_id}}" value="{{info.comment_count}}" />
+				</div>
+
+				<div class="">
+					<a href="#" class="btn p-0 me-1 fw-med colorCustom_01"><span>{{ info.reg_date|date:"Y-m-d" }}</span></a>
+				</div>
+			</div>
+			<div class="w-100 text-center px-4 mb-4">
+				<button id="replyButton" class="btn w-100 text-white py-2" style="background: #006ed5;"
+					class="btn btn-label-secondary" onclick="window.replySend()">답장</button>
+			</div>
+
+			<!----------------------------------------------------------->
+			{% else %}
+			<div class="card-body text-center fs-3">
+				<p>삭제된 칭찬글 입니다.</p>
+			</div>
+			{% endif %}
+		</div>
+		
+        
+</div>
+<div id="footer"><div class="footer w-100 text-center fw-med fs-6" style="color:#418dd4;">ⓒ 2024, made 땡큐토큰</div></div>
+    <script>
+        window.onload = function () {
+  // 하단 내비게이션 높잇값 만큼 모든 페이지 높이조절 시작
+      const moNav_h = document.querySelector('.mobile-navigation').clientHeight;
+      const layoutPage = document.querySelector('.layout-page');
+      layoutPage.style.paddingBottom = moNav_h + 40 + 'px';
+  // 하단 내비게이션 높잇값 만큼 모든 페이지 높이조절 끝 
+  }
+
+    </script>
+</div>
+
+<!-- HOME 페이지 코멘트 모달 댓글 모달 시작 -->
+<div id="compliment_id" style="display: none;"></div>
+<div id="employeeId" style="display: none;"></div>
+
+<div class="modal fade modalPraiseComment" id="modalPraiseComment" tabindex="-1" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header p-2 justify-content-end">
+
+        <button type="button" class="position-absolute btn-close closeCustom"
+          style="background:transparent; border:0; right:20px; top:25px; box-shadow: none; transform: none !important; z-index: 1;"
+          data-bs-dismiss="modal" aria-label="Close">
+          <span></span>
+        </button>
+      </div>
+      <div class="modal-body p-2" style="min-height: 100px;">
+        <div id="insercommenthere" class="px-2" style="margin-top:10px;">              
+    
+        </div>
+      </div>
+      <div class="modal-footer px-2">
+        <div class="input-group input-group-merge">
+          <input id="comment_content" type="text" class="typing_comment form-control" placeholder="댓글 작성" aria-label="Recipient's username"
+            aria-describedby="button-addon2">
+          <button class="btn btn-danger" type="button" id="button-addon2" onclick="praiseCommentRegedit()">등록</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- HOME 페이지 코멘트 모달 끝 -->
+
+
+
+<!-- 댓글 보기 -->
+<div class="modal fade" id="modalPraiseComment" tabindex="-1" aria-labelledby="modalScrollableTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+	<div class="modal-content">
+	  <div class="modal-header">
+<!--		<h5 class="modal-title" id="modalScrollableTitle">댓글 보기</h5>    -->
+		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	  </div>
+	  <div class="modal-body">
+		<div class="row">
+		  <div class="col mb-0 px-0 mt-0" id="divCommentList">
+		  </div>
+		</div>
+	  </div>
+	  <div class="modal-footer input-group input-group-merge px-2">
+        <input type="text" id="comment_content" 
+               name="comment_content" 
+               class="form-control" 
+               placeholder="댓글 작성"
+                  onfocusin="this.style.borderColor='#EB5C32'"
+                  onfocusout="this.style.borderColor=''"
+               /><br>
+		<button type="button" class="btn btn-danger" onclick="praiseCommentRegedit()"><i class="bx bx-send"></i></button>
+	  </div>
+	</div>
+  </div>
+</div>
+
+<script>
+
+$(document).ready(function() {
+	setTimeout(loaddivpage, 300);
+});
+
+function loaddivpage()
+{
+	document.getElementById("con").style.visibility = 'visible';
+	document.getElementById("header").style.visibility = 'visible';
+}
+
+function replySend(){
+    //답장 2024.02
+    var userId = document.querySelector('#hiddenUserId').innerHTML; 
+    //console.log("check replySend userId : " + userId );
+
+    var url = "/praiseRegedit/?userId=" + userId;
+    
+    window.location.href = url;
+
+  
+}
+
+function click_comment_incard()
+	{
+		var complimentId = document.getElementById('hiddenidval').value;
+		praiseCommentData(complimentId);
+	}
+
+	function clickDetailLike() {    // 좋아요 클릭 이벤트
+		_compliment_id = document.getElementById('hiddenidval').value;
+		var inputData = {
+			compliment_id: _compliment_id
+			//value2: input2,	
+		};
+		 try {
+			$.ajax({
+				type: "POST",
+				url: "/apis/praise_like/",
+				data: inputData,
+				success: function (data) {
+					var clickLikeHtml = document.querySelector('#clickLike'+String(_compliment_id)); // 엘리먼트 선택
+					clickLikeHtml.innerHTML = data.likes_count; // tbody 내용 변경
+					document.getElementById('card_like_count').innerHTML = data.likes_count;
+					document.getElementById('hiddenlike').value = data.likes_count;
+					if (data.CancelYn == 'Y') 
+					{
+						var clickIconLikeHtml = document.querySelector('#clickIconLike'+String(_compliment_id));
+						clickIconLikeHtml.className = "me-1";
+						document.getElementById("detailClickIconLike").className = "me-1";	
+					}
+					else
+					{
+						var clickIconLikeHtml = document.querySelector('#clickIconLike'+String(_compliment_id));
+						clickIconLikeHtml.className = "me-1 clicked";						
+						document.getElementById("detailClickIconLike").className = "me-1 clicked";	
+					}	
+				},
+				error: function (e) {
+					console.log("### clickLike ERROR : ", e);
+				}
+		  })
+		  .done(function() {
+			// AJAX 요청 완료 후 처리할 작업
+		  })
+		  .fail(function() {
+			// AJAX 요청 실패 시 처리할 작업
+		  });
+		} catch (e) {
+			alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+		}	
+	}
+		
+	function clickLike(_compliment_id) {    // 좋아요 클릭 이벤트
+		var inputData = {
+			compliment_id: _compliment_id
+			//value2: input2,	
+		};
+		try {
+			$.ajax({
+				type: "POST",
+				url: "/apis/praise_like/",
+				data: inputData,
+				success: function (data) {
+					var clickLikeHtml = document.querySelector('#clickLike'+String(_compliment_id)); // 엘리먼트 선택
+					clickLikeHtml.innerHTML = data.likes_count; // tbody 내용 변경
+					
+					if (data.CancelYn == 'Y') {
+						// 엘리먼트 선택
+						var clickIconLikeHtml = document.querySelector('#clickIconLike'+String(_compliment_id));
+						// tbody 내용 변경
+						clickIconLikeHtml.className = "me-1";
+					}
+					else
+					{
+						// 엘리먼트 선택
+						var clickIconLikeHtml = document.querySelector('#clickIconLike'+String(_compliment_id));
+						// tbody 내용 변경
+						clickIconLikeHtml.className = "me-1 clicked";
+					}	
+				},
+				error: function (e) {
+					console.log("### clickLike ERROR : ", e);
+					//alert("fail");
+				}
+		  })
+		  .done(function() {
+			// AJAX 요청 완료 후 처리할 작업
+		  })
+		  .fail(function() {
+			// AJAX 요청 실패 시 처리할 작업
+		  });
+		} catch (e) {
+			alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+		}	
+	}
+
+	function praiseDetail(idx) {    // 칭찬하기 상세 데이터 이벤트
+		var inputData = {
+			compliment_id : idx
+		};
+
+		 try {
+			$.ajax({
+				type: "POST",
+				url: "/apis/praise_detail/",
+				data: inputData,
+				success: function (data) {
+					// console.log('### clickLike success');
+					//console.log(data);
+					var modal = document.getElementById("modalPraiseDetail");
+					var pdTitle = document.getElementById("modalPraiseDetail_title");
+					var pdContent = document.getElementById("modalPraiseDetail_content");
+					pdTitle.textContent = data.title;
+					pdContent.innerHTML = data.content;
+					var bsModal = new bootstrap.Modal(modal);
+					bsModal.show();
+				},
+				error: function (e) {
+					console.log("### clickLike ERROR : ", e);
+					//alert("fail");
+				}
+		  })
+		  .done(function() {
+			// AJAX 요청 완료 후 처리할 작업
+		  })
+		  .fail(function() {
+			// AJAX 요청 실패 시 처리할 작업
+		  });
+		} catch (e) {
+			alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+		}	
+	}
+		
+	function praiseRegeditPop(idx) {    // 칭찬하기 등록 팝업 이벤트
+		var modal = document.getElementById("modalPraiseRegedit");
+		var bsModal = new bootstrap.Modal(modal);
+		bsModal.show();
+	}
+		
+	function praiseRegedit(idx) {    // 칭찬하기 등록 처리 이벤트
+		var compliment_id = document.querySelector('#compliment_id'+idx);  // 칭찬 ID
+		var praise_id = document.querySelector('#praise_id'+idx);  // 칭찬받는사람 사번
+		var user_id = document.querySelector('#user_id'+idx);  // 칭찬글 등록자 사번
+		var title = document.querySelector('#title'+idx);  // 칭찬 제목
+		var compliment_type = document.querySelector('#compliment_type'+idx);  // 칭찬종류 (1:칭찬, 2:축하,3:감사)
+		var content = document.querySelector('#content'+idx);  // 칭찬 내용
+		var image = document.querySelector('#image'+idx);  // 배경이미지 ID
+		var token_yn = document.querySelector('#token_yn'+idx);  // 토큰 선물 여부
+		var inputData = {
+			compliment_id : compliment_id,
+			praise_id : praise_id,
+			user_id : user_id,
+			title : title,
+			compliment_type : compliment_type,
+			content : content,
+			image : image,
+			token_yn : token_yn
+		};
+
+		 try {
+			$.ajax({
+				type: "POST",
+				url: "/apis/praise_regedit/",
+				data: inputData,
+				success: function (data) {
+					// console.log('### clickLike success');
+					//console.log(data);
+				},
+				error: function (e) {
+					console.log("### clickLike ERROR : ", e);
+					//alert("fail");
+				}
+		  })
+		  .done(function() {
+			// AJAX 요청 완료 후 처리할 작업
+		  })
+		  .fail(function() {
+			// AJAX 요청 실패 시 처리할 작업
+		  });
+		} catch (e) {
+			alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+		}	
+	}
+
+	function praiseModifyPop(idx, editcard_photo_img, editcard_short_content) // 칭찬하기 수정 팝업 이벤트'
+	{    
+		//short_content = String(editcard_short_content).replaceAll('<br>', '\n');
+		short_content = String(document.getElementById('modify_content'+String(idx)).value).replaceAll('<br>', '\n');
+		if (short_content[0] == "'" && short_content[short_content.length-1] == "'")
+		{
+			short_content = short_content.substring(1, short_content.length-1);
+		}
+		//console.log(short_content);
+		document.querySelector("#editcard_short_content textArea").innerHTML = short_content;
+		//console.log('### praiseModifyPop 변수값 확인 ###');
+		document.getElementById('compliment_id').value = idx;
+		document.getElementById('modalPraiseModify_content').value = short_content;		
+		
+	}
+		
+	function praiseModifyAct() {    // 칭찬하기 수정 처리 이벤트
+		var compliment_id = document.querySelector('#compliment_id');  // 칭찬 ID
+		var content = $("#modalPraiseModify_content").val();
+		var images_id = document.querySelector('.swiper-slide-active[name="input_swiper_id"]').getAttribute('value');
+		var newimgsrc = document.querySelector('.swiper-slide-active[name="input_swiper_id"]').querySelector("p").querySelector("img").src;
+		//console.log('praise modify act');
+
+		var inputData = {
+			compliment_id : compliment_id.value,
+			//compliment_type : compliment_type.value,
+			content : content,
+			images_id : images_id
+			//is_active : is_active
+		};
+
+		try {
+			$.ajax({
+				type: "POST",
+				url: "/apis/praise_modify/",
+				data: inputData,
+				success: function (data) {
+					console.log('### praise_modify success');
+					//console.log(data);
+					document.getElementById('pcard_desc'+String(compliment_id.value)).innerHTML = data.short_content;
+					document.getElementById('modify_content'+String(compliment_id.value)).value = content;
+					document.getElementById('cardmodalimg'+String(compliment_id.value)).src = newimgsrc;					
+							
+				},
+				error: function (e) {
+					console.log("### praise_modify ERROR : ", e);
+					//alert("fail");
+				}
+		  })
+		  .done(function() {
+			// AJAX 요청 완료 후 처리할 작업
+		  })
+		  .fail(function() {
+			// AJAX 요청 실패 시 처리할 작업
+		  });
+		} catch (e) {
+			alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+		}	
+	}
+		
+	function praiseCommentPop(idx, complimentId ,employeeId) 
+	{    // 칭찬하기 댓글 팝업 이벤트
+		praiseCommentData(complimentId);
+		document.getElementById('compliment_id').value = complimentId;
+		document.getElementById('employeeId').value = employeeId;
+	}
+
+function praiseCommentRegedit() {    // 칭찬하기 댓글 신규 등록 이벤트
+		var compliment_id_val = document.getElementById('compliment_id').value;
+		var employee_id = document.getElementById('employeeId').value;
+		var comment_content = document.getElementById('comment_content');  // 댓글 내용
+				
+		if (!comment_content.value) {
+			Warning('필수입력 오류','댓글을 작성해 주세요.');
+			$.unblockUI();  
+			return false;
+		}
+		
+		var inputData = {
+			compliment_id : compliment_id_val,
+			employee_id : employee_id,
+			comment_content : comment_content.value,
+			is_active : "Y"
+		};
+
+		try {
+			$.ajax({
+				type: "POST",
+				url: "/apis/praise_comment_regedit/",
+				data: inputData,
+				success: function (data) {
+					// console.log('### clickLike success');
+					//console.log(data);
+					var modal = document.getElementById("modalPraiseComment");
+					modal.style.display = "none";
+					modal.style.display = "block";
+					//console.log(compliment_id_val);
+					var elemid = document.getElementById('clickComment'+String(compliment_id_val));
+					if (parseInt(elemid.innerHTML) == 0)
+					{
+						document.getElementById('clickIconComment'+String(compliment_id_val)).className = 'me-1 clicked';
+					}
+					elemid.innerHTML = String(parseInt(elemid.innerHTML) + 1);
+					praiseCommentData(compliment_id_val);
+					document.getElementById('comment_content').value = '';
+				},
+				error: function (e) {
+					console.log("### clickLike ERROR : ", e);
+					//alert("fail");
+				}
+		  })
+		  .done(function() {
+			// AJAX 요청 완료 후 처리할 작업
+		  })
+		  .fail(function() {
+			// AJAX 요청 실패 시 처리할 작업
+		  });
+		} catch (e) {
+			console.log(e);
+			alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+		} 
+	}
+		
+	function praiseCommentDelete(compliment_id, comment_id) {    // 칭찬하기 댓글 삭제 이벤트
+		var inputData = {
+			compliment_id : compliment_id,
+			comment_id : comment_id
+		};
+
+		try {
+			$.ajax({
+				type: "POST",
+				url: "/apis/praise_comment_delete/",
+				data: inputData,
+				success: function (data) {
+					// console.log('### clickLike success');
+					// console.log(data);
+					praiseCommentData(compliment_id);
+					var elemid = document.getElementById('clickComment'+String(compliment_id));
+					if (parseInt(elemid.innerHTML) == 1)
+					{
+						document.getElementById('clickIconComment'+String(compliment_id)).className = "me-1";
+					}
+				},
+				error: function (e) {
+					console.log("### clickLike ERROR : ", e);
+					//alert("fail");
+				}
+		  })
+		  .done(function() {
+			// AJAX 요청 완료 후 처리할 작업
+		  })
+		  .fail(function() {
+			// AJAX 요청 실패 시 처리할 작업
+		  });
+		} catch (e) {
+			alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+		} 
+	}
+		
+	function praiseCommentModifyView(compliment_id, comment_id) {    // 칭찬하기 댓글 수정 화면 이벤트
+
+    // console.log("### praiseCommentModifyView 값 확인  ###");
+    // console.log("### compliment_id : "+compliment_id);
+    // console.log("### comment_id : "+comment_id);
+
+		var commentButton = document.getElementById('buttonComment'+comment_id);
+		var commentText = document.getElementById('spanComment'+comment_id);
+		var input = document.createElement('input');
+		input.type = 'text';
+		input.id = 'commentText'+comment_id;
+		input.name = 'commentText';
+		input.value = commentText.textContent;
+		input.style.marginBottom = '5px';
+		input.classList.add("form-control");
+		commentText.parentNode.replaceChild(input, commentText);
+		
+		// 버튼의 텍스트 변경
+		commentButton.textContent = "저장";
+
+		// onclick 이벤트 처리 함수 변경
+		commentButton.onclick = function() {
+		  praiseCommentModifyAct(compliment_id, comment_id);
+		};
+	}
+
+	function praiseCommentModifyAct(compliment_id, comment_id) {    // 칭찬하기 댓글 수정 처리 이벤트
+		var commentText = document.getElementById('commentText'+comment_id);
+
+		// console.log("### praiseCommentModifyAct 값 확인  ###");
+		// console.log("### compliment_id : "+compliment_id);
+		// console.log("### comment_id : "+comment_id);
+		// console.log("### commentText1 : "+commentText);
+		// console.log("### commentText2 : "+commentText.value);
+
+		var inputData = {
+			compliment_id : compliment_id,
+			comment_id : comment_id,
+			comment_content : commentText.value,
+			is_active : 'Y'
+		};
+
+		try {
+			$.ajax({
+				type: "POST",
+				url: "/apis/praise_comment_modify/",
+				data: inputData,
+				success: function (data) {
+					// console.log('### clickLike success');
+					// console.log(data);
+
+					praiseCommentData(compliment_id);
+				},
+				error: function (e) {
+					console.log("### clickLike ERROR : ", e);
+					//alert("fail");
+				}
+		  })
+		  .done(function() {
+			// AJAX 요청 완료 후 처리할 작업
+		  })
+		  .fail(function() {
+			// AJAX 요청 실패 시 처리할 작업
+		  });
+		} catch (e) {
+			alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+		}
+	}
+
+	
+
+function viewTag(idx, json_data){
+        
+    var data = JSON.parse(json_data.replace(/&#x27;/g, '"'));		
+		var divhHtml = '';
+		if (data.tag.length > 3) {
+		  data.tag = data.tag.slice(0, 3);
+		}
+
+		divhHtml += '<div class="hash">';
+		// compIdx에 따라 데이터 분류
+		for (var i = 0; i < data.tag.length; i++) 
+		{
+			divhHtml += '<span class="badge colorCustom_03 fw-bold"># ' + data.tag[i] + '</span>';
+		}
+		divhHtml += '</div>';
+		var setHtml = '';
+		setHtml += divhHtml;
+		setHtml += '';
+		
+		// tbody 엘리먼트 선택
+		var viewTagHtml = document.querySelector('#viewTag'+idx);
+		// tbody 내용 변경
+		viewTagHtml.innerHTML = setHtml;
+
+}
+
+function closeModal() {
+    
+    window.history.back(); //2024.01.31
+
+}
+    
+function viewProfile(id, imgYn, imgSrc, employee_id, employee_name, department_name, position_name, company_name) 
+	{
+		if(imgYn == "Y") {
+			document.getElementById("profile_view_img").setAttribute("src", imgSrc);
+		} else {
+			document.getElementById("profile_view_img").setAttribute("src", "{% static 'assets/img/profile_bee_01.png' %}");
+		}
+		
+		document.getElementById("profile_employee_name").innerHTML = employee_name;
+		document.getElementById("profile_position_name").innerHTML = position_name;
+		document.getElementById("profile_company_name").innerHTML = company_name;
+		document.getElementById("profile_department_name").innerHTML = department_name;
+		document.getElementById("profile_change_btn").style.display = 'none';
+		
+	}
+		
+	
+	
+function clearAllElementsById(id) {
+		var element = document.getElementById(id);
+		if (element) {
+			while (element.firstChild) {
+				element.removeChild(element.firstChild);
+			}
+		} else {
+			console.error("Element with id '" + id + "' not found.");
+		}
+	}
+		
+	function praiseCommentData(idx) {    // 칭찬하기 댓글 데이터 불러와서 그리는 이벤트
+		
+		clearAllElementsById("insercommenthere");
+		
+		var inputData = {
+			compliment_id : idx
+		};
+
+		try {
+			$.ajax({
+				type: "POST",
+				url: "/apis/praise_comment_list/",
+				data: inputData,
+				success: function (data) {
+					// console.log('### praise_comment_list success');
+					//console.log(data);
+					var list = data.data_list;
+					html = ''; 
+					var targetdoc = document.getElementById('insercommenthere');
+					
+					try
+					{
+						document.getElementById("clickComment" + String(idx)).innerHTML = list.length;
+					}
+					catch
+					{
+						asd = 1;
+					}
+
+					// list를 사용하여 원하는 처리 수행
+					for (var i = 0; i < list.length; i++) {
+						var item = list[i];
+						var regDate = item.reg_date.split(' ')[0];
+						var comment_content = item.comment_content;
+						var user_employee_name = item.user_employee_name;
+						var user_image_yn		 = item.image_yn;
+						var user_image			 = item.image;
+
+												
+						if(user_image_yn != 'Y'){
+						   user_image = "/static/assets/img/profile_icon.png";
+						}
+						
+						html += '<div class="fw-med mb-2" style="font-size: 12px;"><div class="d-flex align-items-center mb-1" style="justify-content: space-between;">';
+						html += '<div class="d-flex align-items-center"><div class="d-flex align-items-center">';
+						html += '<img style="width:25px; height: 25px; object-fit: cover; border-radius: 100%; margin-right:5px;" src="'+user_image+'" alt="">';
+						html += '<p class="fw-bold m-0 p-0" style="color:#222; font-size: 14px;">'+user_employee_name+'</p>';
+						html += `
+            </div><span class="" style="color:lightgray; font-size: 10px; margin-left:5px;">`+regDate+`</span></div>
+            <div>
+               ${ {{user.id}} === item.user_id ? '<button type="button" id="buttonComment'+item.comment_id+'" class="btn btn-xs rounded-pill me-2 btn-label-primary" onclick="praiseCommentModifyView(\''+item.compliment_id+'\',\''+item.comment_id+'\')">수정</button><button type="button" class="btn btn-xs rounded-pill me-2 btn-label-danger" onclick="praiseCommentDelete(\''+item.compliment_id+'\',\''+item.comment_id+'\')">삭제</button>' : ''}
+                            </div>
+           
+						</div>
+            <p id="spanComment${item.comment_id}">${item.comment_content}</p></div> `;
+		  
+					}
+					targetdoc.insertAdjacentHTML('beforeend',html);
+					
+				},
+				error: function (e) {
+					console.log("### clickLike ERROR : ", e);
+					//alert("fail");
+				}
+		  })
+		  .done(function() {
+			// AJAX 요청 완료 후 처리할 작업
+		  })
+		  .fail(function() {
+			// AJAX 요청 실패 시 처리할 작업
+		  });
+		} catch (e) {
+			alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+		}
+	}	
+	
+</script>
+
+
+  <style>
+    .all_ #mainPage .heartBtn i,
+    .all_ #mainPage .commentBtn i {
+      width: 20px;
+      height: 20px;
+    }
+
+    .select2.select2-container {position: absolute; left:0; width:calc(100% - 99px) !important;}
+    button.searchChkBtn {position: absolute !important; right:0;}
+    
+    /* 공통 editCard 모달 CSS 시작 -240221 */
+#editCard #mainNew {
+  margin: 20px 0 10px;
+}
+
+#editCard .wrap_thumb_layout_1 {
+  height: 80px;
+  /* width: 20%; */
+  overflow: hidden;
+}
+#editCard .wrap_thumb_layout_2 {
+  max-height: 300px;
+  height: 300px;
+  position: relative;
+}
+#editCard .wrap_thumb_layout_2 .swiper-wrapper {
+  align-items: center;
+}
+
+#editCard .wrap_thumb_layout_2 .swiper-button-prev{
+  left:-5px;
+}
+#editCard .wrap_thumb_layout_2 .swiper-button-next{
+  right:-5px;
+}
+#editCard .swiper-slide p {
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+#editCard .gallery-top {
+  width: 80%;
+  margin: 15px auto 0;
+  overflow: hidden;
+  height: 100%;
+}
+
+#editCard .gallery-thumbs .swiper-slide {
+  cursor: pointer;
+  opacity: 0.2;
+}
+
+#editCard .gallery-thumbs .swiper-slide.swiper-slide-thumb-active {
+  opacity: 1;
+}
+
+#editCard .wrap_thumb_layout_2 .swiper-button-prev::after,
+#editCard .wrap_thumb_layout_2 .swiper-button-next::after {
+  content: none;
+}
+
+#editCard .gallery-box .object-fit img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 공통 editCard 모달 CSS 끝 - 240221 */
+
+
+
+    /* #mainPage CSS 시작 */
+    #mainPage .chkCard {
+      max-height: 230px;
+    }
+    #mainPage #notice {
+      display: block !important;
+    }
+
+    #mainPage .card {
+      border: 2px solid #dde7f1;
+      box-shadow: none;
+    }
+
+    #mainPage .todayThank>div {
+      border: none;
+      background: #fff url(/static/assets/img/today_thank_border.png) no-repeat center/100% 100%;
+    }
+
+    #mainPage .photoCard {
+      min-height: 80px !important;
+      min-width: 80px !important;
+    }
+
+    #mainPage .photoCard img {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+    }
+
+    /* 오늘의 땡큐 카드 - 헤더 데코 */
+    .all_ .todayThank .todayHeader {
+      top: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 300px;
+      width: 100%;
+    }
+
+    .all_ .todayThank .todayHeader img {
+      width: 100%;
+      object-fit: contain;
+    }
+
+    .all_ .sendMeCard>div {
+      background: #c8edff;
+    }
+
+    /* 카드 - 지점 명칭 */
+    .all_ .card-title {
+      font-size: 0.5rem;
+    }
+
+    /* 카드 - 사람 > 직위 명칭 */
+    .all_ .card-text span {
+      font-size: 0.8rem;
+    }
+
+    /* 카드 - 해쉬태그 */
+    .all_ .hash>span {
+      border-radius: 17px;
+      background: #e8f7ff;
+    }
+
+    
+
+    .modalPraiseComment .typing_comment:focus {
+      border-color: #14a8ea;
+    }
+
+    .modalPraiseComment .typing_comment+button {
+      border: 1px solid #14a8ea !important;
+      background: #14a8ea !important;
+      box-shadow: none;
+    }
+
+    .all_ .modal-dialog {
+      top: 3%;
+      max-width: 450px;
+    }
+
+    
+    .mobile-navigation button .icon_home {
+      -webkit-mask: url(/static/assets/img/icon_menu_01_02.svg) no-repeat center/auto 100%;
+      mask: url(/static/assets/img/icon_menu_01_02.svg) no-repeat center/auto 100%;
+    }
+
+    .mobile-navigation button .icon_myThank {
+      -webkit-mask: url(/static/assets/img/icon_menu_02_01.svg) no-repeat center/auto 100%;
+      mask: url(/static/assets/img/icon_menu_02_01.svg) no-repeat center/auto 100%;
+    }
+
+    .mobile-navigation button .icon_sendThank {
+      -webkit-mask: url(/static/assets/img/icon_menu_03_01.svg) no-repeat center/auto 100%;
+      mask: url(/static/assets/img/icon_menu_03_01.svg) no-repeat center/auto 100%;
+    }
+
+    .mobile-navigation button .icon_best {
+      -webkit-mask: url(/static/assets/img/icon_menu_04_01.svg) no-repeat center/auto 100%;
+      mask: url(/static/assets/img/icon_menu_04_01.svg) no-repeat center/auto 100%;
+    }
+
+    .mobile-navigation button .icon_myToken {
+      -webkit-mask: url(/static/assets/img/icon_menu_05_01.svg) no-repeat center/auto 100%;
+      mask: url(/static/assets/img/icon_menu_05_01.svg) no-repeat center/auto 100%;
+    }
+    @media (max-width:576px) {
+
+
+      #mainPage .card>div {
+        justify-content: space-between !important;
+      }
+
+      .allPage .forPc {
+        display: block !important;
+      }
+
+      #adSignEdit_modal .upload label,
+      #profileEdit_modal .upload label {
+        margin-bottom: 10px !important;
+        margin-right: 0 !important;
+      }
+
+      #adSignEdit_modal .profileNowImg,
+      #profileEdit_modal .profileNowImg {
+        width: 45% !important;
+      }
+
+      #porfileUplaodBox {
+        align-items: center !important;
+      }
+
+    }
+
+    @media (max-width:440px) {
+
+
+      .allPage .todayThank .todayHeader {
+        top: -25px;
+        max-width: 250px;
+      }
+
+      .allPage .modal-dialog {
+        max-width: 350px;
+        margin: 0 auto;
+      }
+    }
+    #moreBtn {
+      position: relative;
+      display: inline-block;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      background: #fbfbfb;
+      color: #666;
+      z-index: 1;
+    }
+  </style>
+
+
+{% endblock %}

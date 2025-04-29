@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+
+<div class="container-xxl flex-grow-1 container-p-y">
+<div class="row">
+    
+<button id="goBackButton" onclick="goBack()">뒤로 가기</button>
+<iframe id="myIframe" src="https://49.247.44.76:442" width="600" height="400"></iframe>
+
+<script>
+  
+    function goBack() {
+        const iframe = document.getElementById('myIframe');
+        // 메시지를 iframe으로 보냅니다.
+        iframe.contentWindow.postMessage('goBack', '*');
+    }
+
+</script>
+	
+</div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,1384 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+
+  <!-- 드림 사용 소스 -->
+  {% comment %} <link rel="stylesheet" href="{% static 'assets/css/apex-charts.css' %}" /> {% endcomment %}
+  <link rel="stylesheet" href="{% static 'assets/css/bootstrap-datepicker.css' %}" />
+  <link rel="stylesheet" href="{% static 'assets/css/boxicons.css' %}" />
+  <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+  <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+  <!-- 드림 사용 소스 끝 -->
+
+</head>
+
+<body>
+  <!-- 전체 태그 감싸기 시작 -->
+  <div id="myThankPage" class="allPage tkTalkPage layout-container flex-column">
+  	<!-- 컨텐츠 시작 -->
+
+		{% if manage.id == 0 or manage.id == null %}
+			<script>
+				$(document).ready(function () {
+					Swal.fire({
+						title: "안내",
+						text: "신규 토큰발행 준비 중 입니다.",
+						type: 'warning',
+						customClass: {
+							confirmButton: 'btn btn-primary'
+						},
+						buttonsStyling: false
+					})
+				});
+			</script>
+
+			{% endif %}
+
+			{% if token.my_current_tokens == 0 %}
+			<script>
+				$(document).ready(function () {
+					// Swal.fire({
+					//   title: "사용가능한 토큰이 없습니다.",
+					//   text: "[나의 토큰]메뉴에서 토큰 충전시 1번 더 칭찬 가능합니다.",
+					//   type: 'warning',
+					//   customClass: {
+					//     confirmButton: 'btn btn-primary'
+					//   },
+					//   buttonsStyling: false
+					// })
+					AlertInfo('사용가능한 토큰이 없습니다.', '[나의 토큰]메뉴에서 토큰 충전시 1번 더 칭찬 가능합니다.', true)
+										.then((result) => {
+												window.location.href = '/accounts/myprofile';
+										});
+				});
+			</script>
+
+			{% endif %}
+
+			{% if info.error %}
+			<div class="alert alert-danger" role="alert">
+				{{ info.error }}
+			</div>
+
+			<script>
+				$(document).ready(function () {
+					Swal.fire({
+						title: "입력오류",
+						text: "{{ info.error }}",
+						type: 'warning',
+						customClass: {
+							confirmButton: 'btn btn-primary'
+						},
+						buttonsStyling: false
+					})
+				});
+			</script>
+			{% endif %}
+
+  	<div id="con" class="container-xxl mt-5">
+  		<div class="row">
+  			<div class="col-12 mb-2 position-relative" style="z-index: 0;">
+  				{% for part in posts %}
+  				{% if forloop.counter == 1 %}
+  				<div class="card-header position-relative">
+  					<div class="d-flex align-items-end justify-content-center">
+						{% if part.praise_id == user.id %}
+						<h3 class="mb-0 text-white fw-med me-2" style="line-height: 1;">{{ part.user_employee_name }}</h3>
+						<span class="colorCustom_08 fw-med" style="line-height: 1;">{{ part.user_company_name }}
+						  {{ part.user_department_name }}</span>
+					  {% else %}
+						<h3 class="mb-0 text-white fw-med me-2" style="line-height: 1;">{{ part.praise_employee_name }}</h3>
+						<span class="colorCustom_08 fw-med" style="line-height: 1;">{{ part.praise_company_name }}
+						  {{ part.praise_department_name }}</span>
+					  {% endif %}
+  					</div>
+  					<!-- MY땡큐 대화목록 페이지로 돌아가기 버튼 시작 -->
+  					<div class="position-absolute" style="top:50%; transform: translateY(-50%); width: 15px; cursor: pointer;"
+  						onclick="location.href='{% url 'tk_list' %}'"><img class="w-100"
+  							src="{% static 'assets/img/icon_historyBack.png' %}"></div>
+  					<!-- MY땡큐 대화목록 페이지로 돌아가기 버튼 끝 -->
+  				</div>
+  				{% endif %}
+  				{% endfor %}
+
+  				{% for part in posts %}
+  				<div class="card-body tkTalkBox">
+  					
+  					<!--part.user_id가 send_id-->
+  					{% if part.praise_id == user.id %}
+					<span id="token_user_id" class="visually-hidden">{{part.user_id}}</span>
+  					<div class="tkTalk my-5">
+  						<div class="tkSendTime text-center"><span class="text-white p-2 px-4"
+  								style="border-radius: 20px; background:rgba(0,0,0,0.2); font-size: clamp(12px,2.5vw,16px);">{{part.reg_date|date:"Y-m-d H:i:s"}}</span>
+  						</div>
+  						<div class="d-flex mt-3">
+							<div class="me-3 customSize overflow-hidden" style="border:1px solid #d3f1ff; background: #fff; width:50px; height:50px; border-radius: 100%; overflow: hidden;">
+  								{% if part.user_image_yn == 'Y' %}
+  								<img src="{{ part.user_image }}" class="w-100 img-fluid" style="height:100%; object-fit: cover;" href="#" data-bs-toggle="modal" data-bs-target="#profile_modal" onclick="viewuserprofile('{{ part.user_image }}','{{ part.user_employee_name }}','{{ part.user_position_name }}','{{ part.user_company_name}}','{{ part.user_department_name }}');"/>
+  								{% else %}
+  								<img src="{% static 'assets/img/profile_bee_01.png' %}" class="w-100 img-fluid" href="#" data-bs-toggle="modal" data-bs-target="#profile_modal" onclick="viewuserprofile('{% static 'assets/img/profile_bee_01.png' %}','{{ part.user_employee_name }}','{{ part.user_position_name }}','{{ part.user_company_name}}','{{ part.user_department_name }}');"
+  									style="height:100%; object-fit: cover;" />
+  								{% endif %}
+  							</div>
+  							<div style="margin-right:10%;" class="talkSendBox">
+  								<div class="d-flex align-items-end mb-3" style="">
+  									<h3 class="mb-0 text-white fw-med"
+  										style="line-height: 1; font-size: clamp(14px,3.4vw,24px); margin-right:1%;">
+  										{{ part.user_employee_name }}</h3>
+  									<span class="colorCustom_08 fw-med"
+  										style="line-height: 1; font-size: clamp(12px,2.5vw,16px);">{{ part.user_company_name}}
+  										{{ part.user_department_name }}</span>
+  								</div>
+
+  								<div class="tkTalkInner border d-flex align-items-start pb-3"
+  									style=" border-radius: 10px; width:100%; margin-bottom:10px; padding:10px;">
+  									<span class="position-absolute leftTale"><img class="w-100"
+  											src="{% static 'assets/img/icon_tale.png' %}"></span>
+  									<div class="overflow-hidden me-2"
+  										style="width:70px; height:50px; border-radius: 8px; overflow: hidden;">
+  										<img src="{{ part.image_path }}" style="width:100%; height:100%; object-fit: cover;">
+  									</div>
+
+  									<div class="overflow-hidden" style="width: 75%;">
+  										<p style="font-size: clamp(14px,2.5vw,16px);" class="fw-med card-text mb-0 colorCustom_01">
+  											{{ part.content}}</p>
+  										<div id="viewTag{{ part.compliment_id }}" class="hash d-flex mt-2"></div>
+  										<script>
+  											$(document).ready(function () {
+  												viewTag("{{ part.compliment_id }}", "{{part.tag}}");
+  												// window.scrollTo(0, document.body.scrollHeight);
+  											});
+  										</script>
+  									</div>
+  								</div>
+  							</div>
+  						</div>
+
+  					</div>
+  					{% endif %}
+
+  					{% if part.praise_id != user.id %}
+  					<div class="tkTalk tkTalk_02 my-5">
+  						<div class="tkSendTime text-center"><span class="text-white p-2 px-4"
+  								style="border-radius: 20px; background:rgba(0,0,0,0.2); font-size: clamp(12px,2.5vw,16px);">{{part.reg_date|date:"Y-m-d H:i:s"}}</span>
+  						</div>
+  						<div class="d-flex mt-4" style="justify-content: flex-end;">
+  							<div class="talkSendBox">
+  								<div class="tkTalkInner border d-flex align-items-start"
+  									style=" border-radius: 10px; width:100%; margin-bottom:10px; padding:10px; background: #c8edff;">
+  									<span class="position-absolute rightTale"><img class="w-100"
+  											src="{% static 'assets/img/icon_rightTale.png' %}"></span>
+  									<div class="overflow-hidden me-3"
+  										style="width:70px; height:50px; border-radius: 8px; overflow: hidden;">
+  										<img src="{{ part.image_path }}" style="width:100%; height:100%; object-fit: cover;">
+  									</div>
+
+  									<div class="overflow-hidden" style="width: 75%; margin-right:10%;">
+  										<p style="font-size: clamp(14px,2.5vw,16px);" class="fw-med card-text mb-0 colorCustom_01">
+  											{{part.content}}</p>
+  										<div id="viewTag{{ part.compliment_id }}" class="hash d-flex mt-2"
+  											style="font-size: clamp(10px,2.5vw,15px);">
+  											<script>
+  												$(document).ready(function () {
+  													viewTag("{{ part.compliment_id }}", "{{part.tag}}");
+  													// window.scrollTo(0, document.body.scrollHeight);
+  												});
+  											</script>
+  										</div>
+  									</div>
+  								</div>
+  							</div>
+  						</div>
+  					</div>
+  					{% endif %}
+  					{% if forloop.last %}
+  					{% if part.praise_id == user.id %}
+						<div id="replyBtn" class="text-center" style="width: 35%; margin:0 auto; max-width: 200px; min-width: 150px;">
+							<button style="border:0; padding:0; border-radius: 40px; font-size: clamp(14px,3vw,22px); background:#fff"
+								class="py-3 w-100 fw-bold colorCustom_03" onclick="window.replySend()">답장하기 <span class="d-inline-block"
+									style="margin-left:1%; width:16px; height:10px;">
+									<img class="w-100" src="{% static 'assets/img/icon_back.png' %}"></span></button>
+						</div>
+						<div class="reply-container" style="display: none;">
+							<div id="cardView-confirmed" class="showPhoto-confirmed">
+								<div class="swiper-button-prev swiperPrev-confirmed" role="button" data-bs-toggle="modal" data-bs-target="#card_modal"></div>
+								<img id="viewImg-confirmed" src="{{posts_All.0.image_path}}" value="{{posts_All.0.id}}" data-bs-toggle="modal" data-bs-target="#card_modal" />
+								<div class="swiper-button-next swiperNext-confirmed" role="button" data-bs-toggle="modal" data-bs-target="#card_modal"></div>
+							</div>
+							<button type="button" onclick="window.closeReply()" class="position-absolute btn-close closeCustom"
+								style="background:transparent; border:0; right:5px; top:-175.75px; box-shadow: none; transform: none !important; z-index:10">
+								<span></span>
+							</button>
+							<textarea class="form-control mb-3" id="praiseRegedit_content" style="height: 100%; margin-bottom: 10px;" onclick="textareaUpward();"></textarea>
+							<a data-bs-toggle="modal" data-bs-target="#card_modal" href="#" class="d-flex"><div class="open-icons" onclick="openChooseCard()"></div></a>
+							<div class="send-reply-container">
+								<button id="resetBtn" type="reset" class="btn h-[30px] m-0 fw-med fs-5" onclick="window.sendCardResetBtn()" style="box-shadow: none; background: #e8f7ff;">초기화</button>
+								<button id="submitBtn" type="button" class="btn h-[30px] text-white m-0 fw-med fs-5" style="box-shadow: none; background: #006ed5;">등록하기</button>
+							</div>
+						</div>
+  					{% endif %}
+  					{% endif %}
+
+  				</div>
+  				{% endfor %}
+  			</div>
+
+  		</div>
+  	</div>
+	  <div id="footer"><div class="footer w-100 text-center fw-med fs-6" style="color:#418dd4;  padding-bottom:120px;">ⓒ 2024, made 땡큐토큰</div></div>
+    <span id="hiddenChkSubmitYn" class="visually-hidden">N</span> <!--칭찬하기 제어-->
+		<a href="#start"></a>
+		<!-- <script>
+			window.onload = function () {
+				// 하단 내비게이션 높잇값 만큼 모든 페이지 높이조절 시작
+				const moNav_h = document.querySelector('.mobile-navigation').clientHeight;
+				const layoutPage = document.querySelector('.layout-page');
+				layoutPage.style.paddingBottom = moNav_h + 40 + 'px';
+				// 하단 내비게이션 높잇값 만큼 모든 페이지 높이조절 끝 
+			}
+		</script> -->
+		<div class="modal fade" id="card_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog mt-5">
+				<div class="modal-content p-4 pb-3">
+					<form id="formAuthentication" name="formAuthentication" class="browser-default-validation mb-0"
+							action="{% url 'tk_talk' %}" method="POST" enctype="multipart/form-data">
+							{% csrf_token %}
+						<button type="button" class="button-choose-card btn h-[30px] text-white m-0 fw-med fs-5"
+							style="box-shadow: none; background: #006ed5;"
+							data-bs-dismiss="modal" onclick="chooseCard()">선택</button>
+						<div>
+							<div class="card-header">
+								<input type="hidden" name="input_swiper_id" id="input_swiper_id" value="">
+								<input type="hidden" name="input_Contents_text" id="input_Contents_text" value="">
+								<input type="hidden" name="input_Contents" id="input_Contents" value="">
+								<input type="hidden" name="input_active" value="Y">
+
+								<div id="hiddenDivSelect">
+									<select id="select2Basic" class="select2 form-select" data-allow-clear="true" style="display: none;"></select>
+									{% with posts.object_list|last as last_post %}
+										<input type="hidden" id="input_employee_id" name="input_employee_id" value="{{ last_post.user_id }}" />
+									{% endwith %}
+								</div>
+							</div>
+
+							<div class="card-body pb-0">
+								<div id="sendCard">
+									<div class="cardOptionBtn cardOptionSwiper d-flex justify-content-between">
+										<div class="swiper-wrapper">
+											<div class="swiper-slide" style="cursor: pointer;">
+												<a href="javascript:void(0);" class="btn colorCustom_03 fw-med rounded clicked"
+													onclick="topcardselect('prcard0')" data-bs-target="#navs-pills-top-0" aria-controls="navs-pills-top-0"
+													aria-selected="true">전체</a>
+											</div>
+											<div class="swiper-slide" style="cursor: pointer;">
+												<a href="javascript:void(0);" class="btn colorCustom_03 fw-med rounded" onclick="topcardselect('prcard6')"
+													data-bs-target="#navs-pills-top-6" aria-controls="navs-pills-top-6" aria-selected="false">위비</a>
+											</div>
+											<div class="swiper-slide" style="cursor: pointer;">
+												<a href="javascript:void(0);" class="btn colorCustom_03 fw-med rounded" onclick="topcardselect('prcard1')"
+													data-bs-target="#navs-pills-top-1" aria-controls="navs-pills-top-1" aria-selected="false">감사</a>
+											</div>
+											<div class="swiper-slide" style="cursor: pointer;">
+												<a href="javascript:void(0);" class="btn colorCustom_03 fw-med rounded" onclick="topcardselect('prcard2')"
+													data-bs-target="#navs-pills-top-2" aria-controls="navs-pills-top-2" aria-selected="false">응원</a>
+											</div>
+											<div class="swiper-slide" style="cursor: pointer;">
+												<a href="javascript:void(0);" class="btn colorCustom_03 fw-med rounded" onclick="topcardselect('prcard3')"
+													data-bs-target="#navs-pills-top-3" aria-controls="navs-pills-top-3" aria-selected="false">축하</a>
+											</div>
+											<div class="swiper-slide" style="cursor: pointer;">
+												<a href="javascript:void(0);" class="btn colorCustom_03 fw-med rounded" onclick="topcardselect('prcard4')"
+													data-bs-target="#navs-pills-top-4" aria-controls="navs-pills-top-4" aria-selected="false">재미</a>
+											</div>
+											<div class="swiper-slide" style="cursor: pointer;">
+												<a href="javascript:void(0);" class="btn colorCustom_03 fw-med rounded" onclick="topcardselect('prcard5')"
+													data-bs-target="#navs-pills-top-5" aria-controls="navs-pills-top-5" aria-selected="false">신년</a>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</div>
+
+							<div class="card-body pb-0">
+								<div class="mt-3 mb-5">
+									<div id="navs-pills-top-0" class="swiperBox" style="position: relative;">
+										<!-- cardOptionBtn 버튼 별 Slide 개수 js 불러오기 시작 -->
+										<div id="cardSwiper" class="sendCardSwiper" style="height:clamp(40px, 15vw, 100px);">
+											<div class="swiper-wrapper">
+												<div class="swiper-slide" style="height:clamp(40px,15vw,100px); cursor: pointer;">
+													<input id="inputCardImg" name="inputCardImg" class="form-control" onChange="addSwiperImage(event);"
+														type="file"
+														style="position:absolute; top:0;left:0;width:100%; height: 100%;  font-size:0; background:transparent; padding:0 !important; border:0 !important; opacity:0;">
+													<img src="{% static 'assets/img/sendCard_00.png' %}"></img>
+												</div>
+												{% for part in posts_All %}
+												<div class="swiper-slide" style="height:clamp(40px,15vw,100px); cursor: pointer;"><img
+														onClick='selectSwiperImg(this, "{{part.card_message}}", "{{part.id}}" );' src="{{ part.image_path }}">
+												</div>
+												{% endfor %}
+											</div>
+										</div>
+										<div class="swiper-button-prev swiperPrev"></div>
+										<div class="swiper-button-next swiperNext"></div>
+									</div>
+									<div id="navs-pills-top-1" class="position-relative swiperBox" style="display:none;">
+										<!-- navs-pills-top-1 -->
+										<!-- cardOptionBtn 버튼 별 Slide 개수 js 불러오기 시작 -->
+										<div id="cardSwiper" class="sendCardSwiper">
+											<div class="swiper-wrapper">
+												<div class="swiper-slide" style="height:clamp(40px,15vw,100px); cursor: pointer;">
+													<input id="inputCardImg" name="inputCardImg" class="form-control" type="file"
+														onChange="addSwiperImage(event);"
+														style="position:absolute; top:0;left:0;width:100%; height: 100%;  font-size:0; background:transparent; padding:0 !important; border:0 !important; opacity:0;">
+													<img src="{% static 'assets/img/sendCard_00.png' %}"></img>
+												</div>
+												{% for part in posts_1 %}
+												<div class="swiper-slide" style="height:clamp(40px,15vw,100px); cursor: pointer;"><img
+														onClick='selectSwiperImg(this, "{{part.card_message}}", "{{part.id}}" );' src="{{ part.image_path }}">
+												</div>
+												{% endfor %}
+											</div>
+										</div>
+										<div class="swiper-button-prev swiperPrev"></div>
+										<div class="swiper-button-next swiperNext"></div>
+									</div>
+									<div id="navs-pills-top-2" class="position-relative swiperBox" style="display:none;">
+										<!-- cardOptionBtn 버튼 별 Slide 개수 js 불러오기 시작 -->
+										<div id="cardSwiper" class="sendCardSwiper">
+											<div class="swiper-wrapper">
+												<div class="swiper-slide" style="height:clamp(40px,15vw,100px); cursor: pointer;">
+													<input id="inputCardImg" name="inputCardImg" class="form-control" type="file"
+														onChange="addSwiperImage(event);"
+														style="position:absolute; top:0;left:0;width:100%; height: 100%;  font-size:0; background:transparent; padding:0 !important; border:0 !important; opacity:0;">
+													<img src="{% static 'assets/img/sendCard_00.png' %}"></img>
+												</div>
+												{% for part in posts_2 %}
+												<div class="swiper-slide" style="height:clamp(40px,15vw,100px); cursor: pointer;"><img
+														onClick='selectSwiperImg(this, "{{part.card_message}}", "{{part.id}}" );' src="{{ part.image_path }}">
+												</div>
+												{% endfor %}
+											</div>
+										</div>
+										<div class="swiper-button-prev swiperPrev"></div>
+										<div class="swiper-button-next swiperNext"></div>
+									</div>
+
+									<div id="navs-pills-top-3" class="position-relative swiperBox" style="display:none;">
+										<!-- cardOptionBtn 버튼 별 Slide 개수 js 불러오기 시작 -->
+										<div id="cardSwiper" class="sendCardSwiper">
+											<div class="swiper-wrapper">
+												<div class="swiper-slide" style="height:clamp(40px,15vw,100px); cursor: pointer;">
+													<input id="inputCardImg" name="inputCardImg" class="form-control" type="file"
+														onChange="addSwiperImage(event);"
+														style="position:absolute; top:0;left:0;width:100%; height: 100%;  font-size:0; background:transparent; padding:0 !important; border:0 !important; opacity:0;">
+													<img src="{% static 'assets/img/sendCard_00.png' %}"></img>
+												</div>
+												{% for part in posts_3 %}
+												<div class="swiper-slide" style="height:clamp(40px,15vw,100px); cursor: pointer;"><img
+														onClick='selectSwiperImg(this, "{{part.card_message}}", "{{part.id}}" );' src="{{ part.image_path }}">
+												</div>
+												{% endfor %}
+											</div>
+										</div>
+										<div class="swiper-button-prev swiperPrev"></div>
+										<div class="swiper-button-next swiperNext"></div>
+									</div>
+
+									<div id="navs-pills-top-4" class="position-relative swiperBox" style="display:none;">
+										<!-- cardOptionBtn 버튼 별 Slide 개수 js 불러오기 시작 -->
+										<div id="cardSwiper" class="sendCardSwiper">
+											<div class="swiper-wrapper">
+												<div class="swiper-slide" style="height:clamp(40px,15vw,100px); cursor: pointer;">
+													<input id="inputCardImg" name="inputCardImg" class="form-control" type="file"
+														onChange="addSwiperImage(event);"
+														style="position:absolute; top:0;left:0;width:100%; height: 100%;  font-size:0; background:transparent; padding:0 !important; border:0 !important; opacity:0;">
+													<img src="{% static 'assets/img/sendCard_00.png' %}"></img>
+												</div>
+												{% for part in posts_4 %}
+												<div class="swiper-slide" style="height:clamp(40px,15vw,100px); cursor: pointer;"><img
+														onClick='selectSwiperImg(this, "{{part.card_message}}", "{{part.id}}" );' src="{{ part.image_path }}">
+												</div>
+												{% endfor %}
+											</div>
+										</div>
+										<div class="swiper-button-prev swiperPrev"></div>
+										<div class="swiper-button-next swiperNext"></div>
+									</div>
+
+									<div id="navs-pills-top-5" class="position-relative swiperBox" style="display:none;">
+										<!-- cardOptionBtn 버튼 별 Slide 개수 js 불러오기 시작 -->
+										<div id="cardSwiper" class="sendCardSwiper">
+											<div class="swiper-wrapper">
+												<div class="swiper-slide" style="height:clamp(40px,15vw,100px); cursor: pointer;">
+													<input id="inputCardImg" name="inputCardImg" class="form-control" type="file"
+														onChange="addSwiperImage(event);"
+														style="position:absolute; top:0;left:0;width:100%; height: 100%;  font-size:0; background:transparent; padding:0 !important; border:0 !important; opacity:0;">
+													<img src="{% static 'assets/img/sendCard_00.png' %}"></img>
+												</div>
+												{% for part in posts_5 %}
+												<div class="swiper-slide" style="height:clamp(40px,15vw,100px); cursor: pointer;"><img
+														onClick='selectSwiperImg(this, "{{part.card_message}}", "{{part.id}}" );' src="{{ part.image_path }}">
+												</div>
+												{% endfor %}
+											</div>
+										</div>
+										<div class="swiper-button-prev swiperPrev"></div>
+										<div class="swiper-button-next swiperNext"></div>
+									</div>
+
+									<div id="navs-pills-top-6" class="position-relative swiperBox" style="display:none;">
+										<!-- cardOptionBtn 버튼 별 Slide 개수 js 불러오기 시작 -->
+										<div id="cardSwiper" class="sendCardSwiper">
+											<div class="swiper-wrapper">
+												<div class="swiper-slide" style="height:clamp(40px,15vw,100px); cursor: pointer;">
+													<input id="inputCardImg" name="inputCardImg" class="form-control" type="file"
+														onChange="addSwiperImage(event);"
+														style="position:absolute; top:0;left:0;width:100%; height: 100%;  font-size:0; background:transparent; padding:0 !important; border:0 !important; opacity:0;">
+													<img src="{% static 'assets/img/sendCard_00.png' %}"></img>
+												</div>
+												{% for part in posts_6 %}
+												<div class="swiper-slide" style="height:clamp(40px,15vw,100px); cursor: pointer;"><img
+														onClick='selectSwiperImg(this, "{{part.card_message}}", "{{part.id}}" );' src="{{ part.image_path }}">
+												</div>
+												{% endfor %}
+											</div>
+										</div>
+										<div class="swiper-button-prev swiperPrev"></div>
+										<div class="swiper-button-next swiperNext"></div>
+									</div>
+
+									<!-- cardOptionBtn 버튼 별 Slide 개수 js 불러오기 끝 -->
+									<div id="cardView" class="showPhoto mx-auto mt-3">
+										<img id="viewImg" src="{{posts_All.0.image_path}}" value="{{posts_All.0.id}}" />
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+  </div>
+
+
+  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+  </script> -->
+<style>
+.select2.select2-container {position: absolute; left:0; width:calc(100% - 99px) !important;}
+    button.searchChkBtn {position: absolute !important; right:0;}  
+.comment_modal .typing_comment:focus {
+  border-color: #14a8ea;
+}
+
+.comment_modal .typing_comment+button {
+  border: 1px solid #14a8ea !important;
+  background: #14a8ea !important;
+  box-shadow: none;
+}
+
+
+    .mobile-navigation button .icon_home {
+      -webkit-mask: url(/static/assets/img/icon_menu_01_01.svg) no-repeat center/auto 100%;
+      mask: url(/static/assets/img/icon_menu_01_01.svg) no-repeat center/auto 100%;
+    }
+
+    .mobile-navigation button .icon_myThank {
+      -webkit-mask: url(/static/assets/img/icon_menu_02_02.svg) no-repeat center/auto 100%;
+      mask: url(/static/assets/img/icon_menu_02_02.svg) no-repeat center/auto 100%;
+    }
+
+    .mobile-navigation button .icon_sendThank {
+      -webkit-mask: url(/static/assets/img/icon_menu_03_01.svg) no-repeat center/auto 100%;
+      mask: url(/static/assets/img/icon_menu_03_01.svg) no-repeat center/auto 100%;
+    }
+
+    .mobile-navigation button .icon_best {
+      -webkit-mask: url(/static/assets/img/icon_menu_04_01.svg) no-repeat center/auto 100%;
+      mask: url(/static/assets/img/icon_menu_04_01.svg) no-repeat center/auto 100%;
+    }
+
+    .mobile-navigation button .icon_myToken {
+      -webkit-mask: url(/static/assets/img/icon_menu_05_01.svg) no-repeat center/auto 100%;
+      mask: url(/static/assets/img/icon_menu_05_01.svg) no-repeat center/auto 100%;
+    }
+
+
+/* MY땡큐 - talk 페이지 CSS 추가 시작 - 240219*/
+body:has(#myThankPage.tkTalkPage) {
+  background: url(/static/assets/img/tkTalk_bg.jpg) no-repeat top/cover;
+}
+
+#myThankPage.tkTalkPage .talkSendBox {
+  max-width: 70%;
+  width: 100%;
+}
+
+#myThankPage.tkTalkPage .tkTalkInner {
+  position: relative;
+  background: #fff;
+}
+
+#myThankPage.tkTalkPage .tkTalkInner .leftTale {
+  top: -7px;
+  left: -7px;
+  width: 15px;
+}
+
+#myThankPage.tkTalkPage .tkTalkInner .rightTale {
+  top: -7px;
+  right: -7px;
+  width: 15px;
+}
+
+#myThankPage.tkTalkPage .hash span {
+  margin-top: 5px;
+  margin-right: 10px;
+  font-size: clamp(10px, 2vw, 14px);
+}
+#myThankPage.tkTalkPage .tkTalk_02 .hash span {
+  background: #fff !important;
+}
+
+#myThankPage.tkTalkPage #praiseRegedit_content {
+  height: 100px !important;
+	position: absolute;
+	z-index: 1;
+	border: 0;
+	box-shadow: unset;
+	resize: none;
+}
+
+#myThankPage.tkTalkPage .send-reply {
+	background: #006ed5;
+	-webkit-mask: url(/static/assets/img/icon_reply.svg) no-repeat center/contain;
+	mask: url(/static/assets/img/icon_reply.svg) no-repeat center/contain;
+	width: 30px;
+	height: 30px;
+	margin: 4px;
+}
+
+#myThankPage.tkTalkPage #sendCard {
+  overflow: hidden;
+  min-height: 43px;
+}
+#myThankPage.tkTalkPage .cardOptionBtn {
+  /* overflow-x: hidden; */
+}
+#myThankPage.tkTalkPage .cardOptionBtn a {
+  width: 100%;
+  background: #e8f7ff;
+  font-size: 15px;
+  padding:10px 5px;
+}
+
+#myThankPage.tkTalkPage .cardOptionBtn a.clicked {
+  background: #006ed5;
+  color: #fff !important;
+}
+
+#myThankPage.tkTalkPage .cardOptionBtn a~a {
+  margin-left: 10px;
+}
+
+#myThankPage.tkTalkPage .reply-container textarea {
+  color: #006ed5;
+}
+
+#myThankPage.tkTalkPage .sendCardSwiper {
+  overflow: hidden;
+}
+
+#myThankPage.tkTalkPage .sendCardSwiper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+#myThankPage.tkTalkPage .sendCardSwiper .swiper-slide {
+  border-radius: 10px;
+  overflow: hidden;
+}
+#myThankPage.tkTalkPage .sendCardSwiper .swiper-slide.picked {
+  opacity: 0.6;
+}
+#myThankPage.tkTalkPage .sendCardSwiper .swiper-slide img {
+  border:none !important;
+}
+#myThankPage.tkTalkPage .swiperBox {
+  padding: 0 35px;
+}
+
+#myThankPage.tkTalkPage .swiperPrev {
+  left: 0;
+}
+
+#myThankPage.tkTalkPage .swiperPrev-confirmed {
+  position: unset;
+	margin-top: 0;
+}
+
+#myThankPage.tkTalkPage .swiperPrev-confirmed::after {
+  font-size: 20px;
+	font-weight: bold;
+}
+
+#myThankPage.tkTalkPage .swiperNext {
+  right: 0;
+}
+
+#myThankPage.tkTalkPage .swiperNext-confirmed {
+  position: unset;
+	margin-top: 0;
+}
+
+#myThankPage.tkTalkPage .swiperNext-confirmed::after {
+  font-size: 20px;
+	font-weight: bold;
+}
+
+#myThankPage.tkTalkPage .showPhoto-confirmed {
+  height: 185px;
+	width: 100%;
+	background-color: #ffffff99;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 0.375rem 0.375rem 0 0;
+}
+
+#myThankPage.tkTalkPage .showPhoto-confirmed img {
+  height: 90%;
+  object-fit: cover;
+}
+
+#myThankPage.tkTalkPage .showPhoto {
+  max-width: 300px;
+  max-height: 300px;
+}
+
+#myThankPage.tkTalkPage .showPhoto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#myThankPage.tkTalkPage .swiperPrev::after,
+#myThankPage.tkTalkPage .swiperNext::after {
+  color: #9fc4e7;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+#myThankPage.tkTalkPage .sendSearchBtn::after {
+  content: none;
+}
+
+#myThankPage.tkTalkPage .sendSearchBtn img {
+  right: 20px;
+  width: auto;
+  height: 10px;
+}
+
+#myThankPage.tkTalkPage .sendSearch input::placeholder {
+  color: #14a8ea;
+}
+
+#myThankPage.tkTalkPage #cardView-confirmed {
+  position: absolute;
+	z-index: 10;
+	top: -185px;
+	display: flex;
+	gap: 16px;
+}
+
+#myThankPage.tkTalkPage #cardView-confirmed #viewImg-confirmed {
+  cursor: pointer;
+}
+
+#myThankPage.tkTalkPage .reply-container {
+	background-color: white;
+  height: 138px !important;
+	position: fixed;
+	bottom: 6rem;
+	max-width: 1440px;
+	width: 100%;
+	z-index: 1;
+	left: 50%;
+	transform: translateX(-50%);
+	border-radius: 0 0 0.375rem 0.375rem;
+}
+
+#myThankPage.tkTalkPage .open-icons {
+	background: #006ed5;
+	-webkit-mask: url(/static/assets/img/icon_smile.svg) no-repeat center/contain;
+	mask: url(/static/assets/img/icon_smile.svg) no-repeat center/contain;
+	position: fixed;
+	bottom: 0;
+	width: 30px;
+	height: 30px;
+	margin: 4px;
+	z-index: 10;
+}
+
+#myThankPage.tkTalkPage .send-reply-container {
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	z-index: 10;
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 4px;
+}
+
+#myThankPage.tkTalkPage .send-reply-container button {
+	font-size: 16px !important;
+}
+
+#myThankPage.tkTalkPage .button-choose-card {
+	position: absolute;
+	bottom: 1rem;
+	right: 1.5rem;
+}
+
+/* MY땡큐 - talk 페이지 CSS 추가 끝 - 240219*/
+
+@media (min-width: 1440px) {
+	#myThankPage.tkTalkPage #card_modal .modal-dialog {
+		max-width: 1440px;
+		width: 100%;
+	}
+}
+
+@media (max-width: 1440px) {
+	#myThankPage.tkTalkPage .reply-container {
+		bottom: 5rem;
+		left: 0;
+		transform: unset;
+		border-radius: 0;
+	}
+
+	#myThankPage.tkTalkPage .open-icons {
+		bottom: 5.5rem;
+	}
+
+	#myThankPage.tkTalkPage .send-reply-container {
+		bottom: 5.5rem;
+	}
+}
+
+@media (max-width:576px) {
+  .allPage .forPc {
+    display: block !important;
+  }
+  /* MY땡큐 - talk 페이지 CSS 추가 시작 - 240219*/
+
+  #myThankPage.tkTalkPage .hash {
+    flex-wrap: wrap;
+  }
+
+  #myThankPage.tkTalkPage .hash span {
+    margin-right: 5px;
+  }
+}
+
+</style>
+  <script>
+		var chkuser = {{ user.id }};
+		$("#submitBtn").click(function() {
+      // console.log("20240225 select2Basic: ", $("#select2Basic").val());
+      
+      // if(document.querySelector("#hiddenChkSubmitYn").innerHTML == 'Y'){
+      //     Warning('칭찬은 하루 5번 가능합니다.', '토큰 충전시 1번 더 칭찬 가능합니다.');
+  		// 		$.unblockUI();
+  		// 		return false;
+      //     window.location.href = '/accounts/myprofile';
+      // }
+
+      if(document.querySelector("#hiddenChkSubmitYn").innerHTML == 'Z'){
+          Warning('금일 칭찬 한도가 초과되었습니다.', '내일 칭찬 등록 부탁드립니다.');
+  				$.unblockUI();
+  				return false;
+      }
+
+      //2023-08-28 이미지 파일여부 검증추가
+      var _inputCardImg = $("#inputCardImg").val();
+      // console.log("check card img : ",_inputCardImg );
+      if (_inputCardImg != "") {
+          var imageExtensions = ["jpg", "jpeg", "png", "gif", "bmp"];
+          var extension = _inputCardImg.split('.').pop().toLowerCase();
+
+          // console.log('File name ' + _inputCardImg);
+          // console.log('extension ' + extension);
+
+          if (imageExtensions.indexOf(extension) === -1) {
+        			Warning('파일형식 오류','이미지 파일만 첨부 가능합니다.'); // modalver3 모달을 검색 해주세요
+        			$.unblockUI();  
+              return false;
+          }
+      }
+  			
+  	  var input_swiper_id = $("#viewImg").attr("value");  
+  	  console.log(input_swiper_id);
+
+        
+  		$("<input>").attr({
+  			type: "hidden",
+  			name: "input_swiper_id",
+  			value: input_swiper_id
+  		}).appendTo("#formAuthentication");
+
+  		document.getElementById("input_swiper_id").value = input_swiper_id;
+
+  		var _input_employee_id = $("#input_employee_id").val();
+  		if (!_input_employee_id) {
+  				Warning('필수입력 오류','직원을 선택해 주세요.'); // modalver4 모달을 검색 해주세요
+  				$.unblockUI();  
+  				//clearTimeout($.data(document.body, 'blockUI.timeout'));
+
+  				return false;
+  		}
+                
+
+  		//var input_Contents_text = $("#editor .ql-editor").text();
+      var input_Contents_text = $("#praiseRegedit_content").val();
+  		if (!input_Contents_text || input_Contents_text.trim() === '') {
+  				Warning('필수입력 오류','내용을 입력해 주세요.'); // modalver4 모달을 검색 해주세요
+  				$.unblockUI();  
+  				return false;
+  		}
+      
+      
+      var pattern = /'/; // '를 찾는 정규 표현식
+
+      if (input_Contents_text.match(pattern)) {
+        // 특수기호가 존재하면 오류 출력
+        Warning('특수기호 오류',"특수기호( \' )는 사용할 수 없습니다."); // modalver4 모달을 검색 해주세요
+        $.unblockUI();  
+        return false;
+      }        
+      /*
+      if (input_Contents_text.includes("'") || input_Contents_text.includes('"')) {
+			Warning('입력 내용오류','특수 기호 '와 \"는 입력할 수 없습니다.')
+			$.unblockUI();  
+			return false;
+      }
+      */
+        
+        
+  		var inputLen = input_Contents_text.length;
+  		if (input_Contents_text.length < 5) {
+  				Warning('내용부족','5자 이상 입력해주세요. ( 입력내용 : '+inputLen+'자)'); // modalver1 모달을 검색 해주세요
+  				$.unblockUI();  
+  				return false;
+  		}
+
+  		if (input_Contents_text.length > 500) {
+  				Warning('내용많음','500자 미만 입력해주세요. ( 입력내용 : '+inputLen+'자)'); // modalver2 모달을 검색 해주세요
+  				$.unblockUI();  
+  				return false;
+  		}
+          
+  		//var input_Contents = $("#editor .ql-editor").html();
+          var input_Contents = $("#praiseRegedit_content").val();
+  		$("<input>").attr({
+  			type: "hidden",
+  			name: "input_Contents",
+  			value: input_Contents
+  		}).appendTo("#formAuthentication");
+  		document.getElementById("input_Contents").value = input_Contents;
+
+  		$("<input>").attr({
+  			type: "hidden",
+  			name: "input_Contents_text",
+  			value: input_Contents_text
+  		}).appendTo("#formAuthentication");
+  		document.getElementById("input_Contents_text").value = input_Contents_text;
+
+      //20240225 왜 에러나는지 확인하기
+  		// $.blockUI({
+  		// 		message:
+  		// 			'<div class="row d-flex justify-content-center"><p class="mb-0">칭찬글등록</p> <div class="sk-wave m-0"><div class="sk-rect sk-wave-rect"></div> <div class="sk-rect sk-wave-rect"></div> <div class="sk-rect sk-wave-rect"></div> <div class="sk-rect sk-wave-rect"></div> <div class="sk-rect sk-wave-rect"></div></div> </div>',
+  		// 		timeout: 30000,
+  		// 		css: {
+  		// 			backgroundColor: 'transparent',
+  		// 			color: '#fff',
+  		// 			border: '0'
+  		// 		},
+  		// 		overlayCSS: {
+  		// 			opacity: 0.5
+  		// 		}
+  		// });
+
+  		var formData = $("#formAuthentication").serializeArray();
+  		var alertMsg = "";
+  		$.each(formData, function(i, field) {
+  				alertMsg += field.name + ": " + field.value + "\n";
+  				// console.log(alertMsg);
+  		});
+
+  		// console.log('formData' + formData);
+  		// console.log('alertMsg' + alertMsg);
+
+		$(this).addClass('disabled')
+               
+  		setTimeout(function() {
+              // 직원중복여부 검증 2023-09-13
+              praiseCheck(_input_employee_id);  
+              
+
+  		}, 20);
+  });
+
+	function Warning(_title, _text) {
+		Swal.fire({
+			title: _title,
+			text: _text,
+			type: 'warning',
+			customClass: {
+				confirmButton: 'btn btn-primary'
+			},
+			buttonsStyling: false
+		})
+	}
+
+	function AlertPickAct(_title, _text, _confirmValue, _cancelValue) {
+    return new Promise((resolve, reject) => {
+        Swal.fire({
+            title: _title,
+            text: _text,
+            type: 'warning',
+            customClass: {
+                confirmButton: 'btn btn-primary',
+                cancelButton: 'btn btn-secondary'
+            },
+            buttonsStyling: false,
+            showCancelButton: true,
+            showConfirmButton: true,
+            cancelButtonText: '취소',
+            confirmButtonText: '진행'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                resolve(_confirmValue); // 사용자가 '진행' 버튼을 클릭한 경우
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                resolve(_cancelValue); // 사용자가 '취소' 버튼을 클릭한 경우
+            }
+        });
+    });
+	}
+
+	function praiseCheck(_employee_id) {    // 칭찬하기 상세 데이터 이벤트
+    var inputData = {
+        employee_id : _employee_id
+    };
+
+     try {
+        $.ajax({
+            type: "POST",
+            url: "/apis/praise_check/",
+            data: inputData,
+            async: false, // 동기식으로 처리
+            success: function (data) {
+                // console.log('### praiseCheck success');
+                // console.log(data);
+                
+                if(data.status == "200"){
+                    // console.log(data.data_list[0].praise_count);
+                    var priaseCnt      = data.data_list[0].praise_count;
+                    var reward_skip_yn = data.data_list[0].reward_skip_yn;
+                    
+                    //console.log(reward_skip_yn);
+                    // 2023-12-14 소속상 직급가능
+                    /*
+                    if (reward_skip_yn == "Y") {
+                        Warning('칭찬직원 재확인','소속장 이상 직급은 칭찬받기가 불가합니다.');
+                        $.unblockUI();  
+                        return false;
+                    }
+                    */
+                    
+                    var time = "{{ manage.start_date|slice:"4:6" }}.{{ manage.start_date|slice:"6:8" }} ~ {{ manage.end_date|slice:"4:6" }}.{{ manage.end_date|slice:"6:8" }}";
+                    
+                    // if (priaseCnt > 0 && chkuser != 15893) { //15893 회장님
+                    //         Warning('칭찬직원 재확인',time + ' 기간동안 중복등록 불가합니다.'); // modalver3 모달을 검색 해주세요
+                    //         $.unblockUI();  
+                    //         return false;
+                    // }else{
+                    //     //최종 제출
+                    //     document.formAuthentication.submit();
+                    // }
+                    
+                    //2024.07.01 모모콘 반영시 같이 반영 apis praise_check 수정
+                    if (priaseCnt > 0 && chkuser != 15893) { //15893 회장님
+                            
+                            AlertPickAct(time + '<br>기간동안 중복대상<br>칭찬으로 포인트<br>추가는 안됩니다!<br>([남은 토큰]은 차감)', '', '진행', '취소').then((result) => {
+                                    if (result === '진행') {
+                                        // 진행 버튼을 클릭한 경우의 처리
+                                        document.formAuthentication.submit();
+                                        // 여기에 진행 처리에 대한 코드를 추가합니다.
+                                    } else if (result === '취소') {
+                                        // 취소 버튼을 클릭한 경우의 처리
+                                        // console.log('사용자가 취소를 선택했습니다.');
+                                        // 여기에 취소 처리에 대한 코드를 추가합니다.
+                                    }
+                            });                    
+                            
+                    }else{
+                        //최종 제출
+                        document.formAuthentication.submit();
+                    }
+
+                }else{
+                    Warning('시스템 오류','칭찬직원 검증시 오류가 발생 했습니다.');
+                    $.unblockUI();  
+                    return false;
+                }
+            },
+            error: function (e) {
+                console.log("### praiseCheck ERROR : ", e);
+                //alert("fail");
+            }
+      })
+      .done(function(data) {
+        // AJAX 요청 완료 후 처리할 작업
+		var priaseCnt = data.data_list[0].praise_count;
+		if (priaseCnt > 0) {
+			$("#submitBtn").removeClass('disabled');
+		}
+      })
+      .fail(function() {
+        // AJAX 요청 실패 시 처리할 작업
+      });
+    } catch (e) {
+        alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+    }	
+}
+
+		var cardOptionSwiper = new Swiper('.cardOptionSwiper', {
+      autoHeight : true,
+      slidesPerView: 5,
+      spaceBetween: 10,
+            breakpoints: {
+        1000: {
+          slidesPerView: 4.5,
+        },
+        350: {
+          slidesPerView: 3.5,
+        },
+      }
+    });
+    var sendCardSwiper = new Swiper('.sendCardSwiper', {
+      slidesPerView: 3,
+      spaceBetween: 10,
+
+      navigation: {
+        nextEl: '.swiperNext',
+        prevEl: '.swiperPrev',
+      },
+      breakpoints: {
+        1000: {
+          slidesPerView: 10,
+        },
+        600: {
+          slidesPerView: 5,
+        },
+        400: {
+          slidesPerView: 4,
+        },
+      }
+    });
+
+    // 슬라이드 상단 탭메뉴 버튼 클릭시 색상 효과 
+    const sendPhotoBtn = document.querySelectorAll('.cardOptionBtn a');
+    sendPhotoBtn.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        sendPhotoBtn.forEach((siblingBtn) => {
+          siblingBtn.classList.remove('clicked');
+        });
+        btn.classList.add('clicked');
+      });
+    });
+
+		function topcardselect(topcardval) 
+		{
+			var cardelem0 = document.getElementById('navs-pills-top-0');
+			var cardelem1 = document.getElementById('navs-pills-top-1');
+			var cardelem2 = document.getElementById('navs-pills-top-2');
+			var cardelem3 = document.getElementById('navs-pills-top-3');
+			var cardelem4 = document.getElementById('navs-pills-top-4');
+			var cardelem5 = document.getElementById('navs-pills-top-5');
+			var cardelem6 = document.getElementById('navs-pills-top-6');
+			try
+			{
+		
+				cardelem0.style.display = 'none';
+				cardelem1.style.display = 'none';
+				cardelem2.style.display = 'none';
+				cardelem3.style.display = 'none';
+				cardelem4.style.display = 'none';
+				cardelem5.style.display = 'none';
+				cardelem6.style.display = 'none';
+			}
+			catch
+			{
+				asd = 1;
+			}
+			
+			// console.log(topcardval);
+			
+			if (topcardval == 'prcard0')
+			{
+				// console.log('prcard0');
+				cardelem0.style.display = 'block';
+			}
+			if (topcardval == 'prcard1')
+			{
+				// console.log('prcard1');
+				cardelem1.style.display = 'block';
+			}
+			if (topcardval == 'prcard2')
+			{
+				// console.log('prcard2');
+				cardelem2.style.display = 'block';
+			}
+			if (topcardval == 'prcard3')
+			{
+				cardelem3.style.display = 'block';
+			}
+			if (topcardval == 'prcard4')
+			{
+				cardelem4.style.display = 'block';
+			}
+			if (topcardval == 'prcard5')
+			{
+				cardelem5.style.display = 'block';
+			}
+			if (topcardval == 'prcard6')
+			{
+				cardelem6.style.display = 'block';
+			}
+		
+		
+		}
+
+		function insertText(text) {
+			var textarea = document.getElementById('praiseRegedit_content');
+			textarea.value = text + ' ';
+	}
+
+	function openChooseCard() {
+		$("#viewImg").attr("src", $("#viewImg-confirmed").attr("src"));
+		$("#viewImg").attr("value", $("#viewImg-confirmed").attr("value"));
+	}
+
+	function chooseCard() {
+		$("#viewImg-confirmed").attr("src", $("#viewImg").attr("src"));
+		$("#viewImg-confirmed").attr("value", $("#viewImg").attr("value"));
+		if ($("#viewImg").data("content")) {
+			insertText($("#viewImg").data("content"));
+			$("#viewImg").removeData("content")
+		}
+	}
+			
+	function selectSwiperImg(obj, card_message, valueid) {
+				
+		$("#viewImg").attr("src", $(obj).attr("src"));
+		console.log(valueid);
+		//$("#viewImg").attr("value", $(obj).attr("value")); obj 값 NULL
+		$("#viewImg").attr("value", valueid);
+		$("#formFile").val("");
+				
+				// 모든 이미지에서 border를 제거
+				var allImages = document.querySelectorAll(".swiper-slide");
+				allImages.forEach(function(img) {
+						img.style.border = "none";
+				});
+	
+				// 클릭한 이미지에 border 스타일 적용
+				obj.style.border = "3px solid #000000";  // 원하는 스타일을 지정하세요
+				var textarea = document.getElementById('praiseRegedit_content');
+			if (textarea.value.length < 2)
+			{
+				$("#viewImg").data("content", card_message);
+			}
+				
+				
+	}
+
+	function addSwiperImage(event) {
+		// return;
+		var reader = new FileReader();
+		reader.onload = function(event) {
+			document.querySelector("#viewImg").setAttribute("src", event.target.result);
+		}
+		reader.readAsDataURL(event.target.files[0]);
+		$("#viewImg").attr("value", "0");
+				
+				// 모든 이미지에서 border를 제거
+				var allImages = document.querySelectorAll(".swiper-slide");
+				allImages.forEach(function(img) {
+						img.style.border = "none";
+				});
+	
+				// 클릭한 이미지에 border 스타일 적용
+				//event.style.border = "3px solid #000000";  // 원하는 스타일을 지정하세요
+				
+		event.target.value = "";
+	}
+
+	function sendCardResetBtn() {
+		document.querySelector('.reply-container textarea').value = "";
+	}
+
+	function viewuserprofile(profile_view_img, profile_employee_name, profile_position_name, profile_company_name, profile_department_name)
+	{
+		document.getElementById("profile_view_img").setAttribute("src", profile_view_img);
+		document.getElementById("profile_employee_name").innerHTML = profile_employee_name;
+		document.getElementById("profile_position_name").innerHTML = profile_position_name;
+		document.getElementById("profile_company_name").innerHTML = profile_company_name;
+		document.getElementById("profile_department_name").innerHTML = profile_department_name;
+		document.getElementById("profile_change_btn").style.display = 'none';
+	}
+
+	function replySend(){
+		//답장
+		//var userId = document.querySelector("#token_user_id").innerHTML;
+		
+		//var url = "/praiseRegedit/?userId=" + userId;
+		
+		//window.location.href = url;	
+
+		$('#footer').css('padding-bottom', '320px');
+		window.scrollTo(0, document.body.scrollHeight);
+
+		$(".reply-container").show();
+		$("#replyBtn").hide();
+	}
+
+	function closeReply() {
+		$('#footer').css('padding-bottom', '0');
+
+		$("#replyBtn").show();
+		$(".reply-container").hide();
+	}
+
+        // 하단 페이지 시작
+		window.onload = function() {
+    window.scrollTo({
+    top: document.documentElement.scrollHeight,
+    left: 0,
+    behavior: "instant",
+    });
+  };
+
+    function tk_token_H() {
+      const tk_token = document.querySelectorAll('#tk_con .tk_token');
+      tk_token.forEach(item => {
+        const tk_token_w = tk_token[0].clientWidth;
+        item.style.paddingBottom = tk_token_w + 'px';
+        // item.style.paddingRight = tk_token_w + 'px'
+      });
+    }
+    tk_token_H();
+
+
+    function viewTag(idx, json_data){
+        
+        //console.log('viewTag ========= ' + idx + ' '+ json_data);
+        
+        var data = JSON.parse(json_data.replace(/&#x27;/g, '"'));
+        //console.log(data);
+        var divhHtml = '';
+        if (data.tag.length > 3) {
+          data.tag = data.tag.slice(0, 3);
+        }
+		
+        // compIdx에 따라 데이터 분류
+        for (var i = 0; i < data.tag.length; i++) 
+		{
+			divhHtml += '<span style="background: #c8edff;" class="badge rounded colorCustom_03 fw-bold"># ' + data.tag[i] + '</span>';
+        }
+        var setHtml = '';
+        setHtml += divhHtml;
+        setHtml += '';
+        // tbody 엘리먼트 선택
+        var viewTagHtml = document.querySelector('#viewTag'+idx);
+        // tbody 내용 변경
+        viewTagHtml.innerHTML = setHtml;
+    }
+	$(document).ready(function() {
+		setTimeout(loaddivpage, 30);
+
+		$.ajax({
+			type: "POST",
+			url: "/apis/check_five/",
+			delay: 250,
+			dataType: 'json',
+			data: '',
+			success: function (data) {
+				// console.log("check_five",data)
+				chkPosition = "{{user.position_name}}";
+				//chkuser != 20111 && is_staff 사용하기
+				if(chkuser != 15893 && chkuser != 15186 && chkuser != 4783 && chkuser != 4792 && chkuser != 5498 && chkuser != 12823 && chkuser != 12849 && chkuser != 13079 && !chkPosition.includes('본부장') && !chkPosition.includes('영업본부장') && !chkPosition.includes('본부장(부장)') && !chkPosition.includes('본부장(상무)') && !chkPosition.includes('본부장(상무대우)') && !chkPosition.includes('본부장(전무)') && !chkPosition.includes('전무') && !chkPosition.includes('부사장') && !chkPosition.includes('은행장') && !chkPosition.includes('상무') && !chkPosition.includes('부행장')  && !chkPosition.includes('부행장보') && !chkPosition.includes('집행부행장') ){ //15893
+							chkCount = parseInt(data.check_five.count)
+							if( chkCount >= 5 ){//2024.05.21부터 무조건 최대 일 5건 발송 가능 202409.09~18까지 5 > 50 땡큐주간관리
+									document.querySelector("#hiddenChkSubmitYn").innerHTML = 'Z';
+									AlertInfo('금일 칭찬 한도가 초과되었습니다.', '내일 칭찬 등록 부탁드립니다.', true)
+									.then((result) => {
+											window.location.href = '/'; //HOME으로 이동
+									});
+
+							}
+
+							// if( chkCount >= 5 && data.addedTokenYn == 'N' ){
+							//     document.querySelector("#hiddenChkSubmitYn").innerHTML = 'Y';
+							//     AlertInfo('칭찬은 하루 5번 가능합니다.', '토큰 충전시 1번 더 칭찬 가능합니다.', true) // modalver1 모달을 검색 해주세요
+							//     .then((result) => {
+							//         window.location.href = '/accounts/myprofile';
+							//     });
+
+							// }
+
+							// if( chkCount >= 6 && data.addedTokenYn == 'Y' ){
+							//     document.querySelector("#hiddenChkSubmitYn").innerHTML = 'Z';
+							//     AlertInfo('금일 칭찬 한도가 초과되었습니다.', '내일 칭찬 등록 부탁드립니다.', true) // modalver2 모달을 검색 해주세요
+							//     .then((result) => {
+							//         window.location.href = '/'; //HOME으로 이동
+							//     });   
+							// }
+					}
+					
+			},
+			error: function (e) {
+
+			}
+	})
+	.done(function() {
+	// AJAX 요청 완료 후 처리할 작업
+	})
+	.fail(function() {
+	// AJAX 요청 실패 시 처리할 작업
+	});
+	});
+	
+	function loaddivpage()
+	{
+		document.getElementById("con").style.visibility = 'visible';
+		document.getElementById("header").style.visibility = 'visible';
+	}
+  </script>
+</body>
+
+</html>
+
+{% endblock %}

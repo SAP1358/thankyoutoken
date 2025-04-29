@@ -1,0 +1,1399 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+
+<head>
+<!-- Page CSS -->
+<link rel="stylesheet" href="{% static 'assets/vendor/css/pages/page-profile.css' %}" />
+<link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+
+<!-- 드림 사용 소스 -->
+{% comment %} <link rel="stylesheet" href="{% static 'assets/css/apex-charts.css' %}" /> {% endcomment %}
+{% comment %} <link rel="stylesheet" href="{% static 'assets/css/bootstrap-datepicker.css' %}" /> {% endcomment %}
+<!-- 드림 사용 소스 끝 -->
+
+  <script>
+    function copyLink(_bbsId) {
+      const textToCopy = 'https://thankyou.run.goorm.app/praiseDetail/' + _bbsId;
+      const tempInput = document.createElement('input');
+      tempInput.setAttribute('value', textToCopy);
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempInput);
+      toastr['success']('', '링크가 복사 되었습니다.');
+    }
+  </script>
+
+</head>
+
+
+<!-- Content wrapper -->
+<div id="bestPage" class="allPage layout-container flex-column">
+  <!-- Content -->
+  <div id="con" class="container-xxl mt-2">
+    <div class="row">
+      <div id="loadingdiv" class="col-12 mb-2 position-relative" style="z-index: 0; visibility: hidden;">
+        <div class="card py-3 px-2">
+          <div class="card-header p-0 pb-2">
+            <div class="mb-0 d-flex justify-content-between align-items-center">
+
+              <span class="">
+                {% if token_prev > 0 %}
+                <button style="background:none; border:0; padding:0; width: auto; height:30px; padding-left:10px;"><img class="w-100"
+                    src="{% static 'assets/img/icon_leftArrow_02.png' %}" alt=""
+                    onclick="window.location.href='/rankList?manage_token_id={{ token_prev }}'"></button>
+                {% else %}
+                <button style="background:none; border:0; padding:0; width: auto; height:30px; padding-left:10px;"><img class="w-100"
+                    src="{% static 'assets/img/icon_leftArrow_02.png' %}" alt=""></button>
+                {% endif %}
+              </span>
+
+              <h5 class="m-0 fw-med colorCustom_01" style="line-height: 1; ">
+                <span id="originalDate">
+                  {{ manageToken.start_date|slice:"0:4" }}-{{ manageToken.start_date|slice:"4:6" }}-{{ manageToken.start_date|slice:"6:8" }}
+                  ~
+                  {{ manageToken.end_date|slice:"0:4" }}-{{ manageToken.end_date|slice:"4:6" }}-{{ manageToken.end_date|slice:"6:8" }}
+                </span>
+                <span id="tokensGroupDate" style="display: none;">2024-07-01 ~ 2024-12-31</span>
+              </h5>
+              <span class="">
+                {% if token_next > 0 %}
+                <button style="background:none; border:0; padding:0; width: auto; height:30px; padding-right:10px;"><img class="w-100"
+                    src="{% static 'assets/img/icon_rightArrow_02.png' %}" alt=""
+                    onclick="window.location.href='/rankList?manage_token_id={{ token_next }}'"></button>
+                {% else %}
+                <button style="background:none; border:0; padding:0; width: auto; height:30px; padding-right:10px;"><img class="w-100"
+                    src="{% static 'assets/img/icon_rightArrow_02.png' %}" alt=""></button>
+                {% endif %}
+              </span>
+
+            </div>
+
+            <div class="bestBtnBox bestBtnSwiper mt-4 d-flex justify-content-between">
+						    <div class="swiper-wrapper">
+									<div class="swiper-slide" style="cursor: pointer;">
+                    <button onclick="bestBtnBoxs('loaddiv1');" class="btn fw-med clicked">
+                      {% if user.company_name == "우리에프아이에스" %}
+                      우리 에프아이에스
+                      {% else %}
+                      {{user.company_name}}
+                      
+                      {% endif %}
+                      
+                      {% if user.company_id == "20" %}
+                      <span class="badge rounded-pill ms-1"> {{ peer_no }}</span>
+                      {% endif %}
+                    </button>
+                  </div>
+
+                  {% if user.is_superuser and user.id != 15952 %}
+			  <!-- 여기서 버튼을 선택합니다 버튼에 맞는 id로 ranklistdiv1~ranklistdiv6 에 데이터를 전송합니다 -->
+        <div class="swiper-slide" style="cursor: pointer;">
+          <button onclick="bestBtnBoxs('loaddiv3');" class="btn fw-med ">우리금융 <span class="badge rounded-pill ms-1">
+              A</span></button> </div>
+              <div class="swiper-slide" style="cursor: pointer;">
+          <button onclick="bestBtnBoxs('loaddiv4');" class="btn fw-med ">우리금융 <span class="badge rounded-pill ms-1">
+              B</span></button> </div>
+              <div class="swiper-slide" style="cursor: pointer;">
+          <button onclick="bestBtnBoxs('loaddiv5');" class="btn fw-med ">우리금융 <span class="badge rounded-pill ms-1">
+              C</span></button> </div>
+              <div class="swiper-slide" style="cursor: pointer;">
+          <button onclick="bestBtnBoxs('loaddiv6');" class="btn fw-med ">우리금융 <span class="badge rounded-pill ms-1">
+              D</span></button> 
+      </div>
+              <!-- 경쟁과열 방지 -->
+              {% elif user.id == 15952 %}  
+                <div class="swiper-slide" style="cursor: pointer;">
+                    <button onclick="bestBtnBoxs('loaddiv3');" class="btn fw-med ">우리금융 <span class="badge rounded-pill ms-1">
+                        A</span></button> </div>
+                        <div class="swiper-slide" style="cursor: pointer;">
+                    <button onclick="bestBtnBoxs('loaddiv4');" class="btn fw-med ">우리금융 <span class="badge rounded-pill ms-1">
+                        B</span></button> </div>
+                        <div class="swiper-slide" style="cursor: pointer;">
+                    <button onclick="bestBtnBoxs('loaddiv5');" class="btn fw-med ">우리금융 <span class="badge rounded-pill ms-1">
+                        C</span></button> </div>
+                        <div class="swiper-slide" style="cursor: pointer;">
+                    <button onclick="bestBtnBoxs('loaddiv6');" class="btn fw-med ">우리금융 <span class="badge rounded-pill ms-1">
+                        D</span></button> 
+                </div>
+              <!-- 경쟁과열 방지 -->
+              {% else %}
+									<div class="swiper-slide" style="cursor: pointer;">
+                    <button onclick="bestBtnBoxs('loaddiv2');" class="btn fw-med ">
+                    <!-- <button onclick="alarmPrivate('1Round이벤트기간(3~6월)<br>종료 임박으로<br>누적 순위는 비공개하오니<br>양해부탁드립니다.')" class="btn fw-med"> -->
+                      우리금융그룹
+                {% if user.company_id in '20'|make_list %}
+                  <span class="badge rounded-pill ms-1"> A</span>
+                {% endif %}
+                {% if user.company_id in '95,E5,B3,B1'|make_list %}
+                  <span class="badge rounded-pill ms-1"> B</span>
+                {% endif %}
+                {% if user.company_id in 'D2,E3,E1,C9,E6'|make_list %}
+                  <span class="badge rounded-pill ms-1"> C</span>
+                {% endif %}
+                {% if user.company_id in 'C7,E8,D1,C1,E7'|make_list %}
+                  <span class="badge rounded-pill ms-1"> D</span>
+                {% endif %}
+              </button>
+            </div>
+              {% endif %}
+            				</div>
+						 </div>
+          </div>
+
+          <!-- rank list -->
+          <div id="ranklistdiv1" class="card-body rankList p-2">
+                    <!-- info -->
+                    <div id="rankInfo" class="accordion card-footer p-0" id="accordionExample">
+                      <div class="accordion-item p-2">
+                        <h2 class="accordion-header px-0" id="headingOne">
+                          <button class="accordion-button colorCustom_06 fw-bold mb-1 p-0" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
+                            aria-controls="collapseOne">
+                            ⓘ {{user.company_name}} 이용안내
+                          </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                          data-bs-parent="#accordionExample">
+                          <div class="accordion-body  px-0">
+                            <p class="colorCustom_05 fw-med m-0" style="font-size: 12px;">
+                              ※ 매월 {{user.company_name}}의 상위 칭찬직원을 출력 합니다. <br>
+                              ※ 포인트는 "받은건수*1 + 보낸건수*1"의 합산 입니다.<br>
+                              {% if user.company_id == "20" %}
+                              ※ 우리은행 경우, 38개 Peer 그룹으로 구성되어 있습니다.<br>
+                              (<mark>{{user.employee_name}}님은 Peer {{ peer_no }} </mark> 입니다.) <br><br>
+                              ※ Peer {{ peer_no }} 그룹 : {{ dept_names }}
+                              {% endif %}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- / info -->
+
+                  <!-- rank list -->
+                  <div id="ranklistdiv2" class="card-body rankList p-2" style="display: none;">
+                            <!-- info -->
+                            <div id="rankInfo" class="accordion card-footer p-0" id="accordionExample">
+                              <div class="accordion-item p-2">
+                                <h2 class="accordion-header px-0" id="headingOne">
+                                  <button class="accordion-button colorCustom_06 fw-bold mb-1 p-0" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
+                                    aria-controls="collapseOne">
+                                    ⓘ {{user.company_name}} 이용안내
+                                  </button>
+                                </h2>
+                                <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                                  data-bs-parent="#accordionExample">
+                                  <div class="accordion-body  px-0">
+                                    <p class="colorCustom_05 fw-med m-0" style="font-size: 12px;">
+                                      ※ 우리금융그룹 상위직원은 {{ group_start_dt }} ~ {{group_end_dt}} 기간동안 집계한 기준 입니다. <br>
+                                      ※ 포인트는 "받은건수*1 + 보낸건수*1"의 합산 입니다.<br>
+                                      {% if user.company_id == "20" %}
+                                          ※ A그룹 (1개사) : 우리은행
+                                      {% endif %} 
+                                      {% if user.company_id == "95" or user.company_id == "E5" or user.company_id == "B3" or user.company_id == "B1" %}
+                                          ※ B그룹 (4개사) : 우리금융지주,우리카드,우리금융캐피탈,우리에프아이에스
+                                      {% endif %} 
+                                      {% if user.company_id == "D2" or user.company_id == "E3" or user.company_id == "E1" or user.company_id == "C9" or user.company_id == "E6" %}
+                                          ※ C그룹 (5개사) : 우리투자증권,우리자산신탁,우리자산운용,우리신용정보,우리금융저축은행
+                                      {% endif %} 
+                                      {% if user.company_id == "C7" or user.company_id == "E8" or user.company_id == "D1" or user.company_id == "C1" or user.company_id == "E7"%}
+                                          ※ D그룹 (5개사) : 우리펀드서비스,우리벤처파트너스,우리금융경영연구소,우리프라이빗에퀴티자산운용,우리금융에프앤아이
+                                      {% endif %} 
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <!-- / info -->
+
+                          <!-- GroupA rank list -->
+                          <div id="ranklistdiv3" class="card-body rankList p-2" style="display: none;">
+                                    <!-- info -->
+                                    <div id="rankInfo" class="accordion card-footer p-0" id="accordionExample">
+                                      <div class="accordion-item p-2">
+                                        <h2 class="accordion-header px-0" id="headingOne">
+                                          <button class="accordion-button colorCustom_06 fw-bold mb-1 p-0" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
+                                            aria-controls="collapseOne">
+                                            ⓘ {{user.company_name}} 이용안내
+                                          </button>
+                                        </h2>
+                                        <div id="collapseOne" class="accordion-collapse collapse"
+                                          aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                          <div class="accordion-body  px-0">
+                                            <p class="colorCustom_05 fw-med m-0" style="font-size: 12px;">
+                                              ※ 우리금융그룹 상위직원은 {{ group_start_dt }} ~ {{group_end_dt}} 기간동안 집계한 기준 입니다.
+                                              <br>
+                                              ※ 포인트는 "받은건수*1 + 보낸건수*1"의 합산 입니다.<br>
+                                              ※ A그룹 (1개사) : 우리은행
+                                            </p>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <!-- GroupA rank list / info -->
+
+
+                          <!-- GroupB rank list -->
+                          <div id="ranklistdiv4" class="card-body rankList p-2" style="display: none;">
+                                    <!-- info -->
+                                    <div id="rankInfo" class="accordion card-footer p-0" id="accordionExample">
+                                      <div class="accordion-item p-2">
+                                        <h2 class="accordion-header px-0" id="headingOne">
+                                          <button class="accordion-button colorCustom_06 fw-bold mb-1 p-0" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
+                                            aria-controls="collapseOne">
+                                            ⓘ {{user.company_name}} 이용안내
+                                          </button>
+                                        </h2>
+                                        <div id="collapseOne" class="accordion-collapse collapse"
+                                          aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                          <div class="accordion-body  px-0">
+                                            <p class="colorCustom_05 fw-med m-0" style="font-size: 12px;">
+                                              ※ 우리금융그룹 상위직원은 {{ group_start_dt }} ~ {{group_end_dt}} 기간동안 집계한 기준 입니다.
+                                              <br>
+                                              ※ 포인트는 "받은건수*1 + 보낸건수*1"의 합산 입니다.<br>
+                                              ※ B그룹 (4개사) : 우리금융지주,우리카드,우리금융캐피탈,우리에프아이에스
+                                            </p>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <!-- GroupB rank list / info -->
+                                          
+                                        
+                          
+                          <!-- GroupC rank list -->
+                          <div id="ranklistdiv5" class="card-body rankList p-2" style="display: none;">
+                                    <!-- info -->
+                                    <div id="rankInfo" class="accordion card-footer p-0" id="accordionExample">
+                                      <div class="accordion-item p-2">
+                                        <h2 class="accordion-header px-0" id="headingOne">
+                                          <button class="accordion-button colorCustom_06 fw-bold mb-1 p-0" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
+                                            aria-controls="collapseOne">
+                                            ⓘ {{user.company_name}} 이용안내
+                                          </button>
+                                        </h2>
+                                        <div id="collapseOne" class="accordion-collapse collapse"
+                                          aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                          <div class="accordion-body  px-0">
+                                            <p class="colorCustom_05 fw-med m-0" style="font-size: 12px;">
+                                              ※ 우리금융그룹 상위직원은 {{ group_start_dt }} ~ {{group_end_dt}} 기간동안 집계한 기준 입니다.
+                                              <br>
+                                              ※ 포인트는 "받은건수*1 + 보낸건수*1"의 합산 입니다.<br>
+                                              ※ C그룹 (5개사) : 우리투자증권,우리자산신탁,우리자산운용,우리신용정보,우리금융저축은행
+                                            </p>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <!-- GroupC rank list / info -->
+                                  
+                                  
+                          <!-- GroupD rank list -->
+                          <div id="ranklistdiv6" class="card-body rankList p-2" style="display: none;">
+                                    <!-- info -->
+                                    <div id="rankInfo" class="accordion card-footer p-0" id="accordionExample">
+                                      <div class="accordion-item p-2">
+                                        <h2 class="accordion-header px-0" id="headingOne">
+                                          <button class="accordion-button colorCustom_06 fw-bold mb-1 p-0" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
+                                            aria-controls="collapseOne">
+                                            ⓘ {{user.company_name}} 이용안내
+                                          </button>
+                                        </h2>
+                                        <div id="collapseOne" class="accordion-collapse collapse"
+                                          aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                          <div class="accordion-body  px-0">
+                                            <p class="colorCustom_05 fw-med m-0" style="font-size: 12px;">
+                                              ※ 우리금융그룹 상위직원은 {{ group_start_dt }} ~ {{group_end_dt}} 기간동안 집계한 기준 입니다.
+                                              <br>
+                                              ※ 포인트는 "받은건수*1 + 보낸건수*1"의 합산 입니다.<br>
+                                              ※ D그룹 (5개사) : 우리펀드서비스,우리벤처파트너스,우리금융경영연구소,우리프라이빗에퀴티자산운용,우리금융에프앤아이
+                                            </p>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <!-- GroupD rank list / info -->
+
+
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div id="footer"></div>
+                            </div>
+                          </div>
+                          
+                          
+						<!-- 2024.02.26 깨진다.... 태그만 바꿀 수 있게 변경하기!!! 우리칭찬왕 받은 칭찬리스트 모달 시작 - 240219 -->
+						<div class="modal fade" id="sendTkModal" tabindex="-1"
+						  aria-labelledby="exampleModalLabel" aria-hidden="true">
+						  <div class="modal-dialog modal-dialog-scrollable" style="max-width: 600px;">
+							<div class="modal-content" style="padding:5%;">
+							  <div class="modal-header p-0">
+								<button type="button" class="position-absolute btn-close closeCustom"
+								  style="background:transparent; border:0; right:20px; top:25px; box-shadow: none; transform: none !important; z-index: 2;"
+								  data-bs-dismiss="modal">
+								  <span></span>
+								</button>
+								<div class="d-flex align-items-center" style="width: 100%;">
+								  <div class="me-2" style="width:60px; height:60px; border-radius: 100%; overflow: hidden;"><img style="height: 100%; object-fit: cover;" id="rankPriseListUserImg"
+									  class="w-100" src="{% static 'assets/img/profile_icon.png' %}">
+								  </div>
+								  <div style="word-break: keep-all; width:64%;">
+									<div class="d-flex mb-2"
+									  style="font-size: clamp(14px,3.5vw,20px);">
+									  <p id="rank_md_sender_text" class="mb-0 colorCustom_03 fw-bold">전략기획부 고은택 대리의 칭찬</p>
+									</div>
+									<div class="colorCustom_01 fw-med d-inline-block"
+									  style="background: #c8edff; padding:2px 5px; font-size: clamp(14px,3.5vw,20px);">
+									  포인트
+									  (받음:<span id="rank_receivenum" class="gaveTk"></span>/보냄:<span
+										id="rank_sentnum" class="sendTk"></span>)</div>
+								  </div>
+								</div>
+							  </div>
+
+							  <div id="montly_rank_praise_modal" class="modal-body p-0 mt-3">
+
+								
+
+							  </div>
+							</div>
+						  </div>
+						</div>
+						<!-- 우리칭찬왕 받은 칭찬리스트 모달 끝 - 240219 -->
+
+<!-- praise list view modal -->
+<!--
+<div class="modal fade" id="praiseListModal" tabindex="-1" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="row">
+				<div class="col-12">
+					<div class="card">
+						<div class="px-2 py-3 d-flex align-items-center">
+							<img id="rankPriseListUserImg" src="{% static 'assets/img/woori.png' %}" alt="Avatar" class="avatar avatar-s ms-0 me-2 rounded-circle">
+							<div class="w-100">
+								<div class="d-flex justify-content-between">
+									<div class="user-info">
+										<h6 id="rankPriseListTitle" class="mb-0"></h6>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="px-2 pb-3">
+							<div class="rank-praise-list overflow-auto">
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div> -->
+<!-- praise list view modal -->
+
+<script>
+      
+
+  function viewTag(idx, json_data) {
+    console.log('viewTag =========');
+    var data = JSON.parse(json_data.replace(/&quot;/g, '"'));
+    //console.log(data);
+    var divhHtml = '';
+    // compIdx에 따라 데이터 분류
+    for (var i = 0; i < data.tag.length; i++) {
+      divhHtml += '<span class="badge bg-label-SECONDARY"> # ' + data.tag[i] +
+        '</span>';
+    }
+
+    var setHtml =
+      '<div class="d-flex justify-content-center align-items-center gap-2 mb-0 Pretendard">';
+    setHtml += divhHtml;
+    setHtml += '</div>';
+
+    // tbody 엘리먼트 선택
+    var viewTagHtml = document.querySelector('#viewTag' + idx);
+    // tbody 내용 변경
+    viewTagHtml.innerHTML = setHtml;
+  }
+
+
+  function clickLike(idx, _compliment_id) {
+
+    var inputData = {
+      compliment_id: _compliment_id
+      //value2: input2,
+      //value3: input3
+
+    };
+
+    try {
+      $.ajax({
+          type: "POST",
+          url: "/apis/praise_like/",
+          data: inputData,
+          success: function (data) {
+            console.log('### clickLike success');
+            //console.log(data);
+            //console.log(data.likes_count);
+
+            // 엘리먼트 선택
+            var clickLikeHtml = document.querySelector('#clickLike' + idx);
+
+            // tbody 내용 변경
+            clickLikeHtml.innerHTML = data.likes_count;
+
+          },
+          error: function (e) {
+            console.log("### clickLike ERROR : ", e);
+            //alert("fail");
+          }
+        })
+        .done(function () {
+          // AJAX 요청 완료 후 처리할 작업
+        })
+        .fail(function () {
+          // AJAX 요청 실패 시 처리할 작업
+        });
+    } catch (e) {
+      alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+    }
+
+    //testAPI();
+  // }
+
+  function testAPI() {
+    console.log('### testAPI CALL');
+    console.log('viewNotice =========');
+
+    var inputData = {
+      compliment_id: '1'
+      //value2: input2,
+      //value3: input3
+    };
+
+    try {
+      $.ajax({
+          type: "POST",
+          url: "/apis/myprofile_notice/",
+          data: inputData,
+          success: function (data) {
+            console.log('### myprofile_notice success');
+            //console.log(data);
+          },
+          error: function (e) {
+            console.log("### myprofile_notice ERROR : ", e);
+            //alert("fail");
+          }
+        })
+        .done(function () {
+          // AJAX 요청 완료 후 처리할 작업
+        })
+        .fail(function () {
+          // AJAX 요청 실패 시 처리할 작업
+        });
+    } catch (e) {
+      alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+    }
+  }
+
+  // 2024.02.26 태그 빨간색을 파란색으로 바꾸는거 확인해보기 이전
+    document.getElementById('rank_depart').innerHTML = String(department_name);
+    document.getElementById('rank_name').innerHTML = String(employee_name);
+    document.getElementById('rank_position').innerHTML = String(position_name);
+    document.getElementById('rank_receivenum').innerHTML = String(recev);
+    document.getElementById('rank_sentnum').innerHTML = String(send);
+
+    if (image_yn == "Y") {
+      document.querySelector("#rankPriseListUserImg").setAttribute("src", image);
+    } else {
+      document.querySelector("#rankPriseListUserImg").setAttribute("src",
+        "{% static 'assets/img/profile_bee_01.png' %}");
+    }
+
+
+    var inputData = {
+      user_id: id,
+      token_id: "{{manageToken.id}}"
+    };
+
+    try {
+      $.ajax({
+          type: "POST",
+          url: "/apis/praise_count/",
+          data: inputData,
+          success: function (data) {
+            console.log(data.data_list);
+            /*
+		 					$(".rank-praise-list").html("");
+                            
+		 					var tempHtml = data.data_list.reduce(function(acc, cur, idx){
+                                   var tagString = cur.tag.substr(1).slice(0, -1).replace(/'/g, '"');
+                                   var tagArray = JSON.parse("{" + tagString + "}").tag;
+                                   //console.log('tagArray'+tagArray);
+                                   //console.log('Array.isArray(tagArray'+Array.isArray(tagArray) );
+                                
+                                   var tagHtml = Array.isArray(tagArray) ? tagArray.reduce(function(acc, cur, idx) {
+                                     return acc += `<span class="badge bg-label-DANGER mt-1 me-1"># ${cur}</span>`;
+                                   }, '') : '<span class="badge bg-label-DANGER mt-1 me-1"># '+tagArray+'</span>';
+                                 //console.log('tagHtml '+tagHtml);
+                                 //tagHtml = tagHtml+'11';
+                                 //console.log('acc '+acc);
+		 						return acc += `<div class="rank-praise-item d-flex p-2  ">
+		 							<img src="${cur.image_path}" class="me-2 w-px-75" style="object-fit: contain;">
+		 							<div class="w-100">
+		 								<div class="d-flex justify-content-between">
+		 									<div class="user-info">
+		 										<h6 class="mb-1">${cur.user_department_name + ' ' + cur.user_employee_name + ' ' + cur.user_position_name}</h6>
+		 										<small>${cur.short_content}</small>
+		 										<div id="viewTag1">
+		 											${tagHtml}
+		 										</div>
+		 									</div>
+		 								</div>
+		 							</div>
+		 						</div>`;
+		 					}, '');
+		 					$(".rank-praise-list").html(tempHtml); */
+          },
+          error: function (e) {
+            console.log("### praise_count ERROR : ", e);
+          }
+        })
+        .done(function () {
+          // AJAX 요청 완료 후 처리할 작업
+        })
+        .fail(function () {
+          // AJAX 요청 실패 시 처리할 작업
+        });
+    } catch (e) {
+      alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+    }
+  }
+  
+  function viewPraiseList(id, employee_name, position_name, department_name, image, image_yn, rank_receivenum, rank_sentnum) 
+  {
+	var rank_receivenum = rank_receivenum;
+	var rank_sentnum = rank_sentnum;
+	var modal_total_txt = String(department_name) + ' ' + String(employee_name) + ' ' + String(position_name) + '의 칭찬';
+	document.getElementById('rank_receivenum').innerHTML = rank_receivenum;
+	document.getElementById('rank_sentnum').innerHTML = rank_sentnum;
+	document.getElementById('rank_md_sender_text').innerHTML = modal_total_txt;
+	
+	var inputData = {
+				user_id : id,
+                token_id:"{{manageToken.id}}"
+		};
+		try {
+				$.ajax({
+						type: "POST",
+						url: "/apis/praise_count/",
+						data: inputData,
+						success: function (data) {
+							html = '';
+							const myNode = document.getElementById("montly_rank_praise_modal");
+							while (myNode.firstChild) 
+							{
+								myNode.removeChild(myNode.lastChild);
+							}
+							
+							for (var i = 0; i < data.data_list.length; i++) {
+								var praise_position_name = data.data_list[i].user_position_name;
+								var praise_department_name = data.data_list[i].user_department_name;
+								var praise_employee_name = data.data_list[i].user_employee_name;
+								var short_content = data.data_list[i].short_content;
+								var tagvar = JSON.stringify(data.data_list[i]).split('"tag"')[1].split("[")[1].split(']')[0].split(',');
+								var image_path = data.data_list[i].image_path;
+								var total_txt = praise_department_name + ' ' + praise_employee_name + ' ' + praise_position_name;
+								// console.log(short_content);
+								
+								
+								html += '<div class="sendTkList p-2 border rounded d-flex align-items-center" style="margin-bottom:10px"><div class="photoCard rounded overflow-hidden me-3" style="min-width:60px; width: 20%; min-height:60px; height:60px; border-radius: 10px;">';
+								html += '<img src="'+image_path+'" class="w-100 h-100 img-fluid" style="object-fit: cover;">';
+								html += '</div><div class="overflow-hidden" style="width: 75%;"><div class="d-flex" style="font-size: 16px;">';
+								html += '<p style="word-break: keep-all;" class="mb-0 colorCustom_01 fw-med">'+total_txt+'</p>';
+								html += '</div><p style="text-overflow: ellipsis; word-wrap: break-word; font-size:14px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;"';
+								html += 'class="card-text mb-0 colorCustom_01">'+short_content+'</p>';
+								html += '<div class="hash" style="margin-top: 1.5%;">';
+								for (var t = 0; t < tagvar.length; t++)
+								{
+									var removedtags = tagvar[t].replace(/['"\\]/g, '');
+									html += '<span class="badge colorCustom_03 fw-bold" style="color:#006ed5 !important;background: #e8f7ff; font-size:10px; margin-right:5px;"># '+removedtags+'</span>';
+									
+								}
+								html += '</div></div></div>';
+							
+							}
+							
+							
+							document.getElementById('montly_rank_praise_modal').insertAdjacentHTML('beforeend',html);
+							
+						},
+						error: function (e) {
+								console.log("### praise_count ERROR : ", e);
+						}
+			})
+			.done(function() {
+				// AJAX 요청 완료 후 처리할 작업
+			})
+			.fail(function() {
+				// AJAX 요청 실패 시 처리할 작업
+			});
+		} catch (e) {
+				alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+		} 
+	
+  } 
+
+  function viewProfile(id, imgYn, imgSrc, employee_id, employee_name, department_name, position_name, company_name) {
+    //var profileViewModal = document.getElementById('profileViewModal');
+    //var bootstrapModal = new bootstrap.Modal(profileViewModal);
+    //bootstrapModal.toggle();
+    if (imgYn == "Y") {
+      document.getElementById("profile_view_img").setAttribute("src", imgSrc);
+    } else {
+      document.getElementById("profile_view_img").setAttribute("src", "{% static 'assets/img/profile_bee_01.png' %}"); //woori.png
+    }
+    document.getElementById("profile_employee_name").innerHTML = employee_name;
+    document.getElementById("profile_position_name").innerHTML = position_name;
+    document.getElementById("profile_company_name").innerHTML = company_name;
+	document.getElementById("profile_department_name").innerHTML = department_name;
+	document.getElementById("profile_change_btn").style.display = 'none';
+
+    //--------------
+    // 칭찬건수 호출
+    //--------------
+	
+	/*
+    var inputData = {
+      user_id: id,
+    };
+
+    console.log("### praise_count called  ###");
+    // document.querySelector("#span_token_count").innerHTML = '';
+
+    try {
+      $.ajax({
+          type: "POST",
+          url: "/apis/praise_count/",
+          data: inputData,
+          success: function (data) {
+            console.log('### praise_count success');
+            //console.log(data);
+            //document.querySelector("#span_token_count").innerHTML = data.praise_count;
+            //document.querySelector("#span_token_rank").innerHTML = data.operator_rank + '위';
+
+          },
+          error: function (e) {
+            console.log("### praise_count ERROR : ", e);
+            //alert("fail");
+          }
+        })
+        .done(function () {
+          // AJAX 요청 완료 후 처리할 작업
+        })
+        .fail(function () {
+          // AJAX 요청 실패 시 처리할 작업
+        });
+    } catch (e) {
+      alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+    } */
+  }
+</script>
+<script>
+  //비공개 알림
+  function alarmPrivate(_text) {  
+      Swal.fire({
+        html: _text,
+        type: 'warning',
+        customClass: {
+          confirmButton: 'btn btn-primary'
+        },
+        buttonsStyling: false
+      })
+  }
+  // 우리칭찬왕 탭 버튼 클릭시 CSS (배경,폰트색상) 추가 시작 - 240219
+
+  function bestBtnBoxs(loaddivval) {
+    const originalDate = document.getElementById('originalDate');
+    const tokensGroupDate = document.getElementById('tokensGroupDate');
+
+    // 버튼 클릭시 이벤트 발생
+    $('.bestBtnBox').off('click').on('click', event => {
+      // 클릭한 target이 .bestBtnBox button인지 판단
+      const clickedBtn = event.target.closest('.bestBtnBox button');
+      // 아닐시 rturn
+      if (!clickedBtn) return;
+
+      // 탭버튼의 모든 형제요소 CSS 기본으로 초기화
+      const siblings = document.querySelectorAll('.bestBtnBox button');
+      siblings.forEach(siblingBtn => {
+        siblingBtn.classList.remove('clicked');
+      });
+    
+      
+      // 클릭한 탭버튼 CSS 추가
+      clickedBtn.classList.add('clicked');
+      document.getElementById('ranklistdiv1').style.display = loaddivval == 'loaddiv1' ? 'block' : 'none';
+      document.getElementById('ranklistdiv2').style.display = loaddivval == 'loaddiv2' ? 'block' : 'none';
+      document.getElementById('ranklistdiv3').style.display = loaddivval == 'loaddiv3' ? 'block' : 'none';
+      document.getElementById('ranklistdiv4').style.display = loaddivval == 'loaddiv4' ? 'block' : 'none';
+      document.getElementById('ranklistdiv5').style.display = loaddivval == 'loaddiv5' ? 'block' : 'none';
+      document.getElementById('ranklistdiv6').style.display = loaddivval == 'loaddiv6' ? 'block' : 'none';
+      if (loaddivval) {
+        originalDate.style.display = 'block'; // 원래 날짜 보이기
+        tokensGroupDate.style.display = 'none';
+
+        const id = `ranklistdiv${loaddivval.slice(-1)}`;
+        const params = {
+          type: "posts"
+        }
+        switch (loaddivval) {
+          case "loaddiv2":
+            params.type = "postsGroup"
+            break;
+          case "loaddiv3":
+            params.type = "group"
+            params.group = "A"
+            break;
+          case "loaddiv4":
+            params.type = "group"
+            params.group = "B"
+            break;
+          case "loaddiv5":
+            params.type = "group"
+            params.group = "C"
+            break;
+          case "loaddiv6":
+            params.type = "group"
+            params.group = "D"
+            break;
+          default:
+            break;
+        }
+
+        if (document.getElementById(id).childElementCount === 1) {
+          getRankList(id, params);
+        }
+      }
+    });
+    // 우리칭찬왕 버튼 클릭시 CSS (배경,폰트색상) 추가 끝 - 240219
+  }
+  bestBtnBoxs();
+
+  function getRankList(id, params) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const manageTokenId = urlParams.get('manage_token_id');
+    if (manageTokenId) {
+      params.manage_token_id = manageTokenId
+    }
+
+    $.ajax({
+      type: "GET",
+      url: "/apis/rank_list/get_group_data",
+      data: params,
+      beforeSend: function () {
+        renderSkeletons(id);
+      },
+      success: function (data) {
+        renderUserList(id, data.data.posts);
+      },
+      error: function (e) {
+        console.log("### Get rank list ERROR : ", e);
+      },
+      complete: function() {
+        $(`#${id}`).find('.skeleton-container').remove();
+      }
+    })
+  }
+
+  // Function to render the user list
+  function renderUserList(id, postsGroup) {
+    const container = document.getElementById(id);
+    const rankInfoElement = container.querySelector(`#${id} > #rankInfo`);
+    
+    postsGroup.forEach((part, index) => {
+        const counter = index + 1;
+        
+        // Check if this user's content is already appended
+        const existingContent = container.querySelector(`[data-user-id="${part.user_id}"]`);
+        if (existingContent) {
+            console.log(`Content for user ${part.user_id} already exists`);
+            return; // Skip this iteration
+        }
+        
+        // Create a new div element to hold the content
+        const newDiv = document.createElement('div');
+        
+        let html = '';
+        
+        // Create wrapper div based on rank
+        html += `
+          <div ${counter <= 3 ? `id="best_0${counter}"` : ''} class="d-flex align-items-center" data-user-id="${part.user_id}">
+              <div class="user_logo">
+                  <img src="/static/assets/img/rank_wing${counter}.png" class="w-100" alt="rankImg" />
+              </div>
+        `;
+
+        // User profile image
+        const profileImage = part.user_image_yn === 'Y' 
+            ? part.user_image 
+            : '/static/assets/img/profile_bee_01.png';
+            
+        html += `
+            <div class="user_profile" href="#" data-bs-toggle="modal" data-bs-target="#profile_modal"
+                onclick='javascript:viewProfile("${part.user_id}", "${part.user_image_yn}", "${part.user_image}", 
+                "${part.employee_id}", "${part.employee_name}", "${part.department_name}",
+                "${part.position_name}","${part.company_name}");'>
+                <img src="${profileImage}" class="w-100 h-100" style="object-fit: cover;" />
+            </div>
+            <div class="">
+                <div class="user_name">
+                    <h1 class="colorCustom_01 m-0 fw-med" style="display: inline-block; margin-right:10px;">
+                        ${part.employee_name} ${part.position_name}
+                    </h1>
+                    <p class="colorCustom_02 m-0 fw-med" style="display:inline-block; margin-top:5px !important;">
+                        ${part.department_name}
+                    </p>
+                </div>
+                <div class="hash d-flex">
+        `;
+
+        // Add hashtags
+        const top3Result = JSON.parse("{{ top3_result|safe }}".replace(/(\d+):/g, '"$1":').replace(/'/g, '"'));
+        if (top3Result[part.user_id]) {
+            top3Result[part.user_id].forEach((tag, tagIndex) => {
+                const marginClass = tagIndex === 0 ? '' : 'ms-2';
+                html += `<span class="badge colorCustom_03 fw-bold ${marginClass}"># ${tag} </span>`;
+            });
+        }
+
+        html += `
+                </div>
+            </div>
+            <div class="totalToken" style="cursor: pointer; margin-left:auto;">
+                <span class="gm-bold" data-bs-toggle="modal" data-bs-target="#sendTkModal"
+                onclick='javascript:viewPraiseList("${part.user_id}", "${part.employee_name}", "${part.position_name}", 
+                "${part.department_name}", "${part.user_image}", "${part.user__image_yn}",
+                "${part.recev_point}","${part.send_point}");'>${part.tot_point}</span>
+            </div>
+        </div>
+        `;
+
+        // Set the HTML content to the new div
+        newDiv.innerHTML = html;
+        
+        // Insert the new div before the span element
+        container.insertBefore(newDiv.firstElementChild, rankInfoElement);
+    });
+  }
+
+  function renderSkeletons(id) {
+    $(`#${id}`).prepend('<div class="skeleton-container"></div>');
+    const container = $(`#${id} > .skeleton-container`);
+
+    for (let i = 0; i < 5; i++) {
+      const counter = i + 1;
+        container.append(`
+          <div ${counter <= 3 ? `id="best_0${counter}"` : ''} class="d-flex align-items-center" style="margin-top: 7px; border-radius: 10px; padding: 14px 2%;">
+            <div class="user_logo">
+              <div class="skeleton-avatar"></div>
+            </div>
+            <div class="user_profile">
+              <div class="skeleton-avatar"></div>
+            </div>
+            <div style="width: 75%;">
+              <div class="user_name skeleton-line">
+                <h1 class="colorCustom_01 m-0 fw-med" style="display: inline-block; margin-right:10px;"></h1>
+                <p class="colorCustom_02 m-0 fw-med" style="display:inline-block; margin-top:5px !important;"></p>
+              </div>
+              <div class="hash d-flex skeleton-line"></div>
+            </div>
+            <div class="totalToken skeleton-rank" style="cursor: pointer; margin-left:auto;">
+              <span class="gm-bold"></span>
+            </div>
+          </div>
+        `);
+    }
+  }
+
+  //console.log("scriptStart");
+  // 공통 js 시작 - 240222
+  var doc = document;
+
+  function chkHiddenInput() {
+    //부서, 직위 서브 찾기 탭 생성 시작
+    const chkHiddenInputs = document.querySelectorAll('.chkHiddenInput');
+    document.addEventListener('click', (event) => {
+      const clickedElement = event.target;
+      const isChkHiddenInput = clickedElement.classList.contains(
+        'chkHiddenInput') || clickedElement.closest(
+        '.chkHiddenInput');
+
+      chkHiddenInputs.forEach((item, index) => {
+        const editSearchBox = item.querySelector('.editSearchBox');
+
+        if (!isChkHiddenInput || item !== clickedElement.closest(
+            '.chkHiddenInput')) {
+          editSearchBox.classList.add('d-none');
+        } else {
+          editSearchBox.classList.remove('d-none');
+        }
+      });
+    });
+    //부서, 직위 서브 찾기 탭 생성 끝
+  }
+  chkHiddenInput();
+
+  // 검색 아이콘 클릭시 검색 서브 input 탭 닫기 시작
+  const searchBox = document.querySelector('.searchBox');
+
+  function searchbtns() {
+    const search = document.getElementById('select2Trans');
+    search.addEventListener('click', () => {
+      if (searchBox.classList.contains('clicked')) {
+        searchBox.classList.remove('clicked');
+      }
+    });
+  }
+  searchbtns();
+  // 검색 아이콘 클릭시 검색 서브 input 탭 닫기 끝
+  
+  window.onload = function () {
+  // 하단 내비게이션 높잇값 만큼 모든 페이지 높이조절 시작
+      const moNav_h = document.querySelector('.mobile-navigation').clientHeight;
+      const layoutPage = document.querySelector('.layout-page');
+      layoutPage.style.paddingBottom = moNav_h + 40 + 'px';
+  // 하단 내비게이션 높잇값 만큼 모든 페이지 높이조절 끝 
+
+      var bestBtnBoxSwiper = new Swiper('.bestBtnSwiper', {
+        autoHeight : true,
+      slidesPerView: 2.0, //4.5
+      spaceBetween: 10, //10
+                 breakpoints: {
+        1000: {
+          slidesPerView: 2.0, //4.5
+        },
+        350: {
+          slidesPerView: 2.0,  //3.5
+        },
+      },
+
+/*       breakpoints: {
+        1000: {
+          slidesPerView: 10,
+        },
+        600: {
+          slidesPerView: 5,
+        },
+        400: {
+          slidesPerView: 4,
+        },
+      } */
+    });
+    setTimeout(loaddivpage, 30);
+  }
+
+function loaddivpage()
+{
+	// 모든 페이지 footer 태그 출력 시작 - 240223
+    const footer = document.querySelector('#footer');
+    if (footer) {
+      footer.innerHTML =
+        '<div class="footer w-100 text-center fw-med fs-6" style="color:#418dd4;">ⓒ 2024, made 땡큐토큰</div>';
+    }
+    // 모든 페이지 footer 태그 출력 끝 - 240223
+	document.getElementById("loadingdiv").style.visibility = 'visible';
+	document.getElementById("header").style.visibility = 'visible';
+	
+  getRankList("ranklistdiv1", { type: "posts" });
+  }
+
+</script>
+
+<style>
+  .select2.select2-container {position: absolute; left:0; width:calc(100% - 99px) !important;}
+    button.searchChkBtn {position: absolute !important; right:0;}
+  .allPage .sendMeCard>div {
+    background: #c8edff;
+  }
+
+  /* 카드 - 지점 명칭 */
+  .allPage .card-title {
+    font-size: 0.7rem;
+  }
+
+  /* 카드 - 사람 > 직위 명칭 */
+  .allPage .card-text span {
+    font-size: 0.8rem;
+  }
+
+  /* 카드 - 해쉬태그 */
+  .allPage .hash>span {
+    border-radius: 17px;
+    background: #e8f7ff;
+  }
+
+  .allPage .icon_right_arrow {
+    width: 25px;
+    height: 25px;
+    background: url(/static/assets/img/icon_arrow.svg) no-repeat center/100% auto;
+  }
+
+  .allPage .heartBtn,
+  .allPage .commentBtn {
+    width: 100%;
+    height: 100%;
+  }
+
+  .allPage .heartBtn i {
+    width: 100%;
+    height: 100%;
+    /* background: #222; */
+    /* -webkit-mask: url(../img/icon_heart_01.svg) no-repeat center/contain; */
+    /* mask: url(../img/icon_heart_01.svg) no-repeat center/contain; */
+    background: no-repeat center/100% auto;
+    background-image: url(/static/assets/img/icon_heart_01.svg);
+  }
+
+  .allPage .heartBtn i.clicked {
+    background-image: url(/static/assets/img/icon_heart_02.svg);
+  }
+
+  .allPage .commentBtn i {
+    width: 100%;
+    height: 100%;
+    /* background: #222; */
+    /* -webkit-mask: url(../img/icon_comment_01.svg) no-repeat center/contain; */
+    /* mask: url(../img/icon_comment_01.svg) no-repeat center/contain; */
+    background: no-repeat center/100% auto;
+    background-image: url(../img/icon_comment_01.svg);
+  }
+
+  .allPage .commentBtn i.clicked {
+    background-image: url(../img/icon_comment_02.svg);
+  }
+
+  .allPage .heartBtn i,
+  .allPage .commentBtn i {
+    min-width: 20px;
+  }
+
+  .allPage .editBtn {
+    height: 100%;
+  }
+
+  .allPage .editBtn span {
+    width: 10px;
+    height: 150%;
+    background: #006ed5;
+    -webkit-mask: url(../img/icon_edit.svg) no-repeat center/auto 100%;
+    mask: url(../img/icon_edit.svg) no-repeat center/auto 100%;
+  }
+
+  .comment_modal .typing_comment:focus {
+    border-color: #14a8ea;
+  }
+
+  .comment_modal .typing_comment+button {
+    border: 1px solid #14a8ea !important;
+    background: #14a8ea !important;
+    box-shadow: none;
+  }
+
+  .allPage .modal-dialog {
+    top: 3%;
+    max-width: 450px;
+  }
+
+
+  /* 우리칭찬왕 페이지 CSS 추가 시작 - 240219*/
+    #bestPage .bestBtnBox {
+      overflow: hidden;
+    }
+  #bestPage .bestBtnBox button {
+    width: 100%;
+    padding: clamp(5px, 3.4vw, 10px);
+    background-color: #e8f7ff;
+    color: #006ed5;
+    word-break: keep-all;
+    font-size: clamp(10px, 2vw, 14px) !important;
+  }
+
+  #bestPage .bestBtnBox button.clicked {
+    background: #006ed5;
+    color: #fff;
+  }
+
+  #bestPage .bestBtnBox button span {
+    top: auto;
+    background: #006ed5;
+    color: #FFF;
+    z-index: 1;
+  }
+
+  #bestPage .bestBtnBox button.clicked span {
+    background-color: #fff;
+    color: #006ed5;
+  }
+
+  /* 1등~3등 개별 테두리 배경 시작 */
+  #bestPage #best_01 {
+    background: #fff url(/static/assets/img/rank_bg01.png) no-repeat center/100% 100%;
+  }
+
+  #bestPage #best_02 {
+    background: #fff url(/static/assets/img/rank_bg02.png) no-repeat center/100% 100%;
+  }
+
+  #bestPage #best_03 {
+    background: #fff url(/static/assets/img/rank_bg03.png) no-repeat center/100% 100%;
+  }
+
+  /* 1등~3등 개별 테두리 배경 끝 */
+
+  /* 4~10등 공통 배경 시작  */
+  #bestPage .rankList>div {
+    margin-top: 7px;
+    border-radius: 10px;
+    background: #e8f7ff;
+    padding: 15px 2%;
+  }
+  @media (max-width:500px) {
+  #bestPage .rankList>div {
+    padding-right:10px;
+  }
+  }
+
+  #bestPage .user_logo {
+    width: 40px;
+    margin-right:3%;
+  }
+
+  #bestPage .user_profile {
+    position: relative;
+    width: 35px;
+    height: 35px;
+    margin-right:10px;
+  }
+
+  #bestPage .user_profile::after {
+    content: "";
+    position: absolute;
+    top: -10%;
+    left: 0;
+    transform: scale(1.45);
+    width: 100%;
+    height: 100%;
+  }
+
+  #bestPage #best_01 .user_profile::after,
+  #bestPage #best_02 .user_profile::after,
+  #bestPage #best_03 .user_profile::after {
+    top: -3%;
+  }
+
+  /* 1등~3등 개별 왕관 아이콘 시작*/
+  #bestPage #best_01 .user_profile::after {
+    background-image: url(/static/assets/img/rank_crown01.png);
+  }
+
+  #bestPage #best_02 .user_profile::after {
+    background-image: url(/static/assets/img/rank_crown02.png);
+  }
+
+  #bestPage #best_03 .user_profile::after {
+    background-image: url(/static/assets/img/rank_crown03.png);
+  }
+
+  /* 1등~3등 개별 왕관 아이콘 끝*/
+
+  /* 4등 부터 공통 왕관 아이콘 시작*/
+  #bestPage .user_profile::after {
+    background: url(/static/assets/img/rank_crown04-10.png) no-repeat center/100% auto;
+  }
+
+  /* 4등 부터 공통 왕관 아이콘 끝*/
+
+  #bestPage .user_profile img {
+    border-radius: 100%;
+  }
+
+  #bestPage #best_01 .hash span,
+  #bestPage #best_02 .hash span,
+  #bestPage #best_03 .hash span {
+    background: #e8f7ff;
+  }
+
+  #bestPage .hash {
+    margin-top: 7px;
+    min-height: 17.88px;
+  }
+
+  #bestPage .hash span {
+    background: #fff;
+    font-size: 10px;
+  }
+
+  #bestPage .user_name h1 {
+    font-size: 16px;
+    word-break: keep-all;
+  }
+  
+  #bestPage .user_name p {
+    font-size: 12px;
+    word-break: keep-all;
+  }
+
+  #bestPage .user_name h1,
+  #bestPage .user_name p {
+    line-height: 1;
+  }
+
+  #bestPage .totalToken {
+    font-size: 24px;
+  }
+
+  #bestPage #best_01 .totalToken span,
+  #bestPage #best_02 .totalToken span,
+  #bestPage #best_03 .totalToken span {
+    color: #006ed5;
+  }
+
+  #bestPage .totalToken span {
+    color: #14a8ea;
+  }
+
+  #bestPage #rankInfo button::after {
+    content: none;
+  }
+
+  /* 우리칭찬왕 페이지 CSS 추가 끝 - 240219*/
+
+    .mobile-navigation button .icon_home {
+      -webkit-mask: url(/static/assets/img/icon_menu_01_01.svg) no-repeat center/auto 100%;
+      mask: url(/static/assets/img/icon_menu_01_01.svg) no-repeat center/auto 100%;
+    }
+
+    .mobile-navigation button .icon_myThank {
+      -webkit-mask: url(/static/assets/img/icon_menu_02_01.svg) no-repeat center/auto 100%;
+      mask: url(/static/assets/img/icon_menu_02_01.svg) no-repeat center/auto 100%;
+    }
+
+    .mobile-navigation button .icon_sendThank {
+      -webkit-mask: url(/static/assets/img/icon_menu_03_01.svg) no-repeat center/auto 100%;
+      mask: url(/static/assets/img/icon_menu_03_01.svg) no-repeat center/auto 100%;
+    }
+
+    .mobile-navigation button .icon_best {
+      -webkit-mask: url(/static/assets/img/icon_menu_04_02.svg) no-repeat center/auto 100%;
+      mask: url(/static/assets/img/icon_menu_04_02.svg) no-repeat center/auto 100%;
+    }
+
+    .mobile-navigation button .icon_myToken {
+      -webkit-mask: url(/static/assets/img/icon_menu_05_01.svg) no-repeat center/auto 100%;
+      mask: url(/static/assets/img/icon_menu_05_01.svg) no-repeat center/auto 100%;
+    }
+  @media (max-width:576px) {
+
+    .allPage .forPc {
+      display: block !important;
+    }
+  }
+
+  @media (max-width:440px) {
+    .allPage .modal-dialog {
+      max-width: 350px;
+      margin: 0 auto;
+    }
+  }
+
+  .skeleton-container {
+    margin-top: 0 !important;
+    border-radius: 0 !important;
+    background: unset !important;
+    padding: 0 !important;
+  }
+
+  .skeleton-container .user_logo {
+    height: 40px;
+  }
+
+  .skeleton-avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+
+  .skeleton-line {
+    height: 16px;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 4px;
+    margin-bottom: 8px;
+  }
+
+  .skeleton-line:last-child {
+    width: 20%;
+  }
+
+  .skeleton-rank {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 4px;
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+</style>
+
+
+<!-- Vendors JS -->
+{% comment %} <script src="{% static 'assets/vendor/libs/cleavejs/cleave.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/cleavejs/cleave-phone.js' %}"></script> {% endcomment %}
+
+{% comment %} <script src="https://cdn.wooriwbn.com/thb/wooribank/2024/03/01/cdn/css/previous/apexcharts.js"></script>
+<script src="{% static 'assets/vendor/libs/formvalidation/dist/js/FormValidation.min.js' %}">
+</script>
+<script src="{% static 'assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js' %}">
+</script>
+<script src="{% static 'assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js' %}">
+</script> {% endcomment %}
+
+<!-- Page JS -->
+<script src="{% static 'assets/js/cards-advance.js' %}"></script>
+<script src="{% static 'assets/js/modal-add-new-cc.js' %}"></script>
+<script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+{% comment %} <link href="https://webfontworld.github.io/pretendard/Pretendard.css" rel="stylesheet"> {% endcomment %}
+
+{% endblock %}

@@ -1,0 +1,316 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+
+<head>
+   
+    
+<script>
+    
+    function copyLink(_bbsId) {
+      const textToCopy = 'https://thankyou.run.goorm.app/praiseDetail/' + _bbsId;
+      const tempInput = document.createElement('input');
+      tempInput.setAttribute('value', textToCopy);
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempInput);
+      toastr['success']('', '링크가 복사 되었습니다.');
+    }
+    
+</script>
+    
+</head>
+
+<style>
+body {
+  font-family: 'Pretendard', sans-serif;
+}
+</style>
+
+<!-- Content wrapper -->
+<div class="content-wrapper">
+<!-- Content -->
+<div class="container-xxl flex-grow-1 container-p-y">    
+    
+    <div class="row mb-5">
+    {% for part in posts %}           
+                
+		<!-- Shared Event border border-info border-1-->
+		<div class="col-md-6 col-lg-4 mb-4 ">
+			
+		    <div class="card ">
+
+                
+
+                
+				<div class="mx-0 mt-0 mb-3">
+					<a href="{% url 'praiseDetail' part.compliment_id %}">
+						<img class="img-fluid w-100" src="{{part.image_path}}" alt="Card image cap">
+					</a>
+				</div>		
+                
+                     <div class="d-flex justify-content-center align-items-center">
+                        <div class="me-2 mt-2">
+                          <h4>
+                            <button type="button" class="btn btn-label-secondary Pretendard ">
+                                
+                                <div class="avatar avatar-xs ms-0 me-2">                
+                                    {% if part.user_image_yn == 'Y' %}
+                                        <img src="{{ part.user_image }}" alt="Avatar" class="rounded-circle" />
+                                    {% else %}
+                                        <img src="{% static 'assets/img/woori.png' %}" alt="Avatar" class="rounded-circle" />
+                                    {% endif %}
+                                </div>
+                                {{part.user_employee_name}}
+                              
+                             <i class='mx-4 bx bxs-right-arrow-circle'></i>
+                                
+                                <div class="avatar avatar-xs ms-0 me-2">                
+                                    {% if part.praise_image_yn == 'Y' %}
+                                        <img src="{{ part.praise_image }}" alt="Avatar" class="rounded-circle" />
+                                    {% else %}
+                                        <img src="{% static 'assets/img/woori.png' %}" alt="Avatar" class="rounded-circle" />
+                                    {% endif %}
+                                </div>
+                                
+                                {{part.praise_employee_name}}</button> 
+                          </h4>
+                        </div>
+                    </div>
+				
+				<div class="mx-4 lex-grow-0">
+                    
+
+
+					
+					<div class="d-flex justify-content-center align-items-center mb-0 Pretendard mx-2">
+                        <h6>
+                            
+                        {{part.short_content|safe}} 
+                        </h6>
+					</div>
+                    <!--
+					<div id="viewTag{{ forloop.counter }}"></div>
+					<script>
+						$(document).ready(function() {
+							viewTag("{{ forloop.counter }}", "{{part.tag}}");
+						});
+					</script>
+					-->
+				</div>
+				
+                <!--
+                <div class="featured-date mt-n4 ms-4 bg-white rounded w-px-50 shadow text-center p-1">
+                  <h5 class="mb-0 text-dark">21</h5>
+                  <span class="text-primary">May</span>
+                </div>
+                -->
+              <div class="mt-0">
+                  <hr style="border-style: dashed; border-width: 1px;">
+              </div>
+				
+				<div class="d-flex justify-content-center">
+				  <div class="row">
+					<div class="col-12 text-center">
+					  <img class="img-fluid" src="{% static 'assets/img/barcode.png' %}" alt="Card image cap" style="max-height: 500px; width: auto;">
+					</div>
+					<div class="col-12 text-center">
+					  <small class="text-muted Pretendard">{{part.reg_date}}</small>
+					</div>
+				  </div>
+				</div>
+				
+				<div class="mx-4 mt-2 mb-2">
+				    <div class="d-flex align-items-center justify-content-between mb-2">
+						<div class="card-actions">
+                            <a href="javascript:clickLike('{{ forloop.counter }}','{{part.compliment_id}}');" class="text-muted me-3"><i class="bx bx-heart me-1"></i> <span id="clickLike{{ forloop.counter }}">{{part.likes_count}}</span></a>
+						    <a href="javascript:;" class="text-muted"><i class="bx bx-message me-1"></i> {{part.comment_count}}</a>
+						</div>
+
+                        
+						<div class="dropdown">
+                            <!-- URL 복사하기 -->
+                            <button
+                              class="btn p-0"
+                              type="button"
+                              id="conversionRate"
+                              data-bs-toggle="dropdown"
+                              aria-haspopup="true"
+                              aria-expanded="false"
+                            >
+                              <i class="bx bx-share me-1"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="conversionRate">
+                              <a class="dropdown-item" href="javascript:copyLink( '{{part.compliment_id}}' );">URL 복사하기</a>
+                            </div>
+                            
+                            <!--수정하기 -->
+                            <button
+							  class="btn p-0"
+							  type="button"
+							  id="conversionRate"
+							  data-bs-toggle="dropdown"
+							  aria-haspopup="true"
+							  aria-expanded="false"
+							>
+							  <i class="bx bx-dots-vertical-rounded"></i>
+							</button>
+							<div class="dropdown-menu dropdown-menu-end" aria-labelledby="conversionRate">
+							  <a class="dropdown-item" href="{% url 'praiseModify' part.compliment_id %}">수정하기</a>
+							</div>
+						</div>						
+				    </div>
+				</div>
+                
+		    </div>
+		</div>
+		<!--/ Shared Event -->
+          
+    {% endfor %}         
+    </div>
+    <div class = 'container'>
+		{% if posts.has_previous %}
+		<a href="?page=1&item_code=">First</a>
+		<a href="?page={{posts.previous_page_number}}&item_code=">Previous</a>
+		{% endif %}
+		<span>{{posts.number}}</span>
+		<span>of</span>
+		<span>{{posts.paginator.num_pages}}</span>
+		{% if posts.has_next %}
+		<a href="?page={{posts.next_page_number}}&item_code=">Next</a>
+		<a href="?page={{posts.paginator.num_pages}}&item_code=">Last</a>
+		{% endif %}
+		<br>
+		<br>
+    </div>
+
+    <!--
+    <div class="buy-now">
+        <a href="{% url 'praiseRegedit' %}" class="btn rounded-pill btn-icon btn-primary btn-buy-now"><i class="bx bx-edit-alt"></i></a>
+    </div>
+    -->
+    
+    
+</div>
+</div>
+
+
+<script>
+function viewTag(idx, json_data){
+        
+    console.log('viewTag =========');
+    
+    
+    var data = JSON.parse(json_data.replace(/&quot;/g, '"'));
+    console.log(data);
+    
+    var divhHtml = '';
+
+    // compIdx에 따라 데이터 분류
+    for (var i = 0; i < data.tag.length; i++) {
+    divhHtml += '<span class="badge bg-label-SECONDARY"> # ' + data.tag[i] + '</span>';
+    }
+
+    var setHtml = '<div class="d-flex justify-content-center align-items-center gap-2 mb-0 Pretendard">';
+    setHtml += divhHtml;
+    setHtml += '</div>';
+    
+    // tbody 엘리먼트 선택
+    var viewTagHtml = document.querySelector('#viewTag'+idx);
+    // tbody 내용 변경
+    viewTagHtml.innerHTML = setHtml;
+
+}
+    
+    
+function clickLike(idx,_compliment_id) {    
+
+    var inputData = {
+        compliment_id: _compliment_id
+        //value2: input2,
+        //value3: input3
+        
+    };
+    
+     try {
+        $.ajax({
+            type: "POST",
+            url: "/apis/praise_like/",
+            data: inputData,
+            success: function (data) {
+                console.log('### clickLike success');
+                console.log(data);
+                console.log(data.likes_count);
+                
+                // 엘리먼트 선택
+                var clickLikeHtml = document.querySelector('#clickLike'+idx);
+				
+                // tbody 내용 변경
+                clickLikeHtml.innerHTML = data.likes_count;
+                
+            },
+            error: function (e) {
+                console.log("### clickLike ERROR : ", e);
+                //alert("fail");
+            }
+      })
+      .done(function() {
+        // AJAX 요청 완료 후 처리할 작업
+      })
+      .fail(function() {
+        // AJAX 요청 실패 시 처리할 작업
+      });
+    } catch (e) {
+        alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+    }	
+	
+	//testAPI();
+}
+    
+function testAPI() {    
+	console.log('### testAPI CALL');
+	
+    console.log('viewNotice =========');
+
+        var inputData = {
+            compliment_id: '1'
+            //value2: input2,
+            //value3: input3
+
+        };
+
+         try {
+            $.ajax({
+                type: "POST",
+                url: "/apis/myprofile_notice/",
+                data: inputData,
+                success: function (data) {
+                    console.log('### myprofile_notice success');
+                    console.log(data);
+
+
+                },
+                error: function (e) {
+                    console.log("### myprofile_notice ERROR : ", e);
+                    //alert("fail");
+                }
+          })
+          .done(function() {
+            // AJAX 요청 완료 후 처리할 작업
+          })
+          .fail(function() {
+            // AJAX 요청 실패 시 처리할 작업
+          });
+        } catch (e) {
+            alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+        }	
+    
+}
+    
+</script>        
+
+
+
+{% endblock %}
+                                                          

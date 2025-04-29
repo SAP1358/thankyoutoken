@@ -1,0 +1,545 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+
+<div class="container-xxl flex-grow-1 container-p-y">
+<div class="row">
+
+	<!-- Main Layout -->
+	<div class="card mb-4">
+		<!--
+		<div class="card-header">
+			칭찬하기 리스트1 : 
+		</div>
+		<div class="card-body">
+			<div class="col-12 mb-3">
+        		 <a href="javascript:apitest_1();" class="btn btn-primary ms-auto" role="button">댓글조회</a>
+    		</div>
+		</div>
+		
+		<div class="card-header">
+			칭찬하기 리스트2 : 
+		</div>
+		<div class="card-body">
+			<div class="col-12 mb-3">
+        		 <a href="javascript:apitest_2();" class="btn btn-primary ms-auto" role="button">댓글등록</a>
+    		</div>
+		</div>
+        
+		
+		<div class="card-header">
+			칭찬하기 리스트3 : 
+		</div>
+		<div class="card-body">
+			<div class="col-12 mb-3">
+        		 <a href="javascript:apitest_3();" class="btn btn-primary ms-auto" role="button">댓글변경</a>
+    		</div>
+		</div>
+        
+		
+		<div class="card-header">
+			칭찬하기 리스트4 : 
+		</div>
+		<div class="card-body">
+			<div class="col-12 mb-3">
+        		 <a href="javascript:apitest_4();" class="btn btn-primary ms-auto" role="button">댓글삭제</a>
+    		</div>
+		</div>
+		-->
+		<div class="card-header">
+			떙토 로그인 API 1 : 
+		</div>
+		<div class="card-body">
+			<div class="col-12 mb-3">
+        		 <a href="javascript:apitest_5();" class="btn btn-primary ms-auto" role="button">테스트 API 1</a>
+    		</div>
+		</div>
+        
+		<div class="card-header">
+			채널W 로그인 API : 
+		</div>
+		<div class="card-body">
+			<div class="col-12 mb-3">
+        		 <a href="javascript:apitest_6();" class="btn btn-primary ms-auto" role="button">테스트 API 2</a>
+    		</div>
+		</div>        
+        
+		<div class="card-header">
+			회원정보 API : 
+		</div>
+		<div class="card-body">
+			<div class="col-12 mb-3">
+        		 <a href="javascript:apitest_user();" class="btn btn-primary ms-auto" role="button">테스트 API 2</a>
+    		</div>
+		</div>    
+        
+		<div class="card-header">
+			부서정보 API : 
+		</div>
+		<div class="card-body">
+			<div class="col-12 mb-3">
+        		 <a href="javascript:apitest_dept();" class="btn btn-primary ms-auto" role="button">테스트 API 2</a>
+    		</div>
+		</div>    
+        
+		<div class="card-header">
+			직위정보 API : 
+		</div>
+		<div class="card-body">
+			<div class="col-12 mb-3">
+        		 <a href="javascript:apitest_posi();" class="btn btn-primary ms-auto" role="button">테스트 API 2</a>
+    		</div>
+		</div>    
+        
+		<div class="card-header">
+			푸쉬 API : 
+		</div>
+		<div class="card-body">
+			<div class="col-12 mb-3">
+        		 <a href="javascript:apitest_push();" class="btn btn-primary ms-auto" role="button">푸쉬 API 2</a>
+    		</div>
+		</div>    
+        
+	</div>
+    
+    
+      <form id="formAuthentication" class="mb-3" action="{% url 'signin'%}" method="POST">
+			  {% csrf_token %}
+				<div class="mb-3">
+				  <label for="username" class="form-label text-dark fs-6">사번ID <small class="fs-7 text-lowercase text-secondary">(반드시 사번을 입력해 주세요)</small></label>
+				  <input
+					type="text"
+					class="form-control"
+					id="username"
+					name="username"
+					placeholder="ex 20999999"
+				  />
+				</div>
+				 
+				<div class="mb-3">
+				  <label for="employee_name" class="form-label text-dark fs-6">이름</label>
+				  <input type="text" class="form-control" id="employee_name" name="employee_name" placeholder="ex 홍길동" required 
+                         onfocusin="this.style.borderColor='#EB5C32'"
+                         onfocusout="this.style.borderColor=''"
+                         />
+				</div>
+				
+                   
+				<button id="submitBtn" type="submit" class="btn btn-danger d-grid w-100">회원가입</button>
+			  </form>
+    
+
+	
+</div>
+</div>
+
+<script>       
+    
+    
+
+function apitest_1() {    
+	console.log('### word CALL');
+	
+	var inputData = {
+		compliment_id: '29'
+
+        
+    };
+    
+     try {
+        $.ajax({
+            type: "POST",
+            url: "/apis/word/",
+            data: inputData,
+            success: function (data) {
+                console.log('### word success');
+                console.log(data);                
+            },
+            error: function (e) {
+                console.log("### word ERROR : ", e);
+                //alert("fail");
+            }
+      })
+      .done(function() {
+        // AJAX 요청 완료 후 처리할 작업
+      })
+      .fail(function() {
+        // AJAX 요청 실패 시 처리할 작업
+      });
+    } catch (e) {
+        alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+    }	
+}
+
+function apitest_2() {    
+	console.log('### testAPI CALL');
+	
+	var inputData = {
+		compliment_id    : '5',
+		comment_content  : '칭찬칭찬해요',
+        user_id          : '56',
+        employee_id          : '20201112',
+        is_active        : 'Y'
+    };
+    
+     try {
+        $.ajax({
+            type: "POST",
+            url: "/apis/praise_comment_regedit/",
+            data: inputData,
+            success: function (data) {
+                console.log('### testAPI success');
+                console.log(data);                
+            },
+            error: function (e) {
+                console.log("### testAPI ERROR : ", e);
+                //alert("fail");
+            }
+      })
+      .done(function() {
+        // AJAX 요청 완료 후 처리할 작업
+      })
+      .fail(function() {
+        // AJAX 요청 실패 시 처리할 작업
+      });
+    } catch (e) {
+        alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+    }	
+}
+    
+    
+function apitest_3() {    
+	console.log('### testAPI CALL');
+	
+	var inputData = {
+		compliment_id: '5',
+        comment_id : 2,
+		comment_content  : '44444444',
+        user_id          : '56',
+        employee_id          : '20201112',
+        is_active        : 'Y'
+
+    };
+    
+     try {
+        $.ajax({
+            type: "POST",
+            url: "/apis/praise_comment_modify/",
+            data: inputData,
+            success: function (data) {
+                console.log('### testAPI success');
+                console.log(data);                
+            },
+            error: function (e) {
+                console.log("### testAPI ERROR : ", e);
+                //alert("fail");
+            }
+      })
+      .done(function() {
+        // AJAX 요청 완료 후 처리할 작업
+      })
+      .fail(function() {
+        // AJAX 요청 실패 시 처리할 작업
+      });
+    } catch (e) {
+        alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+    }	
+}
+    
+    
+function apitest_4() {    
+	console.log('### testAPI CALL');
+	
+	var inputData = {
+		compliment_id: '5',
+        comment_id : 2,
+        user_id          : '56',
+        employee_id          : '20201112',
+        is_active        : 'N'
+
+    };
+    
+     try {
+        $.ajax({
+            type: "POST",
+            url: "/apis/praise_comment_delete/",
+            data: inputData,
+            success: function (data) {
+                console.log('### testAPI success');
+                console.log(data);                
+            },
+            error: function (e) {
+                console.log("### testAPI ERROR : ", e);
+                //alert("fail");
+            }
+      })
+      .done(function() {
+        // AJAX 요청 완료 후 처리할 작업
+      })
+      .fail(function() {
+        // AJAX 요청 실패 시 처리할 작업
+      });
+    } catch (e) {
+        alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+    }	
+}
+    
+function ttapitest_5() {    
+	console.log('### myprofile_info CALL');
+	
+	var inputData = {
+        id: 54
+    };
+    
+     try {
+        $.ajax({
+            type: "POST",
+            url: "/apis/myprofile_info/",
+            data: inputData,
+            success: function (data) {
+                console.log('### testAPI success');
+                console.log(data);                
+            },
+            error: function (e) {
+                console.log("### testAPI ERROR : ", e);
+                //alert("fail");
+            }
+      })
+      .done(function() {
+        // AJAX 요청 완료 후 처리할 작업
+      })
+      .fail(function() {
+        // AJAX 요청 실패 시 처리할 작업
+      });
+    } catch (e) {
+        alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+    }	
+}
+ 
+function apitest_5() {    
+	console.log('### praise_count CALL');
+	
+	var inputData = {
+        userId: 'dh6NkYgW9YkSXfZH4T2brQ=='
+    };
+    
+     try {
+        $.ajax({
+            type: "POST",
+            url: "/accounts/signin/",
+            data: JSON.stringify(inputData),
+            contentType: 'application/json',
+            success: function (data) {
+                console.log('### testAPI success');
+                console.log(data);                
+            },
+            error: function (e) {
+                console.log("### testAPI ERROR : ", e);
+                //alert("fail");
+            }
+      })
+      .done(function() {
+        // AJAX 요청 완료 후 처리할 작업
+      })
+      .fail(function() {
+        // AJAX 요청 실패 시 처리할 작업
+      });
+    } catch (e) {
+        alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+    }	
+}    
+    
+function apitest_6() {    
+	console.log('### castware CALL');
+	
+	var inputData = {
+        userId: '20200111'
+    };
+    
+     try {
+        $.ajax({
+            type: "POST",
+            url: "http://wbn.castware.co.kr:20232/api/cms/tt/aes_test",
+            data:inputData,
+            data: JSON.stringify(inputData),
+            contentType: 'application/json',
+            success: function (data) {
+                console.log('### testAPI success');
+                console.log(data);                
+            },
+            error: function (e) {
+                console.log("### testAPI ERROR : ", e);
+                //alert("fail");
+            }
+      })
+      .done(function() {
+        // AJAX 요청 완료 후 처리할 작업
+      })
+      .fail(function() {
+        // AJAX 요청 실패 시 처리할 작업
+      });
+    } catch (e) {
+        alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+    }	
+}    
+    
+function apitest_user() {   
+    
+	console.log('### apitest_user CALL');
+	
+	var inputData = {
+        trn_cd    : 'I',
+        company_id: '20',
+        employee_id: '50501234', 
+        employee_name: '홍길동2',
+        position_id: '146500',
+        department_id: '084Z99',
+        pre_employee_id: '',
+    };
+    
+     try {
+        $.ajax({
+            type: "POST",
+            url: "/apis/manage_user/",
+            data:inputData,
+            data: JSON.stringify(inputData),
+            contentType: 'application/json',
+            success: function (data) {
+                console.log('### apitest_user success');
+                console.log(data);                
+            },
+            error: function (e) {
+                console.log("### apitest_user ERROR : ", e);
+                //alert("fail");
+            }
+      })
+      .done(function() {
+        // AJAX 요청 완료 후 처리할 작업
+      })
+      .fail(function() {
+        // AJAX 요청 실패 시 처리할 작업
+      });
+    } catch (e) {
+        alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+    }	
+}    
+    
+function apitest_posi() {    
+
+	console.log('### apitest_posi CALL');
+	
+	var inputData = {
+        trn_cd    : 'U',
+        company_id: 'B1',
+        position_id: '900100',
+        position_name: '테111스트',
+        reward_skip_yn : 'Y'
+    };
+    
+     try {
+        $.ajax({
+            type: "POST",
+            url: "/apis/manage_position/",
+            data:inputData,
+            data: JSON.stringify(inputData),
+            contentType: 'application/json',
+            success: function (data) {
+                console.log('### apitest_posi success');
+                console.log(data);                
+            },
+            error: function (e) {
+                console.log("### apitest_posi ERROR : ", e);
+                //alert("fail");
+            }
+      })
+      .done(function() {
+        // AJAX 요청 완료 후 처리할 작업
+      })
+      .fail(function() {
+        // AJAX 요청 실패 시 처리할 작업
+      });
+    } catch (e) {
+        alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+    }	
+}   
+    
+function apitest_push() {    
+
+	console.log('### apitest_push CALL');
+	
+	var inputData = {
+        key: '20xa3S5H2FSI6Ybc4CWBe+DTUUs8LI/6OU/XzsoZr+s=',
+        title: 'thankyoutokentest',
+        message: 'thankyoutokentest'
+    };
+    
+     try {
+        $.ajax({
+            type: "POST",
+            url: "http://wbn.castware.co.kr:8080/r-api/v1/thankyoutoken/addPush",
+            data:inputData,
+            data: JSON.stringify(inputData),
+            contentType: 'application/json',
+            success: function (data) {
+                console.log('### apitest_posi success');
+                console.log(data);                
+            },
+            error: function (e) {
+                console.log("### apitest_posi ERROR : ", e);
+                //alert("fail");
+            }
+      })
+      .done(function() {
+        // AJAX 요청 완료 후 처리할 작업
+      })
+      .fail(function() {
+        // AJAX 요청 실패 시 처리할 작업
+      });
+    } catch (e) {
+        alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+    }	
+}   
+    
+function apitest_dept() {    
+	console.log('### apitest_dept CALL');
+	
+	var inputData = {
+        trn_cd    : 'U',
+        company_id: 'B1',
+        company_name: '우리에프아이에스',
+        department_id: 'B1F08',
+        department_name: '경영지원부4',
+        department_lev: '3',
+        parent_department_id: 'B1F08',
+    };
+    
+     try {
+        $.ajax({
+            type: "POST",
+            url: "/apis/manage_department/",
+            data:inputData,
+            data: JSON.stringify(inputData),
+            contentType: 'application/json',
+            success: function (data) {
+                console.log('### apitest_dept success');
+                console.log(data);                
+            },
+            error: function (e) {
+                console.log("### apitest_dept ERROR : ", e);
+                //alert("fail");
+            }
+      })
+      .done(function() {
+        // AJAX 요청 완료 후 처리할 작업
+      })
+      .fail(function() {
+        // AJAX 요청 실패 시 처리할 작업
+      });
+    } catch (e) {
+        alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+    }	
+}   
+    
+</script>    
+
+{% endblock %}

@@ -1,0 +1,368 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+<head>
+ 
+<!-- Vendors CSS -->
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/select2/select2.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/tagify/tagify.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/bootstrap-select/bootstrap-select.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/typeahead-js/typeahead.css' %}" />
+
+<!-- Page CSS -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+
+    
+</head>
+<!-- Content wrapper -->
+<div class="content-wrapper">
+<!-- Content -->
+<div id="con" class="container-xxl flex-grow-1 container-p-y" style="visibility: hidden;">
+<div class="row">
+	
+
+    <div class="col-12">
+         
+      <!-- HTML5 Inputs -->
+      <div class="card mb-2">
+          <h5 class="card-header">개인정보 수정하기</h5>
+
+          {% if info.error %}
+          <div class="alert alert-danger" role="alert">
+            {{ info.error }}
+          </div>
+          {% endif %}
+
+          <div class="card-body">
+          <form id="formAuthentication" class="mb-3" action="{% url 'myprofileModify' %}" method="POST" enctype="multipart/form-data">
+          {% csrf_token %}  
+                 
+          {% if user.is_superuser %}             
+					<div class="mb-3 row">
+						<label for="input_employee_name" class="col-md-2 col-form-label">이름</label>
+						<div class="col-md-10">
+						  <input class="form-control border border-primary" type="text" value="{{info.employee_name}}" id="input_employee_name" name="input_employee_name" />
+						</div>
+					</div>
+                    
+					<div class="mb-3 row">
+						<label for="input_employee_id" class="col-md-2 col-form-label">사번</label>
+						<div class="col-md-10">
+						  <input class="form-control border border-primary" type="text" value="{{info.employee_id}}" id="input_employee_id" name="input_employee_id" />
+						</div>
+					</div>
+                    
+					<div class="mb-3 row">
+						<label for="input_department_name" class="col-md-2 col-form-label">부서</label>
+						<div class="col-md-10">
+						  <input class="form-control border border-primary" type="text" value="{{info.department_name}}" id="input_department_name" name="input_department_name" />
+						</div>
+					</div>
+          {% endif %}
+          <!--
+					<div class="mb-3 row">
+						<label for="input_email" class="col-md-2 col-form-label">메일</label>
+						<div class="col-md-10">
+						  <input class="form-control border border-primary" type="text" value="{{info.email}}" id="input_email" name="input_email" />
+						</div>
+					</div>
+          -->
+                    
+					<div class="mb-3 row">
+						<label for="input_formFile" class="col-md-2 col-form-label">사진</label>
+						<div class="col-md-10">
+                            {% if info.image_yn == 'Y' %}
+                                <div class="avatar avatar-lg mb-2 ms-0 me-0">                
+                                    <img
+                                        src="{{info.image}}"
+                                        alt="Avatar" class="rounded-circle"
+                                    />
+                                </div>
+                            {% endif %}
+							<input class="form-control border border-primary" type="file" id="input_formFile" value="{{info.image}}" name="input_formFile" accept="image/*"/>
+						</div>
+					</div>
+				  
+					<div class="pt-4">
+						<div class="row justify-content-end">
+						  <div class="col-sm-9">
+							<button id="submitBtn" type="submit" class="btn btn-primary me-sm-2 me-1">수정하기</button>
+							<button type="reset" class="btn btn-label-secondary">취소하기</button>
+						  </div>
+						</div>
+					</div>
+                    
+				</form>
+                </div>
+				
+            </div>
+        </div>
+   
+	</div>
+</div>
+</div>
+
+<style>
+.select2.select2-container {position: absolute; left:0; width:calc(100% - 99px) !important;}
+    button.searchChkBtn {position: absolute !important; right:0;}
+</style>
+
+	
+  <style>
+    .all_ #mainPage .heartBtn i,
+    .all_ #mainPage .commentBtn i {
+      width: 20px;
+      height: 20px;
+    }
+
+    .select2.select2-container {position: absolute; left:0; width:calc(100% - 99px) !important;}
+    button.searchChkBtn {position: absolute !important; right:0;}
+    
+    /* 공통 editCard 모달 CSS 시작 -240221 */
+#editCard #mainNew {
+  margin: 20px 0 10px;
+}
+
+#editCard .wrap_thumb_layout_1 {
+  height: 80px;
+  /* width: 20%; */
+  overflow: hidden;
+}
+#editCard .wrap_thumb_layout_2 {
+  max-height: 300px;
+  height: 300px;
+  position: relative;
+}
+#editCard .wrap_thumb_layout_2 .swiper-wrapper {
+  align-items: center;
+}
+
+#editCard .wrap_thumb_layout_2 .swiper-button-prev{
+  left:-5px;
+}
+#editCard .wrap_thumb_layout_2 .swiper-button-next{
+  right:-5px;
+}
+#editCard .swiper-slide p {
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+#editCard .gallery-top {
+  width: 80%;
+  margin: 15px auto 0;
+  overflow: hidden;
+  height: 100%;
+}
+
+#editCard .gallery-thumbs .swiper-slide {
+  cursor: pointer;
+  opacity: 0.2;
+}
+
+#editCard .gallery-thumbs .swiper-slide.swiper-slide-thumb-active {
+  opacity: 1;
+}
+
+#editCard .wrap_thumb_layout_2 .swiper-button-prev::after,
+#editCard .wrap_thumb_layout_2 .swiper-button-next::after {
+  content: none;
+}
+
+#editCard .gallery-box .object-fit img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 공통 editCard 모달 CSS 끝 - 240221 */
+
+
+
+    /* #mainPage CSS 시작 */
+    #mainPage .chkCard {
+      max-height: 230px;
+    }
+    #mainPage #notice {
+      display: block !important;
+    }
+
+    #mainPage .card {
+      border: 2px solid #dde7f1;
+      box-shadow: none;
+    }
+
+    #mainPage .todayThank>div {
+      border: none;
+      background: #fff url(/static/assets/img/today_thank_border.png) no-repeat center/100% 100%;
+    }
+
+    #mainPage .photoCard {
+      min-height: 80px !important;
+      min-width: 80px !important;
+    }
+
+    #mainPage .photoCard img {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+    }
+
+    /* 오늘의 땡큐 카드 - 헤더 데코 */
+    .all_ .todayThank .todayHeader {
+      top: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 300px;
+      width: 100%;
+    }
+
+    .all_ .todayThank .todayHeader img {
+      width: 100%;
+      object-fit: contain;
+    }
+
+    .all_ .sendMeCard>div {
+      background: #c8edff;
+    }
+
+    /* 카드 - 지점 명칭 */
+    .all_ .card-title {
+      font-size: 0.5rem;
+    }
+
+    /* 카드 - 사람 > 직위 명칭 */
+    .all_ .card-text span {
+      font-size: 0.8rem;
+    }
+
+    /* 카드 - 해쉬태그 */
+    .all_ .hash>span {
+      border-radius: 17px;
+      background: #e8f7ff;
+    }
+
+    
+
+    .modalPraiseComment .typing_comment:focus {
+      border-color: #14a8ea;
+    }
+
+    .modalPraiseComment .typing_comment+button {
+      border: 1px solid #14a8ea !important;
+      background: #14a8ea !important;
+      box-shadow: none;
+    }
+
+    .all_ .modal-dialog {
+      top: 3%;
+      max-width: 450px;
+    }
+
+    
+    .mobile-navigation button .icon_home {
+      -webkit-mask: url(/static/assets/img/icon_menu_01_02.svg) no-repeat center/auto 100%;
+      mask: url(/static/assets/img/icon_menu_01_02.svg) no-repeat center/auto 100%;
+    }
+
+    .mobile-navigation button .icon_myThank {
+      -webkit-mask: url(/static/assets/img/icon_menu_02_01.svg) no-repeat center/auto 100%;
+      mask: url(/static/assets/img/icon_menu_02_01.svg) no-repeat center/auto 100%;
+    }
+
+    .mobile-navigation button .icon_sendThank {
+      -webkit-mask: url(/static/assets/img/icon_menu_03_01.svg) no-repeat center/auto 100%;
+      mask: url(/static/assets/img/icon_menu_03_01.svg) no-repeat center/auto 100%;
+    }
+
+    .mobile-navigation button .icon_best {
+      -webkit-mask: url(/static/assets/img/icon_menu_04_01.svg) no-repeat center/auto 100%;
+      mask: url(/static/assets/img/icon_menu_04_01.svg) no-repeat center/auto 100%;
+    }
+
+    .mobile-navigation button .icon_myToken {
+      -webkit-mask: url(/static/assets/img/icon_menu_05_01.svg) no-repeat center/auto 100%;
+      mask: url(/static/assets/img/icon_menu_05_01.svg) no-repeat center/auto 100%;
+    }
+    @media (max-width:576px) {
+
+
+      #mainPage .card>div {
+        justify-content: space-between !important;
+      }
+
+      .allPage .forPc {
+        display: block !important;
+      }
+
+      #adSignEdit_modal .upload label,
+      #profileEdit_modal .upload label {
+        margin-bottom: 10px !important;
+        margin-right: 0 !important;
+      }
+
+      #adSignEdit_modal .profileNowImg,
+      #profileEdit_modal .profileNowImg {
+        width: 45% !important;
+      }
+
+      #porfileUplaodBox {
+        align-items: center !important;
+      }
+
+    }
+
+    @media (max-width:440px) {
+
+
+      .allPage .todayThank .todayHeader {
+        top: -25px;
+        max-width: 250px;
+      }
+
+      .allPage .modal-dialog {
+        max-width: 350px;
+        margin: 0 auto;
+      }
+    }
+    #moreBtn {
+      position: relative;
+      display: inline-block;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      background: #fbfbfb;
+      color: #666;
+      z-index: 1;
+    }
+  </style>
+
+<script>
+$(document).ready(function() {
+	setTimeout(loaddivpage, 300);
+});
+
+function loaddivpage()
+{
+	document.getElementById("con").style.visibility = 'visible';
+	document.getElementById("header").style.visibility = 'visible';
+}
+
+</script>
+
+<!-- Vendors JS -->
+<script src="{% static 'assets/vendor/libs/select2/select2.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/tagify/tagify.js' %}"></script>
+
+<script src="{% static 'assets/vendor/libs/bootstrap-select/bootstrap-select.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/typeahead-js/typeahead.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/bloodhound/bloodhound.js' %}"></script>
+
+<!-- Page JS -->
+<script src="{% static 'assets/js/forms-editors.js' %}"></script>
+<script src="{% static 'assets/js/forms-selects.js' %}"></script>
+<script src="{% static 'assets/js/forms-tagify.js' %}"></script>
+<script src="{% static 'assets/js/forms-typeahead.js' %}"></script>
+
+
+{% endblock %}

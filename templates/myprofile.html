@@ -1,0 +1,1266 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+
+<head>
+
+<!-- Page CSS -->
+<link rel="stylesheet" href="{% static 'assets/vendor/css/pages/page-profile.css' %}" />
+
+{% comment %} <link href="https://webfontworld.github.io/pretendard/Pretendard.css" rel="stylesheet"> {% endcomment %}
+
+<!-- 드림 사용 소스 -->
+<link rel="stylesheet" href="{% static 'assets/css/bootstrap-datepicker.css' %}" />
+<link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+<script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+<!-- 드림 사용 소스 끝 -->
+
+</head>
+
+<!-- Content wrapper -->
+<div id="myTokenPage" class="allPage layout-container flex-column">
+	<!-- Content -->
+	<div id="con" class="container-xxl mt-3" style="visibility: hidden;">
+
+		<!-- Header -->
+		<div class="row">
+        <div class="col-12 mb-2 position-relative" style="z-index: 0;">
+          <div class="card py-3 px-2" style="border:1px solid #dde7f1;">
+            <div class="card-header p-2">
+				<div class="d-flex justify-content-between align-items-center">
+					<span class="">
+          {% if token_prev > 0 %}                    
+						<button style="background:none; border:0; padding:0; width: 15px; margin-left:10px;"><img class="w-100" src="{% static 'assets/img/icon_leftArrow_02.png' %}" alt="" onclick="window.location.href='/accounts/myprofile?manage_token_id={{ token_prev }}'"></button>
+					{% else %}                        
+						<button style="background:none; border:0; padding:0; width: 15px; margin-left:10px;"><img class="w-100" src="{% static 'assets/img/icon_leftArrow_02.png' %}" alt=""></button>                               
+					{% endif %}
+          </span>
+                    <h5 class="m-0 fw-med colorCustom_01" style="line-height: 1;">
+                        {{ manageToken.start_date|slice:"0:4" }}-{{ manageToken.start_date|slice:"4:6" }}-{{ manageToken.start_date|slice:"6:8" }} ~
+                        {{ manageToken.end_date|slice:"0:4" }}-{{ manageToken.end_date|slice:"4:6" }}-{{ manageToken.end_date|slice:"6:8" }}
+                    </h5>
+					<span class="">
+          {% if token_next > 0 %}
+						<button style="background:none; border:0; padding:0; width: 15px; margin-right:10px;"><img class="w-100" src="{% static 'assets/img/icon_rightArrow_02.png' %}" alt="" onclick="window.location.href='/accounts/myprofile?manage_token_id={{ token_next }}'"></button>
+					{% else %}                        
+						<button style="background:none; border:0; padding:0; width: 15px; margin-left:10px;"><img class="w-100" src="{% static 'assets/img/icon_rightArrow_02.png' %}" alt=""></button>      
+					{% endif %}
+                    </span>    
+				</div>
+				
+				<!-- 남은기간 자동 퍼센트 계산 js 시작 -->
+				<div id="remainTimeBar" class="progress-bar mt-4" style="background: #e8f7ff; overflow: hidden; border-radius: 20px; box-shadow: none;">
+					<div class="progress-bar py-1 fs-5 fw-bold" role="progressbar" style="width: {% if progress < 0 %} 0% {% else %}  {{progress}}% {% endif %}">
+            {% if progress < 0 %}   
+              0%
+            {% else %}                        
+              {{progress}}%
+            {% endif %}
+
+            
+          
+          </div>
+				</div>
+				<!-- 남은기간 자동 퍼센트 계산 js 끝 -->
+				
+				<div class="card-body p-0 pt-3">
+					<div class="tokenInfo d-flex justify-content-between">
+						<div class="text-center">
+							<img src="{% static 'assets/img/icon_myToken_01.png' %}">
+							<p class="fw-med colorCustom_01 mb-0">남은 토큰</p>
+							<span id="myRemainToken" class="colorCustom_01 fw-bold">
+              {% if tokens.my_current_tokens == null %}
+                  {% if reward_skip_yn == 'Y' %}
+                      {% if remainTokYn == 'Y'  %}                  
+                        100  
+                      {% else %}
+                        {{manageToken.high_tokens}}
+                      {% endif %}   
+                  {% else %}
+                      {{manageToken.tokens}}
+                  {% endif %}
+              {% else %}
+                  {{tokens.my_current_tokens}}
+              {% endif %}
+							</span>
+						</div>
+						<div class="text-center">
+							<img src="{% static 'assets/img/icon_myToken_02.png' %}">
+							<p class="fw-med colorCustom_01 mb-0">보낸 토큰</p>
+							<span id="mySendToken" class="colorCustom_01 fw-bold">
+							{% if tokens.my_send_tokens == null %}
+								0
+							{% else %}
+								{{tokens.my_send_tokens}}
+							{% endif %}
+							</span>
+						</div>
+						<div class="text-center">
+							<img src="{% static 'assets/img/icon_myToken_03.png' %}">
+							<p class="fw-med colorCustom_01 mb-0">받은 토큰</p><span id="myGaveToken" class="colorCustom_01 fw-bold">	
+							{% if tokens.received_tokens == null %}
+								0
+							{% else %}
+								{{tokens.received_tokens}}
+							{% endif %}
+							</span>
+						</div>
+            <!-- {% if manageToken.id == 19 or manageToken.id == 20 %}
+            <div class="text-center">
+							<img src="{% static 'assets/img/momoconp.png' %}">
+							<p class="fw-med colorCustom_01 mb-0">모모콘P</p><span id="myGaveToken" class="colorCustom_01 fw-bold">	
+								{{total_momocon_tokens}}
+							</span>
+						</div>
+            {%endif%} -->
+					</div>
+				</div>
+			</div>
+		</div>
+
+    
+		<!--/ Header -->
+    <div class="card py-3 px-2 mt-3" style="border:1px solid #dde7f1; background: #c8edff;">
+      <div class="card-body p-0 mt-n4">
+        <div>
+          <div style="width:90%; margin:0 auto; max-width: 600px;"><img class="w-100"
+              src="{% static 'assets/img/charge_token.png' %}">
+          </div>
+          <div class="text-center my-3">
+            <button style="border:0; padding:0; font-size: clamp(16px,3.5vw,20px); width: 80%; max-width: 550px; background: #006ed5; border-radius: 40px; line-height: 1;" class="py-4 text-white fw-med" onclick="checkattendance();">땡큐토큰 출석체크
+            <!-- <button data-bs-toggle="modal" data-bs-target="#chargingModal"  style="border:0; padding:0; font-size: clamp(16px,3.5vw,20px); width: 80%; max-width: 550px; background: #006ed5; border-radius: 40px; line-height: 1;" class="py-4 text-white fw-med" onclick="checkattendance();">땡큐토큰 출석체크 -->
+    <span style="background: #13a8ea; border-radius: 20px; padding:2px 3%; font-size: clamp(12px,2.5vw,16px);">click</span></button>
+          </div>
+        </div>
+      </div>
+    </div>
+		<!--/ Main -->
+		
+		<div class="card py-3 px-2 mt-3" style="border:1px solid #dde7f1;">
+			<div class="card-header p-2">
+				<div class="myTokenBtn d-flex justify-content-between text-center">
+					<button id="receiveCheck" style="width:49%;" onclick="myTokenBtns()" class="py-2 gaveTk colorCustom_03 rounded btn fw-med clicked"><i class="d-block"></i>받은 토큰</button>
+					<button id="sendCheck" style="width:49%;" onclick="myTokenBtns()" class="py-2 sendTk colorCustom_03 rounded btn fw-med "><i class="d-block"></i>보낸 토큰</button>
+				</div>
+            </div>
+
+			<div class="card-body p-0 pt-3">
+				<div class="myTokenList justify-content-center" style="flex-wrap: wrap; display: flex;">
+					{% for data in recv %}
+					<a href="#" data-bs-toggle="modal" data-bs-target="#coin_modal" onclick="viewToken('{{data.user_department_name}}','{{data.user_company_name}}','{{data.user_position_name}}','{{data.praise_department_name}}','{{data.praise_company_name}}','{{data.praise_position_name}}','{{data.like_yn}}','{{data.user_id}}','{{data.compliment_id}}','{{data.likes_count}}', '{{data.comment_count}}','{{data.image_path}}', '{{data.user_image_yn}}', '{{data.user_image}}', '{{data.praise_image_yn}}', '{{data.praise_image}}', '{{data.user_employee_name}}', '{{data.praise_employee_name}}', '{{data.content}}', '{{data.user_employee_id}}', '{{data.reg_date|date:'Y-m-d'}}')">
+					<div class="token rounded-circle d-flex align-items-center justify-content-center m-1">
+					<div class="token token-line rounded-circle d-flex align-items-center justify-content-center">
+					{% if data.user_employee_name|length >= 4 %}
+						<span class="fw-bold text-white" style="font-size: 11px;">{{data.user_employee_name}}</span>
+					{% else %}
+						<span class="fw-bold text-white">{{data.user_employee_name}}</span>
+					{% endif %}
+					</div>
+					</div>
+					</a>
+					{% endfor %}
+					
+					{% if recv|length == 0 %}
+					<div class="text-center" style="font-size: 20px;">받은토큰이 없습니다.</div>
+					{% else %}
+					{% endif %}
+
+				<!-- 받은 토큰 가져오기 끝 -->
+				</div>
+
+				<div class="myTokenList justify-content-center" style="flex-wrap: wrap; display: none;">
+					{% for data in send %} 
+					<a href="#" data-bs-toggle="modal" data-bs-target="#coin_modal" onclick="viewToken('{{data.user_department_name}}','{{data.user_company_name}}','{{data.user_position_name}}','{{data.praise_department_name}}','{{data.praise_company_name}}','{{data.praise_position_name}}','{{data.like_yn}}','{{data.user_id}}','{{data.compliment_id}}','{{data.likes_count}}', '{{data.comment_count}}','{{data.image_path}}', '{{data.user_image_yn}}', '{{data.user_image}}', '{{data.praise_image_yn}}', '{{data.praise_image}}', '{{data.user_employee_name}}', '{{data.praise_employee_name}}', '{{data.content}}', '{{data.user_employee_id}}', '{{data.reg_date|date:'Y-m-d'}}')">
+					<div class="token rounded-circle d-flex align-items-center justify-content-center m-1">
+					<div class="token token-line rounded-circle d-flex align-items-center justify-content-center">
+					{% if data.praise_employee_name|length >= 4 %}
+						<span class="fw-bold text-white" style="font-size: 11px;">{{data.praise_employee_name}}</span>
+					{% else %}
+						<span class="fw-bold text-white">{{data.praise_employee_name}}</span>
+					{% endif %}
+					</div>
+					</div>
+					</a>					
+					{% endfor %}
+					
+					{% if send|length == 0 %}
+					<div class="text-center" style="font-size: 20px;">보낸토큰이 없습니다.</div>
+					{% else %}
+					{% endif %}
+				</div>
+			</div>
+
+		</div>
+		
+		
+			</div>
+		</div>
+		<!-- / Main -->       
+    <div id="footer"><div class="footer w-100 text-center fw-med fs-6" style="color:#418dd4;">ⓒ 2024, made 땡큐토큰</div></div>
+    <script>
+String.prototype.replaceAll = function(org, dest) 
+	{     
+		return this.split(org).join(dest); 
+	} 
+        window.onload = function () {
+  // 하단 내비게이션 높잇값 만큼 모든 페이지 높이조절 시작
+      const moNav_h = document.querySelector('.mobile-navigation').clientHeight;
+      const layoutPage = document.querySelector('.layout-page');
+      layoutPage.style.paddingBottom = moNav_h + 40 + 'px';
+  // 하단 내비게이션 높잇값 만큼 모든 페이지 높이조절 끝 
+  }
+
+    </script>
+	</div>
+	<!-- / Content -->
+</div>
+<div id="allModalWrap">
+	<!-- 나의토큰 페이지 땡큐토큰 급속충전 모달 시작 - 240220 -->
+	<!--
+	<div class="modal fade" id="chargingModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header text-center">
+					<h5 class="modal-title w-100 mb-0 fw-med" id="exampleModalLabel">Daily 출석체크</h5>
+					<button type="button" class="position-absolute btn-close closeCustom"
+						style="background:transparent; border:0; right:20px; top:25px; box-shadow: none; transform: none !important; z-index: 2;"
+						data-bs-dismiss="modal">
+						<span></span>
+					</button>
+				</div>
+				<div class="modal-body p-0 pt-2">
+					<div class="d-flex align-items-center justify-content-center">
+						<span class="me-2" style="width: 10%; min-width: 40px;"><img class="w-100"
+								src="{% static 'assets/img/icon_token05.png' %}"></span>
+						<p class="gm-bold colorCustom_03 mb-0" style="font-size: 29px; border-bottom:2px solid #006ed5;">1토큰 지급완료!
+						</p>
+						<span class="ms-2" style="width: 10%; min-width: 40px;"><img class="w-100"
+								src="{% static 'assets/img/icon_token04.png' %}"></span>
+					</div>
+					<div class="text-center mt-4">
+						<p class="gm-bold colorCustom_06" style="font-size: 80px; line-height: 1;"><span class="gm-med">+</span>1
+						</p>
+					</div>
+				</div>
+			</div>
+
+      <div class="modal-content" style="padding:20px;">
+        <div class="title" style="text-align: center;">
+          <div style="margin: 0 auto 10px; width:100px; height:67px;"><img style="width:100%;height:100%; object-fit: cover;" src="/static/assets/img/icon_chkModal_04.png"></div>
+          <h5 class="gm-bold" style="display: inline-block; font-size: 35px; border-bottom:2px solid #006ed5; color:#006ed5;">이미 출석체크 하셨습니다.</h5>
+        </div>
+        <div class="txt" style="text-align: center; margin:10px 0;">
+          <P class="fw-med" style="word-break: keep-all; color:#222;">출석체크는 하루 1번 가능합니다.</P>
+        </div>
+        <div class="okBox" style="text-align: center;">
+          <button style="padding:10px 50px; background: #006ed5;" type="button" class="btn btn-secondary" data-bs-dismiss="modal">OK</button>
+        </div>
+      </div>
+
+		</div>
+	</div> 임시로 개발해둔것 주석처리 --> 
+	
+	<input id="my_view_img" type="hidden"></input>
+	<input id="my_name" type="hidden"></input>
+	<input id="my_position_name" type="hidden"></input>
+	<input id="my_company_name" type="hidden"></input>
+	<input id="my_department_name" type="hidden"></input>
+	<input id="praiser_view_img" type="hidden"></input>
+	<input id="praiser_name" type="hidden"></input>
+	<input id="praiser_position_name" type="hidden"></input>
+	<input id="praiser_company_name" type="hidden"></input>
+	<input id="praiser_department_name" type="hidden"></input>
+	
+	<div class="modal fade" id="chargingModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+		<div class="modal-content">
+		  <div class="modal-header text-center">
+			<h5 class="modal-title w-100 mb-0 fw-med" id="exampleModalLabel">Daily 출석체크</h5>
+			<button type="button" class="position-absolute btn-close closeCustom"
+			  style="background:transparent; border:0; right:20px; top:25px; box-shadow: none; transform: none !important; z-index: 2;"
+			  data-bs-dismiss="modal">
+			  <span></span>
+			</button>
+		  </div>
+		  <div class="modal-body p-0 pt-2">
+			<div class="d-flex align-items-center justify-content-center">
+			  <span class="me-2" style="width: 10%; min-width: 40px;"><img class="w-100"
+				  src="{% static 'assets/img/icon_token05.png' %}"></span>
+			  <p class="gm-bold colorCustom_03 mb-0" style="font-size: 29px; border-bottom:2px solid #006ed5;">1토큰 지급완료!
+			  </p>
+			  <span class="ms-2" style="width: 10%; min-width: 40px;"><img class="w-100"
+				  src="{% static 'assets/img/icon_token04.png' %}"></span>
+			</div>
+			<div class="text-center mt-4">
+			  <p class="gm-bold colorCustom_06" style="font-size: 80px; line-height: 1;"><span class="gm-med">+</span>1
+			  </p>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	</div>
+	
+	
+	<!-- 나의토큰 페이지 땡큐토큰 급속충전 모달 끝 - 240220 -->
+
+	<!-- 나의토큰 페이지 땡큐토큰 카드 모달 시작 -->
+	<div class="modal fade" id="coin_modal" style="z-index: 1089;" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog mt-5">
+		<div class="modal-content p-4 pb-3">
+		  <button type="button" class="position-absolute btn-close closeCustom" style="background:transparent; border:0; right:5px; top:5px; box-shadow: none; transform: none !important;" data-bs-dismiss="modal">
+			<span></span>
+		  </button>
+		  <div class="text-center coinImg" style="width: 60%; margin:-15% auto 0;">
+			<img class="w-100" src="{% static 'assets/img/coin_icon_02.png' %}">
+		  </div>
+		  <div class="modal-header rounded p-2 mt-3 justify-content-center" style="border:1px solid #dde7f1;">
+			<div class="d-flex align-items-center">
+			  <img style="width: 32px; height: 32px; border-radius: 100%; overflow: hidden; object-fit: cover; border:1px solid #d3f1ff;" src="{% static 'assets/img/profile_bee_01.png' %}" class="img-fluid me-2" id="token_user_image" href="#" data-bs-toggle="modal" data-bs-target="#profile_modal" onclick="viewuserprofile();">
+			  <p id="token_user_employee_name" style="font-size: 14px;" class="m-0 fw-med colorCustom_01"></p>
+			</div>
+			<span class="mx-3 d-block" style="width: 25px; height: 25px; background: url({% static 'assets/img/icon_arrow.svg' %}) no-repeat center/100% auto;"></span>
+			<div class="d-flex align-items-center">
+			  <img style="width: 32px; height: 32px; border-radius: 100%; overflow: hidden; object-fit: cover; border:1px solid #d3f1ff;" src="{% static 'assets/img/profile_bee_01.png' %}" class="img-fluid me-2" id="token_praise_image" href="#" data-bs-toggle="modal" data-bs-target="#profile_modal" onclick="viewpraiserprofile();">
+			  <p id="token_praise_employee_name" style="font-size: 14px;" class="m-0 fw-med colorCustom_01"></p>
+			  <span id="token_user_id" class="visually-hidden"></span>
+			</div>
+		  </div>
+		  <div class="modal-body p-0 mb-2 mt-2">
+			<div class="w-75 mx-auto"><img src="{% static 'assets/img/photo01.jpg' %}" class="img-fluid rounded w-100" id="token_image_path">
+			</div>
+			<div class="p-3 text-center rounded mt-3" style="border:1px solid #dde7f1">
+			  <p id="token_content" class="text-dark mb-0 fw-med colorCustom_01"></p>
+			</div>
+		  </div>
+      
+		  <div class="modal-footer p-0 mt-2 d-flex justify-content-between align-items-center">
+			<div class="w-100 p-0 d-flex justify-content-between" style="height: 30px;">
+			  <div class="d-flex">
+          <a href="javascript:void(0);"
+            class="d-flex heartBtn btn p-0 me-2">
+            <i id="profile_like_clicked" class="me-1 clicked"></i>
+            <span id="profile_likenum" class="fw-med colorCustom_01"></span></a>
+          <a href="javascript:void(0);" class="d-flex commentBtn btn p-0"> <!-- 댓글 버튼 잠가놓기 data-bs-toggle="modal" data-bs-target="#myProfile_comment_modal"-->
+            <i id="profile_com_clicked" class="me-1 clicked"></i>
+            <span id="profile_commentnum" class="fw-med colorCustom_01"></span>
+          </a>
+				  <!-- <a href="#" class="d-flex heartBtn btn p-0 me-2">
+            <i id="profile_like_clicked" class="me-1" style="width: 20px; height: 20px; background-image: url(/static/assets/img/icon_heart_01.svg);"></i>
+				    <span id="profile_likenum" class="fw-med colorCustom_01"></span>
+          </a> 
+				  <a href="#" class="d-flex commentBtn btn p-0" data-bs-toggle="modal" data-bs-target="#comment_modal">
+				    <i id="profile_com_clicked" style="width: 20px; height: 20px; background-image: url(/static/assets/img/icon_comment_01.svg);" class="me-1"></i>
+            <span id="profile_commentnum" class="fw-med colorCustom_01"></span>
+          </a> -->
+			  </div>
+			  <div class="position-relative">
+				<a class="btn p-0 me-1 fw-med colorCustom_01"><span id="token_reg_date"></span></a>
+				<button class="btn p-0 editBtn" type="button" id="conversionRate" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				  <span class="d-block"></span>
+				</button>
+				<div class="dropdown-menu dropdown-menu-end" aria-labelledby="conversionRate" data-popper-placement="bottom-end" style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate(0px, 25px);">
+				  <a id="modal_modify_token"class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#modalPraiseModify" onclick="updatetextarea();">수정하기</a>
+				  <a id="modal_delete_token" class="dropdown-item" onclick="return confirmDelete()">삭제하기</a>
+				</div>
+			  </div>
+			</div>
+			<div class="w-100 text-center">
+			  <button id="replyButton" class="btn w-100 text-white py-2" style="background: #006ed5;" onclick ="window.replySend();">답장</button>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	</div>
+	<!-- 나의토큰 페이지 땡큐토큰 카드 모달 끝 -->
+</div>
+
+
+<!-- profile view modal -->
+
+<!--/ profile view modal -->
+
+<!-- storyModal view modal -->
+<div class="modal fade animate__animated animate__jackInTheBox" id="storyModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+            {% if 0 >= remaining_days %}
+                <img src="{% static 'assets/img/main/story_notice.jpg' %}" alt="Avatar" class="card img-fluid shadow-none"/>
+                <div class="modal-body p-2 d-flex justify-content-center align-items-center">
+                    <div class="spinner-border text-primary mb-3" id="reportLoading" role="status">
+                          <span class="visually-hidden">Report Loading...</span>
+                    </div>
+                    <div class="mx-3 p-0 border border-0 border-secondary  text-dark text-start" id="viewStory" >칭찬글 분석 중...</div>
+                </div>
+            <img id="img_story_word" src="{% static 'assets/img/main/word_mask.png' %}" alt="칭찬 워드크라우드" class="img-fluid mx-3 rounded">
+            {% else %}               
+            <img src="{% static 'assets/img/main/story_ready.jpg' %}" alt="Avatar" class="card img-fluid shadow-none"/>
+            <h5 class="pt-4 text-center">D - {{remaining_days}}</h5>
+            {% endif %}
+        
+			<div class="modal-footer p-1">
+				<button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">닫기</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- storyModal view modal -->
+
+<!-- 코멘트 모달 -->
+<div class="modal fade" id="myProfile_comment_modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header p-2 justify-content-end">
+
+        <button type="button" class="position-absolute btn-close closeCustom"
+          style="background:transparent; border:0; right:20px; top:25px; box-shadow: none; transform: none !important; z-index: 1;"
+          data-bs-dismiss="modal" aria-label="Close">
+          <span></span>
+        </button>
+      </div>
+      <div class="modal-body p-2" style="min-height: 100px;">
+      </div>
+      <div class="modal-footer px-2">
+        <div class="input-group input-group-merge">
+          <input type="text" class="typing_comment form-control" placeholder="댓글 작성" aria-label="Recipient's username"
+            aria-describedby="button-addon2">
+          <button class="btn btn-danger" type="button" id="button-addon2" onclick="praiseCommentRegedit()">등록</button>
+          <style>#myProfile_comment_modal .typing_comment+button{border: 1px solid #14a8ea !important;background: #14a8ea !important;box-shadow: none; border-top-right-radius: 8px; border-bottom-right-radius: 8px;}</style>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 코멘트 모달 -->
+
+<!-- 칭찬 수정하기 -->
+<div class="modal fade " id="modalPraiseModify" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="position-absolute btn-close closeCustom"
+          style="background:transparent; border:0; right:20px; top:25px; box-shadow: none; transform: none !important; z-index: 2;"
+          data-bs-dismiss="modal">
+          <span></span>
+        </button>
+      </div>
+      <div class="modal-body p-0 mb-2 mt-2">
+        <div class="mx-3">
+
+          <div id="mainNew">
+
+
+            <div class="wrap_thumb_layout_1">
+              <div class="swiper-container gallery-thumbs">
+                <div class="swiper-wrapper">
+                  {% for part in images %}
+                  <input id="modify_thumb_path" type="hidden" value="{{part.image_path}}"></input>
+                  <div class="swiper-slide " name="input_swiper_id" value="{{part.id}}">
+                    <p class="object-fit"><img id="modify_thumb" style="width:100%; height:100%; object-fit: cover;" ></p> <!--src="{{part.image_path}}" 2024.03.17-->
+                  </div>
+                  {% endfor %}
+
+                </div>
+              </div>
+
+            </div>
+            <div class="wrap_thumb_layout_2">
+
+              <div class="swiper-container gallery-top">
+                <div class="swiper-wrapper">
+                  {% for part in images %}
+                  <div id="swiper{{part.id}}" class="swiper-slide" value="{{part.id}}">
+                    <p class="object-fit"><img id="modify_gallery" style="width:100%; height:100%; object-fit: cover;" ></p> <!--src="{{part.image_path}}" 2024.03.17-->
+                  </div>
+                  {% endfor %}
+
+                </div>
+              </div>
+              <!-- Add Arrows -->
+              <div class="swiper-button-prev"><img src="/static/assets/img/icon_leftArrow.png"></div>
+              <div class="swiper-button-next"><img src="/static/assets/img/icon_rightArrow.png"></div>
+            </div>
+          </div>
+			<div id="compliment_id" style="display: none;"></div>
+          <div class="card my-2">
+                 <textarea class="form-control" id="modalPraiseModify_content"
+                style="min-height: 200px; height:200px;"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer px-3 d-flex justify-content-between">
+        <button type="button" class="btn colorCustom_03 m-0 py-2  fw-med fs-5"
+          style="width:49%; box-shadow: none; background: #e8f7ff;" data-bs-dismiss="modal">닫기</button>
+        <button type="button" class="btn text-white m-0 py-2  fw-med fs-5"
+          style="width:49%; box-shadow: none; background: #006ed5;" data-bs-dismiss="modal" onclick="praiseModifyAct();">저장</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+
+function updatetextarea()
+{
+  var mdthumb = document.querySelectorAll("#modify_thumb_path");
+  var mdthumb_img = document.querySelectorAll("#modify_thumb");
+  var mdgallery_img = document.querySelectorAll("#modify_gallery");
+  
+  for (var m = 0; m < mdthumb.length; m++)
+  {
+    mdthumb_img[m].src = mdthumb[m].value;
+    mdgallery_img[m].src = mdthumb[m].value;
+  }		
+	document.getElementById("modalPraiseModify_content").value = document.querySelector("#token_content").innerHTML;
+}
+
+function replySend(){
+    //답장
+    var userId = document.querySelector("#token_user_id").innerHTML;
+
+    var url = "/praiseRegedit/?userId=" + userId;
+    
+    window.location.href = url;
+
+  
+}
+	
+function setPotoImg(event) {
+		var reader = new FileReader();
+		reader.onload = function(event) {
+			document.querySelector("#poto_img").setAttribute("src", event.target.result);
+		}
+		reader.readAsDataURL(event.target.files[0]);
+}
+
+function resetPotoImg(src) {
+		document.querySelector("#poto_img").setAttribute("src", src);
+		document.querySelector("#input_formFile").value = null;
+}
+	
+function praiseModifyAct() {    // 칭찬하기 수정 처리 이벤트
+
+    var compliment_id = document.querySelector('#compliment_id');  // 칭찬 ID
+	var content = $("#modalPraiseModify_content").val();
+	var images_id = document.querySelector('.swiper-slide-active[name="input_swiper_id"]').getAttribute('value');
+	// console.log(compliment_id);
+  
+	var inputData = {
+		compliment_id : compliment_id.value,
+		//compliment_type : compliment_type.value,
+		content : content,
+		images_id : images_id
+		//is_active : is_active
+	};
+	
+	//console.log("### praiseModifyAct 값 확인  ###");
+	//console.log("### compliment_id : "+compliment_id.value);
+	//console.log("### content : "+content);
+	//console.log("### images_id : "+images_id);
+
+	try {
+		$.ajax({
+			type: "POST",
+			url: "/apis/praise_modify/",
+			data: inputData,
+			success: function (data) {
+				// console.log('### praise_modify success');
+				//console.log(data);
+				window.location = window.location.href;				
+				
+			},
+			error: function (e) {
+				console.log("### praise_modify ERROR : ", e);
+				//alert("fail");
+			}
+	  })
+      .done(function() {
+        // AJAX 요청 완료 후 처리할 작업
+      })
+      .fail(function() {
+        // AJAX 요청 실패 시 처리할 작업
+      });
+    } catch (e) {
+        alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+    }
+	alert('수정이 완료 되었습니다');
+	window.location = window.location.href;	
+	
+}
+	
+function praiseModifyPop(idx) {    // 칭찬하기 수정 팝업 이벤트'
+    // console.log('### praiseModifyPop call ###', idx);  
+    
+    var inputData = {
+        compliment_id : idx
+    };
+    
+    try {
+        $.ajax({
+            type: "POST",
+            url: "/apis/praise_detail/",
+            data: inputData,
+            success: function (data) {
+                // console.log('### praise_detail success');
+                
+
+            },
+            error: function (e) {
+                console.log("### praise_detail ERROR : ", e);
+                //alert("fail");
+            }
+      })
+      .done(function() {
+        // AJAX 요청 완료 후 처리할 작업
+      })
+      .fail(function() {
+        // AJAX 요청 실패 시 처리할 작업
+      });
+   } catch (e) {
+        alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+   }	
+}
+
+function viewuserprofile()
+{
+	document.getElementById("profile_view_img").setAttribute("src", document.getElementById("my_view_img").value);
+	document.getElementById("profile_employee_name").innerHTML = document.getElementById("my_name").value;
+	document.getElementById("profile_position_name").innerHTML = document.getElementById("my_position_name").value;
+	document.getElementById("profile_company_name").innerHTML = document.getElementById("my_company_name").value;
+	document.getElementById("profile_department_name").innerHTML = document.getElementById("my_department_name").value;
+	document.getElementById("profile_change_btn").style.display = 'none';
+}
+
+function viewpraiserprofile()
+{
+	document.getElementById("profile_view_img").setAttribute("src", document.getElementById("praiser_view_img").value);
+	document.getElementById("profile_employee_name").innerHTML = document.getElementById("praiser_name").value;
+	document.getElementById("profile_position_name").innerHTML = document.getElementById("praiser_position_name").value;
+	document.getElementById("profile_company_name").innerHTML = document.getElementById("praiser_company_name").value;
+	document.getElementById("profile_department_name").innerHTML = document.getElementById("praiser_department_name").value;
+	document.getElementById("profile_change_btn").style.display = 'none';
+}
+
+	
+function viewToken(user_department_name, user_company_name, user_position_name, praise_department_name, praise_company_name, praise_position_name, like_yn, user_id, compliment_id, likes_count, comment_count, image_path, user_image_yn, user_image, praise_image_yn, praise_image, user_employee_name, praise_employee_name, content,user_employee_id, reg_date) {
+	document.getElementById('modal_delete_token').href = "/praiseDelete/" + String(compliment_id);
+	document.getElementById('compliment_id').value = compliment_id;
+	document.querySelector("#token_image_path").setAttribute("src", image_path);
+	document.getElementById("profile_change_btn").style.display = 'none';
+	
+    if(user_image_yn == "Y") {
+			document.querySelector("#token_user_image").setAttribute("src", user_image);
+			document.getElementById("my_view_img").value = user_image;
+		} else {
+			document.querySelector("#token_user_image").setAttribute("src", "{% static 'assets/img/profile_bee_01.png' %}");
+			document.getElementById("my_view_img").value = "{% static 'assets/img/profile_bee_01.png' %}";
+		}
+		if(praise_image_yn == "Y") {
+			document.querySelector("#token_praise_image").setAttribute("src", praise_image);
+			document.getElementById("praiser_view_img").value = praise_image;
+		} else {
+			document.querySelector("#token_praise_image").setAttribute("src", "{% static 'assets/img/profile_bee_01.png' %}");
+			document.getElementById("praiser_view_img").value = "{% static 'assets/img/profile_bee_01.png' %}";
+		}
+        
+		document.querySelector("#token_user_employee_name").innerHTML = user_employee_name;
+		document.querySelector("#token_user_id").innerHTML = user_id;
+		document.querySelector("#token_praise_employee_name").innerHTML = praise_employee_name;
+    content = content.replaceAll('<br>','\n');
+    if (content[0] == "'" && content[content.length-1] == "'")
+		{
+			content = content.substring(1, content.length-1);
+		}
+		document.querySelector("#token_content").innerHTML = content;
+		
+		document.getElementById("my_name").value = user_employee_name;
+		document.getElementById("my_position_name").value = user_position_name;
+		document.getElementById("my_company_name").value = user_company_name;
+		document.getElementById("my_department_name").value = user_department_name;
+		document.getElementById("praiser_name").value = praise_employee_name;
+		document.getElementById("praiser_position_name").value = praise_position_name;
+		document.getElementById("praiser_company_name").value = praise_company_name;
+		document.getElementById("praiser_department_name").value = praise_department_name;
+
+
+	document.getElementById("profile_likenum").innerHTML = likes_count;
+	document.getElementById("profile_commentnum").innerHTML = comment_count;
+	
+	if (parseInt(like_yn) >= 1)
+	{
+		document.getElementById("profile_like_clicked").className = "me-1 clicked";
+	}
+	else
+	{
+		document.getElementById("profile_like_clicked").className = "me-1";
+	}
+	if (parseInt(comment_count) >= 1)
+	{
+		document.getElementById("profile_com_clicked").className = "me-1 clicked";
+	}
+	else
+	{
+		document.getElementById("profile_com_clicked").className = "me-1";
+	}
+	
+    var date_result = reg_date.slice(0, 10);// 날짜만 출력
+    document.querySelector("#token_reg_date").innerHTML = date_result;
+    
+    var tokenModifyHtml ='';
+
+    if ( "{{user.id}}" == user_id) {
+        tokenModifyHtml = ''+ '<div class="dropdown">' + 
+            '<button class="btn p-0" type="button" id="conversionRate" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>'+
+
+            '<button class="btn p-0" type="button" id="conversionRate" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
+                '<i class="bx bx-dots-vertical-rounded"></i>'+
+            '</button>'+
+            '<div class="dropdown-menu dropdown-menu-end" aria-labelledby="conversionRate">'+
+            '<a class="dropdown-item" href="javascript:void(0);" onclick="praiseModifyPop( \''+compliment_id+'\' );">수정하기</a>'+
+            '<a class="dropdown-item" href="/praiseDelete/'+ compliment_id + '" onclick="return confirmDelete()">삭제하기</a>' +
+            //'<a class="dropdown-item" href="javascript:copyLink( \''+compliment_id+'\' //);">URL 복사하기</a>' +
+            '</div>'+'</div>';
+    }
+	else if ("{{user.is_superuser}}" == "True") 
+	{ 
+        tokenModifyHtml = ''+ '<div class="dropdown">' +
+            '<button class="btn p-0 " type="button" id="conversionRate" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>'+
+
+            '<button class="btn p-0" type="button" id="conversionRate" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
+                '<i class="bx bx-dots-vertical-rounded"></i>'+
+            '</button>'+
+            '<div class="dropdown-menu dropdown-menu-end" aria-labelledby="conversionRate">'+
+            '<a class="dropdown-item" href="javascript:void(0);" onclick="praiseModifyPop( \''+compliment_id+'\' );">수정하기</a>'+
+            '<a class="dropdown-item" href="/praiseDelete/'+ compliment_id + '" onclick="return confirmDelete()">삭제하기</a>' +
+            //'<a class="dropdown-item" href="javascript:copyLink( \''+compliment_id+'\' //);">URL 복사하기</a>' +
+            '</div>'+'</div>';
+    }
+    //document.querySelector("#toekn_modify").innerHTML = tokenModifyHtml;
+    //답장
+    if($("#receiveCheck").hasClass("clicked"))
+	{
+      //$("#replyButton").show(); 
+	  replyButton.style.display = 'block';
+	  conversionRate.style.display = 'none';
+	  // console.log('받은 토큰 클릭댔습니다');
+    }
+	else
+	{
+      //$("#replyButton").hide();  
+		replyButton.style.display = 'none';
+		conversionRate.style.display = 'inline-flex';
+		// console.log('보낸 토큰 클릭댔습니다');
+    } 
+}
+  
+    
+function openAi_Story() {    
+  	// console.log('### openAi_Story CALL');
+	
+    var inputData = {
+        id: "{{user.id}}",
+        token_id:"{{manageToken.id}}"
+        //value2: input2,
+        //value3: input3
+    };
+
+    document.querySelector("#viewStory").innerHTML = "칭찬글 분석 중...";
+    $('#img_story_word').hide();
+
+    try {
+        $('#reportLoading').show();
+        $.ajax({
+            type: "POST",
+            url: "/apis/openAi_Story/",
+            data: inputData,
+            success: function (data) {
+                // console.log('### openAi_Story success');
+                // console.log(data);
+                //console.log(data.story);
+                
+                if (data.status != '200' || data.data_count == '0') {
+                    console.log('error log');
+                    document.querySelector("#viewStory").innerHTML = '<span class="lead Pretendard text-dark">' + data.story.summary + '</span>';    
+                }else{
+                    $('#img_story_word').show();
+                    document.querySelector("#viewStory").innerHTML = '<span class="lead Pretendard text-dark">' + data.story + '</span>';
+                    document.querySelector("#img_story_word").setAttribute("src", data.image);                        
+                }
+
+
+            },
+            error: function (e) {
+                console.log("### openAi_Story ERROR : ", e);
+                //alert("fail");
+            }
+     })
+      .done(function() {
+          $('#reportLoading').hide();
+          // AJAX 요청 완료 후 처리할 작업
+     })
+      .fail(function() {
+          $('#reportLoading').hide();
+          // AJAX 요청 실패 시 처리할 작업
+      });
+     } catch (e) {
+        alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+     }	
+    
+}
+
+    
+</script>
+
+<script>
+    $(document).ready(function() {
+      // 페이지 로딩이 완료되면 실행될 코드
+      $('#reportLoading').hide();	
+        
+	var swiperTopNum = $('#modalPraiseModify .gallery-top').find('.swiper-slide');
+	var swiperSubNum = $('#modalPraiseModify .gallery-thumbs').find('.gallery-thumbs');
+
+	var galleryThumbs = new Swiper('#modalPraiseModify .gallery-thumbs', {
+	  spaceBetween: 10, //슬라이드 간격
+	  slidesPerView: '5',
+    autoHeight : true,
+	  breakpoints: {
+		640: {
+		  slidesPerView: '4.5',
+		},
+		350: {
+		  slidesPerView: '3.5',
+		},
+	  },
+	  slideToClickedSlide: true,
+	});
+
+	var galleryTop = new Swiper('#modalPraiseModify .gallery-top', {
+	  spaceBetween: 10,
+    autoHeight : true,
+	  navigation: {
+		nextEl: '.swiper-button-next',
+		prevEl: '.swiper-button-prev',
+	  },
+	  slidesPerView: '1',
+	});
+
+	galleryTop.controller.control = galleryThumbs;
+	galleryThumbs.controller.control = galleryTop;
+
+	setTimeout(loaddivpage, 30);
+
+    });
+
+function loaddivpage()
+{
+	document.getElementById("con").style.visibility = 'visible';
+	document.getElementById("header").style.visibility = 'visible';
+}
+
+
+</script>
+
+<script>
+    // 마이프로필 자동 퍼센트 계산 시작 - 240220
+    const timePercent = document.querySelector('#remainTimeBar');
+    const now = new Date(); //현재 시간
+    const nowDate = now.getDate(); //현재 시간에서 일자 가져오기
+    const lastDate = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate(); // 현재달 마지막 일자 가져오기
+    const remainDate = Math.floor((nowDate / lastDate) * 100); // 현재달 마지막 일자에서 현재일
+    // console.log(remainDate);
+
+    function myTokenBtns() {
+      // 마이프로필 버튼 클릭시 CSS 추가 시작 - 240220
+      const myTokenBtn = document.querySelectorAll('.myTokenBtn button');
+      const myTokenList = document.querySelectorAll('.myTokenList');
+
+      myTokenBtn.forEach((btn, btnIndex) => {
+        btn.addEventListener('click', () => {
+
+          myTokenBtn.forEach((siblingBtn, siblingIndex) => {
+            siblingBtn.classList.remove('clicked');
+            myTokenList[siblingIndex].style.display = 'none';
+          });
+
+          btn.classList.add('clicked');
+          myTokenList[btnIndex].style.display = 'flex';
+        });
+      });
+    }
+    // 마이프로필 버튼 클릭시 CSS 추가 끝 - 240219
+    myTokenBtns();
+
+    // console.log("scriptStart");
+    // 공통 js 시작 - 240222
+    var doc = document;
+
+    //부서, 직위 서브 찾기 탭 생성 시작
+    const chkHiddenInputs = document.querySelectorAll('.chkHiddenInput');
+    document.addEventListener('click', (event) => {
+      const clickedElement = event.target;
+      const isChkHiddenInput = clickedElement.classList.contains('chkHiddenInput') || clickedElement.closest(
+        '.chkHiddenInput');
+
+      chkHiddenInputs.forEach((item, index) => {
+        const editSearchBox = item.querySelector('.editSearchBox');
+
+        if (!isChkHiddenInput || item !== clickedElement.closest('.chkHiddenInput')) {
+          editSearchBox.classList.add('d-none');
+        } else {
+          editSearchBox.classList.remove('d-none');
+        }
+      });
+    });
+    //부서, 직위 서브 찾기 탭 생성 끝
+
+	
+function checkattendance(){
+
+    try {
+        $.ajax({
+            type: "POST",
+            url: "/apis/add_token/",
+            data: "",
+            success: function (data) {
+                // console.log('### checkattendance success');
+                // console.log(data);                
+                // console.log("chk af_curr_tokens : " ,data.af_curr_tokens);
+                // console.log("chk af_send_tokens : " ,data.af_send_tokens);
+                // console.log("chk af_recv_tokens : " ,data.af_recv_tokens);
+                // console.log("chk addNeedtoken_yn : " ,data.addNeedtoken_yn);
+
+                if(data.chk_update_yn == 'Y'){
+                    document.getElementById('myRemainToken').innerText = data.af_curr_tokens; //남은토큰
+                    document.getElementById('mySendToken').innerText = data.af_send_tokens; //보낸토큰
+                    document.getElementById('myGaveToken').innerText = data.af_recv_tokens; //받은토큰
+                    var modal = document.getElementById("chargingModal");
+                    // console.log("### data.images_id : "+data.images_id);
+                    var bsModal = new bootstrap.Modal(modal);
+                    bsModal.show();
+                }else if(data.addNeedtoken_yn == 'A'){
+                    Warning('월충전 토큰 20개를 모두 소진시 <br>충전이 가능합니다.',' 출석체크는 하루 1번 가능합니다.');
+                    $.unblockUI();  
+                    return false;
+                }else if(data.addNeedtoken_yn == undefined){ // 확인해보기!!!!
+                     Warning('월충전 토큰 20개를 모두 소진시 <br>충전이 가능합니다.',' 출석체크는 하루 1번 가능합니다.');
+                    $.unblockUI();  
+                    return false;                }else{
+                    Warning('이미 출석체크하셨습니다.',' 출석체크는 하루 1번 가능합니다.');
+                    $.unblockUI();  
+                    var modal = document.getElementById("chargingModal");
+                    var bsModal = new bootstrap.Modal(modal);
+                    bsModal.hide();
+                    // console.log("test::::::::bsModal : ", bsModal);
+                    return false;
+                }               
+            },
+            error: function (e) {
+
+            }
+        })
+        .done(function() {
+        // AJAX 요청 완료 후 처리할 작업
+        })
+        .fail(function() {
+        // AJAX 요청 실패 시 처리할 작업
+        });
+    } catch (e) {
+        alert('checkFive 조회');
+    }	
+
+}
+
+function Warning(_title, _text) {
+  Swal.fire({
+    title: _title,
+    text: _text,
+    type: 'warning',
+    customClass: {
+      confirmButton: 'btn btn-primary'
+    },
+    buttonsStyling: false
+  })
+}
+
+  </script>
+
+
+  <style>
+    .modal-backdrop.show { 
+    z-index: 1088;
+}
+
+	.select2.select2-container {position: absolute; left:0; width:calc(100% - 99px) !important;}
+    button.searchChkBtn {position: absolute !important; right:0;}
+
+    /* 공통 editCard 모달 CSS 시작 -240221 */
+#modalPraiseModify #mainNew {
+  margin: 20px 0;
+}
+
+#modalPraiseModify .wrap_thumb_layout_1 {
+  height: 80px;
+  /* width: 20%; */
+  overflow: hidden;
+}
+#modalPraiseModify .wrap_thumb_layout_2 {
+  /* max-height: 300px; */
+  /* height: 300px; */
+  position: relative;
+}
+
+#modalPraiseModify .wrap_thumb_layout_2 .swiper-wrapper {
+  align-items: center;
+}
+#modalPraiseModify .wrap_thumb_layout_2 .swiper-button-prev{
+  left:-5px;
+}
+#modalPraiseModify .wrap_thumb_layout_2 .swiper-button-next{
+  right:-5px;
+}
+#modalPraiseModify .swiper-slide p {
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+#modalPraiseModify .gallery-top {
+  width: 80%;
+  margin: 15px auto 0;
+  overflow: hidden;
+  max-height: 450px;
+}
+
+#modalPraiseModify .gallery-thumbs .swiper-slide {
+  cursor: pointer;
+  opacity: 0.2;
+}
+
+#modalPraiseModify .gallery-thumbs .swiper-slide.swiper-slide-thumb-active,
+#modalPraiseModify .gallery-thumbs .swiper-slide.swiper-slide-active {
+  opacity: 1;
+}
+
+#modalPraiseModify .wrap_thumb_layout_2 .swiper-button-prev::after,
+#modalPraiseModify .wrap_thumb_layout_2 .swiper-button-next::after {
+  content: none;
+}
+
+#modalPraiseModify .gallery-box .object-fit img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 공통 editCard 모달 CSS 끝 - 240221 */
+
+    /* 오늘의 땡큐 카드 - 헤더 데코 */
+    .all_ .todayThank .todayHeader {
+      top: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 300px;
+      width: 100%;
+    }
+
+    .all_ .todayThank .todayHeader img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .all_ .sendMeCard>div {
+      background: #c8edff;
+    }
+
+    /* 카드 - 지점 명칭 */
+    .all_ .card-title {
+      font-size: 0.7rem;
+    }
+
+    /* 카드 - 사람 > 직위 명칭 */
+    .all_ .card-text span {
+      font-size: 0.8rem;
+    }
+
+    /* 카드 - 해쉬태그 */
+    .all_ .hash>span {
+      border-radius: 17px;
+      background: #e8f7ff;
+    }
+
+    .modalPraiseComment .typing_comment:focus {
+      border-color: #14a8ea;
+    }
+
+    .modalPraiseComment .typing_comment+button {
+      border: 1px solid #14a8ea !important;
+      background: #14a8ea !important;
+      box-shadow: none;
+    }
+
+    .all_ .modal-dialog {
+      top: 3%;
+      max-width: 450px;
+    }
+
+#myTokenPage #remainTimeBar>div {
+  background: #006ed5;
+}
+
+#myTokenPage .myTokenBtn button.clicked {
+  background: #006ed5;
+  color: #fff !important;
+}
+
+#myTokenPage .myTokenBtn button {
+  background: #e8f7ff;
+}
+
+#myTokenPage .myTokenBtn button.gaveTk i,
+#myTokenPage .myTokenBtn button.sendTk i {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+#myTokenPage .myTokenBtn button.gaveTk i {
+  background-color: #006ed5;
+  -webkit-mask: url(/static/assets/img/icon_menu_05_01.svg) no-repeat center/auto 100%;
+  mask: url(/static/assets/img/icon_menu_05_01.svg) no-repeat center/auto 100%;
+}
+
+#myTokenPage .myTokenBtn button.gaveTk.clicked i {
+  background: #fff;
+}
+
+#myTokenPage .myTokenBtn button.sendTk i {
+  background: url(/static/assets/img/icon_arrow.png) no-repeat center/100% auto;
+}
+
+#myTokenPage .tokenInfo>div {
+  position: relative;
+  width: calc(100% / 3);
+}
+
+#myTokenPage .tokenInfo>div::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  height: 80%;
+  border: 1px solid #c8edff;
+}
+
+#myTokenPage .tokenInfo>div:last-child::after {
+  content: none;
+}
+
+#myTokenPage .tokenInfo>div img {
+  max-width: 100px;
+  min-width: 50px;
+  width: 30%;
+}
+
+#myTokenPage .tokenInfo>div p {
+  margin-top: 2%;
+  font-size: clamp(14px, 2.5vw, 24px);
+}
+
+#myTokenPage .tokenInfo>div span {
+  font-size: clamp(18px, 4.5vw, 32px);
+}
+
+
+#myTokenPage .myTokenList .token {
+  width: 65px;
+  height: 65px;
+  background: linear-gradient(0deg, rgba(251, 221, 102, 1) 0%, rgba(250, 160, 13, 1) 50%, rgba(251, 221, 102, 1) 100%);
+  cursor: pointer;
+}
+
+#myTokenPage .myTokenList .token .token-line {
+  width: 55px;
+  height: 55px;
+  border: 2px solid #ffffd0ed;
+}
+
+#myTokenPage .myTokenList .token span {
+  font-size: 14px;
+}
+
+#myTokenPage #coin_modal .editBtn {
+  height: 30px;
+}
+
+#myTokenPage #coin_modal .editBtn span {
+  width: 15px;
+  height: 120%;
+  background: #006ed5;
+  -webkit-mask: url(/static/assets/img/icon_edit.svg) no-repeat center/auto 100%;
+  mask: url(/static/assets/img/icon_edit.svg) no-repeat center/auto 100%;
+}
+
+body:has(#myTokenPage) .modal-backdrop {
+  z-index: 1088;
+}
+
+    .mobile-navigation button .icon_home {
+      -webkit-mask: url(/static/assets/img/icon_menu_01_01.svg) no-repeat center/auto 100%;
+      mask: url(/static/assets/img/icon_menu_01_01.svg) no-repeat center/auto 100%;
+    }
+
+    .mobile-navigation button .icon_myThank {
+      -webkit-mask: url(/static/assets/img/icon_menu_02_01.svg) no-repeat center/auto 100%;
+      mask: url(/static/assets/img/icon_menu_02_01.svg) no-repeat center/auto 100%;
+    }
+
+    .mobile-navigation button .icon_sendThank {
+      -webkit-mask: url(/static/assets/img/icon_menu_03_01.svg) no-repeat center/auto 100%;
+      mask: url(/static/assets/img/icon_menu_03_01.svg) no-repeat center/auto 100%;
+    }
+
+    .mobile-navigation button .icon_best {
+      -webkit-mask: url(/static/assets/img/icon_menu_04_01.svg) no-repeat center/auto 100%;
+      mask: url(/static/assets/img/icon_menu_04_01.svg) no-repeat center/auto 100%;
+    }
+
+    .mobile-navigation button .icon_myToken {
+      -webkit-mask: url(/static/assets/img/icon_menu_05_02.svg) no-repeat center/auto 100%;
+      mask: url(/static/assets/img/icon_menu_05_02.svg) no-repeat center/auto 100%;
+    }
+
+/* 나의토큰 페이지 CSS 추가 끝 - 240220*/
+@media (max-width:767px) {
+  .adminPage .totalNum>div {
+    width: 49%;
+  }
+}
+
+@media (max-width:576px) {
+
+  .allPage .forPc {
+    display: block !important;
+  }
+}
+
+@media (max-width:440px) {
+
+  .allPage .modal-dialog {
+    max-width: 350px;
+    margin: 0 auto;
+  }
+}
+
+  </style>
+
+<!-- <script src="{% static 'assets/vendor/libs/swiper/swiper.js' %}"></script> -->
+<!-- <script src="{% static 'assets/js/ui-carousel.js' %}"></script> -->
+
+
+{% endblock %}

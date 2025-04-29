@@ -1,0 +1,1630 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+
+<!-- 드림 사용 소스 -->
+{% comment %} <link rel="stylesheet" href="{% static 'assets/css/apex-charts.css' %}" /> {% endcomment %}
+<link rel="stylesheet" href="{% static 'assets/css/bootstrap-datepicker.css' %}" />
+<link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+<script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+<!-- 드림 사용 소스 끝 -->
+
+<!-- Page JS -->
+<script src="{% static 'assets/js/forms-typeahead.js' %}"></script>
+
+<script>
+var chkuser = {{user.id}};
+// WARNING ALERT
+function Warning(_title, _text) {
+  Swal.fire({
+    title: _title,
+    text: _text,
+    type: 'warning',
+    customClass: {
+      confirmButton: 'btn btn-primary'
+    },
+    buttonsStyling: false
+  })
+}
+
+function AlertInfo(_title, _text, _returnValue) {
+    return new Promise((resolve, reject) => {
+        Swal.fire({
+            title: _title,
+            text: _text,
+            type: 'warning',
+            customClass: {
+                confirmButton: 'btn btn-primary'
+            },
+            buttonsStyling: false,
+            showConfirmButton: true
+        }).then((result) => {
+            if (result.value) {
+                resolve(_returnValue);
+            }
+        });
+    });
+}
+
+function AlertPickAct(_title, _text, _confirmValue, _cancelValue) {
+    return new Promise((resolve, reject) => {
+        Swal.fire({
+            title: _title,
+            text: _text,
+            type: 'warning',
+            customClass: {
+                confirmButton: 'btn btn-primary',
+                cancelButton: 'btn btn-secondary'
+            },
+            buttonsStyling: false,
+            showCancelButton: true,
+            showConfirmButton: true,
+            cancelButtonText: '취소',
+            confirmButtonText: '진행'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                resolve(_confirmValue); // 사용자가 '진행' 버튼을 클릭한 경우
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                resolve(_cancelValue); // 사용자가 '취소' 버튼을 클릭한 경우
+            }
+        });
+    });
+}
+
+function praiseCheck(_employee_id) {    // 칭찬하기 상세 데이터 이벤트
+    var inputData = {
+        employee_id : _employee_id
+    };
+
+     try {
+        $.ajax({
+            type: "POST",
+            url: "/apis/praise_check/",
+            data: inputData,
+            async: false, // 동기식으로 처리
+            success: function (data) {
+                // console.log('### praiseCheck success');
+                // console.log(data);
+                
+                if(data.status == "200"){
+                    // console.log(data.data_list[0].praise_count);
+                    var priaseCnt      = data.data_list[0].praise_count;
+                    var reward_skip_yn = data.data_list[0].reward_skip_yn;
+                    
+                    //console.log(reward_skip_yn);
+                    // 2023-12-14 소속상 직급가능
+                    /*
+                    if (reward_skip_yn == "Y") {
+                        Warning('칭찬직원 재확인','소속장 이상 직급은 칭찬받기가 불가합니다.');
+                        $.unblockUI();  
+                        return false;
+                    }
+                    */
+                    
+                    var time = "{{ manage.start_date|slice:"4:6" }}.{{ manage.start_date|slice:"6:8" }} ~ {{ manage.end_date|slice:"4:6" }}.{{ manage.end_date|slice:"6:8" }}";
+                    
+                    // if (priaseCnt > 0 && chkuser != 15893) { //15893 회장님
+                    //         Warning('칭찬직원 재확인',time + ' 기간동안 중복등록 불가합니다.'); // modalver3 모달을 검색 해주세요
+                    //         $.unblockUI();  
+                    //         return false;
+                    // }else{
+                    //     //최종 제출
+                    //     document.formAuthentication.submit();
+                    // }
+                    
+                    //2024.07.01 모모콘 반영시 같이 반영 apis praise_check 수정
+                    if (priaseCnt > 0 && chkuser != 15893) { //15893 회장님
+                            
+                            AlertPickAct(time + '<br>기간동안 중복대상<br>칭찬으로 포인트<br>추가는 안됩니다!<br>([남은 토큰]은 차감)', '', '진행', '취소').then((result) => {
+                                    if (result === '진행') {
+                                        // 진행 버튼을 클릭한 경우의 처리
+                                        document.formAuthentication.submit();
+                                        // 여기에 진행 처리에 대한 코드를 추가합니다.
+                                    } else if (result === '취소') {
+                                        // 취소 버튼을 클릭한 경우의 처리
+                                        // console.log('사용자가 취소를 선택했습니다.');
+                                        // 여기에 취소 처리에 대한 코드를 추가합니다.
+                                    }
+                            });                    
+                            
+                    }else{
+                        //최종 제출
+                        document.formAuthentication.submit();
+                    }
+
+                }else{
+                    Warning('시스템 오류','칭찬직원 검증시 오류가 발생 했습니다.');
+                    $.unblockUI();  
+                    return false;
+                }
+            },
+            error: function (e) {
+                console.log("### praiseCheck ERROR : ", e);
+                //alert("fail");
+            }
+      })
+      .done(function(data) {
+        // AJAX 요청 완료 후 처리할 작업
+        var priaseCnt = data.data_list[0].praise_count;
+        if (priaseCnt > 0) {
+          $("#submitBtn").removeClass('disabled');
+        }
+      })
+      .fail(function() {
+        // AJAX 요청 실패 시 처리할 작업
+      })
+    } catch (e) {
+        alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+    }	
+}
+    
+    
+$(function() {
+	$("#submitBtn").click(function() {
+      // console.log("20240225 select2Basic: ", $("#select2Basic").val());
+      
+      // if(document.querySelector("#hiddenChkSubmitYn").innerHTML == 'Y'){
+      //     Warning('칭찬은 하루 5번 가능합니다.', '토큰 충전시 1번 더 칭찬 가능합니다.');
+  		// 		$.unblockUI();
+  		// 		return false;
+      //     window.location.href = '/accounts/myprofile';
+      // }
+
+      if(document.querySelector("#hiddenChkSubmitYn").innerHTML == 'Z'){
+          Warning('금일 칭찬 한도가 초과되었습니다.', '내일 칭찬 등록 부탁드립니다.');
+  				$.unblockUI();
+  				return false;
+      }
+
+      //2023-08-28 이미지 파일여부 검증추가
+      var _inputCardImg = $("#inputCardImg").val();
+      // console.log("check card img : ",_inputCardImg );
+      if (_inputCardImg != "") {
+          var imageExtensions = ["jpg", "jpeg", "png", "gif", "bmp"];
+          var extension = _inputCardImg.split('.').pop().toLowerCase();
+
+          // console.log('File name ' + _inputCardImg);
+          // console.log('extension ' + extension);
+
+          if (imageExtensions.indexOf(extension) === -1) {
+        			Warning('파일형식 오류','이미지 파일만 첨부 가능합니다.'); // modalver3 모달을 검색 해주세요
+        			$.unblockUI();  
+              return false;
+          }
+      }
+        
+
+        var chk_user_id = {{ user_info.user_id | default:0 }};  //R102401172924 답장 2024.01
+        // console.log("check chk_user_id 20240225 : " + chk_user_id);
+        if(chk_user_id != 0){
+            $("#input_employee_id").val(chk_user_id);
+        }else{
+            $("#input_employee_id").val($("#select2Basic").val());
+        }
+        
+  			
+  	  var input_swiper_id = $("#viewImg").attr("value");  
+  	  console.log(input_swiper_id);
+
+        
+  		$("<input>").attr({
+  			type: "hidden",
+  			name: "input_swiper_id",
+  			value: input_swiper_id
+  		}).appendTo("#formAuthentication");
+
+  		document.getElementById("input_swiper_id").value = input_swiper_id;
+
+  		var _input_employee_id = $("#input_employee_id").val();
+  		if (!_input_employee_id) {
+  				Warning('필수입력 오류','직원을 선택해 주세요.'); // modalver4 모달을 검색 해주세요
+  				$.unblockUI();  
+  				//clearTimeout($.data(document.body, 'blockUI.timeout'));
+
+  				return false;
+  		}
+                
+
+  		//var input_Contents_text = $("#editor .ql-editor").text();
+      var input_Contents_text = $("#praiseRegedit_content").val();
+  		if (!input_Contents_text || input_Contents_text.trim() === '') {
+  				Warning('필수입력 오류','내용을 입력해 주세요.'); // modalver4 모달을 검색 해주세요
+  				$.unblockUI();  
+  				return false;
+  		}
+      
+      
+      var pattern = /'/; // '를 찾는 정규 표현식
+
+      if (input_Contents_text.match(pattern)) {
+        // 특수기호가 존재하면 오류 출력
+        Warning('특수기호 오류',"특수기호( \' )는 사용할 수 없습니다."); // modalver4 모달을 검색 해주세요
+        $.unblockUI();  
+        return false;
+      }        
+      /*
+      if (input_Contents_text.includes("'") || input_Contents_text.includes('"')) {
+			Warning('입력 내용오류','특수 기호 '와 \"는 입력할 수 없습니다.')
+			$.unblockUI();  
+			return false;
+      }
+      */
+        
+        
+  		var inputLen = input_Contents_text.length;
+  		if (input_Contents_text.length < 5) {
+  				Warning('내용부족','5자 이상 입력해주세요. ( 입력내용 : '+inputLen+'자)'); // modalver1 모달을 검색 해주세요
+  				$.unblockUI();  
+  				return false;
+  		}
+
+  		if (input_Contents_text.length > 500) {
+  				Warning('내용많음','500자 미만 입력해주세요. ( 입력내용 : '+inputLen+'자)'); // modalver2 모달을 검색 해주세요
+  				$.unblockUI();  
+  				return false;
+  		}
+          
+  		//var input_Contents = $("#editor .ql-editor").html();
+          var input_Contents = $("#praiseRegedit_content").val();
+  		$("<input>").attr({
+  			type: "hidden",
+  			name: "input_Contents",
+  			value: input_Contents
+  		}).appendTo("#formAuthentication");
+  		document.getElementById("input_Contents").value = input_Contents;
+
+  		$("<input>").attr({
+  			type: "hidden",
+  			name: "input_Contents_text",
+  			value: input_Contents_text
+  		}).appendTo("#formAuthentication");
+  		document.getElementById("input_Contents_text").value = input_Contents_text;
+
+      //20240225 왜 에러나는지 확인하기
+  		// $.blockUI({
+  		// 		message:
+  		// 			'<div class="row d-flex justify-content-center"><p class="mb-0">칭찬글등록</p> <div class="sk-wave m-0"><div class="sk-rect sk-wave-rect"></div> <div class="sk-rect sk-wave-rect"></div> <div class="sk-rect sk-wave-rect"></div> <div class="sk-rect sk-wave-rect"></div> <div class="sk-rect sk-wave-rect"></div></div> </div>',
+  		// 		timeout: 30000,
+  		// 		css: {
+  		// 			backgroundColor: 'transparent',
+  		// 			color: '#fff',
+  		// 			border: '0'
+  		// 		},
+  		// 		overlayCSS: {
+  		// 			opacity: 0.5
+  		// 		}
+  		// });
+
+  		var formData = $("#formAuthentication").serializeArray();
+  		var alertMsg = "";
+  		$.each(formData, function(i, field) {
+  				alertMsg += field.name + ": " + field.value + "\n";
+  				// console.log(alertMsg);
+  		});
+
+  		// console.log('formData' + formData);
+  		// console.log('alertMsg' + alertMsg);
+
+      $(this).addClass('disabled')
+               
+  		setTimeout(function() {
+              // 직원중복여부 검증 2023-09-13
+              praiseCheck(_input_employee_id);  
+              
+
+  		}, 20);
+  });
+});
+
+$(".bootstrap-maxlength-example").each(function() {
+    
+  $(this).maxlength({
+    warningClass: "label label-success bg-success text-white",
+    limitReachedClass: "label label-danger",
+    separator: " out of ",
+    preText: "You typed ",
+    postText: " chars available.",
+    validate: true,
+    threshold: +this.getAttribute("maxlength")
+  });
+});
+    
+    
+/* Extended UI - Block UI *
+$(function() {
+
+  // Custom Message
+  $(".btn-card-block-spinner").on("click", function() {
+        
+      $.blockUI({
+        message:
+          '<div class="row d-flex justify-content-center"><p class="mb-0">떙큐토큰</p> <div class="sk-wave m-0"><div class="sk-rect sk-wave-rect"></div> <div class="sk-rect sk-wave-rect"></div> <div class="sk-rect sk-wave-rect"></div> <div class="sk-rect sk-wave-rect"></div> <div class="sk-rect sk-wave-rect"></div></div> </div>',
+        timeout: 3000,
+        css: {
+          backgroundColor: 'transparent',
+          color: '#fff',
+          border: '0'
+        },
+        overlayCSS: {
+          opacity: 0.5
+        }
+      });
+        
+  })
+    
+})
+*/
+    
+</script>
+    
+
+</head>
+
+<body>
+<!-- Content wrapper -->
+<div id="sendTkPage" class="allPage layout-container flex-column">
+
+  <!-- Content -->
+  <div id="con" class="container-xxl mt-2">
+    <div class="row">
+      <div class="col-12 mb-2 position-relative">
+
+        <!-- HTML5 Inputs -->
+        <div class="card text-center">
+          <!--
+            <h5 class="card-header text-dark">칭찬하기</h5>
+            -->
+          {% if manage.id == 0 or manage.id == null %}
+          <script>
+            $(document).ready(function () {
+              Swal.fire({
+                title: "안내",
+                text: "신규 토큰발행 준비 중 입니다.",
+                type: 'warning',
+                customClass: {
+                  confirmButton: 'btn btn-primary'
+                },
+                buttonsStyling: false
+              })
+            });
+          </script>
+
+          {% endif %}
+
+          {% if token.my_current_tokens == 0 %}
+          <script>
+            $(document).ready(function () {
+              // Swal.fire({
+              //   title: "사용가능한 토큰이 없습니다.",
+              //   text: "[나의 토큰]메뉴에서 토큰 충전시 1번 더 칭찬 가능합니다.",
+              //   type: 'warning',
+              //   customClass: {
+              //     confirmButton: 'btn btn-primary'
+              //   },
+              //   buttonsStyling: false
+              // })
+              AlertInfo('사용가능한 토큰이 없습니다.', '[나의 토큰]메뉴에서 토큰 충전시 1번 더 칭찬 가능합니다.', true)
+                        .then((result) => {
+                            window.location.href = '/accounts/myprofile';
+                        });
+            });
+          </script>
+
+          {% endif %}
+
+          {% if info.error %}
+          <div class="alert alert-danger" role="alert">
+            {{ info.error }}
+          </div>
+
+          <script>
+            $(document).ready(function () {
+              Swal.fire({
+                title: "입력오류",
+                text: "{{ info.error }}",
+                type: 'warning',
+                customClass: {
+                  confirmButton: 'btn btn-primary'
+                },
+                buttonsStyling: false
+              })
+            });
+          </script>
+          {% endif %}
+
+
+		<form id="formAuthentication" name="formAuthentication" class="browser-default-validation mb-0"
+			action="{% url 'praiseRegedit' %}" method="POST" enctype="multipart/form-data">
+			{% csrf_token %}
+			<div class="card-header pb-1">
+
+
+				<input type="hidden" name="input_swiper_id" id="input_swiper_id" value="">
+				<input type="hidden" name="input_Contents_text" id="input_Contents_text" value="">
+				<input type="hidden" name="input_Contents" id="input_Contents" value="">
+				<input type="hidden" name="input_active" value="Y">
+
+				<div class="d-flex align-items-end mb-2">
+					<h3 id="hiddenh3" class="me-2 mb-0 colorCustom_03 fw-bold">직원검색</h3>
+					<span id="hiddenspan" class="fw-med colorCustom_01"
+						style="padding:2px 3px; background: #c8edff; line-height: 1;">(가입한 직원만 검색가능/<br> 검색시 본인 이름 자동제외)</span>
+					<label type="hidden" id="chgLabelText" for="input_employee_name" class="form-label text-dark fs-6"></label>
+				</div>
+
+				<div id="hiddenDivSelect" class="mb-3">
+					<select id="select2Basic" class="select2 form-select" data-allow-clear="true" style="display: none;"></select>
+					<input type="hidden" id="input_employee_id" name="input_employee_id" />
+				</div>
+
+			</div>
+
+			<div class="card-body pb-0">
+				<div id="sendCard" style="visibility: hidden;">
+					<div class="cardOptionBtn cardOptionSwiper d-flex justify-content-between">
+						<div class="swiper-wrapper">
+							<div class="swiper-slide" style="cursor: pointer;">
+								<a href="javascript:void(0);" class="btn colorCustom_03 fw-med rounded clicked"
+									onclick="topcardselect('prcard0')" data-bs-target="#navs-pills-top-0" aria-controls="navs-pills-top-0"
+									aria-selected="true">전체</a>
+							</div>
+							<div class="swiper-slide" style="cursor: pointer;">
+								<a href="javascript:void(0);" class="btn colorCustom_03 fw-med rounded" onclick="topcardselect('prcard6')"
+									data-bs-target="#navs-pills-top-6" aria-controls="navs-pills-top-6" aria-selected="false">위비</a>
+							</div>
+							<div class="swiper-slide" style="cursor: pointer;">
+								<a href="javascript:void(0);" class="btn colorCustom_03 fw-med rounded" onclick="topcardselect('prcard1')"
+									data-bs-target="#navs-pills-top-1" aria-controls="navs-pills-top-1" aria-selected="false">감사</a>
+							</div>
+							<div class="swiper-slide" style="cursor: pointer;">
+								<a href="javascript:void(0);" class="btn colorCustom_03 fw-med rounded" onclick="topcardselect('prcard2')"
+									data-bs-target="#navs-pills-top-2" aria-controls="navs-pills-top-2" aria-selected="false">응원</a>
+							</div>
+							<div class="swiper-slide" style="cursor: pointer;">
+								<a href="javascript:void(0);" class="btn colorCustom_03 fw-med rounded" onclick="topcardselect('prcard3')"
+									data-bs-target="#navs-pills-top-3" aria-controls="navs-pills-top-3" aria-selected="false">축하</a>
+							</div>
+							<div class="swiper-slide" style="cursor: pointer;">
+								<a href="javascript:void(0);" class="btn colorCustom_03 fw-med rounded" onclick="topcardselect('prcard4')"
+									data-bs-target="#navs-pills-top-4" aria-controls="navs-pills-top-4" aria-selected="false">재미</a>
+							</div>
+							<div class="swiper-slide" style="cursor: pointer;">
+								<a href="javascript:void(0);" class="btn colorCustom_03 fw-med rounded" onclick="topcardselect('prcard5')"
+									data-bs-target="#navs-pills-top-5" aria-controls="navs-pills-top-5" aria-selected="false">신년</a>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+			<div class="card-body pb-0">
+				<div class="my-3">
+					<div id="navs-pills-top-0" class="swiperBox" style="position: relative; visibility: hidden;">
+						<!-- cardOptionBtn 버튼 별 Slide 개수 js 불러오기 시작 -->
+						<div id="cardSwiper" class="sendCardSwiper" style="height:clamp(40px, 15vw, 100px);">
+							<div class="swiper-wrapper">
+								<div class="swiper-slide" style="height:clamp(40px,15vw,100px); cursor: pointer;">
+									<input id="inputCardImg" name="inputCardImg" class="form-control" onChange="addSwiperImage(event);"
+										type="file"
+										style="position:absolute; top:0;left:0;width:100%; height: 100%;  font-size:0; background:transparent; padding:0 !important; border:0 !important; opacity:0;">
+									<img src="{% static 'assets/img/sendCard_00.png' %}"></img>
+								</div>
+								{% for part in posts_All %}
+								<div class="swiper-slide" style="height:clamp(40px,15vw,100px); cursor: pointer;"><img
+										onClick='selectSwiperImg(this, "{{part.card_message}}", "{{part.id}}" );' src="{{ part.image_path }}">
+								</div>
+								{% endfor %}
+							</div>
+						</div>
+						<div class="swiper-button-prev swiperPrev"></div>
+						<div class="swiper-button-next swiperNext"></div>
+					</div>
+					<div id="navs-pills-top-1" class="position-relative swiperBox" style="display:none;">
+						<!-- navs-pills-top-1 -->
+						<!-- cardOptionBtn 버튼 별 Slide 개수 js 불러오기 시작 -->
+						<div id="cardSwiper" class="sendCardSwiper">
+							<div class="swiper-wrapper">
+								<div class="swiper-slide" style="height:clamp(40px,15vw,100px); cursor: pointer;">
+									<input id="inputCardImg" name="inputCardImg" class="form-control" type="file"
+										onChange="addSwiperImage(event);"
+										style="position:absolute; top:0;left:0;width:100%; height: 100%;  font-size:0; background:transparent; padding:0 !important; border:0 !important; opacity:0;">
+									<img src="{% static 'assets/img/sendCard_00.png' %}"></img>
+								</div>
+								{% for part in posts_1 %}
+								<div class="swiper-slide" style="height:clamp(40px,15vw,100px); cursor: pointer;"><img
+										onClick='selectSwiperImg(this, "{{part.card_message}}", "{{part.id}}" );' src="{{ part.image_path }}">
+								</div>
+								{% endfor %}
+							</div>
+						</div>
+						<div class="swiper-button-prev swiperPrev"></div>
+						<div class="swiper-button-next swiperNext"></div>
+					</div>
+					<div id="navs-pills-top-2" class="position-relative swiperBox" style="display:none;">
+						<!-- cardOptionBtn 버튼 별 Slide 개수 js 불러오기 시작 -->
+						<div id="cardSwiper" class="sendCardSwiper">
+							<div class="swiper-wrapper">
+								<div class="swiper-slide" style="height:clamp(40px,15vw,100px); cursor: pointer;">
+									<input id="inputCardImg" name="inputCardImg" class="form-control" type="file"
+										onChange="addSwiperImage(event);"
+										style="position:absolute; top:0;left:0;width:100%; height: 100%;  font-size:0; background:transparent; padding:0 !important; border:0 !important; opacity:0;">
+									<img src="{% static 'assets/img/sendCard_00.png' %}"></img>
+								</div>
+								{% for part in posts_2 %}
+								<div class="swiper-slide" style="height:clamp(40px,15vw,100px); cursor: pointer;"><img
+										onClick='selectSwiperImg(this, "{{part.card_message}}", "{{part.id}}" );' src="{{ part.image_path }}">
+								</div>
+								{% endfor %}
+							</div>
+						</div>
+						<div class="swiper-button-prev swiperPrev"></div>
+						<div class="swiper-button-next swiperNext"></div>
+					</div>
+
+					<div id="navs-pills-top-3" class="position-relative swiperBox" style="display:none;">
+						<!-- cardOptionBtn 버튼 별 Slide 개수 js 불러오기 시작 -->
+						<div id="cardSwiper" class="sendCardSwiper">
+							<div class="swiper-wrapper">
+								<div class="swiper-slide" style="height:clamp(40px,15vw,100px); cursor: pointer;">
+									<input id="inputCardImg" name="inputCardImg" class="form-control" type="file"
+										onChange="addSwiperImage(event);"
+										style="position:absolute; top:0;left:0;width:100%; height: 100%;  font-size:0; background:transparent; padding:0 !important; border:0 !important; opacity:0;">
+									<img src="{% static 'assets/img/sendCard_00.png' %}"></img>
+								</div>
+								{% for part in posts_3 %}
+								<div class="swiper-slide" style="height:clamp(40px,15vw,100px); cursor: pointer;"><img
+										onClick='selectSwiperImg(this, "{{part.card_message}}", "{{part.id}}" );' src="{{ part.image_path }}">
+								</div>
+								{% endfor %}
+							</div>
+						</div>
+						<div class="swiper-button-prev swiperPrev"></div>
+						<div class="swiper-button-next swiperNext"></div>
+					</div>
+
+					<div id="navs-pills-top-4" class="position-relative swiperBox" style="display:none;">
+						<!-- cardOptionBtn 버튼 별 Slide 개수 js 불러오기 시작 -->
+						<div id="cardSwiper" class="sendCardSwiper">
+							<div class="swiper-wrapper">
+								<div class="swiper-slide" style="height:clamp(40px,15vw,100px); cursor: pointer;">
+									<input id="inputCardImg" name="inputCardImg" class="form-control" type="file"
+										onChange="addSwiperImage(event);"
+										style="position:absolute; top:0;left:0;width:100%; height: 100%;  font-size:0; background:transparent; padding:0 !important; border:0 !important; opacity:0;">
+									<img src="{% static 'assets/img/sendCard_00.png' %}"></img>
+								</div>
+								{% for part in posts_4 %}
+								<div class="swiper-slide" style="height:clamp(40px,15vw,100px); cursor: pointer;"><img
+										onClick='selectSwiperImg(this, "{{part.card_message}}", "{{part.id}}" );' src="{{ part.image_path }}">
+								</div>
+								{% endfor %}
+							</div>
+						</div>
+						<div class="swiper-button-prev swiperPrev"></div>
+						<div class="swiper-button-next swiperNext"></div>
+					</div>
+
+					<div id="navs-pills-top-5" class="position-relative swiperBox" style="display:none;">
+						<!-- cardOptionBtn 버튼 별 Slide 개수 js 불러오기 시작 -->
+						<div id="cardSwiper" class="sendCardSwiper">
+							<div class="swiper-wrapper">
+								<div class="swiper-slide" style="height:clamp(40px,15vw,100px); cursor: pointer;">
+									<input id="inputCardImg" name="inputCardImg" class="form-control" type="file"
+										onChange="addSwiperImage(event);"
+										style="position:absolute; top:0;left:0;width:100%; height: 100%;  font-size:0; background:transparent; padding:0 !important; border:0 !important; opacity:0;">
+									<img src="{% static 'assets/img/sendCard_00.png' %}"></img>
+								</div>
+								{% for part in posts_5 %}
+								<div class="swiper-slide" style="height:clamp(40px,15vw,100px); cursor: pointer;"><img
+										onClick='selectSwiperImg(this, "{{part.card_message}}", "{{part.id}}" );' src="{{ part.image_path }}">
+								</div>
+								{% endfor %}
+							</div>
+						</div>
+						<div class="swiper-button-prev swiperPrev"></div>
+						<div class="swiper-button-next swiperNext"></div>
+					</div>
+
+					<div id="navs-pills-top-6" class="position-relative swiperBox" style="display:none;">
+						<!-- cardOptionBtn 버튼 별 Slide 개수 js 불러오기 시작 -->
+						<div id="cardSwiper" class="sendCardSwiper">
+							<div class="swiper-wrapper">
+								<div class="swiper-slide" style="height:clamp(40px,15vw,100px); cursor: pointer;">
+									<input id="inputCardImg" name="inputCardImg" class="form-control" type="file"
+										onChange="addSwiperImage(event);"
+										style="position:absolute; top:0;left:0;width:100%; height: 100%;  font-size:0; background:transparent; padding:0 !important; border:0 !important; opacity:0;">
+									<img src="{% static 'assets/img/sendCard_00.png' %}"></img>
+								</div>
+								{% for part in posts_6 %}
+								<div class="swiper-slide" style="height:clamp(40px,15vw,100px); cursor: pointer;"><img
+										onClick='selectSwiperImg(this, "{{part.card_message}}", "{{part.id}}" );' src="{{ part.image_path }}">
+								</div>
+								{% endfor %}
+							</div>
+						</div>
+						<div class="swiper-button-prev swiperPrev"></div>
+						<div class="swiper-button-next swiperNext"></div>
+					</div>
+
+					<!-- cardOptionBtn 버튼 별 Slide 개수 js 불러오기 끝 -->
+					<div id="cardView" class="showPhoto mx-auto mt-3" style="visibility: hidden;">
+						<img id="viewImg" src="{{posts_All.0.image_path}}" value="{{posts_All.0.id}}" />
+					</div>
+				</div>
+			</div>
+		</form>
+          <!-- Full Editor -->
+          <div class="mx-3 mb-4">
+            <div id="editor" class="sendMessage text-dark rounded mt-1 mb-3 colorCustom_01 "
+              style="height:15vh;  min-height: 100px; overflow: hidden;  border:1px solid #14a8ea; ">
+              <!-- {{info.content|safe}} -->
+              <textarea class="form-control mb-3" id="praiseRegedit_content" style="height: 100%; margin-bottom: 10px;" onclick="textareaUpward();"></textarea>
+       <script>
+       	// console.log(visualViewport);
+       	function textareaUpward() {
+            if (user.indexOf("iPhone") > -1 || user.indexOf("Android") > -1) {
+              document.body.style.height = 150 + 'vh';
+       				window.scrollTo({
+       					top: window.scrollY + window.visualViewport.height,
+       					left: 0,
+       					behavior: "instant",
+       				});
+            }
+          }
+               
+               var textarea = document.getElementById('praiseRegedit_content');
+       	const isMobile = () => {
+       		const user = navigator.userAgent;
+       		let isCheck = false;
+       		// document.querySelector('#testBox').innerHTML = isCheck
+       		if (user.indexOf("iPhone") > -1 || user.indexOf("Android") > -1) {
+       			isCheck = true;
+
+
+       			textarea.addEventListener('focus', () => {
+       				document.body.style.height = 150 + 'vh';
+
+       				window.scrollTo({
+       					top: window.scrollY + window.visualViewport.height,
+       					left: 0,
+       					behavior: "instant",
+       				});
+       			});
+       			textarea.addEventListener('focusout', () => {
+       				document.body.style.height = 100 + '%';
+       			});
+
+       		}
+
+       		return isCheck;
+       	}
+       	isMobile();
+       </script>
+            </div>
+
+
+
+            <div class="d-flex justify-content-between">
+              <button id="resetbtn" type="reset" class="btn colorCustom_03 m-0 py-3  fw-med fs-5"
+                style="width:49%; box-shadow: none; background: #e8f7ff;" data-bs-dismiss="modal">초기화</button>
+              <!-- <button id="submitBtn" type="button" class="btn text-white m-0 py-3  fw-med fs-5" style="width:49%; box-shadow: none; background: #006ed5;" data-bs-toggle="modal" data-bs-target="#modalver1">등록하기</button> --> <!-- 모달 팝업 버전1 --> 
+              <!-- <button id="submitBtn" type="button" class="btn text-white m-0 py-3  fw-med fs-5" style="width:49%; box-shadow: none; background: #006ed5;" data-bs-toggle="modal" data-bs-target="#modalver2">등록하기</button> --> <!-- 모달 팝업 버전2 --> 
+			  <!-- <button id="submitBtn" type="button" class="btn text-white m-0 py-3  fw-med fs-5" style="width:49%; box-shadow: none; background: #006ed5;" data-bs-toggle="modal" data-bs-target="#modalver3">등록하기</button> --> <!-- 모달 팝업 버전3 --> 
+			  <!-- <button id="submitBtn" type="button" class="btn text-white m-0 py-3  fw-med fs-5" style="width:49%; box-shadow: none; background: #006ed5;" data-bs-toggle="modal" data-bs-target="#modalver4">등록하기</button> --> <!-- 모달 팝업 버전4 --> 
+			  <button id="submitBtn" type="button" class="btn text-white m-0 py-3  fw-med fs-5" style="width:49%; box-shadow: none; background: #006ed5;" >등록하기</button>
+            </div>
+          </div>
+		   
+        </div>
+      </div>
+      <div id="footer"></div>
+    </div>
+    <span id="hiddenChkSubmitYn" class="visually-hidden">N</span> <!--칭찬하기 제어-->
+
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalver1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered"> 
+		<div class="modal-content" style="padding:20px;">
+			<div class="title" style="text-align: center;">
+			<div style="margin: 0 auto 10px; width:100px;"><img style="width:100%;height:100%; object-fit: cover;" src="/static/assets/img/icon_chkModal_01.png"></div>
+			<!-- 버전1 제목 텍스트 부분 -->
+			<!--<h5 class="gm-bold" style="display: inline-block; font-size: 35px; border-bottom:2px solid #006ed5; color:#006ed5;">칭찬은 하루 5번</h5><br><h5 class="gm-bold" style="display: inline-block; font-size: 35px; border-bottom:2px solid #006ed5; color:#006ed5;">가능합니다.</h5>-->
+			<h5 class="gm-bold" style="display: inline-block; font-size: 35px; border-bottom:2px solid #006ed5; color:#006ed5;">내용부족</h5>
+			
+			</div>
+			<div class="txt" style="text-align: center; margin:10px 0;">
+			<!-- 버전1 모달 내용 텍스트 부분 -->
+			<!--<P class="fw-med" style="word-break: keep-all; color:#222;">토큰 충전 시 1번 더 칭찬 가능합니다. 토큰 충전 시 1번 더 칭찬 가능합니다. 토큰 충전 시 1번 더 칭찬 가능합니다.</P>-->
+			<P class="fw-med" style="word-break: keep-all; color:#222;">5자 이상 입력해주세요. ( 입력내용 : '+inputLen+'자 )</P>
+			</div>
+			<div class="okBox" style="text-align: center;">
+			<button style="padding:10px 50px; background: #006ed5;" type="button" class="btn btn-secondary" data-bs-dismiss="modal">OK</button>
+			</div>
+		</div> 
+	</div>   
+</div>  
+
+<div class="modal fade" id="modalver2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered"> 
+        <div class="modal-content" style="padding:20px;">
+			<div class="title" style="text-align: center;">
+				<div style="margin: 0 auto 10px; width:100px;"><img style="width:100%;height:100%; object-fit: cover;" src="/static/assets/img/icon_chkModal_03.png"></div>
+				<!-- 버전2 제목 텍스트 부분 -->
+				<!--<h5 class="gm-bold" style="display: inline-block; font-size: 35px; border-bottom:2px solid #006ed5; color:#006ed5;">금일 칭찬 한도가</h5><br><h5 class="gm-bold" style="display: inline-block; font-size: 35px; border-bottom:2px solid #006ed5; color:#006ed5;">초과되었습니다.</h5>-->
+				<h5 class="gm-bold" style="display: inline-block; font-size: 35px; border-bottom:2px solid #006ed5; color:#006ed5;">내용많음</h5>
+			
+			</div>
+			<div class="txt" style="text-align: center; margin:10px 0;">
+			<!-- 버전2 모달 내용 텍스트 부분 -->
+			<!--<P class="fw-med" style="word-break: keep-all; color:#222;">02.01 ~ 02.29 기간동안 중복등록 불가합니다.</P>-->
+			<P class="fw-med" style="word-break: keep-all; color:#222;">500자 미만 입력해주세요. ( 입력내용 : '+inputLen+'자)'</P>
+			</div>
+			<div class="okBox" style="text-align: center;">
+			<button style="padding:10px 50px; background: #006ed5;" type="button" class="btn btn-secondary" data-bs-dismiss="modal">OK</button>
+			</div>
+        </div>
+	</div>
+</div>		
+
+<div class="modal fade" id="modalver3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered"> 
+		<div class="modal-content" style="padding:20px;">
+			<div class="title" style="text-align: center;">
+			<div style="margin: 0 auto 10px; width:100px;"><img style="width:100%;height:100%; object-fit: cover;" src="/static/assets/img/icon_chkModal_05.png"></div>
+			<!-- 버전3 제목 텍스트 부분 -->
+			<!--<h5 class="gm-bold" style="display: inline-block; font-size: 35px; border-bottom:2px solid #006ed5; color:#006ed5;">칭찬직원 재확인</h5> -->
+			<!--<h5 class="gm-bold" style="display: inline-block; font-size: 35px; border-bottom:2px solid #006ed5; color:#006ed5;">시스템 오류</h5> -->
+			<h5 class="gm-bold" style="display: inline-block; font-size: 35px; border-bottom:2px solid #006ed5; color:#006ed5;">파일형식 오류</h5>
+			</div>
+			<div class="txt" style="text-align: center; margin:10px 0;">
+			<!-- 버전3 모달 내용 텍스트 부분 -->
+			<!--<P class="fw-med" style="word-break: keep-all; color:#222;">time + ' 기간동안 중복등록 불가합니다.'</P>-->
+			<!--<P class="fw-med" style="word-break: keep-all; color:#222;">칭찬직원 검증시 오류가 발생 했습니다.</P>-->
+			<P class="fw-med" style="word-break: keep-all; color:#222;">이미지 파일만 첨부 가능합니다.</P>
+			</div>
+			<div class="okBox" style="text-align: center;">
+			<button style="padding:10px 50px; background: #006ed5;" type="button" class="btn btn-secondary" data-bs-dismiss="modal">OK</button>
+			</div>
+		</div> 
+	</div>
+</div>
+
+<div class="modal fade" id="modalver4" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">   
+		<div class="modal-content" style="padding:20px;">
+			<div class="title" style="text-align: center;">
+			<div style="margin: 0 auto 10px; width:100px;"><img style="width:100%;height:100%; object-fit: cover;" src="/static/assets/img/icon_chkModal_02.png"></div>
+			<!-- 버전4 제목 텍스트 부분 -->
+			<!-- <h5 class="gm-bold" style="display: inline-block; font-size: 35px; border-bottom:2px solid #006ed5; color:#006ed5;">필수입력 오류</h5> -->
+			<!-- <h5 class="gm-bold" style="display: inline-block; font-size: 35px; border-bottom:2px solid #006ed5; color:#006ed5;">필수입력 오류</h5> -->
+			<h5 class="gm-bold" style="display: inline-block; font-size: 35px; border-bottom:2px solid #006ed5; color:#006ed5;">특수기호 오류</h5>
+			</div>
+			<div class="txt" style="text-align: center; margin:10px 0;">
+			<!-- 버전4 모달 내용 텍스트 부분 -->
+			<!-- <P class="fw-med" style="word-break: keep-all; color:#222;">직원을 선택해 주세요.</P> -->
+			<!-- <P class="fw-med" style="word-break: keep-all; color:#222;">내용을 입력해 주세요.</P> -->
+			<P class="fw-med" style="word-break: keep-all; color:#222;">특수기호( \' )는 사용할 수 없습니다.</P>
+			</div>
+			<div class="okBox" style="text-align: center;">
+			<button style="padding:10px 50px; background: #006ed5;" type="button" class="btn btn-secondary" data-bs-dismiss="modal">OK</button>
+			</div>
+		</div>
+	</div>
+</div>		  
+		
+
+  <script>
+    var cardOptionSwiper = new Swiper('.cardOptionSwiper', {
+      autoHeight : true,
+      slidesPerView: 5,
+      spaceBetween: 10,
+            breakpoints: {
+        1000: {
+          slidesPerView: 4.5,
+        },
+        350: {
+          slidesPerView: 3.5,
+        },
+      }
+    });
+    var sendCardSwiper = new Swiper('.sendCardSwiper', {
+      slidesPerView: 3,
+      spaceBetween: 10,
+
+      navigation: {
+        nextEl: '.swiperNext',
+        prevEl: '.swiperPrev',
+      },
+      breakpoints: {
+        1000: {
+          slidesPerView: 10,
+        },
+        600: {
+          slidesPerView: 5,
+        },
+        400: {
+          slidesPerView: 4,
+        },
+      }
+    });
+
+    // 슬라이드 상단 탭메뉴 버튼 클릭시 색상 효과 
+    const sendPhotoBtn = document.querySelectorAll('.cardOptionBtn a');
+    sendPhotoBtn.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        sendPhotoBtn.forEach((siblingBtn) => {
+          siblingBtn.classList.remove('clicked');
+        });
+        btn.classList.add('clicked');
+      });
+    });
+    // 슬라이드 상단 탭메뉴 버튼 클릭시 색상 효과 
+
+
+    // ***슬라이드이 이미지 클릭시 showPhoto 에 보여지기 기능 -> <img src="{{posts_All.0.image_path}}">
+    // ***클릭한 이미지 자동으로 불러와지는 개발기능이라면 삭제하셔도 됩니다
+	/*
+    const sendCardBox = document.querySelector('.sendCardSwiper');
+    const showPhoto = document.querySelector('#sendTkPage .showPhoto img');
+
+    sendCardBox.addEventListener('click', event => {
+      const clickedPhoto = event.target.closest('.swiper-slide');
+      if (!clickedPhoto) return;
+
+      // 칭찬하기 이미지 클릭시 효과 및 보여질 이미지 src 가져오기 시작 - 240219
+      const siblings = sendCardBox.querySelectorAll('.swiper-slide');
+      siblings.forEach(siblingPhoto => {
+        siblingPhoto.classList.remove('picked');
+      });
+
+      clickedPhoto.classList.add('picked');
+      const imgSrc = clickedPhoto.querySelector('img').getAttribute('src');
+      showPhoto.src = imgSrc;
+      // 칭찬하기 이미지 클릭시 효과 및 보여질 이미지 src 가져오기 끝 - 240219
+    }); */
+	
+    // ***슬라이드이 이미지 클릭시 showPhoto 에 보여지기 기능 -> <img src="{{posts_All.0.image_path}}">
+    // ***클릭한 이미지 자동으로 불러와지는 개발기능이라면 삭제하셔도 됩니다
+
+
+    function sendCardResetBtn() {
+      // 칭찬하기 글 초기화 시작 - 240219
+
+      const sendCardReset = document.getElementById('resetbtn');
+      sendCardReset.addEventListener('click', () => {
+        document.querySelector('.sendMessage textarea').value = "";
+      });
+      // 칭찬하기 글 초기화 끝 - 240219
+    }
+    sendCardResetBtn();
+
+    //console.log("scriptStart");
+    // 공통 js 시작 - 240222
+    var doc = document;
+
+    function chkHiddenInput() {
+      //부서, 직위 서브 찾기 탭 생성 시작
+      const chkHiddenInputs = document.querySelectorAll('.chkHiddenInput');
+      document.addEventListener('click', (event) => {
+        const clickedElement = event.target;
+        const isChkHiddenInput = clickedElement.classList.contains('chkHiddenInput') || clickedElement.closest(
+          '.chkHiddenInput');
+
+        chkHiddenInputs.forEach((item, index) => {
+          const editSearchBox = item.querySelector('.editSearchBox');
+
+          if (!isChkHiddenInput || item !== clickedElement.closest('.chkHiddenInput')) {
+            editSearchBox.classList.add('d-none');
+          } else {
+            editSearchBox.classList.remove('d-none');
+          }
+        });
+      });
+      //부서, 직위 서브 찾기 탭 생성 끝
+    }
+    chkHiddenInput();
+
+    // 검색 아이콘 클릭시 검색 서브 input 탭 닫기 시작
+    const searchBox = document.querySelector('.searchBox');
+    const searchOpenBtn = document.querySelector('.searchOpenBtn');
+
+  // 하단 내비게이션 높잇값 만큼 모든 페이지 높이조절 시작
+  window.onload = function(){
+        const moNav_h = document.querySelector('.mobile-navigation').clientHeight;
+        const layoutPage = document.querySelector('.layout-page');
+      layoutPage.style.paddingBottom = moNav_h + 40 + 'px';
+  // 하단 내비게이션 높잇값 만큼 모든 페이지 높이조절 끝 
+}
+
+
+    // 모든 페이지 footer 태그 출력 시작 - 240223
+    const footer = document.querySelector('#footer');
+    if (footer) {
+      footer.innerHTML =
+        `<div class="footer w-100 text-center fw-med fs-6" style="color:#418dd4;">ⓒ 2024, made 땡큐토큰</div>`;
+    }
+    // 모든 페이지 footer 태그 출력 끝 - 240223
+    // 공통 js 끝 - 240222
+  </script>
+
+<style>
+    .mobile-navigation button .icon_home {
+      -webkit-mask: url(/static/assets/img/icon_menu_01_01.svg) no-repeat center/auto 100%;
+      mask: url(/static/assets/img/icon_menu_01_01.svg) no-repeat center/auto 100%;
+    }
+
+    .mobile-navigation button .icon_myThank {
+      -webkit-mask: url(/static/assets/img/icon_menu_02_01.svg) no-repeat center/auto 100%;
+      mask: url(/static/assets/img/icon_menu_02_01.svg) no-repeat center/auto 100%;
+    }
+
+    .mobile-navigation button .icon_sendThank {
+      -webkit-mask: url(/static/assets/img/icon_menu_03_02.svg) no-repeat center/auto 100%;
+      mask: url(/static/assets/img/icon_menu_03_02.svg) no-repeat center/auto 100%;
+    }
+
+    .mobile-navigation button .icon_best {
+      -webkit-mask: url(/static/assets/img/icon_menu_04_01.svg) no-repeat center/auto 100%;
+      mask: url(/static/assets/img/icon_menu_04_01.svg) no-repeat center/auto 100%;
+    }
+
+    .mobile-navigation button .icon_myToken {
+      -webkit-mask: url(/static/assets/img/icon_menu_05_01.svg) no-repeat center/auto 100%;
+      mask: url(/static/assets/img/icon_menu_05_01.svg) no-repeat center/auto 100%;
+    }
+
+#profile_modal .modal-content {
+  max-width: 400px;
+  margin: 0 auto;
+  background: url(../img/profile_bg.jpg) no-repeat top/cover;
+  overflow: hidden;
+}
+
+/* 공통 레이아웃 CSS 끝 */
+
+/* 공통 editCard 모달 CSS 시작 -240221 */
+#editCard .gallery-box {
+  max-width: 800px;
+  margin: 0 auto;
+  overflow-x: hidden;
+}
+
+#editCard .gallery-top {
+  width: 80%;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+#editCard .gallery-thumbs .swiper-slide {
+  cursor: pointer;
+  opacity: 0.2;
+}
+
+#editCard .gallery-thumbs .swiper-slide.swiper-slide-active {
+  opacity: 1;
+}
+
+#editCard .swiper-button-prev::after,
+#editCard .swiper-button-next::after {
+  content: none;
+}
+
+#editCard .gallery-box .object-fit img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 공통 editCard 모달 CSS 끝 - 240221 */
+
+/* 오늘의 땡큐 카드 - 헤더 데코 */
+.all_ .sendMeCard>div {
+  background: #c8edff;
+}
+
+/* 카드 - 지점 명칭 */
+.all_ .card-title {
+  font-size: 0.7rem;
+}
+
+/* 카드 - 사람 > 직위 명칭 */
+.all_ .card-text span {
+  font-size: 0.8rem;
+}
+
+/* 카드 - 해쉬태그 */
+.all_ .hash>span {
+  border-radius: 17px;
+  background: #e8f7ff;
+}
+
+.all_ .icon_right_arrow {
+  width: 25px;
+  height: 25px;
+  background: url(../img/icon_arrow.svg) no-repeat center/100% auto;
+}
+
+.all_ .heartBtn,
+.all_ .commentBtn {
+  width: 100%;
+  height: 100%;
+}
+
+.all_ .heartBtn i {
+  width: 100%;
+  height: 100%;
+  /* background: #222; */
+  /* -webkit-mask: url(../img/icon_heart_01.svg) no-repeat center/contain; */
+  /* mask: url(../img/icon_heart_01.svg) no-repeat center/contain; */
+  background: no-repeat center/100% auto;
+  background-image: url(../img/icon_heart_01.svg);
+}
+
+.all_ .heartBtn i.clicked {
+  background-image: url(../img/icon_heart_02.svg);
+}
+
+.all_ .commentBtn i {
+  width: 100%;
+  height: 100%;
+  /* background: #222; */
+  /* -webkit-mask: url(../img/icon_comment_01.svg) no-repeat center/contain; */
+  /* mask: url(../img/icon_comment_01.svg) no-repeat center/contain; */
+  background: no-repeat center/100% auto;
+  background-image: url(../img/icon_comment_01.svg);
+}
+
+.all_ .commentBtn i.clicked {
+  background-image: url(../img/icon_comment_02.svg);
+}
+
+.all_ .heartBtn i,
+.all_ .commentBtn i {
+  min-width: 20px;
+}
+
+.all_ .editBtn {
+  height: 100%;
+}
+
+.all_ .editBtn span {
+  width: 10px;
+  height: 150%;
+  background: #006ed5;
+  -webkit-mask: url(../img/icon_edit.svg) no-repeat center/auto 100%;
+  mask: url(../img/icon_edit.svg) no-repeat center/auto 100%;
+}
+
+.comment_modal .typing_comment:focus {
+  border-color: #14a8ea;
+}
+
+.comment_modal .typing_comment+button {
+  border: 1px solid #14a8ea !important;
+  background: #14a8ea !important;
+  box-shadow: none;
+}
+
+.allPage .modal-dialog {
+  top: 3%;
+  max-width: 450px;
+}
+
+/* 칭찬하기 페이지 CSS 추가 시작 - 240219*/
+#sendTkPage #sendCard {
+  overflow: hidden;
+  min-height: 43px;
+}
+#sendTkPage .cardOptionBtn {
+  /* overflow-x: hidden; */
+}
+#sendTkPage .cardOptionBtn a {
+  width: 100%;
+  background: #e8f7ff;
+  font-size: 15px;
+  padding:10px 5px;
+}
+
+#sendTkPage .cardOptionBtn a.clicked {
+  background: #006ed5;
+  color: #fff !important;
+}
+
+#sendTkPage .cardOptionBtn a~a {
+  margin-left: 10px;
+}
+
+#sendTkPage .sendMessage textarea {
+  color: #006ed5;
+}
+
+#sendTkPage .sendCardSwiper {
+  overflow: hidden;
+}
+
+#sendTkPage .sendCardSwiper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+#sendTkPage .sendCardSwiper .swiper-slide {
+  border-radius: 10px;
+  overflow: hidden;
+}
+#sendTkPage .sendCardSwiper .swiper-slide.picked {
+  opacity: 0.6;
+}
+#sendTkPage .sendCardSwiper .swiper-slide img {
+  border:none !important;
+}
+#sendTkPage .swiperBox {
+  padding: 0 35px;
+}
+
+#sendTkPage .swiperPrev {
+  left: 0;
+}
+
+#sendTkPage .swiperNext {
+  right: 0;
+}
+
+#sendTkPage .showPhoto {
+  max-width: 300px;
+  width: 50%;
+  max-height: 300px;
+}
+
+#sendTkPage .showPhoto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#sendTkPage .swiperPrev::after,
+#sendTkPage .swiperNext::after {
+  color: #9fc4e7;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+#sendTkPage .sendSearchBtn::after {
+  content: none;
+}
+
+#sendTkPage .sendSearchBtn img {
+  right: 20px;
+  width: auto;
+  height: 10px;
+}
+
+#sendTkPage .sendSearch input::placeholder {
+  color: #14a8ea;
+}
+
+/* 칭찬하기 페이지 CSS 추가 끝 - 240219*/
+
+
+@media (max-width:576px) {
+
+  .allPage .forPc {
+    display: block !important;
+  }
+
+
+}
+
+@media (max-width:440px) {
+
+
+  .allPage .todayThank .todayHeader {
+    top: -25px;
+    max-width: 250px;
+  }
+
+  .allPage .modal-dialog {
+    max-width: 350px;
+    margin: 0 auto;
+  }
+}
+
+</style>
+
+
+</body>
+
+<!-- 기존 주석 코드 전부 아래에 기재 -->
+
+<!-- <input id="employeeSearch" class="form-control typeahead" type="text" autocomplete="off" /> -->
+                    <!-- <div class="input-group input-group-merge">
+                        <span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search"></i></span>
+                        <input type="text"
+                            name="input_employee_name"
+                            id="input_employee_name"
+                            class="form-control"
+                            placeholder="직원명 입력"
+                            aria-label="직원명 입력"
+                            aria-describedby="basic-addon-search31"
+                            onkeydown="if (event.keyCode === 13) { searchMember(); return false; }"
+                        />
+                        <button type="button" class="btn btn-secondary " onclick="searchMember()">검색</button>
+                    </div> -->
+                    <!-- <div class="mb-0" id="div_praise_member"></div> -->
+
+<!-- Custom Option Radio Im6ge -->
+                    <!--
+                    <div class="button-wrapper">
+
+                        <label for="input_swiper_id" class="form-label">칭찬카드</label>
+                        -->
+                        <!-- <label for="inputCardImg" class="btn btn-primary btn-xs" tabindex="0">
+                            <i class="bx bx-upload"></i>
+                            <span class="d-none d-sm-block">Upload new photo</span>
+                            <input type="file" id="inputCardImg" name="inputCardImg" onChange="addSwiperImage(event);" class="account-file-input" hidden accept="image/png, image/jpeg" />
+                    </label> 
+                    </div>
+                    -->
+
+
+
+<script>
+/*   window.scrollTo({
+  top: document.body.scrollHeight,
+  left: 0,
+  behavior: "instant",
+}); */
+  // var scText = document.getElementById('praiseRegedit_content');
+  // console.log("chk scText ::: ", scText);
+  // scText.addEventListener("focus", function() { 
+    // console.log("setset");
+    // window.scrollTo(0, scText.offsetTop + scText.offsetHeight);
+    // window.scrollTo(0, document.body.scrollHeight);
+
+    // (function(){window.scrollTo(0,scText.offsetTop + scText.offsetHeight);},0);
+  
+  // });
+
+var user_id = {{ user_info.user_id| default:0 }};
+var user_empname = "{{user_info.employee_name}}"; 
+var company_name = "{{user_info.company_name}}"; 
+var department_name = "{{user_info.department_name}}"; 
+
+// console.log('test ::: ', user_id)
+
+document.addEventListener('DOMContentLoaded', function () {
+  
+  var chgLabelTextElement = document.getElementById('chgLabelText');
+  if (user_id && user_empname) {
+    document.getElementById('hiddenh3').style.display="none";
+    document.getElementById('hiddenspan').style.display="none";
+    document.getElementById('hiddenDivSelect').style.display="none";
+    
+    document.getElementById('chgLabelText').hidden= false;
+    chgLabelTextElement.innerText = company_name +" " +department_name + " "+  user_empname+ ' 님에게 답장'; //답장 2024.01
+  }
+  
+  document.getElementById('sendCard').style.visibility = 'visible';
+  document.getElementById('cardView').style.visibility = 'visible';
+  document.getElementById('navs-pills-top-0').style.visibility = 'visible';
+  
+
+})
+
+function topcardselect(topcardval) 
+{
+  var cardelem0 = document.getElementById('navs-pills-top-0');
+	var cardelem1 = document.getElementById('navs-pills-top-1');
+	var cardelem2 = document.getElementById('navs-pills-top-2');
+	var cardelem3 = document.getElementById('navs-pills-top-3');
+	var cardelem4 = document.getElementById('navs-pills-top-4');
+	var cardelem5 = document.getElementById('navs-pills-top-5');
+	var cardelem6 = document.getElementById('navs-pills-top-6');
+	try
+	{
+
+    cardelem0.style.display = 'none';
+		cardelem1.style.display = 'none';
+		cardelem2.style.display = 'none';
+		cardelem3.style.display = 'none';
+		cardelem4.style.display = 'none';
+		cardelem5.style.display = 'none';
+		cardelem6.style.display = 'none';
+	}
+	catch
+	{
+		asd = 1;
+	}
+	
+	// console.log(topcardval);
+	
+  if (topcardval == 'prcard0')
+	{
+		// console.log('prcard0');
+		cardelem0.style.display = 'block';
+	}
+	if (topcardval == 'prcard1')
+	{
+		// console.log('prcard1');
+		cardelem1.style.display = 'block';
+	}
+	if (topcardval == 'prcard2')
+	{
+		// console.log('prcard2');
+		cardelem2.style.display = 'block';
+	}
+	if (topcardval == 'prcard3')
+	{
+		cardelem3.style.display = 'block';
+	}
+	if (topcardval == 'prcard4')
+	{
+		cardelem4.style.display = 'block';
+	}
+	if (topcardval == 'prcard5')
+	{
+		cardelem5.style.display = 'block';
+	}
+	if (topcardval == 'prcard6')
+	{
+		cardelem6.style.display = 'block';
+	}
+
+
+}
+
+var swiper = null;
+    
+$(document).ready(function(){
+
+    
+		$("#select2Basic").select2({
+			ajax: {
+				allowClear: false,
+				type: "POST",
+				url: "/apis/praise_member/",
+				delay: 250,
+				dataType: 'json',
+				data: function (params) {
+					var query = {
+						employee_name: params.term,
+                        id: {{user_info.user_id | default:0}}
+					}
+					return query;
+				},
+				processResults: function (data) {
+					var resultData = data.data_list.map(function(obj){
+						return {
+							id: obj.id,
+							text: obj.company_name + " " + obj.department_name + " " +obj.employee_name + " " + obj.positon_name
+						}
+					});
+					return {
+						results: resultData
+					};
+				},
+			},
+			//allowClear: true,
+			placeholder: {
+					id: "the_predefined_value",
+					text: ""
+			},
+			minimumInputLength: 2,
+			language: {
+				noResults: function() {
+					return "검색 결과가 없습니다.";
+				},
+				searching: function(){
+					return "검색중..";
+				},
+				errorLoading: function(){
+					return "";
+				},
+        inputTooShort: function(args) { // 여기를 추가하세요
+            return "최소 " + args.minimum + "글자 이상 입력하세요.";
+        }
+			}
+		});
+		$("#select2Basic").css("display", "");
+		$(document).on('select2:open', () => {
+			document.querySelector('.select2-container--open .select2-search__field').focus();
+			// $(".select2-search__field").trigger('focus');
+			document.querySelector('.select2-container--open .select2-search__field').setAttribute("placeholder", "검색어를 입력해주세요.");
+		});
+
+        var chk_user_id = {{ user_info.user_id |default:0 }}; //답장 2024.01
+        
+        if(chk_user_id !== 0){
+            $("#select2Basic").next(".select2-container").hide();
+        }
+
+        if(chk_user_id == 0){
+            $("#select2Basic").next(".select2-container").show();
+        }
+		
+		    $.ajax({
+            type: "POST",
+            url: "/apis/check_five/",
+            delay: 250,
+            dataType: 'json',
+            data: '',
+            success: function (data) {
+              // console.log("check_five",data)
+              chkPosition = "{{user.position_name}}";
+              //chkuser != 20111 && is_staff 사용하기
+              if(chkuser != 15893 && chkuser != 15186 && chkuser != 4783 && chkuser != 4792 && chkuser != 5498 && chkuser != 12823 && chkuser != 12849 && chkuser != 13079 && !chkPosition.includes('본부장') && !chkPosition.includes('영업본부장') && !chkPosition.includes('본부장(부장)') && !chkPosition.includes('본부장(상무)') && !chkPosition.includes('본부장(상무대우)') && !chkPosition.includes('본부장(전무)') && !chkPosition.includes('전무') && !chkPosition.includes('부사장') && !chkPosition.includes('은행장') && !chkPosition.includes('상무') && !chkPosition.includes('부행장')  && !chkPosition.includes('부행장보') && !chkPosition.includes('집행부행장') ){ //15893
+                    chkCount = parseInt(data.check_five.count)
+                    if( chkCount >= 5 ){//2024.05.21부터 무조건 최대 일 5건 발송 가능 202409.09~18까지 5 > 50 땡큐주간관리
+                        document.querySelector("#hiddenChkSubmitYn").innerHTML = 'Z';
+                        AlertInfo('금일 칭찬 한도가 초과되었습니다.', '내일 칭찬 등록 부탁드립니다.', true)
+                        .then((result) => {
+                            window.location.href = '/'; //HOME으로 이동
+                        });
+
+                    }
+
+                    // if( chkCount >= 5 && data.addedTokenYn == 'N' ){
+                    //     document.querySelector("#hiddenChkSubmitYn").innerHTML = 'Y';
+                    //     AlertInfo('칭찬은 하루 5번 가능합니다.', '토큰 충전시 1번 더 칭찬 가능합니다.', true) // modalver1 모달을 검색 해주세요
+                    //     .then((result) => {
+                    //         window.location.href = '/accounts/myprofile';
+                    //     });
+
+                    // }
+
+                    // if( chkCount >= 6 && data.addedTokenYn == 'Y' ){
+                    //     document.querySelector("#hiddenChkSubmitYn").innerHTML = 'Z';
+                    //     AlertInfo('금일 칭찬 한도가 초과되었습니다.', '내일 칭찬 등록 부탁드립니다.', true) // modalver2 모달을 검색 해주세요
+                    //     .then((result) => {
+                    //         window.location.href = '/'; //HOME으로 이동
+                    //     });   
+                    // }
+                }
+                
+            },
+            error: function (e) {
+
+            }
+        })
+        .done(function() {
+        // AJAX 요청 완료 후 처리할 작업
+        })
+        .fail(function() {
+        // AJAX 요청 실패 시 처리할 작업
+        });
+        
+});
+    
+   
+function insertText(text) {
+    var textarea = document.getElementById('praiseRegedit_content');
+    textarea.value = text + ' ';
+}
+    
+function selectSwiperImg(obj, card_message, valueid) {
+      
+	$("#viewImg").attr("src", $(obj).attr("src"));
+	console.log(valueid);
+	//$("#viewImg").attr("value", $(obj).attr("value")); obj 값 NULL
+	$("#viewImg").attr("value", valueid);
+	$("#formFile").val("");
+      
+      // 모든 이미지에서 border를 제거
+      var allImages = document.querySelectorAll(".swiper-slide");
+      allImages.forEach(function(img) {
+          img.style.border = "none";
+      });
+
+      // 클릭한 이미지에 border 스타일 적용
+      obj.style.border = "3px solid #000000";  // 원하는 스타일을 지정하세요
+      var textarea = document.getElementById('praiseRegedit_content');
+	  if (textarea.value.length < 2)
+	  {
+		insertText(card_message);
+	  }
+      
+      
+}
+	
+function addSwiperImage(event) {
+	// return;
+	var reader = new FileReader();
+	reader.onload = function(event) {
+		document.querySelector("#viewImg").setAttribute("src", event.target.result);
+	}
+	reader.readAsDataURL(event.target.files[0]);
+	$("#viewImg").attr("value", "0");
+      
+      // 모든 이미지에서 border를 제거
+      var allImages = document.querySelectorAll(".swiper-slide");
+      allImages.forEach(function(img) {
+          img.style.border = "none";
+      });
+
+      // 클릭한 이미지에 border 스타일 적용
+      //event.style.border = "3px solid #000000";  // 원하는 스타일을 지정하세요
+      
+}
+
+function searchMember() {    
+
+    /*************************************************
+     * 입력값 검증
+     *************************************************/  
+    var _employee_name      = $( 'input#input_employee_name' ).val();
+
+    if (!_employee_name) {
+		Warning('필수입력 오류','칭찬직원 입력해 주세요.')
+		$.unblockUI();  
+        return false;
+    }
+    
+    var inputData = {
+        employee_name: _employee_name
+        //value2: input2,
+        //value3: input3       
+    };
+
+    try {
+        $.ajax({
+            type: "POST",
+            url: "/apis/praise_member/",
+            data: inputData,
+            success: function (data) {
+                // console.log('### praise_member success');
+                // console.log(data);
+                
+                // console.log(data.data_list.length);
+                // console.log(data.data_list[0].employee_name);
+                
+                var select = document.createElement('select');
+                //select.setAttribute('multiple', '');
+                select.setAttribute('class', 'form-select');
+                select.setAttribute('id', 'input_employee_id');
+                select.setAttribute('name', 'input_employee_id');
+                select.setAttribute('aria-label', 'Multiple select example');
+
+                for (var i = 0; i < data.data_list.length; i++) {
+                  var option = document.createElement('option');
+                  option.value = data.data_list[i].id;
+                  option.text = data.data_list[i].department_name + ' ' + data.data_list[i].employee_name + ' 프로';
+                  select.appendChild(option);
+                }
+
+                var divHtml = document.querySelector('#div_praise_member');
+                divHtml.innerHTML = '';
+                divHtml.appendChild(select);
+                
+
+                
+            },
+            error: function (e) {
+                console.log("### praise_member ERROR : ", e);
+                Warning('시스템 오류','칭찬직원 검증시 오류가 발생 했습니다.'); // modalver3 모달을 검색 해주세요
+                $.unblockUI();  
+                return false;
+                //alert("fail");
+            }
+      })
+      .done(function() {
+        // AJAX 요청 완료 후 처리할 작업
+      })
+      .fail(function() {
+        // AJAX 요청 실패 시 처리할 작업
+      });
+    } catch (e) {
+        alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+    }	
+	
+	//testAPI();
+}
+    
+    
+</script>
+
+
+{% endblock %}

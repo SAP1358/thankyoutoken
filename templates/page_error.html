@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+
+  
+    <!-- Content -->
+
+    <div class="container-xxl">
+      <div class="authentication-wrapper authentication-basic">
+        <div class="authentication-inner">
+            
+          <!-- Register -->
+          <div class="card">
+            <div class="card-body">
+                
+              <!-- Logo -->
+              <div class="app-brand justify-content-center">
+                  <span class="mt-3 fs-4 text-body fw-bolder">현재 서비스를 제공할 수 없습니다.</span>
+              </div>
+              <p class="mt-4 text-center">
+                {% if error %}
+                  <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                  </div>
+                {% endif %}
+              </p>
+                
+              <!-- /Logo -->
+                
+            </div>
+          </div>
+          <!-- /Register -->
+            
+        </div>
+      </div>
+    </div>
+
+    <!-- / Content -->
+
+{% endblock %}
