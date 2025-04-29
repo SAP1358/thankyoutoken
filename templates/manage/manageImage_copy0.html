@@ -1,0 +1,297 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+<head>
+ 
+<!-- Vendors CSS -->
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/typeahead-js/typeahead.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/bootstrap-maxlength/bootstrap-maxlength.css' %}" />
+    
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/animate-css/animate.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/sweetalert2/sweetalert2.css' %}" />
+    
+<!-- Page CSS -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    
+<script>
+    
+
+  function form_submit() {
+      console.log('form_submit called');
+   
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: '<h4>성공적으로 등록 되었습니다.</h4>',
+          showConfirmButton: false,
+          timer: 15000
+        })
+      
+  }
+    
+ function handleUpdateClick(button) {
+    // Get the parent form element
+    var form = button.closest('form');
+    
+    // Submit the form
+    form.submit();
+  }
+
+  function handleFormSubmit(event) {
+    // Prevent the default form submission
+    event.preventDefault();
+  }
+    
+</script>
+    
+</head>
+<!-- Content wrapper -->
+<div class="content-wrapper">
+<!-- Content -->
+<div class="container-xxl flex-grow-1 container-p-y">
+	<div class="row">
+	
+
+        <div class="col-12">
+         
+            <!-- HTML5 Inputs -->
+            <div class="card mb-2">
+                <h5 class="card-header">칭찬카드</h5>
+
+                {% if error %}
+                <div class="alert alert-danger" role="alert">
+                  {{ error }}
+                </div>
+                {% endif %}
+
+                <div class="card-body">
+                
+                    
+                    
+                    <!-- Form Repeater -->
+                    {% for part in images %}
+                    
+                    <form id="formAuthentication-{{part.id}}" class="mb-3" action="{% url 'manageImage' %}" method="POST" enctype="multipart/form-data">
+                      {% csrf_token %}
+                      <div class="row mb-2 mt-2">
+                        <input type="hidden" name="card_id" id="form-{{part.id}}-1" class="form-control" value="{{part.id}}">
+                        <div class="mb-3 col-lg-6 col-xl-3 col-6 mb-0">
+                          <label class="form-label" for="form-{{part.id}}-2">카드이름</label>
+                          <input type="text" name="card_name" id="form-{{part.id}}-2" class="form-control" value="{{part.image_name}}">
+                        </div>
+                        <div class="mb-3 col-lg-6 col-xl-3 col-6 mb-0">
+                          <label class="form-label" for="form-{{part.id}}-3">사용여부</label>
+                          <select name="card_yn" id="form-{{part.id}}-3" class="form-select">
+                            <option value="Y">사용</option>
+                            <option value="N">중지</option>
+                          </select>
+                        </div>
+                          
+                        <div class="mb-3 col-lg-6 col-xl-3 col-6 mb-0">
+                          <label class="form-label" for="form-{{part.id}}-4">이미지</label>
+                          <div class="d-flex align-items-start align-items-sm-center gap-4">
+                            <img src="{{part.image_path}}" 
+                                 id="potoImg-{{part.id}}" 
+                                 alt="user-avatar" 
+                                 class="d-block rounded" 
+                                 height="100" width="100" 
+                                 id="uploadedAvatar" />
+                            <div class="button-wrapper">
+                            <label for="form-{{part.id}}-4" class="btn btn-primary me-2 mb-4" tabindex="0">
+                              <i class="bx bx-upload"></i>
+                              <span class="d-none d-sm-block">Upload</span>
+                              <input type="file" 
+                                     id="form-{{part.id}}-4" 
+                                     name="card_image" 
+                                     onChange="setPotoImg(event, '{{part.id}}');"
+                                     class="account-file-input"
+                                     hidden accept="image/png, image/jpeg"
+                                     />
+                            </label>
+                              <button type="button" 
+                                      onClick="resetPotoImg('{{part.image_path}}', '{{part.id}}')"
+                                      class="btn btn-outline-secondary account-image-reset mb-4">
+                                <i class="bx bx-reset"></i>
+                                <span class="d-none d-sm-block">Reset</span>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                          
+                        <div class="mb-3 col-lg-12 col-xl-2 col-12 d-flex align-items-center mb-0">
+                          <button type="submit" id="card_submit{{part.id}}" name="card_submit" class="btn btn-primary me-sm-3 me-1">변경</button>
+                          <button type="submit" name="card_delete" class="btn btn-label-secondary">삭제</button>
+                            
+
+                          <script>
+                    
+                            document.getElementById("card_submit{{part.id}}").addEventListener("click", function() {
+                              form_submit();
+                            });
+
+                          </script>
+
+                        </div>
+                      </div>
+                      <hr>
+                    </form>
+                    {% endfor %}
+
+
+					
+                 
+					<form class="form-repeater" action="{% url 'manageImage' %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+					  <div data-repeater-list="group-a">
+						<div data-repeater-item>
+						  <div class="row">
+                            <input type="hidden" name="card_id" id="form-repeater-1-0" class="form-control" value="0">  
+							<div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
+							  <label class="form-label" for="form-repeater-1-1">카드이름</label>
+							  <input type="text" id="form-repeater-1-1" name="card_name" class="form-control" placeholder="카드이름" />
+							</div>
+							<div class="mb-3 col-lg-6 col-xl-3 col-12 mb-0">
+							  <label class="form-label" for="form-repeater-1-2">사용여부</label>
+							  <select name="card_yn" id="form-repeater-1-2" class="form-select">
+                                <option value="Y">사용</option>
+                                <option value="N">중지</option>
+                              </select>
+                            </div>
+                              
+                             <div class="mb-3 col-lg-6 col-xl-3 col-6 mb-0">
+                              <label class="form-label" for="form-repeater-1-3">이미지</label>
+                              <div class="d-flex align-items-start align-items-sm-center gap-4">
+                                <img src="{{part.image_path}}" 
+                                     id="potoImg-{{part.id}}" 
+                                     alt="user-avatar" 
+                                     class="d-block rounded" 
+                                     height="100" width="100" 
+                                     id="uploadedAvatar" />
+                                <div class="button-wrapper">
+                                <label for="form-{{part.id}}-4" class="btn btn-primary me-2 mb-4" tabindex="0">
+                                  <i class="bx bx-upload"></i>
+                                  <span class="d-none d-sm-block">Upload</span>
+                                  <input type="file" 
+                                         id="form-repeater-1-3" 
+                                         name="card_image" 
+                                         onChange="setPotoImg(event, '3');"
+                                         class="account-file-input"
+                                         hidden accept="image/png, image/jpeg"
+                                         />
+                                </label>
+                                  <button type="button" 
+                                          onClick="resetPotoImg('{{part.image_path}}', '{{part.id}}')"
+                                          class="btn btn-outline-secondary account-image-reset mb-4">
+                                    <i class="bx bx-reset"></i>
+                                    <span class="d-none d-sm-block">Reset</span>
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                              
+                              
+							<div class="mb-3 col-lg-12 col-xl-2 col-12 d-flex align-items-center mb-0">
+          <button type="button" name="card_submit" class="btn btn-primary me-sm-3 me-1" onclick="handleUpdateClick(this)">update</button>
+							  <button class="btn btn-label-danger mt-4" data-repeater-delete>
+								<i class="bx bx-x me-1"></i>
+								<span class="align-middle">Delete</span>
+							  </button>
+							</div>
+						  </div>
+						  <hr>
+						</div>
+					  </div>
+					  <div class="mb-0">
+						<button class="btn btn-primary" data-repeater-create>
+						  <i class="bx bx-plus me-1"></i>
+						  <span class="align-middle">Add</span>
+						</button>
+					  </div>
+					</form>
+					
+                </div>
+				
+            </div>
+        </div>
+   
+	</div>
+</div>
+</div>
+
+
+
+<!-- Vendors JS -->
+
+<script src="{% static 'assets/vendor/libs/typeahead-js/typeahead.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/bloodhound/bloodhound.js' %}"></script>
+
+<!-- Page JS -->
+<script src="{% static 'assets/js/forms-typeahead.js' %}"></script>
+<script src="{% static 'assets/js/forms-extras.js' %}"></script>
+<script src="{% static 'assets/js/extended-ui-sweetalert2.js' %}"></script>
+
+
+<!-- Vendors JS -->
+<script src="{% static 'assets/vendor/libs/autosize/autosize.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/cleavejs/cleave.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/cleavejs/cleave-phone.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/bootstrap-maxlength/bootstrap-maxlength.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/jquery-repeater/jquery-repeater.js' %}"></script>
+
+<script src="{% static 'assets/vendor/libs/sweetalert2/sweetalert2.js' %}" ></script>
+
+
+
+
+<script>
+
+// Form Repeater
+// ! Using jQuery each loop to add dynamic id and class for inputs. You may need to improve it based on form fields.
+// -----------------------------------------------------------------------------------------------------------------
+var formRepeater = $(".form-repeater");
+
+var row = 2;
+var col = 1;
+formRepeater.on('submit', function(e) {
+  e.preventDefault();
+});
+formRepeater.repeater({
+  show: function() {
+    var fromControl = $(this).find('.form-control, .form-select');
+    var formLabel = $(this).find('.form-label');
+
+    fromControl.each(function(i) {
+      var id = 'form-repeater-' + row + '-' + col;
+      $(fromControl[i]).attr('id', id);
+      $(formLabel[i]).attr('for', id);
+      col++;
+    });
+
+    row++;
+
+    $(this).slideDown();
+  },
+  hide: function(e) {
+    confirm('[문의] 해당내용을 정말로 삭제 하실건가요?') && $(this).slideUp(e);
+  }
+});
+
+
+function setPotoImg(event, id) {
+    var reader = new FileReader();
+    reader.onload = function(event) {
+        document.querySelector("#potoImg-"+id).setAttribute("src", event.target.result);
+    }
+    reader.readAsDataURL(event.target.files[0]);
+}
+
+function resetPotoImg(src, id) {
+    document.querySelector("#potoImg-"+id).setAttribute("src", src);
+    document.querySelector("#form-"+id+"-4").value = null;
+}
+
+</script>
+
+
+{% endblock %}

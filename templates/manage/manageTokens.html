@@ -1,0 +1,522 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+ <!-- <head> -->
+ 
+<!-- <link rel="stylesheet" href="{% static 'assets/vendor/libs/typeahead-js/typeahead.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/bootstrap-maxlength/bootstrap-maxlength.css' %}" />
+    
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/animate-css/animate.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/sweetalert2/sweetalert2.css' %}" /> -->
+
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>  -->
+
+<!-- Page CSS -->
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
+
+
+<!-- 달력 생성 css 지우시면 안됩니다 -->
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/flatpickr/flatpickr.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/pickr/pickr-themes.css' %}" />
+<!-- 달력 생성 css 지우시면 안됩니다 -->
+<script>
+    
+
+
+    
+  function form_submit() {
+      console.log('form_submit called');
+   
+
+      
+  }
+    
+ function handleUpdateClick(button) {
+    // Get the parent form element
+    var form = button.closest('form');
+    
+    // Submit the form
+    form.submit();
+  }
+
+  function handleFormSubmit(event) {
+    // Prevent the default form submission
+    event.preventDefault();
+  }
+    
+</script>
+    
+<!-- </head> -->
+
+<style>
+
+/* 관리자 공통 css 시작 */
+.mobile-navigation button .icon_home {
+  -webkit-mask: url(/static/assets/img/icon_menu_01_01.svg) no-repeat center/auto 100%;
+  mask: url(/static/assets/img/icon_menu_01_01.svg) no-repeat center/auto 100%;
+}
+
+.mobile-navigation button .icon_myThank {
+  -webkit-mask: url(/static/assets/img/icon_menu_02_01.svg) no-repeat center/auto 100%;
+  mask: url(/static/assets/img/icon_menu_02_01.svg) no-repeat center/auto 100%;
+}
+
+.mobile-navigation button .icon_sendThank {
+  -webkit-mask: url(/static/assets/img/icon_menu_03_01.svg) no-repeat center/auto 100%;
+  mask: url(/static/assets/img/icon_menu_03_01.svg) no-repeat center/auto 100%;
+}
+
+.mobile-navigation button .icon_best {
+  -webkit-mask: url(/static/assets/img/icon_menu_04_01.svg) no-repeat center/auto 100%;
+  mask: url(/static/assets/img/icon_menu_04_01.svg) no-repeat center/auto 100%;
+}
+
+.mobile-navigation button .icon_myToken {
+  -webkit-mask: url(/static/assets/img/icon_menu_05_01.svg) no-repeat center/auto 100%;
+  mask: url(/static/assets/img/icon_menu_05_01.svg) no-repeat center/auto 100%;
+}
+
+#adminInfo {
+  margin-top: 15px;
+}
+
+#adminInfo>div {
+  background: #edf6ff;
+  border-radius: 10px;
+}
+
+#adminInfo>div h5 {
+  color: #006ed5;
+  font-weight: bold;
+}
+
+#adminInfo>div p {
+  color: #222222;
+  font-weight: 500;
+}
+
+.adCardHeader {}
+
+.adCardHeader span {
+  background: #222;
+  font-weight: 500;
+  padding: 10px;
+}
+
+.adCardBody {}
+
+.adCardBody>div {}
+
+.adCardBody>div a {
+  background: #e8f7ff;
+  color: #006ed5;
+  font-weight: 500;
+}
+
+.adCardBody>div a {
+  width: calc(100% - 0.5rem);
+}
+
+.adCardBody>div a:hover {
+  background: #006ed5;
+  color: #fff;
+}
+
+.adminPage .customBtn {
+  background: #006ed5;
+  color: #fff;
+  font-weight: 500;
+}
+
+.adminPage .customBtn:hover {
+  background: #e8f7ff;
+  color: #006ed5;
+}
+
+.adminPage .customBtn2 {
+  background: #e8f7ff;
+  color: #006ed5;
+  font-weight: 500;
+}
+
+.adminPage .customBtn2:hover {
+  background: #006ed5;
+  color: #fff;
+}
+
+
+.adCardBody2 {}
+
+.adCardBody2 form label {
+  color: #222;
+  font-weight: 500;
+  font-size: 16px;
+  margin-top: 10px;
+  margin-left: 5px;
+}
+
+.adCardBody2 form input,
+.adCardBody2 form select {
+  border-color: #9fc4e7;
+}
+
+.adCardBody2 form input::placeholder,
+.adCardBody2 form input,
+.adCardBody2 form select,
+.adCardBody2 form select option {
+  color: #9fc4e7;
+  font-weight: 500;
+}
+
+table tbody th {
+  color: #006ed5 !important;
+  font-weight: bold !important;
+  font-size: 14px !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.adminPage div.card {
+  border: 1px solid #dde7f1;
+}
+
+table tbody tr {
+  border-color: #dde7f1;
+}
+
+table tbody td {
+  font-weight: 500;
+  font-size: 13px !important;
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+  color: #222;
+}
+
+.tablePgNation span {
+  color: #222;
+  font-weight: 500;
+}
+
+.tablePgNation a {
+  color: #006ed5;
+  font-weight: bold;
+  border-bottom: 2px solid #006ed5;
+}
+
+/* 관리자 공통 css 끝 */
+</style>
+<!-- Content wrapper -->
+<div class="content-wrapper adminPage">
+  <!-- Content -->
+  <div class="container-xxl flex-grow-1 container-p-y">
+    {% if user.is_superuser %}
+
+    <div id="adminInfo" class="col-12">
+      <div class="card mb-2">
+        <div class="card-body">
+          <h5 class="card-title">토큰관리</h5>
+          <p class="card-text">
+            토큰정보를 관리하는 페이지 입니다.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+
+      <div class="col-12">
+
+        <!-- HTML5 Inputs -->
+        <div class="card mb-2">
+          <h5 class="card-header pb-2" style="font-weight: 500; color:#222; margin-left:5px;">토큰설정(account_manage_tokens / director_tokens 100개 충전)</h5>
+
+          {% if error %}
+          <div class="alert alert-danger" role="alert">
+            {{ error }}
+          </div>
+          {% endif %}
+
+          <div class="card-body">
+
+
+            <!-- Button trigger modal -->
+            <button type="button" style="margin-bottom:20px; margin-left:5px;" class="customBtn btn"
+              data-bs-toggle="modal" data-bs-target="#basicModal">
+              신규등록
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="basicModal" tabindex="-1" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+
+                  <div class="adCardBody2">
+                  <form id="form-repeater" action="{% url 'manageTokens' %}" method="POST"
+                    enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel1" style="font-weight: 500; color:#222; margin-left:5px;">신규 토큰발행</h5>
+                      <button type="button" class="position-absolute btn-close closeCustom"
+                        style="background:transparent; border:0; right:15px; top:25px; box-shadow: none; transform: none !important; z-index: 2;"
+                        data-bs-dismiss="modal" aria-label="Close"><span></span></button>
+                    </div>
+
+                    <div class="modal-body">
+
+                      <div data-repeater-list="group-a">
+                        <div data-repeater-item>
+                          <div class="row">
+                            <input type="hidden" name="token_id" id="form-0-1" class="form-control" value="0">
+
+                            <div class="mb-3 col-lg-6 col-xl-6 col-6 mb-0">
+                              <label class="form-label" for="start_date-form">시작일자</label>
+                              <input type="text" name="manage_start_date" id="start_date-form" class="form-control"
+                                placeholder="시작일자" />
+                            </div>
+
+                            <div class="mb-3 col-lg-6 col-xl-6 col-6 mb-0">
+                              <label class="form-label" for="end_date-form">종료일자</label>
+                              <input type="text" name="manage_end_date" id="end_date-form" class="form-control"
+                                placeholder="종료일자" />
+                            </div>
+
+                            <div class="mb-3 col-lg-6 col-xl-6 col-6 mb-0">
+                              <label class="form-label" for="tokens-form">일반직원 토큰수</label>
+                              <input type="text" name="manage_tokens" id="tokens-form" class="form-control"
+                                placeholder="개별토큰수" />
+                            </div>
+
+                            <div class="mb-3 col-lg-6 col-xl-6 col-6 mb-0">
+                              <label class="form-label" for="tokens-form">소속장이상 토큰수</label>
+                              <input type="text" name="manage_high_tokens" id="tokens-form" class="form-control"
+                                placeholder="개별토큰수" />
+                            </div>
+
+                            <script>
+                              document.addEventListener("DOMContentLoaded", function () {
+                                flatpickr("#start_date-form, #end_date-form ", {
+                                  enableTime: false,
+                                  dateFormat: "Y-m-d",
+                                });
+                              });
+                            </script>
+
+
+                          </div>
+
+                        </div>
+                      </div>
+
+                    </div>
+                    <!--body -->
+
+                    <div class="modal-footer">
+                      <button name="token_regedit" class="btn customBtn">등록</button>
+                    </div>
+
+                  </form>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+
+            <!-- Form Repeater -->
+            {% for part in tokens %}
+
+            <div class="adCardBody2">
+            <form id="post-formAuthentication-{{part.id}}" class="card mb-2 p-3 border-1"
+              action="{% url 'manageTokens' %}" method="POST" enctype="multipart/form-data" style="border-color:#dde7f1;">
+              {% csrf_token %}
+              <div class="row">
+                <input type="hidden" name="token_id" id="form-{{part.id}}-1" class="form-control" value="{{part.id}}">
+
+                <div class="mb-3 col-lg-6 col-xl-3 col-6 mb-0">
+                  <label class="form-label" for="start_date-{{part.id}}">시작일자</label>
+                  <input type="text" name="manage_start_date" id="start_date-{{part.id}}" class="form-control"
+                    value="{{ part.start_date|slice:'0:4' }}-{{ part.start_date|slice:'4:6' }}-{{ part.start_date|slice:'6:8'}}">
+                </div>
+
+                <div class="mb-3 col-lg-6 col-xl-3 col-6 mb-0">
+                  <label class="form-label" for="end_date-{{part.id}}">종료일자</label>
+                  <input type="text" name="manage_end_date" id="end_date-{{part.id}}" class="form-control"
+                    value="{{ part.end_date|slice:'0:4' }}-{{ part.end_date|slice:'4:6' }}-{{ part.end_date|slice:'6:8'}}">
+                </div>
+
+                <div class="mb-3 col-lg-6 col-xl-3 col-6 mb-0">
+                  <label class="form-label" for="tokens-{{part.id}}">일반직원 토큰수</label>
+                  <input type="text" name="manage_tokens" id="tokens-{{part.id}}" class="form-control"
+                    value="{{part.tokens}}">
+                </div>
+
+                <div class="mb-3 col-lg-6 col-xl-3 col-6 mb-0">
+                  <label class="form-label" for="tokens-{{part.id}}">소속장이상 토큰수</label>
+                  <input type="text" name="manage_high_tokens" id="high-tokens-{{part.id}}" class="form-control"
+                    value="{{part.high_tokens}}">
+                </div>
+
+                <div class="col-12 d-flex align-items-end justify-content-center justify-content-sm-end mb-0">
+                  <button type="submit" id="token_update{{part.id}}" name="token_update"
+                    class="btn customBtn me-sm-3 me-1">변경</button>
+                  <button type="submit" name="token_delete" class="btn customBtn2">삭제</button>
+
+                  <script>
+                    document.getElementById("token_update{{part.id}}").addEventListener("click", function () {
+
+                      Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: '<h4>성공적으로 등록 되었습니다.</h4>',
+                        showConfirmButton: false,
+                        timer: 10000
+                      });
+                      //form_submit();
+
+
+                    });
+
+
+                    document.addEventListener("DOMContentLoaded", function () {
+                      flatpickr("#start_date-{{part.id}}, #end_date-{{part.id}} ", {
+                        enableTime: false,
+                        dateFormat: "Y-m-d",
+                      });
+                    });
+                  </script>
+
+                </div>
+              </div>
+            </form>
+            </div>
+            {% endfor %}
+
+
+            <div class='container text-center tablePgNation'>
+              <br>
+              {% if tokens.has_previous %}
+              <a href="?page=1&item_code=">First</a>
+              <a href="?page={{tokens.previous_page_number}}&item_code=">Previous</a>
+              {% endif %}
+              <span>{{tokens.number}}</span>
+              <span>of</span>
+              <span>{{tokens.paginator.num_pages}}</span>
+              {% if tokens.has_next %}
+              <a href="?page={{tokens.next_page_number}}&item_code=">Next</a>
+              <a href="?page={{tokens.paginator.num_pages}}&item_code=">Last</a>
+              {% endif %}
+              <br>
+              <br>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    {% endif %}
+  </div>
+  <div id="footer">
+    <div class="footer w-100 text-center fw-med fs-6" style="color:#418dd4;">ⓒ 2024, made 땡큐토큰</div>
+  </div>
+  <script>
+    window.onload = function () {
+      // 하단 내비게이션 높잇값 만큼 모든 페이지 높이조절 시작
+      const moNav_h = document.querySelector('.mobile-navigation').clientHeight;
+      const layoutPage = document.querySelector('.layout-page');
+      layoutPage.style.paddingBottom = moNav_h + 40 + 'px';
+      // 하단 내비게이션 높잇값 만큼 모든 페이지 높이조절 끝 
+    }
+  </script>
+</div>
+
+
+
+<!-- Vendors JS -->
+
+<script src="{% static 'assets/vendor/libs/typeahead-js/typeahead.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/bloodhound/bloodhound.js' %}"></script>
+
+<script src="{% static 'assets/vendor/libs/flatpickr/flatpickr.js' %}"></script>
+
+<script src="{% static 'assets/js/forms-pickers.js' %}"></script>
+
+
+<!-- Page JS -->
+<script src="{% static 'assets/js/forms-typeahead.js' %}"></script>
+<script src="{% static 'assets/js/forms-extras.js' %}"></script>
+<script src="{% static 'assets/js/extended-ui-sweetalert2.js' %}"></script>
+
+
+<!-- Vendors JS -->
+<script src="{% static 'assets/vendor/libs/autosize/autosize.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/cleavejs/cleave.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/cleavejs/cleave-phone.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/bootstrap-maxlength/bootstrap-maxlength.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/jquery-repeater/jquery-repeater.js' %}"></script>
+
+<script src="{% static 'assets/vendor/libs/sweetalert2/sweetalert2.js' %}" ></script>
+
+
+
+
+<script>
+
+var flatpickrDate = document.querySelector("#flatpickr-date");
+
+flatpickrDate.flatpickr({
+  monthSelectorType: "static"
+});
+    
+// Form Repeater
+// ! Using jQuery each loop to add dynamic id and class for inputs. You may need to improve it based on form fields.
+// -----------------------------------------------------------------------------------------------------------------
+var formRepeater = $(".form-repeater");
+
+var row = 2;
+var col = 1;
+formRepeater.on('submit', function(e) {
+  e.preventDefault();
+});
+formRepeater.repeater({
+  show: function() {
+    var fromControl = $(this).find('.form-control, .form-select');
+    var formLabel = $(this).find('.form-label');
+
+    fromControl.each(function(i) {
+      var id = 'form-repeater-' + row + '-' + col;
+      $(fromControl[i]).attr('id', id);
+      $(formLabel[i]).attr('for', id);
+      col++;
+    });
+
+    row++;
+
+    $(this).slideDown();
+  },
+  hide: function(e) {
+    confirm('[문의] 해당내용을 정말로 삭제 하실건가요?') && $(this).slideUp(e);
+  }
+});
+
+
+function setPotoImg(event, id) {
+    var reader = new FileReader();
+    reader.onload = function(event) {
+        document.querySelector("#potoImg-"+id).setAttribute("src", event.target.result);
+    }
+    reader.readAsDataURL(event.target.files[0]);
+}
+
+function resetPotoImg(src, id) {
+    document.querySelector("#potoImg-"+id).setAttribute("src", src);
+    document.querySelector("#form-"+id+"-4").value = null;
+}
+
+</script>
+
+
+{% endblock %}

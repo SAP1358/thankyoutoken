@@ -1,0 +1,2007 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="light-style" dir="ltr" data-theme="theme-default" data-assets-path="{% static 'assets/' %}"
+  data-template="vertical-menu-template">
+
+<head>
+
+  <meta charset="utf-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+  <!--
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9720816538103083" crossorigin="anonymous"></script>
+-->
+
+<!-- Typeahead.js 라이브러리 추가 -->
+
+
+  <title>땡큐토큰 - 우리금융그룹</title>
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="땡큐토큰">
+  <meta property="og:url" content="https://thankyoutoken.co.kr">
+
+  <meta name="description" content="우리금융그룹 직원전용 칭찬 커뮤니티">
+  <meta property="og:description" content="우리금융그룹 직원전용 칭찬 커뮤니티">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="{% static 'assets/img/favicon.ico' %}" />
+
+  <!--
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/quill/katex.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/quill/editor.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/quill/typography.css' %}" /> -->
+  <!-- <link rel="stylesheet" href="{% static 'assets/vendor/libs/sweetalert2/sweetalert2.css' %}" /> -->
+  <link rel="stylesheet" href="https://cdn.wooriwbn.com/thb/wooribank/2024/03/01/cdn/css/previous/sweetalert2.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <!-- <link rel="stylesheet" href="{% static 'assets/vendor/libs/toastr/toastr.css' %}" /> -->
+  <link rel="stylesheet" href="https://cdn.wooriwbn.com/thb/wooribank/2024/03/01/cdn/css/previous/toastr.js" />
+  <!-- <link rel="stylesheet" href="{% static 'assets/vendor/libs/animate-css/animate.css' %}" /> -->
+  <link rel="stylesheet" href="https://cdn.wooriwbn.com/thb/wooribank/2024/03/01/cdn/css/previous/animate.css" />
+  <!-- <link rel="stylesheet" href="{% static 'assets/vendor/libs/swiper/swiper.css' %}" /> -->
+  <link rel="stylesheet" href="https://cdn.wooriwbn.com/thb/wooribank/2024/03/01/cdn/css/previous/swiper.css" />
+  <link rel="stylesheet" href="{% static 'assets/vendor/css/pages/ui-carousel.css' %}" />
+  <script src="{% static 'assets/vendor/libs/clipboard/clipboard.js' %}"></script>
+  <!-- <script src="{% static 'assets/vendor/libs/idletimer/idletimer.js' %}"></script> -->
+  <script src="https://cdn.wooriwbn.com/thb/wooribank/2024/03/01/cdn/css/previous/idletimer.js"></script>
+  <script src="{% static 'assets/vendor/libs/numeral/numeral.js' %}"></script>
+  <script src="{% static 'assets/vendor/libs/toastr/toastr.js' %}"></script>
+  <script src="{% static 'assets/js/extended-ui-misc-clipboardjs.js' %}"></script>
+  <script src="{% static 'assets/js/extended-ui-misc-idle-timer.js' %}"></script>
+  <script src="{% static 'assets/js/extended-ui-misc-numeraljs.js' %}"></script>
+  <script src="{% static 'assets/etc/jquery.waypoints.min.js' %}"></script>
+
+  <script src="{% static 'assets/vendor/libs/popper/popper.js' %}"></script>
+  <!-- <script src="{% static 'assets/vendor/js/bootstrap.js' %}"></script> -->
+  <script src="https://cdn.wooriwbn.com/thb/wooribank/2024/03/01/cdn/css/previous/bootstrap.js"></script>
+  <script src="{% static 'assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js' %}"></script>
+  <!-- <script src="{% static 'assets/vendor/libs/hammer/hammer.js' %}"></script> -->
+  <script src="https://cdn.wooriwbn.com/thb/wooribank/2024/03/01/cdn/css/previous/hammer.js"></script>
+  <!-- <script src="{% static 'assets/vendor/libs/i18n/i18n.js' %}"></script> -->
+  <script src="https://cdn.wooriwbn.com/thb/wooribank/2024/03/01/cdn/css/previous/i18n.js"></script>
+  <!-- <script src="{% static 'assets/vendor/libs/typeahead-js/typeahead.js' %}"></script> -->
+  <script src="https://cdn.wooriwbn.com/thb/wooribank/2024/03/01/cdn/css/previous/typeahead.js"></script>
+  <script src="{% static 'assets/vendor/js/menu.js' %}"></script>
+  <!-- <script src="{% static 'assets/vendor/libs/apex-charts/apexcharts.js' %}"></script> -->
+  <script src="https://cdn.wooriwbn.com/thb/wooribank/2024/03/01/cdn/css/previous/apexcharts.js"></script>
+  <script src="{% static 'assets/vendor/libs/block-ui/block-ui.js' %}"></script>
+  <!-- <script src="{% static 'assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js' %}"></script> -->
+  <script src="https://cdn.wooriwbn.com/thb/wooribank/2024/03/01/cdn/css/datatables-bootstrap5.js"></script>
+  <!--<script src="{% static 'assets/js/dashboards-analytics.js' %}"></script> -->
+  <script src="{% static 'assets/js/extended-ui-blockui.js' %}"></script>
+  <!-- <script src="{% static 'assets/vendor/libs/moment/moment.js' %}"></script> -->
+  <script src="https://cdn.wooriwbn.com/thb/wooribank/2024/03/01/cdn/css/previous/moment.js"></script>
+  <script src="{% static 'assets/vendor/libs/flatpickr/flatpickr.js' %}"></script>
+  <script src="{% static 'assets/vendor/libs/pickr/pickr.js' %}"></script>
+  <script src="{% static 'assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js' %}"></script>
+  <script src="{% static 'assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js' %}"></script>
+  <script src="{% static 'assets/vendor/libs/jquery-timepicker/jquery-timepicker.js' %}"></script>
+  <!-- <script src="{% static 'assets/vendor/libs/sweetalert2/sweetalert2.js' %}"></script> -->
+  <script src="https://cdn.wooriwbn.com/thb/wooribank/2024/03/01/cdn/css/previous/sweetalert2.js"></script>
+  <!-- <script src="{% static 'assets/vendor/libs/select2/select2.js' %}"></script> -->
+  <script src="https://cdn.wooriwbn.com/thb/wooribank/2024/03/01/cdn/css/previous/select2.js"></script>
+  
+
+  <!-- 드림 사용 소스 -->
+  <!--<script src="{% static 'assets/js/main.js' %}"></script> -->
+  <link rel="stylesheet" href="{% static 'assets/css/apex-charts.css' %}" />
+  <link rel="stylesheet" href="{% static 'assets/css/bootstrap-datepicker.css' %}" />
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/boxicons.css' %}" /> -->
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/core.css' %}" /> -->
+  <link rel="stylesheet" href="https://cdn.wooriwbn.com/thb/wooribank/2024/03/01/cdn/css/dream/core.css" />
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/datatables.bootstrap5.css' %}" /> -->
+  <link rel="stylesheet" href="https://cdn.wooriwbn.com/thb/wooribank/2024/03/01/cdn/css/dream/datatables.bootstrap5.css" />
+  <link rel="stylesheet" href="{% static 'assets/css/datatables.checkboxes.css' %}" />
+  <link rel="stylesheet" href="{% static 'assets/css/demo.css' %}" />
+  <link rel="stylesheet" href="{% static 'assets/css/flag-icons.css' %}" />
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/fontawesome.css' %}" /> -->
+  <link rel="stylesheet" href="https://cdn.wooriwbn.com/thb/wooribank/2024/03/01/cdn/css/dream/fontawesome.css" />
+  <link rel="stylesheet" href="{% static 'assets/css/perfect-scrollbar.css' %}" />
+  <link rel="stylesheet" href="{% static 'assets/css/responsive.bootstrap5.css' %}" />
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/select2.css' %}" /> -->
+  <link rel="stylesheet" href="https://cdn.wooriwbn.com/thb/wooribank/2024/03/01/cdn/css/dream/select2.css" />
+  <link rel="stylesheet" href="{% static 'assets/css/spinkit.css' %}" />
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/sweetalert2.css' %}" /> -->
+  <link rel="stylesheet" href="https://cdn.wooriwbn.com/thb/wooribank/2024/03/01/cdn/css/dream/sweetalert2.css" />
+  <link rel="stylesheet" href="{% static 'assets/css/theme-default.css' %}" />
+  <link rel="stylesheet" href="{% static 'assets/css/typeahead.css' %}" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+  <!-- 드림 사용 소스 끝 -->
+
+  <style>
+    body {
+      min-width: 350px;
+    }
+    #searchmain .select2-container--default.select2-container--focus .select2-selection,
+    #searchmain .select2-container--default.select2-container--open .select2-selection {
+      border:none !important;
+          border-radius: 0;
+    }
+
+   #searchmain .light-style .select2-container--default .select2-selection {
+          border:0 !important;
+      border-radius: 0 !important;
+   }
+  </style>
+
+  <script>
+    // 2024-01-24 메시지 수신 이벤트 핸들러    
+    window.addEventListener('message', function (event) {
+      // 메시지가 "goBack"이면 뒤로 가기 처리
+      if (event.data === 'goBack') {
+
+        // console.log("뒤로가기 전 URL:", document.referrer);
+        //alert(document.referrer);
+
+        // 특정 조건을 만족하는 페이지 URL 체크
+        if (document.referrer === "") {
+          // console.log('### LOG 뒤로가기 불가');
+          Warning_Notice("뒤로가기", "이전 페이지가 없습니다.");
+
+        } else {
+          // console.log('### LOG 뒤로가기 가능');
+          history.back();
+        }
+
+      }
+    });
+  </script>
+
+  <script>
+    // WARNING ALERT
+    function Warning_Notice(_title, _text) {
+      Swal.fire({
+        title: _title,
+        text: _text,
+        type: 'warning',
+        customClass: {
+          confirmButton: 'btn btn-primary'
+        },
+        buttonsStyling: false
+      })
+    }
+
+    $(function () {
+      $("#profileBtn").click(function () {
+
+        //2023-08-28 이미지 파일여부 검증추가
+        var _input_formFile = $("#input_formFile").val();
+        if (_input_formFile != "") {
+          var imageExtensions = ["jpg", "jpeg", "png", "gif", "bmp"];
+          var extension = _input_formFile.split('.').pop().toLowerCase();
+          		  
+		      alert('프로필 사진 변경이 완료 되었습니다');
+
+          if (imageExtensions.indexOf(extension) === -1) {
+            alert("이미지 파일만 첨부 가능합니다.");
+            return false;
+          }
+        }
+
+      });
+    });
+  </script>
+
+</head>
+
+<body class="all_" style="overflow-y: scroll; overflow-x: hidden;">
+  <!-- Content -->
+  <!-- Layout wrapper -->
+  <div class="layout-wrapper layout-content-navbar layout-without-menu">
+    <!-- Layout container -->
+    <div class="layout-page ">
+      <!-- Navbar -->
+      <div id="header" class="w-100 p-3 py-4 position-relative">
+        <span class="allBg"></span>
+
+        <nav
+          class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center border-0 text-dark ms-auto p-0"
+          id="layout-navbar" style="background:none !important; box-shadow:none;">
+          {% if user.is_authenticated %}
+          <div class="col-8 row align-items-center">
+            <div class="nameBox text-white fw-med">
+              <span class="myName fs-2">
+                {{user.employee_name}}
+                <input id="tempUserId" type="hidden" value="{{user.id}}">
+              </span>
+              <span class="myRank fs-6">{{user.position_name}}</span>
+            </div>
+            <div class="departBox fw-med">
+              <span class="myDepart fs-6">
+                {{user.company_name}} {{user.department_name}}
+              </span>
+            </div>
+          </div>
+
+          {% else %}
+          <a href="{% url 'home' %}" class="app-brand-link">
+            <span class="app-brand-logo demo">
+              <span class="app-brand-text demo menu-text fw-bolder ms-0">
+                <a href="{% url 'home' %}" class="menu-link">
+                  <img class="img-fluid mx-auto mx-0 my-0" src="{% static 'assets/img/woorifg.png' %}"
+                    style="max-height: 150px; max-width: 150px;" alt="Card image cap" /></a>
+              </span>
+            </span>
+          </a>
+          {% endif %}
+
+          <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+            <!-- user info . -->
+            {% if user.is_authenticated %}
+            <ul class="navbar-nav flex-row align-items-center ms-auto">
+              <!-- 메뉴 - 검색 버튼 시작 -->
+              <li class="nav-item me-1 me-xl-3">
+                <a class="me-2 collapsed search navBtn d-block position-relative" data-bs-toggle="collapse"
+                  href="#searchmain" role="button" aria-expanded="false" aria-controls="collapseExample">
+
+                  <!-- <img class="w-100" src="{% static 'assets/img/icon_search.png' %}" alt=""> -->
+                </a>
+                </a>
+
+
+              </li>
+
+              <!-- 메뉴 - 검색 버튼 시작 끝 -->
+              <!-- 메뉴 - 알림 버튼 시작  -->
+              <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-xl-3 me-2 position-static">
+                <!-- 신규 알림 존재시 빨간불 들어오는 효과 -->
+                <div class="position-relative">
+                  <span id="alarmred" class="light position-absolute" style="display: none;"></span>
+                </div>
+                <a class="notice navBtn d-block dropdown-toggle hide-arrow position-relative" style="cursor: pointer;" onclick="viewNotice();"
+                  data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                  <span id="divCntNotice" class="" style="display: none;"><span class=""></span></span>
+                </a>
+
+                <ul class="dropdown-menu dropdown-menu-end py-0 w-100 noticeInner" style="-webkit-user-select:none; user-select: none;">
+                  <li class="dropdown-menu-header border-bottom">
+                    <div class="dropdown-header d-flex align-items-center py-3">
+                      <h5 class="text-body mb-0 me-auto colorCustom_06 fw-bold fs-4">알림</h5>
+                    </div>
+                    <button id="closeNotice"  type="button" class="position-absolute btn-close closeCustom"
+                      style="background:transparent; border:0; right:10px; top:10px; padding:10px; box-shadow: none; transform: none !important; z-index: 2;"><span></span>
+                    </button>
+                    <script>
+                    document.querySelector("#closeNotice").addEventListener('click',()=>{
+                      document.querySelector('.noticeInner').classList.remove('show');
+                    });
+                    </script>
+                  </li>
+                  <li class="dropdown-notifications-list scrollable-container0" style="overflow-y: scroll !important;">
+                    <div class="col-12">
+                      <ul class="list-group list-group-flush">
+                        <div id="divViewNotice">
+
+                        </div>
+
+                      </ul>
+                    </div>
+                    <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
+                      <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div>
+                    </div>
+                    <div class="ps__rail-y" style="top: 0px; right: 0px;">
+                      <div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div>
+                    </div>
+                  <li class="dropdown-menu-footer border-top">
+                    <!-- 모든 메세지  -->
+                    <a href="javascript:totalNotice();"
+                      class="dropdown-item d-flex justify-content-center p-3 colorCustom_04 fw-med">전체 알림 보기
+                      <span class="ms-1" style="transform:scale(0.6)">
+                        <!-- 아래 화살표로 이미지 수정 240304 -->
+                        <img class="w-100"
+                        src="{% static 'assets/img/icon_downArrow.png' %}"></span>
+                        <!-- 아래 화살표로 이미지 수정 240304 -->
+                    </a>
+                  </li>
+              </li>
+                </ul>
+              </li>
+            <!-- 메뉴 - 알림 버튼 시작 끝 -->
+
+            <!-- User -->
+            <li class="nav-item navbar-dropdown dropdown-user dropdown position-static">
+              <a class="navBtn nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
+                data-bs-toggle="dropdown">
+                <!-- <div class="avatar avatar-lg ms-2 me-0 forBest best_01" style="font-size: 0 !important;"> -->
+                  <div id="profileCrown" class="avatar avatar-lg ms-2 me-0" style="font-size: 0 !important;">
+                  {{user.image_yn}}
+                  {% if user.image_yn == 'Y' %}
+                  <img src="{{ user.image }}" class="rounded-circle" />
+                  {% else %}
+                  <img src="{% static 'assets/img/profile_bee_01.png' %}" class="rounded-circle" />
+                  {% endif %}
+                </div>
+              </a>
+              <!-- 프로필 -->
+              <ul class="dropdown-menu dropdown-menu-end profileMenu ">
+                <li>
+                  <a class="dropdown-item py-3" data-bs-toggle="modal" data-bs-target="#profile_modal" onclick='javascript:openmyprofile("{{user.id}}", "{{user.image_yn}}", "{{user.image}}", "{{user.employee_id}}", "{{user.employee_name}}", "{{user.department_name}}","{{ user.position_name }}","{{ user.company_name }}")' />
+                    <span class="icon_myprofile"></span>
+                    <span class="align-middle colorCustom_04 fw-bold">마이프로필</span>
+                  </a>
+                </li>
+
+                {% if user.is_superuser %}
+                <li>
+                  <a class="dropdown-item py-3" href="{% url 'manageMain' %}">
+                    <span class="icon_admin"></span>
+                    <span class="align-middle colorCustom_04 fw-bold">관리자</span>
+                  </a>
+                </li>
+
+
+                <li>
+                  <a class="dropdown-item py-3" href="javascript:{document.getElementById('logout').submit()}">
+                    <span class="icon_logout"></span>
+                    <span class="align-middle colorCustom_04 fw-bold">Log Out</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            </ul>
+            {% endif %}
+            <form id="logout" method="POST" action="{% url 'logout' %}">
+              {% csrf_token %} <input type="hidden" />
+            </form>
+            {% endif %}
+          </div>
+
+          <!-- Search Small Screens -->
+          <div class="navbar-search-wrapper search-input-wrapper d-none">
+            <input type="text" class="form-control search-input container-xxl border-0" placeholder="Search..."
+              aria-label="Search..." />
+            <i class="bx bx-x bx-sm search-toggler cursor-pointer"></i>
+          </div>
+
+        </nav>
+
+
+      </div>
+      <div class="collapse container-xxl position-relative" id="searchmain" style="" data-select2-id="search1">
+        <div style="border-radius: 20px; overflow: hidden; margin-top:10px;">
+          <form id="SearchformAuthentication" class="browser-default-validation mb-0" action="{% url 'search' %}"
+            method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="d-grid d-sm-flex border-0 shadow-none">
+              <div class="input-group input-group-merge ">
+                <div class="col-12 d-flex justify-content-center align-items-center text-dark" style="display: none;">
+                  <select id="select2Trans" class="fw-med colorCustom_05 select2 form-select" data-allow-clear="true"
+                    name="input_search" id=""
+                    style="padding-left:10px; background: #fff;">
+                  </select>
+                  <!-- <span class="searchOpenBtn w-100 fs-5 colorCustom_05 fw-med" -->
+                  <!-- style="padding-left:10px; border-radius: initial; border-top-left-radius: 20px; border-bottom-left-radius: 20px; background: #fff;"></span> -->
+                  <button type="submit" class="btn fs-5 "
+                    style="background: #14a8ea; height: 39px; margin-right:-2px; color:#fff; min-width: 100px; border-radius: 0; padding:0;"
+                    onclick="searchData()">검색</button>
+                </div>
+
+                <!-- <div>
+                  <span class="select2-container select2-container--default select2-container--open"
+                    style="position: absolute;"><span class="select2-dropdown select2-dropdown--below"><span
+                        class="select2-search select2-search--dropdown"><input class="select2-search__field"
+                          type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="none"
+                          spellcheck="false" role="searchbox" aria-autocomplete="list"
+                          aria-controls="select2-select2Trans-results" placeholder="검색어를 입력해주세요."></span><span
+                        class="select2-results">
+                        <ul class="select2-results__options" role="listbox" id="select2-select2Trans-results"
+                          aria-expanded="true" aria-hidden="false">
+                          <li role="alert" aria-live="assertive"
+                            class="select2-results__option select2-results__message">최소 2글자 이상 입력하세요.</li>
+                        </ul>
+                      </span></span></span>
+                </div> -->
+
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <!-- / Navbar -->
+      <!-- Content wrapper -->
+      <div class="content-wrapper ">
+        <!-- Content -->
+        {% block body%}
+        {% endblock %}
+        <!-- / Content -->
+
+        <!-- Bottom Navi -->
+        {% if user.is_authenticated %}
+        
+        <div class="mobile-navigation" style="z-index: 2; height: 80px; background: #fff;">
+  <!-- <div class="swiper swiper-container naviSwiper" style="height: 100%;">
+    <div id="naviSwiper" class="swiper-wrapper btn-group shadow rounded-0" role="group"
+      aria-label="Button group with nested dropdown">
+      <button type="button" class="btn swiper-slide" style="background: #fff;" onclick="location.href='/'">
+        <div class="d-flex" style="justify-content: center;">
+          <div class="row">
+            <span class="icon_home"></span>
+            <small class="colorCustom_03 fw-med">HOME</small>
+          </div>
+        </div>
+      </button>
+
+      <button type="button" class="btn swiper-slide" style="background: #fff;" onclick="location.href='/tk_list/'">
+        <div class="d-flex" style="justify-content: center;">
+          <div class="row">
+            <span class="icon_myThank"></span>
+            <small class="colorCustom_03 fw-med">MY땡큐</small>
+          </div>
+        </div>
+      </button>
+
+      <button type="button" class="btn swiper-slide" style="background: #fff;" onclick="location.href='/praiseRegedit/'">
+        <div class="d-flex" style="justify-content: center;">
+          <div class="row">
+            <span class="icon_sendThank"></span>
+            <small class="colorCustom_03 fw-med">칭찬하기</small>
+          </div>
+        </div>
+      </button>
+
+      <button type="button" class="btn swiper-slide" style="background: #fff;" onclick="location.href='/rankList/'">
+        <div class="d-flex" style="justify-content: center;">
+          <div class="row">
+            <span class="icon_best"></span>
+            <small class="colorCustom_03 fw-med">우리칭찬왕</small>
+          </div>
+        </div>
+      </button>
+
+      <button type="button" class="btn swiper-slide" style="background: #fff;" onclick="location.href='/accounts/myprofile/'">
+        <div class="d-flex" style="justify-content: center;">
+          <div class="row">
+            <span class="icon_myToken"></span>
+            <small class="colorCustom_03 fw-med">나의토큰</small>
+          </div>
+        </div>
+      </button>
+    </div>
+
+  <script>
+    const swiper = new Swiper('.naviSwiper', {
+      // loop:true,
+            slidesPerView: '4.5',
+    });
+  </script> 
+  <style>
+  #naviSwiper{width: 150%;}
+  button.swiper-slide {width:20% !important;}
+  </style> -->
+          <div class="btn-group shadow w-100 rounded-0" role="group" aria-label="Button group with nested dropdown">
+            <button type="button" class="naviBtn btn" onclick="location.href='{% url 'home' %}'">
+              {% if request.resolver_match.url_name == 'home' %}
+              <div class="d-flex">
+                <div class="row">
+                  <span class="icon_home"></span>
+                  <small class="colorCustom_03 fw-med">HOME</small>
+                </div>
+              </div>
+              {% else %}
+              <div class="d-flex">
+                <div class="row">
+                  <span class="icon_home"></span>
+                  <small class="colorCustom_03 fw-med">HOME</small>
+                </div>
+              </div>
+              {% endif %}
+            </button>
+
+            <button type="button" class="naviBtn btn" onclick="location.href='{% url 'tk_list' %}'">
+              {% if request.resolver_match.url_name == 'tk_list' %}
+              <div class="d-flex">
+                <div class="row">
+                  <span class="icon_myThank"></span>
+                  <small class="colorCustom_03 fw-med">MY땡큐</small>
+                </div>
+              </div>
+              {% else %}
+              <div class="d-flex">
+                <div class="row">
+                  <span class="icon_myThank"></span>
+                  <small class="colorCustom_03 fw-med">MY땡큐</small>
+                </div>
+              </div>
+              {% endif %}
+            </button>
+
+            <button type="button" class="naviBtn btn" onclick="location.href='{% url 'praiseRegedit' %}'">
+              {% if request.resolver_match.url_name == 'praiseRegedit' %}
+              <div class="d-flex">
+                <div class="row">
+                  <span class="icon_sendThank"></span>
+                  <small class="colorCustom_03 fw-med">칭찬하기</small>
+                </div>
+              </div>
+              {% else %}
+              <div class="d-flex">
+                <div class="row">
+                  <span class="icon_sendThank"></span>
+                  <small class="colorCustom_03 fw-med">칭찬하기</small>
+                </div>
+              </div>
+              {% endif %}
+            </button>
+            <button type="button" class="naviBtn btn" onclick="location.href='{% url 'rankList' %}'">
+              {% if request.resolver_match.url_name == 'rankList' %}
+              <div class="d-flex">
+                <div class="row">
+                  <span class="icon_best"></span>
+                  <small class="colorCustom_03 fw-med">우리칭찬왕</small>
+                </div>
+              </div>
+              {% else %}
+              <div class="d-flex">
+                <div class="row">
+                  <span class="icon_best"></span>
+                  <small class="colorCustom_03 fw-med">우리칭찬왕</small>
+                </div>
+              </div>
+              {% endif %}
+            </button>
+
+            <button type="button" class="naviBtn btn" onclick="location.href='{% url 'myprofile' %}'">
+              {% if request.resolver_match.url_name == 'myprofile' %}
+              <div class="d-flex">
+                <div class="row">
+                  <span class="icon_myToken"></span>
+                  <small class="colorCustom_03 fw-med">나의토큰</small>
+                </div>
+              </div>
+              {% else %}
+              <div class="d-flex">
+                <div class="row">
+                  <span class="icon_myToken"></span>
+                  <small class="colorCustom_03 fw-med">나의토큰</small>
+                </div>
+              </div>
+              {% endif %}
+            </button>
+
+          </div> 
+        </div>
+        {% endif %}
+   </div>
+        <!-- Bottom Navi -->
+
+
+      </div>
+<script>
+  let startX = 0;
+  let endX = 0;
+
+  function handleTouchStart(event) {
+    startX = event.touches[0].clientX;
+  }
+
+  function handleTouchEnd(event, url) {
+    endX = event.changedTouches[0].clientX;
+    const deltaX = endX - startX;
+
+    const swipeThreshold = 50;
+    const pages = ['/', '/tk_list/', '/praiseRegedit/', '/rankList/', '/accounts/myprofile'];
+    const currentIndex = pages.indexOf(window.location.pathname);
+
+    if (deltaX > swipeThreshold) {
+      // const nextIndex = (currentIndex - 1) % pages.length;
+      const nextIndex = currentIndex - 1;
+      if(currentIndex < 0){
+        window.location.href = pages[nextIndex];
+      } else {
+        console.log(nextIndex);
+        return
+      }
+    } else if (deltaX < -swipeThreshold) {
+      // const nextIndex = (currentIndex + 1) % pages.length;
+      const nextIndex = currentIndex + 1;
+      window.location.href = pages[nextIndex];
+    }
+  }
+
+  $('.naviBtn').on('touchstart', function(event) {
+    handleTouchStart(event);
+  });
+
+  $('.naviBtn').on('touchend', function(event) {
+    const url = $(this).attr('data-url');
+    handleTouchEnd(event, url);
+  });
+</script>
+      <!-- Content wrapper -->
+
+    </div>
+    <!-- / Layout page -->
+  </div>
+
+  <!-- Overlay -->
+  <!--<div class="layout-overlay layout-menu-toggle"></div>
+		<!-- Drag Target Area To SlideIn Menu On Small Screens -->
+  <!--<div class="drag-target"></div> -->
+  </div>
+  <!-- / Layout wrapper -->
+  <!-- / Content -->
+
+
+  <div id="allModalWrap">
+    <!-- 프로필 모달 시작 -->
+    <div class="modal fade" id="profile_modal" tabindex="-1" aria-labelledby="exampleModalToggleLabel"
+      aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <button type="button" class="position-absolute btn-close closeCustom"
+            style="background:transparent; border:0; right:5px; top:5px; box-shadow: none; transform: none !important; z-index: 2;"
+            data-bs-dismiss="modal" aria-label="Close"><span></span></button>
+          <div class="modal-header d-flex justify-content-center" style="z-index: 1;">
+            {% if user.image_yn == 'Y' %}
+            <img id="profile_view_img" class="rounded-circle" style="width: 120px;height: 120px; object-fit: cover;" src="{{ user.image }}">
+            {% else %}
+            <img id="profile_view_img" class="rounded-circle" style="width: 120px;height: 120px; object-fit: cover;" src="{% static 'assets/img/profile_icon_02.png' %}">
+            {% endif %}
+
+          </div>
+          <div class="modal-body text-center">
+            <div class="d-flex mb-2 align-items-end justify-content-center">
+              <h2 id="profile_employee_name" class="colorCustom_01 fw-med mb-0 me-1">{{user.employee_name}}</h2>
+              <span id="profile_position_name" class="fs-5 colorCustom_03 fw-med" style="line-height: normal;">{{user.position_name}}</span>
+            </div>
+            <div class="d-flex justify-content-center">
+              <span id="profile_company_name" class="colorCustom_01 fs-6 fw-med me-2">{{user.company_name}}</span>
+              <span id="profile_department_name" class="colorCustom_01 fs-6 fw-med">{{user.department_name}}</span>
+            </div>
+            <!-- 카드 프로필이 아닌, 마이프로필 클릭시 버튼 활성화 시작-->
+            <div class="my-3">
+            <!-- <div id="profile_change_btn" class="my-3"> -->
+              <button id="profile_change_btn" type="button" class="btn colorCustom_03 fw-bold" data-bs-toggle="modal" data-bs-dismiss="modal"
+                data-bs-target="#profileEdit_modal" style="box-shadow: none; background: #c8edff; display: inline-flex;">프로필 사진변경</button>
+            </div>
+            <!-- 카드 프로필이 아닌, 마이프로필 클릭시 버튼 활성화 끝-->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 프로필 모달 끝 -->
+
+    <!-- 프로필 사진변경 모달 시작 -->
+    <form id="ProfileformAuthentication" class="mb-3" action="{% url 'myprofileModify' %}" method="POST"
+      enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="modal fade" id="profileEdit_modal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
+        tabindex="-1">
+        <div class="modal-dialog modal-dialog" style="padding:0;">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalToggleLabel2">프로필 사진변경</h5>
+              <button type="button" class="position-absolute btn-close closeCustom"
+                style="background:transparent; border:0; right:20px; top:25px; box-shadow: none; transform: none !important; z-index: 2;"
+                data-bs-dismiss="modal"><span></span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div id="porfileUplaodBox" class="d-flex align-items-end justify-content-center">
+                <div class="profileNowImg me-1" style="width:40%;">
+                  {% if user.image_yn == 'Y' %}
+                  <!-- <img id="poto_img" class="rounded-circle" style="max-width: 100%;" src="{{ user.image }}"> -->
+                  <img src="{{user.image}}" id="poto_img" alt="user-avatar" class="d-block rounded" height="100"
+                    width="100" id="uploadedAvatar" />
+                  {% else %}
+                  <!-- <img id="poto_img" class="rounded-circle" style="max-width: 100%;" src="{% static 'assets/img/test_profile_icon_03.png' %}"> -->
+                  <img src="{% static 'assets/img/profile_bee_01.png' %}" id="poto_img" alt="user-avatar" class="d-block rounded"
+                    height="100" width="100" id="uploadedAvatar" />
+                  {% endif %}
+                </div>
+                <div class="forPc upload d-flex forMo">
+                  <style>@media (max-width:576px) {
+                    .forMo {flex-wrap:wrap;}
+                     .forMo > .upLoadBox, .forMo > div {
+                      width: 100%;
+                      margin-bottom:5px;
+                      margin-right:0 !important;
+                     }
+                  }
+                  </style>
+                  <label for="input_formFile" class="btn px-3 py-2 upLoadBox" tabindex="0"
+                    style="border-radius: 30px; background: #016ed5; margin-right:10px; height:39px;">
+                    <p class="text-white fw-bold d-flex m-0 align-items-center"><span class="d-block me-2" style="width:20px"><img
+                          class="w-100" src="{% static 'assets/img/icon_upload.png' %}"></span>사진 업로드</p>
+                    <input type="file" id="input_formFile" name="input_formFile" onChange="setPotoImg(event);"
+                      class="account-file-input" hidden="" accept="image/png, image/jpeg">
+                  </label>
+                  <div style="height:39px;">
+                    <button id="profileBtn" type="submit" class="btn fw-bold colorCustom_03 m-0 w-100"
+                      style="border-radius: 30px; background: #c8edff;">변경</button>
+                  </div>
+                </div>
+              </div>
+				
+				
+              <div class="profile_bee d-flex mt-3">
+                <a href="javascript:void(0);" class="clicked" style="width:calc(100% / 6); height:0; padding-bottom:calc((100% / 6) - 5px); border-radius: 100%; overflow: hidden; background:url(/static/assets/img/profile_bee_01.png) no-repeat center/cover; border:2px solid transparent;" onclick="selectdefaultpoto('{% static 'assets/img/profile_bee_01.png' %}');"></a>
+                <a href="javascript:void(0);" class="" style="width:calc(100% / 6); height:0; padding-bottom:calc((100% / 6) - 5px); border-radius: 100%; overflow: hidden; background:url(/static/assets/img/profile_bee_02.png) no-repeat center/cover; border:2px solid transparent;" onclick="selectdefaultpoto('{% static 'assets/img/profile_bee_02.png' %}');"></a>
+                <a href="javascript:void(0);" class="" style="width:calc(100% / 6); height:0; padding-bottom:calc((100% / 6) - 5px); border-radius: 100%; overflow: hidden; background:url(/static/assets/img/profile_bee_03.png) no-repeat center/cover; border:2px solid transparent;" onclick="selectdefaultpoto('{% static 'assets/img/profile_bee_03.png' %}');"></a>
+                <a href="javascript:void(0);" class="" style="width:calc(100% / 6); height:0; padding-bottom:calc((100% / 6) - 5px); border-radius: 100%; overflow: hidden; background:url(/static/assets/img/profile_bee_04.png) no-repeat center/cover; border:2px solid transparent;" onclick="selectdefaultpoto('{% static 'assets/img/profile_bee_04.png' %}');"></a>
+                <a href="javascript:void(0);" class="" style="width:calc(100% / 6); height:0; padding-bottom:calc((100% / 6) - 5px); border-radius: 100%; overflow: hidden; background:url(/static/assets/img/profile_bee_05.png) no-repeat center/cover; border:2px solid transparent;" onclick="selectdefaultpoto('{% static 'assets/img/profile_bee_05.png' %}');"></a>
+                <a href="javascript:void(0);" class="" style="width:calc(100% / 6); height:0; padding-bottom:calc((100% / 6) - 5px); border-radius: 100%; overflow: hidden; background:url(/static/assets/img/profile_bee_06.png) no-repeat center/cover; border:2px solid transparent;" onclick="selectdefaultpoto('{% static 'assets/img/profile_bee_06.png' %}');"></a>
+                <style>.profile_bee a.clicked{border-color: #d3f1ff !important;}</style>
+              </div>
+              {% if user.is_superuser %} 
+              <div class="mt-3">
+                <div>
+                  <span style="background: #222;border-radius: 5px;"
+                    class="py-1 px-2 d-inline-block text-white fw-med fs-6">관리자 전용기능</span>
+                </div>
+                <div>
+                  <div class="mt-2">
+                    <span class="ms-1 d-inline-block fw-med colorCustom_01">ID</span>
+                    <input class="form-control colorCustom_05" style="border-color: #9fc4e7;" readonly type="text"
+                      value="{{user.employee_id}}" id="base_employee_id" name="base_employee_id" readonly=""
+                      onfocusin="this.style.borderColor=''" onfocusout="this.style.borderColor=''">
+                  </div>
+                  <div class="mt-2">
+                    <span class="ms-1 d-inline-block fw-med colorCustom_01">이름</span>
+                    <input class="form-control colorCustom_05" style="border-color: #9fc4e7;" type="text"
+                      value="{{user.employee_name}}" id="input_employee_name" name="input_employee_name"
+                      onfocusin="this.style.borderColor=''" onfocusout="this.style.borderColor=''">
+                  </div>
+                  <div class="mt-2">
+                    <span class="ms-1 d-inline-block fw-med colorCustom_01">회사</span>
+                    <select name="input_company_id" id="input_company_id" class="form-select"
+                      style="border-color: #9fc4e7;">
+                      <option value="20" {% if user.company_id == '20' %}selected{% endif %}>우리은행</option>
+                      <option value="95" {% if user.company_id == '95' %}selected{% endif %}>우리카드</option>
+                      <option value="B1" {% if user.company_id == 'B1' %}selected{% endif %}>우리에프아이에스</option>
+                      <option value="B3" {% if user.company_id == 'B3' %}selected{% endif %}>우리금융지주</option>
+                      <option value="C1" {% if user.company_id == 'C1' %}selected{% endif %}>우리프라이빗에퀴티자산운용</option>
+                      <option value="C7" {% if user.company_id == 'C7' %}selected{% endif %}>우리펀드서비스</option>
+                      <option value="C9" {% if user.company_id == 'C9' %}selected{% endif %}>우리신용정보</option>
+                      <option value="D1" {% if user.company_id == 'D1' %}selected{% endif %}>우리금융경영연구소</option>
+                      <option value="D2" {% if user.company_id == 'D2' %}selected{% endif %}>우리투자증권</option>
+                      <option value="E1" {% if user.company_id == 'E1' %}selected{% endif %}>우리자산운용</option>
+                      <option value="E3" {% if user.company_id == 'E3' %}selected{% endif %}>우리자산신탁</option>
+                      <option value="E4" {% if user.company_id == 'E4' %}selected{% endif %}>우리글로벌자산운용</option>
+                      <option value="E5" {% if user.company_id == 'E5' %}selected{% endif %}>우리금융캐피탈</option>
+                      <option value="E6" {% if user.company_id == 'E6' %}selected{% endif %}>우리금융저축은행</option>
+                      <option value="E7" {% if user.company_id == 'E7' %}selected{% endif %}>우리금융에프앤아이</option>
+                      <option value="E8" {% if user.company_id == 'E8' %}selected{% endif %}>우리벤처파트너스</option>
+                      <option value="W5" {% if user.company_id == 'W5' %}selected{% endif %}>베트남우리은행</option>
+                    </select>
+                  </div>
+                  <div class="mt-2">
+                    <span class="ms-1 d-inline-block fw-med colorCustom_01">부서</span>
+                    <div>
+                      <span class="chkHiddenInput twitter-typeahead" style="position: relative; display: inline-block;">
+                        <input type="text" style="border-color: #9fc4e7;" class="form-control colorCustom_05"
+                          value="{{user.department_name}}">
+                        <div
+                          class="editSearchBox position-absolute form-control w-100 h-100 shadow d-none colorCustom_05"
+                          style="z-index:1; margin-top:3px; border-color:#9fc4e7;"></div>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="mt-2">
+                    <span class="ms-1 d-inline-block fw-med colorCustom_01">직위</span>
+                    <div>
+                      <span class="chkHiddenInput twitter-typeahead" style="position: relative; display: inline-block;">
+                        <input type="text" style="border-color: #9fc4e7;" class="form-control colorCustom_05"
+                          value="{{user.position_name}}">
+                        <div
+                          class="editSearchBox position-absolute form-control w-100 h-100 shadow colorCustom_05 d-none"
+                          style="z-index:1; margin-top:3px; border-color:#9fc4e7;">차장</div>
+                      </span>
+                    </div>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 프로필 사진변경 모달 끝 -->
+    </form>
+
+  </div>
+  <style>
+    /* 지마켓 폰트 추가 시작 - 240219 */
+    @font-face {
+      font-weight: light;
+      font-family: 'gm-light';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff') format('woff');
+      font-style: light;
+    }
+
+    @font-face {
+      font-weight: normal;
+      font-family: 'gm-med';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+      font-style: normal;
+    }
+
+    @font-face {
+      font-weight: bold;
+      font-family: 'gm-bold';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff') format('woff');
+      font-style: bold;
+    }
+
+    /* 지마켓 폰트 추가 끝 - 240219 */
+
+    * {
+      letter-spacing: -0.02em;
+      /* font-family: 'Pretendard', sans-serif; */
+      font-family: 'Noto Sans KR', sans-serif;
+    }
+
+    .gm-med {
+      font-family: 'gm-light', 'Noto Sans KR', sans-serif !important;
+    }
+
+    .gm-med {
+      font-family: 'gm-med', 'Noto Sans KR', sans-serif !important;
+    }
+
+    .gm-bold {
+      font-family: 'gm-bold', 'Noto Sans KR', sans-serif !important;
+    }
+
+    .fw-med {
+      font-weight: 500 !important;
+    }
+
+    .colorCustom_01 {
+      color: #222 !important;
+    }
+
+    .colorCustom_02 {
+      color: #00367f !important;
+    }
+
+    .colorCustom_03 {
+      color: #006ed5 !important;
+    }
+
+    .colorCustom_04 {
+      color: #85b3de !important;
+    }
+
+    .colorCustom_05 {
+      color: #9fc4e7 !important;
+    }
+
+    .colorCustom_06 {
+      color: #14a8ea !important;
+    }
+
+   .colorCustom_07 {
+      color: #dde7f1 !important;
+    }
+
+   .colorCustom_08 {
+      color: #62c8fa !important;
+    }
+
+    body {
+      background: #fbfbfb;
+    }
+
+
+    /* 공통 헤더 #layout-header CSS 시작 */
+    #header {
+      background: #006ed5;
+    }
+
+    #header .allBg {
+      position: absolute;
+      top: 70%;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #006ed5;
+    }
+
+    #header .departBox span {
+      color: #62c8fa;
+      word-break: keep-all;
+    }
+
+    #header .layout-navbar {
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
+    }
+
+    #header .navbar-nav li>a.navBtn {
+      display: block;
+      width: clamp(25px, 5.3vw, 35px);
+      height: clamp(25px, 5.3vw, 35px);
+      padding: 0;
+    }
+
+    #header .navbar-nav li>a.navBtn:has(.avatar) {
+      width: clamp(60px, 10vw, 80px);
+      height: clamp(60px, 10vw, 80px);
+    }
+
+    #header .navbar-nav .search {
+      background: #fff;
+      -webkit-mask: url(/static/assets/img/icon_search.svg) no-repeat center/contain;
+      mask: url(/static/assets/img/icon_search.svg) no-repeat center/contain;
+    }
+
+    #header .navbar-nav .notice {
+      background: #fff;
+      -webkit-mask: url(/static/assets/img/icon_notice01.svg) no-repeat center/contain;
+      mask: url(/static/assets/img/icon_notice01.svg) no-repeat center/contain;
+    }
+
+    #header .navbar-nav li>a.navBtn span {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* 헤더 프로필 아이콘 css 수정 - 240220 */
+    #header .navbar-nav li>a.navBtn .avatar {
+      max-width: 80px;
+      max-height: 80px;
+      width: 100%;
+      height: 100%;
+    }
+
+    #header .navbar-nav li>a.navBtn .avatar img {
+      object-fit: cover;
+    }
+
+    #header .navbar-nav li>a.navBtn .forBest.avatar::after {
+      content: "";
+      position: absolute;
+      top: -10%;
+      left: 0;
+      transform: scale(1.45);
+      width: 100%;
+      height: 100%;
+      background: url(/static/assets/img/rank_crown04-10.png) no-repeat center/100% auto;
+    }
+
+    #header .navbar-nav li>a.navBtn .forBest.best_01.avatar::after,
+    #header .navbar-nav li>a.navBtn .forBest.best_02.avatar::after,
+    #header .navbar-nav li>a.navBtn .forBest.best_03.avatar::after {
+      top: -4%;
+    }
+
+    #header .navbar-nav li>a.navBtn .forBest.best_01.avatar::after {
+      background: url(/static/assets/img/rank_crown01.png) no-repeat center/100% auto;
+    }
+
+    #header .navbar-nav li>a.navBtn .forBest.best_02.avatar::after {
+      background: url(/static/assets/img/rank_crown02.png) no-repeat center/100% auto;
+    }
+
+    #header .navbar-nav li>a.navBtn .forBest.best_03.avatar::after {
+      background: url(/static/assets/img/rank_crown03.png) no-repeat center/100% auto;
+    }
+
+    #footer {
+      margin-top: 20px;
+    }
+
+    /* 헤더 프로필 아이콘 css 수정 끝 - 240220 */
+
+    #header .navbar-nav .light {
+      content: "asdasd";
+      position: absolute;
+      right: 3px;
+      width: 6px !important;
+      height: 6px !important;
+      border-radius: 100%;
+      background: #f6484a;
+    }
+
+
+    .profileMenu,
+    .noticeInner {
+      position: absolute !important;
+      top: 120% !important;
+      max-width: 700px !important;
+      min-width: auto !important;
+    }
+
+    .profileMenu {
+      width: 30% !important;
+    }
+
+    .noticeInner {
+      width: 50% !important;
+    }
+
+    @media (max-width:800px) {
+
+      .profileMenu,
+      .noticeInner {
+        left: auto !important;
+        right: 50% !important;
+        transform: translateX(50%) !important;
+        width: 100% !important;
+      }
+    }
+
+    .profileMenu {
+      padding: 0;
+    }
+
+    .profileMenu li~li {
+      border-top: 1px solid #dde7f1;
+    }
+
+    .profileMenu li a {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .profileMenu li a:hover {
+      opacity: 0.7;
+    }
+
+    .profileMenu li a span:first-child {
+      width: 20px;
+      height: 20px;
+      margin-right: 15px;
+      background: #85b3de;
+    }
+
+    .profileMenu li a span.icon_myprofile {
+      -webkit-mask: url(/static/assets/img/icon_myprofile.svg) no-repeat center/contain;
+      mask: url(/static/assets/img/icon_myprofile.svg) no-repeat center/contain;
+    }
+
+    .profileMenu li a span.icon_admin {
+      -webkit-mask: url(/static/assets/img/icon_admin.svg) no-repeat center/contain;
+      mask: url(/static/assets/img/icon_admin.svg) no-repeat center/contain;
+    }
+
+    .profileMenu li a span.icon_logout {
+      -webkit-mask: url(/static/assets/img/icon_logout.svg) no-repeat center/contain;
+      mask: url(/static/assets/img/icon_logout.svg) no-repeat center/contain;
+    }
+
+    .noticeInner li {
+      background: #fff !important;
+    }
+
+    .noticeInner li.border-bottom {
+      border-color: #14a8ea !important;
+    }
+
+    .noticeInner li.border-top {
+      border-color: #dde7f1 !important;
+    }
+    
+    #divViewNotice> li {
+      border-left: none;
+      border-right: none;
+      cursor: default;
+      border-color: #dde7f1;
+      max-height: 130px;
+      padding:10px 15px;
+    }
+    
+    #divViewNotice>li h6 {
+      word-break: keep-all;
+    }
+    /* 알림창 높이 조절 */
+    .layout-navbar .navbar-dropdown.dropdown-notifications .dropdown-notifications-list {max-height: 50vh !important;}
+    #divViewNotice>li h6 > span {
+      font-size: 14px;
+    }
+    #divViewNotice>li h6 + span {
+      font-size: 12px;
+    }
+    /* 알림창 높이 조절 */
+    #divViewNotice .quickBtn {
+      border-radius: 15px;
+      background: #d3f1ff;
+      font-size: 10px;
+    }
+
+    #divViewNotice .quickBtn:hover {
+      background: #006ed5;
+      color: #fff !important;
+    }
+
+/*     .searchOpenBtn {
+      cursor: pointer;
+    }
+
+    .searchBox.clicked .searchDetail {
+      display: block;
+    }
+
+    .searchBox .searchDetail {
+      display: none;
+      border-radius: 10px !important;
+    } */
+
+    #notice {
+      display: none !important;
+    }
+
+    /* 공통 헤더 #layout-header CSS 끝 */
+
+
+
+
+
+    /* 공통 레이아웃 CSS 시작 */
+    #notice {
+      background: #edf6ff;
+    }
+
+    .closeCustom {
+      background: transparent !important;
+    }
+
+    .closeCustom span {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(45deg);
+      width: 60%;
+      height: 2px;
+      border-radius: 10px;
+      background: #006ed5;
+    }
+
+    .closeCustom span::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: rotate(90deg);
+      width: 100%;
+      height: 100%;
+      border-radius: 10px;
+      background: #006ed5;
+    }
+
+    #profile_modal .closeCustom span,
+    #profile_modal .closeCustom span::after {
+      background: #4797e2;
+    }
+
+    .mobile-navigation {
+      position: fixed;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50%;
+      background-color: transparent;
+    }
+
+    @media (max-width:1440px) {
+      .nameBox {
+        padding: 0;
+      }
+
+      .departBox {
+        padding: 0;
+      }
+
+      .mobile-navigation {
+        bottom: 0px;
+        left: 0;
+        transform: none;
+        width: 100%;
+        border-top: 0px solid #ddd;
+      }
+    }
+
+    .mobile-navigation button {
+      margin: 0 !important;
+      padding: 15px 0 !important;
+      background: #fff;
+    }
+
+    .mobile-navigation button:hover {
+      background-color: #006ed5 !important;
+      border-color: #EB5C32 !important;
+    }
+
+    .mobile-navigation button:hover .row>span {
+      background: #fff;
+    }
+
+    .mobile-navigation button:hover small {
+      color: #fff !important;
+    }
+
+    .mobile-navigation button small {
+      padding: 0;
+      font-size: 13px;
+    }
+
+    .mobile-navigation button .row>span {
+      width: 30px;
+      height: 30px;
+      margin: 0 auto;
+      background: #006ed5;
+    }
+
+    #profile_modal .modal-content {
+      max-width: 400px;
+      margin: 0 auto;
+      background: url(/static/assets/img/profile_bg.jpg) no-repeat top/cover;
+      overflow: hidden;
+    }
+.all_ .icon_right_arrow {
+      width: 25px;
+      height: 25px;
+      background: url(/static/assets/img/icon_arrow.svg) no-repeat center/100% auto;
+    }
+
+    .all_ .heartBtn,
+    .all_ .commentBtn {
+      /* width: 100%; */
+      /* height: 100%; */
+    }
+
+    .all_ .heartBtn i {
+      width: 100%;
+      height: 100%;
+      background: no-repeat center/100% auto;
+      background-image: url(/static/assets/img/icon_heart_01.svg);
+    }
+
+    .all_ .heartBtn i.clicked {
+      background-image: url(/static/assets/img/icon_heart_02.svg);
+    }
+
+    .all_ .commentBtn i {
+      width: 100%;
+      height: 100%;
+      background: no-repeat center/100% auto;
+      background-image: url(/static/assets/img/icon_comment_01.svg);
+    }
+
+    .all_ .replyBtn i{
+            width: 100%;
+      height: 100%;
+      background: no-repeat center/100% auto;
+      background-image: url(/static/assets/img/icon_reply.svg);
+    }
+
+    .all_ .commentBtn i.clicked {
+      background-image: url(/static/assets/img/icon_comment_02.svg);
+    }
+
+    .all_ .heartBtn i,
+    .all_ .commentBtn i {
+      min-width: 20px;
+    }
+    .all_ .replyBtn i {
+      width:20px;
+      height: 20px;
+    }
+    .all_ .editBtn {
+      height: 15px;
+    }
+
+    .all_ .editBtn span {
+      width: 10px;
+      height: 100%;
+      background: #006ed5;
+      -webkit-mask: url(/static/assets/img/icon_edit.svg) no-repeat center/auto 100%;
+      mask: url(/static/assets/img/icon_edit.svg) no-repeat center/auto 100%;
+    }
+    /* 공통 레이아웃 CSS 끝 */
+  </style>
+
+
+  <!-- dead code 모음, 주석 처리 모음 -->
+  <!--  
+<li>
+  <a class="dropdown-item" href="{% url 'praiseList' %}">
+		<i class="bx bx-spreadsheet me-2"></i>
+		<span class="align-middle">[테스트] 칭찬하기1</span>
+  </a>
+</li>
+<li>
+  <div class="dropdown-divider"></div>
+</li>
+  
+<li>
+  <a class="dropdown-item" href="{% url 'htmltest' %}">
+		<i class="bx bx-spreadsheet me-2"></i>
+		<span class="align-middle">[테스트] 칭찬하기2</span>
+  </a>
+</li>
+<li>
+  <div class="dropdown-divider"></div>
+</li>
+  
+<li>
+  <a class="dropdown-item" href="{% url 'apitest' %}">
+		<i class="bx bx-spreadsheet me-2"></i>
+		<span class="align-middle">[테스트] API Call</span>
+  </a>
+</li>
+<li>
+  <div class="dropdown-divider"></div>
+</li>
+-->
+  <!--
+<li>
+  <a class="dropdown-item" href="{% url 'dev' %}">
+		<i class="bx bx-spreadsheet me-2"></i>
+		<span class="align-middle">[테스트] 개발자모드</span>
+  </a>
+</li>
+<li>
+  <div class="dropdown-divider"></div>
+</li>
+-->
+  <!-- <span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search text-danger"></i></span> -->
+  <!-- <input
+type="text"
+name="input_search"
+id="input_search"
+value="{{search_employee_name}}"
+class="form-control"
+placeholder="칭찬 직원명 입력"
+aria-label="칭찬 직원명 입력"
+aria-describedby="basic-addon-search31"
+onkeydown="if (event.keyCode === 13) { searchData(); return false; }"
+onfocusin="this.style.borderColor='#EB5C32'"
+onfocusout="this.style.borderColor=''"
+/> -->
+  <!--/ search -->
+  <!-- Style Switcher --
+                <li class="nav-item me-2 me-xl-0">
+                  <a class="nav-link style-switcher-toggle hide-arrow" href="javascript:void(0);">
+                    <i class="bx bx-sm"></i>
+                  </a>
+                </li>
+                <!--/ Style Switcher -->
+
+  <!-- Style Switcher --
+                    <li class="nav-item me-2 me-xl-0">
+                      <a class="nav-link style-switcher-toggle hide-arrow" href="javascript:void(0);">
+                        <i class="bx bx-sm"></i>
+                      </a>
+                    </li>
+                    <!--/ Style Switcher -->
+
+
+  <!-- User -->
+  <!--  
+                    <li class="menu-item">
+                        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">                        
+                        <button type="button" class="btn rounded-pill btn-icon btn-outline-secondary" onclick='location.href="{% url 'signin' %}"'>
+                              <span class="tf-icons bx bx-user"></span>
+                            </button>
+                        <button type="button" class="btn btn-icon btn-outline-primary" onclick='location.href="{% url 'signup' %}"'>
+                              <span class="tf-icons bx bx-power-off"></span>
+                            </button>
+                         </div>
+                    </li>
+                    -->
+ 
+<script>
+
+	var noticetrial = 0;
+	var loadnotice = 0;
+	
+	function openmyprofile(id, imgYn, imgSrc, employee_id, employee_name, department_name, position_name, company_name)
+	{
+		if(imgYn == "Y") {
+			document.getElementById("profile_view_img").setAttribute("src", imgSrc);
+		} else {
+			document.getElementById("profile_view_img").setAttribute("src", "{% static 'assets/img/profile_bee_01.png' %}");
+		}
+		
+		document.getElementById("profile_employee_name").innerHTML = employee_name;
+		document.getElementById("profile_position_name").innerHTML = position_name;
+		document.getElementById("profile_company_name").innerHTML = company_name;
+		document.getElementById("profile_department_name").innerHTML = department_name;
+		document.getElementById("profile_change_btn").style.display = 'inline-flex';
+	}
+
+function popupselect2()
+{
+	// console.log('popupselect2 clicked');
+	var cssmodals = document.getElementById('searchmain');
+	if (cssmodals.style.display == 'block')
+	{
+		cssmodals.style.display = 'none';
+	}
+	else
+	{
+		cssmodals.style.display = 'block';
+	}
+} 
+
+$(document).ready(function(){		
+    
+  //검색변경 2024.01.24
+  $("#select2Trans").select2({
+	ajax: {
+		allowClear: false,
+		type: "POST",
+		url: "/apis/praise_member/",
+		delay: 250,
+		dataType: 'json',
+		data: function (params) {
+			var query = {
+				employee_name: params.term,
+	id: -7, //답장하고 같이 넘기기 검색변경 2024.01
+			}
+			return query;
+		},
+		processResults: function (data) {
+
+			var resultData = data.data_list.map(function(obj){
+				return {
+					id: obj.id,
+					text: obj.company_name + " " + obj.department_name + " " +obj.employee_name + " " + obj.positon_name
+				}
+			});
+			return {
+				results: resultData
+			};
+		},
+	},
+	//allowClear: true,
+	placeholder: {
+			id: "the_predefined_value",
+			text: ""
+	},
+	minimumInputLength: 2,
+	language: {
+		noResults: function() {
+			return "검색 결과가 없습니다.";
+		},
+		searching: function(){
+			return "검색중..";
+		},
+		errorLoading: function(){
+			return "";
+		},
+	inputTooShort: function(args) { // 여기를 추가하세요
+		return "최소 " + args.minimum + "글자 이상 입력하세요.";
+	}
+		}
+	});
+	
+	$("#select2Trans").css("display", "");
+	$(document).on('select2:open', () => {
+		document.querySelector('.select2-container--open .select2-search__field').focus();
+		// $(".select2-search__field").trigger('focus');
+		document.querySelector('.select2-container--open .select2-search__field').setAttribute("placeholder", "검색어를 입력해주세요.");
+	});
+
+  //상단 프로필 왕관 모양
+  $.ajax({
+            type: "POST",
+            url: "/apis/crown_profile/",
+            delay: 250,
+            dataType: 'json',
+            data: '',
+            success: function (data) {
+                // console.log("crown_profile my_position: ", data.my_position)
+                // id가 'myDiv'인 요소의 클래스를 변경합니다.
+                var chkProfileCrown = document.getElementById('profileCrown');
+                
+                if( data.my_position == '1'){
+                  chkProfileCrown.className = 'avatar avatar-lg ms-2 me-0 forBest best_01';
+                }else if(data.my_position == '2'){
+                  chkProfileCrown.className = 'avatar avatar-lg ms-2 me-0 forBest best_02';
+                }else if(data.my_position == '3'){
+                  chkProfileCrown.className = 'avatar avatar-lg ms-2 me-0 forBest best_03';
+                }                 
+            },
+            error: function (e) {
+
+            }
+        })
+        .done(function() {
+        // AJAX 요청 완료 후 처리할 작업
+        })
+        .fail(function() {
+        // AJAX 요청 실패 시 처리할 작업
+        });
+
+
+    $("#input_department_name").typeahead(
+        {
+            minLength: 1,	// 검색시작 최소 입력 글자
+        },
+        {
+            source: function (query, syncResults, asyncResults) {
+                return $.ajax({
+                    type: "POST",
+                    url: "/apis/search_dept/",
+                    delay: 250,
+                    data: {
+                        dept_name: query,
+                        company_id : $('#input_company_id').val()
+                    },
+                    success: function (response) {
+                        // console.log(response.data_list);
+                        return asyncResults(response.data_list);  //asyncResults 에 배열을 넘기면 된다.
+                    }
+                });
+            },
+            limit: 9999,
+            display: 'dept_name',	// 보여질 컬럼명
+            val: 'dept_id',	//value 컬럼명
+        }
+    );
+
+    // 자동완성 선택 시 이벤트 생성하여 value 셋팅
+    $("#input_department_name").on('typeahead:select', function(event, suggestion) {
+        $("#input_department_id").val(suggestion.dept_id);
+    });
+
+    // 엔터 키를 눌렀을 때 선택 이벤트 실행
+    $("#input_department_name").keypress(function(event) {
+        if (event.which === 13) { // 엔터 키 코드값은 13입니다.
+            var selected = $(".tt-selectable:first");
+            if (selected.length) {
+                selected.trigger('click');
+            }
+            event.preventDefault(); // 기본 엔터 키 동작 방지
+        }
+    });
+
+    ///////////////////////////////
+		// 직위정보 호출
+    ///////////////////////////////
+    $("#input_position_name").typeahead(
+        {
+            minLength: 1,	// 검색시작 최소 입력 글자
+        },
+        {
+            source: function (query, syncResults, asyncResults) {
+                return $.ajax({
+                    type: "POST",
+                    url: "/apis/search_posi/",
+                    delay: 250,
+                    data: {
+                        posi_name: query,
+                        company_id : $('#input_company_id').val()
+                    },
+                    success: function (response) {
+                        // console.log(response.data_list);
+                        return asyncResults(response.data_list);  //asyncResults 에 배열을 넘기면 된다.
+                    }
+                });
+            },
+            limit: 9999,
+            display: 'posi_name',	// 보여질 컬럼명
+            val: 'posi_id',	//value 컬럼명
+        }
+    );
+
+    // 자동완성 선택 시 이벤트 생성하여 value 셋팅
+    $("#input_position_name").on('typeahead:select', function(event, suggestion) {
+        $("#input_position_id").val(suggestion.posi_id);
+    });
+
+    // 엔터 키를 눌렀을 때 선택 이벤트 실행
+    $("#input_position_name").keypress(function(event) {
+        if (event.which === 13) { // 엔터 키 코드값은 13입니다.
+            var selected = $(".tt-selectable:first");
+            if (selected.length) {
+                selected.trigger('click');
+            }
+            event.preventDefault(); // 기본 엔터 키 동작 방지
+        }
+    });      
+});
+
+function getunreadnotice() // 초기 알림 읽은거 표기하려고 함
+{
+	var inputData = {
+		notice_type: '3'
+	};
+		
+	try 
+	{
+		$.ajax({
+			type: "POST",
+			url: "/apis/myprofile_notice/",
+			data: inputData,
+			success: function (data) {
+				// console.log(data);
+				var noticeunread = 0;
+				for (var i = 0; i < data.data_list.length; i++) 
+				{
+					var currentline = data.data_list[i];
+					var check_yn = currentline.check_yn;
+					if (check_yn == 'N')
+					{
+						noticeunread = 1;
+						document.getElementById('alarmred').style.display = 'block';
+					}					
+				}
+				if (noticeunread == 0)
+				{
+					document.getElementById('alarmred').style.display = 'none';
+				}
+
+			},
+			error: function (e) {
+				console.log("### myprofile_notice ERROR : ", e);
+			}
+		})
+		.done(function() {
+			// AJAX 요청 완료 후 처리할 작업
+		})
+		.fail(function() {
+			// AJAX 요청 실패 시 처리할 작업
+		});
+	} 
+	catch (e) 
+	{
+		alert(e);
+		alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+	}	
+		
+}
+
+getunreadnotice();
+
+function viewNotice(){
+		
+	if (loadnotice == 0)
+	{
+		// console.log('viewNotice =========');
+		loadnotice = loadnotice + 1;
+		
+		var inputData = {
+				notice_type: '3'
+				//value2: input2,
+				//value3: input3
+		};
+
+		try {
+				$.ajax({
+					type: "POST",
+					url: "/apis/myprofile_notice/",
+					data: inputData,
+					success: function (data) {
+						//console.log('### myprofile_notice success');
+						var divViewNotice = document.getElementById('divViewNotice');
+						var html = '';
+						// console.log(data);
+						for (var i = 0; i < data.data_list.length; i++) 
+						{
+							var currentline = data.data_list[i];
+							var image_yn = currentline.image_yn;
+							var image = currentline.image;
+							var department_name = currentline.department_name;
+							var employee_name = currentline.employee_name;
+							var position_name = currentline.position_name;
+							var reg_date = currentline.reg_date;
+							var check_yn = currentline.check_yn;	
+							var compliment_id = currentline.compliment_id;
+							var notice_id = currentline.notice_id;
+													
+							if (check_yn == 'N')
+							{
+								html += '<li class="list-group-item list-group-item-action dropdown-notifications-item"><div class="d-flex newMessage"><div class="flex-shrink-0 mt-2 me-3">';
+								html += '<div class="avatar" style="width:3rem; height:3rem;">';
+								if (image_yn == 'Y')
+								{
+									html += '<img src="'+image+'" class="rounded-circle" />';
+								}
+								else
+								{
+									html += '<img src="/static/assets/img/test_profile_icon_03.png" class="rounded-circle" />'
+								}
+
+								html += '</div></div><div class="flex-grow-1"><h6 class="colorCustom_03 mb-0 fw-med fs-5 d-flex justify-content-between align-items-center"><span onclick="removeli(this, '+notice_id+');">';
+								html += department_name + ' ' + employee_name + ' ' + position_name;
+								html += '</span><a class="btn btn-xs my-1 px-3 py-1 quickBtn colorCustom_03 fw-med" onclick="movetoPraiseDetail('+compliment_id+', '+notice_id+');">바로보기</a></h6><span class="mb-0 colorCustom_05 fw-med" onclick="removeliparent(this, '+notice_id+');">소중한 칭찬글을 보냈습니다.</span>';
+								html += '<br><small class="colorCustom_05">';
+								html += reg_date;
+								html += '</small></div><div class="flex-shrink-0 dropdown-notifications-actions"></div><span class="badge badge-dot" style="background:#006ed5;"></span></div></li>';
+							
+							}
+							else
+							{
+								html += '<li id="alreadynoticed" class="list-group-item list-group-item-action dropdown-notifications-item" style="display: none;"><div class="d-flex newMessage"><div class="flex-shrink-0 mt-2 me-3">';
+								html += '<div class="avatar" style="width:3rem; height:3rem;">';
+								if (image_yn == 'Y')
+								{
+									html += '<img src="'+image+'" class="rounded-circle" />';
+								}
+								else
+								{
+									html += '<img src="/static/assets/img/test_profile_icon_03.png" class="rounded-circle" />'
+								}
+
+								html += '</div></div><div class="flex-grow-1"><h6 class="colorCustom_03 mb-0 fw-med fs-5 d-flex justify-content-between align-items-center"><span onclick="removeli(this, '+notice_id+');">';
+								html += department_name + ' ' + employee_name + ' ' + position_name;
+								html += '</span><a class="btn btn-xs my-1 px-3 py-1 quickBtn colorCustom_03 fw-med" onclick="movetoPraiseDetail('+compliment_id+', '+notice_id+');">바로보기</a></h6><span class="mb-0 colorCustom_05 fw-med" onclick="removeliparent(this, '+notice_id+');">소중한 칭찬글을 보냈습니다.</span>';
+								html += '<br><small class="colorCustom_05">';
+								html += reg_date;
+								html += '</small></div><div class="flex-shrink-0 dropdown-notifications-actions"></div></div></li>';
+							
+							}
+							
+							
+							
+						}
+						divViewNotice.insertAdjacentHTML('beforeend',html);
+
+					},
+					error: function (e) {
+							console.log("### myprofile_notice ERROR : ", e);
+							//alert("fail");
+					}
+				})
+				.done(function() {
+					// AJAX 요청 완료 후 처리할 작업
+				})
+				.fail(function() {
+					// AJAX 요청 실패 시 처리할 작업
+				});
+		} catch (e) {
+				alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+		}	
+		
+	}
+		
+}
+
+function movetoPraiseDetail(compliment_id, _notice_id) // praise detail page 이동 및 알림 업데이트
+{
+	var inputData = 
+	{
+		notice_type: 1,
+		notice_check : 'Y',
+		notice_id: _notice_id
+	};
+
+	try {
+		$.ajax({
+			type: "POST",
+			url: "/apis/myprofile_notice/",
+			data: inputData,
+			success: function (data) {
+				getunreadnotice();
+			},
+			error: function (e) {
+				console.log("### myprofile_notice ERROR : ", e);
+				//alert("fail");
+			}
+		})
+		.done(function() {
+			// AJAX 요청 완료 후 처리할 작업
+		})
+		.fail(function() {
+			// AJAX 요청 실패 시 처리할 작업
+		});
+	} catch (e) {
+			alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+	}	
+	
+	location.href = '/praiseDetail/' + compliment_id;
+
+}
+
+function removeli(elementid, _notice_id) 
+{
+	elementid.parentNode.parentNode.parentNode.parentNode.style.display = 'none';
+	elementid.parentNode.parentNode.parentNode.querySelector('.badge').style.display = 'none';
+
+	var inputData = 
+	{
+		notice_type: 1,
+		notice_check : 'Y',
+		notice_id: _notice_id
+	};
+
+	try {
+			$.ajax({
+				type: "POST",
+				url: "/apis/myprofile_notice/",
+				data: inputData,
+				success: function (data) {
+					getunreadnotice();
+				},
+				error: function (e) {
+					console.log("### myprofile_notice ERROR : ", e);
+					//alert("fail");
+				}
+			})
+			.done(function() {
+				// AJAX 요청 완료 후 처리할 작업
+			})
+			.fail(function() {
+				// AJAX 요청 실패 시 처리할 작업
+			});
+	} catch (e) {
+			alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+	}	
+}
+
+function removeliparent(elementid, _notice_id) 
+{
+	elementid.parentNode.parentNode.parentNode.style.display = 'none';
+	elementid.parentNode.parentNode.querySelector('.badge').style.display = 'none';
+	
+	var inputData = 
+	{
+		notice_type: 1,
+		notice_check : 'Y',
+		notice_id: _notice_id
+	};
+
+	try {
+			$.ajax({
+				type: "POST",
+				url: "/apis/myprofile_notice/",
+				data: inputData,
+				success: function (data) {
+					getunreadnotice();
+				},
+				error: function (e) {
+					console.log("### myprofile_notice ERROR : ", e);
+					//alert("fail");
+				}
+			})
+			.done(function() {
+				// AJAX 요청 완료 후 처리할 작업
+			})
+			.fail(function() {
+				// AJAX 요청 실패 시 처리할 작업
+			});
+	} catch (e) {
+			alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+	}	
+}
+
+		
+function totalNotice()
+{
+	var allnotices = document.querySelectorAll('[id=alreadynoticed]');
+	for(i = 0; i < allnotices.length; i++)
+	{
+		if (noticetrial == 0)
+		{
+			allnotices[i].style.display = 'block';
+			noticetrial = 1;
+		}
+		/*
+		else
+		{
+			allnotices[i].style.display = 'none';
+			noticetrial = 0;
+		} */
+    }
+	let div = document.getElementById("divViewNotice");
+	let children = div.children;
+	for (let i = 0; i < children.length; i++) 
+    {
+	  children[i].style.display = "block";
+    }
+}
+
+function selectdefaultpoto(currentimg)
+{
+	document.getElementById('poto_img').src = currentimg;
+	//var fileInput = document.getElementById('input_formFile');
+	//fileInput.value = null;
+	//fileInput.setAttribute('data-default-value', currentimg); 
+	var defaultFile = new File(["file"], currentimg, {type: "image/png, image/jpeg" });
+	const dataTeansfer = new DataTransfer();
+	dataTeansfer.items.add(defaultFile);
+	document.getElementById('input_formFile').files = dataTeansfer.files;
+	
+	//document.querySelector("#poto_img_webee").setAttribute("src", currentimg);
+	//document.querySelector("#input_formFile").value = currentimg;
+	/*
+  	var reader = new FileReader();
+	reader.onload = function(currentimg) {
+			document.querySelector("#poto_img").setAttribute("src", currentimg);
+	}
+
+	reader.readAsDataURL(currentimg.target.files[0]); */
+
+}
+
+
+function setPotoImg(event) {
+	document.getElementById('poto_img').src = event.target.result;
+	var reader = new FileReader();
+	reader.onload = function(event) {
+			document.querySelector("#poto_img").setAttribute("src", event.target.result);
+	}
+		reader.readAsDataURL(event.target.files[0]);
+}
+
+function resetPotoImg(src) {
+	document.querySelector("#poto_img").setAttribute("src", src);
+	document.querySelector("#input_formFile").value = null;
+} 
+
+function searchData() {    
+    $("#input_employee_id").val($("#select2Trans").val());
+    var _employee_name = $("#select2Trans").val();
+
+    // console.log("chk _employee_name" + _employee_name);
+    
+		if (!_employee_name) {
+			Warning('필수입력 오류','칭찬직원 입력해 주세요.');
+			$.unblockUI();  
+			return false;
+		}
+		
+	// 폼 제출
+	document.getElementById("SearchformAuthentication").submit();
+	//submitForm();
+}
+
+$("#SearchformAuthentication").on("submit", function (event) {
+    // 기본 제출 동작을 중지
+    event.preventDefault();
+
+    // 검색어 유효성 검사 (이미 검증한 부분을 여기에도 추가)
+    var _employee_name = $("#select2Trans").val();
+    if (!_employee_name) {
+        Warning('필수입력 오류', '칭찬직원을 선택해 주세요.');
+        $.unblockUI();
+        return false;
+    }
+
+    // 유효한 경우 폼 제출
+    this.submit();
+}); 
+	
+$(function() {
+		$("#form_password").click(function() {
+			var password1 = document.getElementById("password1").value;
+			var password2 = document.getElementById("password2").value;
+			
+	var regex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{10,}$/;
+     
+			if (password1 !== password2) {
+				Warning_Notice("비밀번호 검증", "패스워드가 불일치 합니다.");
+				//alert("패스워드가 불일치 합니다.");
+				return false;
+			}
+		});
+}); 
+
+	/*
+	if (!regex.test(password1)) {
+		Warning_Notice("비밀번호 검증", "영어, 숫자, 특수문자가 포함된 10자리여야 합니다.");
+		//alert("비밀번호가 유효하지 않습니다.\n영어, 숫자, 특수문자가 포함된 10자리여야 합니다.");
+		return false;
+	} */
+        
+
+function BaseViewProfile(id, imgYn, imgSrc, employee_id, employee_name, department_name, position_name, company_name) {
+	if(imgYn == "Y") {
+	  document.querySelector("#base_profile_view_img").setAttribute("src", imgSrc);
+	} else {
+	  document.querySelector("#base_profile_view_img").setAttribute("src", "{% static 'assets/img/profile_bee_01.png' %}");
+	}
+	//document.querySelector("#base_span_employee_id").innerHTML = employee_id;
+	document.querySelector("#base_span_company_name").innerHTML = company_name;
+	document.querySelector("#base_span_employee_name").innerHTML = employee_name + ' ' + position_name;
+	document.querySelector("#base_span_department_name").innerHTML = department_name;     
+}
+        
+		
+</script>
+    
+
+
+</body>
+
+</html>

@@ -1,0 +1,530 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+
+<head>
+<script>
+    window.Promise ||
+    document.write(
+      '<script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js"><\/script>'
+    )
+    window.Promise ||
+    document.write(
+      '<script src="https://cdn.jsdelivr.net/npm/eligrey-classlist-js-polyfill@1.2.20171210/classList.min.js"><\/script>'
+    )
+    window.Promise ||
+    document.write(
+      '<script src="https://cdn.jsdelivr.net/npm/findindex_polyfill_mdn"><\/script>'
+    )
+</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/toastr/toastr.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/animate-css/animate.css' %}" />
+    
+<link href="https://webfontworld.github.io/pretendard/Pretendard.css" rel="stylesheet">
+<style>
+    .Pretendard {
+      font-family: 'Pretendard', sans-serif;
+    }
+</style>
+    
+    
+<script src="{% static 'assets/vendor/libs/clipboard/clipboard.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/moment/moment.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/idletimer/idletimer.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/numeral/numeral.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/toastr/toastr.js' %}"></script>
+
+<script src="{% static 'assets/js/extended-ui-misc-clipboardjs.js' %}"></script>
+<script src="{% static 'assets/js/extended-ui-misc-idle-timer.js' %}"></script>
+<script src="{% static 'assets/js/extended-ui-misc-numeraljs.js' %}"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+
+    
+
+    
+<script>
+    
+    function copyLink(_bbsId) {
+      const textToCopy = 'https://thankyou.run.goorm.app/praiseDetail/' + _bbsId;
+      const tempInput = document.createElement('input');
+      tempInput.setAttribute('value', textToCopy);
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempInput);
+      toastr['success']('', '링크가 복사 되었습니다.');
+    }
+    
+</script>
+    
+</head>
+
+
+<style>
+
+/* 관리자 공통 css 시작 */
+.mobile-navigation button .icon_home {
+  -webkit-mask: url(/static/assets/img/icon_menu_01_01.svg) no-repeat center/auto 100%;
+  mask: url(/static/assets/img/icon_menu_01_01.svg) no-repeat center/auto 100%;
+}
+
+.mobile-navigation button .icon_myThank {
+  -webkit-mask: url(/static/assets/img/icon_menu_02_01.svg) no-repeat center/auto 100%;
+  mask: url(/static/assets/img/icon_menu_02_01.svg) no-repeat center/auto 100%;
+}
+
+.mobile-navigation button .icon_sendThank {
+  -webkit-mask: url(/static/assets/img/icon_menu_03_01.svg) no-repeat center/auto 100%;
+  mask: url(/static/assets/img/icon_menu_03_01.svg) no-repeat center/auto 100%;
+}
+
+.mobile-navigation button .icon_best {
+  -webkit-mask: url(/static/assets/img/icon_menu_04_01.svg) no-repeat center/auto 100%;
+  mask: url(/static/assets/img/icon_menu_04_01.svg) no-repeat center/auto 100%;
+}
+
+.mobile-navigation button .icon_myToken {
+  -webkit-mask: url(/static/assets/img/icon_menu_05_01.svg) no-repeat center/auto 100%;
+  mask: url(/static/assets/img/icon_menu_05_01.svg) no-repeat center/auto 100%;
+}
+
+#adminInfo {
+  margin-top: 15px;
+}
+
+#adminInfo>div {
+  background: #edf6ff;
+  border-radius: 10px;
+}
+
+#adminInfo>div h5 {
+  color: #006ed5;
+  font-weight: bold;
+}
+
+#adminInfo>div p {
+  color: #222222;
+  font-weight: 500;
+}
+
+.adCardHeader {}
+
+.adCardHeader span {
+  background: #222;
+  font-weight: 500;
+  padding: 10px;
+}
+
+.adCardBody {}
+
+.adCardBody>div {}
+
+.adCardBody>div a {
+  background: #e8f7ff;
+  color: #006ed5;
+  font-weight: 500;
+}
+
+.adCardBody>div a {
+  width: calc(100% - 0.5rem);
+}
+
+.adCardBody>div a:hover {
+  background: #006ed5;
+  color: #fff;
+}
+
+.adminPage .customBtn {
+  background: #006ed5;
+  color: #fff;
+  font-weight: 500;
+}
+
+.adminPage .customBtn:hover {
+  background: #e8f7ff;
+  color: #006ed5;
+}
+
+.adminPage .customBtn2 {
+  background: #e8f7ff;
+  color: #006ed5;
+  font-weight: 500;
+}
+
+.adminPage .customBtn2:hover {
+  background: #006ed5;
+  color: #fff;
+}
+
+
+.adCardBody2 {}
+
+.adCardBody2 form label {
+  color: #222;
+  font-weight: 500;
+  font-size: 16px;
+  margin-top: 10px;
+  margin-left: 5px;
+}
+
+.adCardBody2 form input,
+.adCardBody2 form select {
+  border-color: #9fc4e7;
+}
+
+.adCardBody2 form input::placeholder,
+.adCardBody2 form input,
+.adCardBody2 form select,
+.adCardBody2 form select option {
+  color: #9fc4e7;
+  font-weight: 500;
+}
+
+table tbody th {
+  color: #006ed5 !important;
+  font-weight: bold !important;
+  font-size: 14px !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.adminPage div.card {
+  border: 1px solid #dde7f1;
+}
+
+table tbody tr {
+  border-color: #dde7f1;
+}
+
+table tbody td {
+  font-weight: 500;
+  font-size: 13px !important;
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+  color: #222;
+}
+
+.tablePgNation span {
+  color: #222;
+  font-weight: 500;
+}
+
+.tablePgNation a {
+  color: #006ed5;
+  font-weight: bold;
+  border-bottom: 2px solid #006ed5;
+}
+
+/* 관리자 공통 css 끝 */
+</style>
+
+<!-- Content wrapper -->
+<div class="content-wrapper adminPage">
+	<!-- Content -->
+	<div class="container-xxl flex-grow-1 py-1">
+    {% if user.is_superuser %}   
+        
+    <div id="adminInfo" class="col-12">
+      <div class="card mb-2">
+        <div class="card-body">
+          <h5 class="card-title">칭찬관리</h5>
+          <p class="card-text">
+            칭찬정보를 관리하는 페이지 입니다.
+          </p>
+        </div>
+      </div>
+    </div>
+        
+    <div class="card mb-2">
+
+      <div class="card-body">
+
+        <div class="mb-0 px-0 d-flex justify-content-between align-items-center">
+          <span class="">
+            {% if token_prev > 0 %}
+            <button class="btn px-0"
+              style="background:url(/static/assets/img/icon_leftArrow_02.png) no-repeat center/contain; border:0; padding:0; width: 15px; height:15px;"
+              onclick="window.location.href='/manageMember?manage_token_id={{ token_prev }}'">
+            </button>
+            {% else %}
+            <i class='bx bx-left-arrow'></i>
+            {% endif %}
+          </span>
+
+          <span class="fw-bold">
+            {{ manageToken.start_date|slice:"0:4" }}-{{ manageToken.start_date|slice:"4:6" }}-{{ manageToken.start_date|slice:"6:8" }}
+            ~
+            {{ manageToken.end_date|slice:"0:4" }}-{{ manageToken.end_date|slice:"4:6" }}-{{ manageToken.end_date|slice:"6:8" }}
+          </span>
+          <span class="">
+            {% if token_next > 0 %}
+            <button class="btn px-0"
+              style="background:url(/static/assets/img/icon_rightArrow_02.png) no-repeat center/contain; border:0; padding:0; width: 15px; height:15px;"
+              onclick="window.location.href='/manageMember?manage_token_id={{ token_next }}'">
+            </button>
+            {% else %}
+            <i class='bx bx-right-arrow'></i>
+            {% endif %}
+          </span>
+        </div>
+
+        <div class="adCardBody2">
+          <form id="formAuthentication" class="mb-0" action="{% url 'manageMember' %}" method="GET"
+            enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="card-body row py-0 px-0">
+
+              <div class="col-md-6">
+                <label for="company_id" class="form-label ">계열사</label>
+                <select name="company_id" id="company_id" class="form-select">
+                  <option value="20" {% if company_id == '20' %}selected{% endif %}>우리은행</option>
+                  <option value="95" {% if company_id == '95' %}selected{% endif %}>우리카드</option>
+                  <option value="B1" {% if company_id == 'B1' %}selected{% endif %}>우리에프아이에스</option>
+                  <option value="B3" {% if company_id == 'B3' %}selected{% endif %}>우리금융지주</option>
+                  <option value="C1" {% if company_id == 'C1' %}selected{% endif %}>우리프라이빗에퀴티자산운용</option>
+                  <option value="C7" {% if company_id == 'C7' %}selected{% endif %}>우리펀드서비스</option>
+                  <option value="C9" {% if company_id == 'C9' %}selected{% endif %}>우리신용정보</option>
+                  <option value="D1" {% if company_id == 'D1' %}selected{% endif %}>우리금융경영연구소</option>
+                  <option value="D2" {% if company_id == 'D2' %}selected{% endif %}>우리투자증권</option>
+                  <option value="E1" {% if company_id == 'E1' %}selected{% endif %}>우리자산운용</option>
+                  <option value="E3" {% if company_id == 'E3' %}selected{% endif %}>우리자산신탁</option>
+                  <option value="E4" {% if company_id == 'E4' %}selected{% endif %}>우리글로벌자산운용</option>
+                  <option value="E5" {% if company_id == 'E5' %}selected{% endif %}>우리금융캐피탈</option>
+                  <option value="E6" {% if company_id == 'E6' %}selected{% endif %}>우리금융저축은행</option>
+                  <option value="E7" {% if company_id == 'E7' %}selected{% endif %}>우리금융에프앤아이</option>
+                  <option value="E8" {% if company_id == 'E8' %}selected{% endif %}>우리벤처파트너스</option>
+                  <option value="W5" {% if company_id == 'W5' %}selected{% endif %}>베트남우리은행</option>
+                </select>
+
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label" for="searchCode">조회구분</label>
+                <select name="searchCode" id="searchCode" class="form-select">
+                  <option value="A" {% if searchCode == 'A' %}selected{% endif %}>전체대상</option>
+                  <option value="B" {% if searchCode == 'B' %}selected{% endif %}>발행대상</option>
+                </select>
+              </div>
+
+
+              <div class="col-md-6">
+                <label class="form-label text-left">부서</label>
+                <input type="text" name="searchDeptName" id="searchDeptName" class="form-control" placeholder="부서명 입력"
+                  aria-label="부서명 입력" aria-describedby="basic-addon-search31"
+                  onkeydown="if (event.keyCode === 13) { searchManageMember(); return false; }"
+                  value="{{searchDeptName}}" />
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label text-left">이름</label>
+                <input type="text" name="searchUserName" id="searchUserName" class="form-control" placeholder="이름 입력"
+                  aria-label="이름 입력" aria-describedby="basic-addon-search31"
+                  onkeydown="if (event.keyCode === 13) { searchManageMember(); return false; }"
+                  value="{{searchUserName}}" />
+              </div>
+              <div class="col-md-12 mt-4 d-flex align-items-center justify-content-center" style="padding:0;">
+                <!-- Align items vertically and horizontally center -->
+                <input type="hidden" name="manage_token_id" value="{{manageToken.id}}" />
+                <button type="submit" class="customBtn btn w-25">조회</button>
+              </div>
+
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+		<div class="card mb-2">
+      <div class="card-header adCardHeader d-flex justify-content-between">
+        <span class="badge">개인별 칭찬내역</span>
+        
+        <div class="text-end" style="width:95px; height:29px;">
+          <button type="button" style="background: url(/static/assets/img/icon_excelDown.png) no-repeat center/auto 100%; width: 100%;
+          height:100%; padding:0; margin:0; border:0;"
+          onclick='javascript:exportToExcel("table_rank")'></button>
+        </div>
+      </div>
+		  <div class="card-body py-3 px-0">
+
+		    <div class="table-responsive">
+
+
+		      <table class="table" style="table-layout:fixed" id="table_rank">
+		        <thead class="table-dark">
+		          <colgroup>
+		            <col style="width: 150px;">
+		            <col style="width: 100px;">
+		            <col style="width: 100px;">
+		            <col style="width: 150px;">
+		            <col style="width: 80px;">
+		            <col style="width: 80px;">
+		            <col style="width: 80px;">
+		          </colgroup>
+
+		          <tr class="text-center text-dark fs-5">
+		            <th>부서</th>
+		            <th>이름</th>
+		            <th>직위</th>
+		            <th>사번</th>
+		            <th>받은건</th>
+		            <th>보낸건</th>
+		            <th>남은건</th>
+
+
+		          </tr>
+		        </thead>
+		        <tbody>
+		          {% for part in posts %}
+		          <tr class="text-center fs-6">
+		            <td>{{ part.user.department_name }}</td>
+		            <td>{{ part.user.employee_name }}</td>
+		            <td>{{ part.user.position_name }}</td>
+		            <td>{{ part.user.employee_id }}</td>
+		            <td>{{ part.received_tokens }}</td>
+		            <td>{{ part.my_send_tokens }}</td>
+		            <td>{{ part.my_current_tokens }}</td>
+
+
+		          </tr>
+		          {% endfor %}
+		        </tbody>
+		      </table>
+
+		    </div>
+		  </div>
+
+		  <div class='container text-center tablePgNation'>
+		    {% if posts.has_previous %}
+		    <a
+		      href="?page=1&searchDeptName={{searchDeptName}}&searchCode={{searchCode}}&company_id={{company_id}}&manage_token_id={{manageToken.id}}">First</a>
+		    <a
+		      href="?page={{posts.previous_page_number}}&searchDeptName={{searchDeptName}}&searchCode={{searchCode}}&company_id={{company_id}}&manage_token_id={{manageToken.id}}">Previous</a>
+		    {% endif %}
+		    <span>{{posts.number}}</span>
+		    <span>of</span>
+		    <span>{{posts.paginator.num_pages}}</span>
+		    {% if posts.has_next %}
+		    <a
+		      href="?page={{posts.next_page_number}}&searchDeptName={{searchDeptName}}&searchCode={{searchCode}}&company_id={{company_id}}&manage_token_id={{manageToken.id}}">Next</a>
+		    <a
+		      href="?page={{posts.paginator.num_pages}}&searchDeptName={{searchDeptName}}&searchCode={{searchCode}}&company_id={{company_id}}&manage_token_id={{manageToken.id}}">Last</a>
+		    {% endif %}
+		    <br>
+		    <br>
+		  </div>
+
+		</div>
+    {% endif %}  
+                
+	</div>
+
+  <div id="footer">
+    <div class="footer w-100 text-center fw-med fs-6" style="color:#418dd4;">ⓒ 2024, made 땡큐토큰</div>
+  </div>
+  <script>
+    window.onload = function () {
+      // 하단 내비게이션 높잇값 만큼 모든 페이지 높이조절 시작
+      const moNav_h = document.querySelector('.mobile-navigation').clientHeight;
+      const layoutPage = document.querySelector('.layout-page');
+      layoutPage.style.paddingBottom = moNav_h + 40 + 'px';
+      // 하단 내비게이션 높잇값 만큼 모든 페이지 높이조절 끝 
+    }
+  </script>
+</div>
+
+<!-- profile view modal -->
+<div class="modal fade" id="viewStoryModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="card">
+
+        <img id="img_story_word" src="" alt="칭찬 워드크라우드" class="img-fluid m-3 rounded">
+
+        <div class="modal-header">
+          <span id="span_story_date"></span>
+        </div>
+
+
+        <div class="modal-body">
+          <span id="span_story_book"></span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<!--/ profile view modal -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
+<script>
+     
+function viewStory(story_date, story_book, story_image) 
+{
+    
+    console.log('viewStory =========');
+    
+    var viewStoryModal = document.getElementById('viewStoryModal');
+    var bootstrapModal = new bootstrap.Modal(viewStoryModal);
+    bootstrapModal.toggle();
+    
+    document.querySelector("#span_story_date").innerHTML = story_date;
+    document.querySelector("#span_story_book").innerHTML = story_book;
+    document.querySelector("#img_story_word").setAttribute("src", story_image);
+    
+}
+    
+
+    
+function formatDate(input) {
+    // 입력된 값에서 숫자만 추출
+    var numericValue = input.value.replace(/\D/g, '');
+
+    // 날짜 형식으로 변환 (YYYY-MM-DD)
+    var formattedDate = numericValue.replace(/^(\d{4})(\d{2})(\d{2})$/, '$1-$2-$3');
+
+    // 변환된 날짜 값을 입력 필드에 설정
+    input.value = formattedDate;
+}
+    
+function exportToExcel(tableId) {
+    // 대상 테이블의 ID를 사용하여 테이블 요소를 선택합니다.
+    var table = document.getElementById(tableId);
+    
+    if (table) {
+        // 테이블을 XLSX 형식으로 변환합니다.
+        var wb = XLSX.utils.table_to_book(table, { sheet: "Sheet1" });
+        
+        if (tableId =="table_rank"){
+            // XLSX 파일을 저장합니다.
+            XLSX.writeFile(wb, "개인별_우수직원.xlsx");
+        }
+
+        if (tableId =="table_dept"){
+            // XLSX 파일을 저장합니다.
+            XLSX.writeFile(wb, "부서별_우수직원.xlsx");
+        }
+        
+    } else {
+        alert("대상 테이블을 찾을 수 없습니다.");
+    }
+}
+     
+</script>        
+
+<!-- 
+<script src="{% static 'assets/vendor/libs/cleavejs/cleave.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/cleavejs/cleave-phone.js' %}"></script>
+
+<script src="{% static 'assets/vendor/libs/apex-charts/apexcharts.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/formvalidation/dist/js/FormValidation.min.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js' %}"></script>
+<script src="{% static 'assets/js/cards-advance.js' %}"></script>
+<script src="{% static 'assets/js/modal-add-new-cc.js' %}"></script> -->
+
+{% endblock %}
+                                                          

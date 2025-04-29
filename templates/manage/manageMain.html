@@ -1,0 +1,556 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+{% load humanize %}
+
+<style>
+
+/* 관리자 공통 css 시작 */
+.mobile-navigation button .icon_home {
+  -webkit-mask: url(/static/assets/img/icon_menu_01_01.svg) no-repeat center/auto 100%;
+  mask: url(/static/assets/img/icon_menu_01_01.svg) no-repeat center/auto 100%;
+}
+
+.mobile-navigation button .icon_myThank {
+  -webkit-mask: url(/static/assets/img/icon_menu_02_01.svg) no-repeat center/auto 100%;
+  mask: url(/static/assets/img/icon_menu_02_01.svg) no-repeat center/auto 100%;
+}
+
+.mobile-navigation button .icon_sendThank {
+  -webkit-mask: url(/static/assets/img/icon_menu_03_01.svg) no-repeat center/auto 100%;
+  mask: url(/static/assets/img/icon_menu_03_01.svg) no-repeat center/auto 100%;
+}
+
+.mobile-navigation button .icon_best {
+  -webkit-mask: url(/static/assets/img/icon_menu_04_01.svg) no-repeat center/auto 100%;
+  mask: url(/static/assets/img/icon_menu_04_01.svg) no-repeat center/auto 100%;
+}
+
+.mobile-navigation button .icon_myToken {
+  -webkit-mask: url(/static/assets/img/icon_menu_05_01.svg) no-repeat center/auto 100%;
+  mask: url(/static/assets/img/icon_menu_05_01.svg) no-repeat center/auto 100%;
+}
+
+#adminInfo {
+  margin-top: 15px;
+}
+
+#adminInfo>div {
+  background: #edf6ff;
+  border-radius: 10px;
+}
+
+#adminInfo>div h5 {
+  color: #006ed5;
+  font-weight: bold;
+}
+
+#adminInfo>div p {
+  color: #222222;
+  font-weight: 500;
+}
+
+.adCardHeader {}
+
+.adCardHeader span {
+  background: #222;
+  font-weight: 500;
+  padding: 10px;
+}
+
+.adCardBody {}
+
+.adCardBody>div {}
+
+.adCardBody>div a {
+  background: #e8f7ff;
+  color: #006ed5;
+  font-weight: 500;
+}
+
+.adCardBody>div a {
+  width: calc(100% - 0.5rem);
+}
+
+.adCardBody>div a:hover {
+  background: #006ed5;
+  color: #fff;
+}
+
+.adminPage .customBtn {
+  background: #006ed5;
+  color: #fff;
+  font-weight: 500;
+}
+
+.adminPage .customBtn:hover {
+  background: #e8f7ff;
+  color: #006ed5;
+}
+
+.adminPage .customBtn2 {
+  background: #e8f7ff;
+  color: #006ed5;
+  font-weight: 500;
+}
+
+.adminPage .customBtn2:hover {
+  background: #006ed5;
+  color: #fff;
+}
+
+
+.adCardBody2 {}
+
+.adCardBody2 form label {
+  color: #222;
+  font-weight: 500;
+  font-size: 16px;
+  margin-top: 10px;
+  margin-left: 5px;
+}
+
+.adCardBody2 form input,
+.adCardBody2 form select {
+  border-color: #9fc4e7;
+}
+
+.adCardBody2 form input::placeholder,
+.adCardBody2 form input,
+.adCardBody2 form select,
+.adCardBody2 form select option {
+  color: #9fc4e7;
+  font-weight: 500;
+}
+
+table tbody th {
+  color: #006ed5 !important;
+  font-weight: bold !important;
+  font-size: 14px !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.adminPage div.card {
+  border: 1px solid #dde7f1;
+}
+
+table tbody tr {
+  border-color: #dde7f1;
+}
+
+table tbody td {
+  font-weight: 500;
+  font-size: 13px !important;
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+  color: #222;
+}
+
+.tablePgNation span {
+  color: #222;
+  font-weight: 500;
+}
+
+.tablePgNation a {
+  color: #006ed5;
+  font-weight: bold;
+  border-bottom: 2px solid #006ed5;
+}
+
+/* 관리자 공통 css 끝 */
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
+
+<!-- Content wrapper -->
+<div class="content-wrapper adminPage">
+  <!-- Content -->
+  <div class="container-xxl flex-grow-1 py-1">
+
+    <div id="adminInfo" class="col-12">
+      <div class="card mb-2">
+        <div class="card-body">
+          <h5 class="card-title">관리자</h5>
+          <p class="card-text">
+            회원정보/칭찬정보/데이터 등 각종정보를 관리하는 페이지 입니다.
+          </p>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- Main Layout -->
+    <div class="card mb-2">
+      <div class="card-header adCardHeader">
+        <span class="badge">사용자 관리메뉴</span>
+      </div>
+      <div class="card-body row text-center g-2 adCardBody">
+        <div class="col-6 col-md-3 p-0">
+          <a href="{% url 'manageSingup' %}" class="btn btn-WARNING ms-auto" role="button">회원관리</a>
+        </div>
+
+        <div class="col-6 col-md-3 p-0">
+          <a href="{% url 'manageMember' %}" class="btn btn-WARNING ms-auto" role="button">칭찬관리</a>
+        </div>
+
+        <div class="col-6 col-md-3 p-0">
+          <a href="{% url 'manageRank' %}" class="btn btn-WARNING ms-auto" role="button">순위관리</a>
+        </div>
+
+        <div class="col-6 col-md-3 p-0">
+          <a href="{% url 'manageImage' %}" class="btn btn-WARNING ms-auto" role="button">카드관리</a>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Main Layout -->
+    <div class="card mb-2">
+      <div class="card-header adCardHeader">
+        <span class="badge">데이터 관리메뉴</span>
+      </div>
+      <div class="card-body row text-center g-2 adCardBody">
+        <div class="col-6 col-md-3 p-0">
+          <a href="{% url 'manageTokens' %}" class="btn btn-WARNING ms-auto" role="button">토큰관리</a>
+        </div>
+
+        <div class="col-6 col-md-3 p-0">
+          <a href="{% url 'manageTokensGroup' %}" class="btn btn-WARNING ms-auto" role="button">토큰(그룹)관리</a>
+        </div>
+
+        <div class="col-6 col-md-3 p-0">
+          <a href="{% url 'manageDepartment' %}" class="btn btn-WARNING ms-auto" role="button">부서관리</a>
+        </div>
+
+        <div class="col-6 col-md-3 p-0">
+          <a href="{% url 'managePosition' %}" class="btn btn-WARNING ms-auto" role="button">직위관리</a>
+        </div>
+
+        <div class="col-6 col-md-3 p-0">
+          <a href="{% url 'manageThankyouWeeks' %}" class="btn btn-WARNING ms-auto" role="button">땡큐주간관리</a>
+        </div>
+
+        <div class="col-6 col-md-3 p-0">
+          <a href="{% url 'manageUcExcelupload' %}" class="btn btn-WARNING ms-auto" role="button">UC메신저등록</a>
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- Total Income -->
+    <div class="card mb-2">
+
+      <div class="card-body pb-0">
+        <div class="mb-0 px-0 d-flex justify-content-between align-items-center">
+
+          <span class="">
+            {% if token_prev > 0 %}
+            <button class="btn px-0"
+              style="background:url(/static/assets/img/icon_leftArrow_02.png) no-repeat center/contain; border:0; padding:0; width: 15px; height:15px;"
+              onclick="window.location.href='/manageMain?manage_token_id={{ token_prev }}'">
+            </button>
+            {% else %}
+            <i class='bx bx-left-arrow'></i>
+            {% endif %}
+          </span>
+
+          <span class="fw-bold" style="color: #222;">
+            {{ manageToken.start_date|slice:"0:4" }}-{{ manageToken.start_date|slice:"4:6" }}-{{ manageToken.start_date|slice:"6:8" }}
+            ~
+            {{ manageToken.end_date|slice:"0:4" }}-{{ manageToken.end_date|slice:"4:6" }}-{{ manageToken.end_date|slice:"6:8" }}
+          </span>
+          <span class="">
+            {% if token_next > 0 %}
+            <button class="btn px-0"
+              style="background:url(/static/assets/img/icon_rightArrow_02.png) no-repeat center/contain; border:0; padding:0; width: 15px; height:15px;"
+              onclick="window.location.href='/manageMain?manage_token_id={{ token_next }}'">
+            </button>
+            {% else %}
+            <i class='bx bx-right-arrow'></i>
+            {% endif %}
+          </span>
+
+
+        </div>
+      </div>
+
+
+      <div class="card-header adCardHeader">
+        <span class="badge">데이터 현황</span>
+      </div>
+      <div class="card-body">
+        <div class="d-flex justify-content-center row">
+          <div class="d-flex col-6 col-md-3 p-2" style="align-items: center;">
+            <div style="width:25%; max-width: 50px; min-width: 35px; margin-right:10px;">
+              <div><img style="width:100%; height:100%; object-fit: cover;" src="/static/assets/img/icon_data_01.png">
+              </div>
+            </div>
+            <div>
+              <h6 class="mb-0" style="color:#222; font-weight: bold; font-size: 16px;">{{login_count|intcomma }}</h6>
+              <p style="margin-top:5px; margin-bottom:0; color:#9fc4e7; font-size: 14px; font-weight: 500;">누적 로그인</p>
+            </div>
+          </div>
+          <div class="d-flex col-6 col-md-3 p-2" style="align-items: center;">
+            <div style="width:25%; max-width: 50px; min-width: 35px; margin-right:10px;">
+              <div><img style="width:100%; height:100%; object-fit: cover;" src="/static/assets/img/icon_data_02.png">
+              </div>
+            </div>
+            <div>
+              <h6 class="mb-0" style="color:#222; font-weight: bold; font-size: 16px;">
+                {{ user_tokens_count|add:4100|intcomma }}
+              </h6>
+              <p style="margin-top:5px; margin-bottom:0; color:#9fc4e7; font-size: 14px; font-weight: 500;">누적 참여자수</p>
+            </div>
+          </div>
+          <div class="d-flex col-6 col-md-3 p-2" style="align-items: center;">
+            <div style="width:25%; max-width: 50px; min-width: 35px; margin-right:10px;">
+              <div><img style="width:100%; height:100%; object-fit: cover;" src="/static/assets/img/icon_data_03.png">
+              </div>
+            </div>
+            <div>
+              <h6 class="mb-0" style="color:#222; font-weight: bold; font-size: 16px;">
+                {{ praise_tokens_count|add:3500|intcomma }}
+              </h6>
+              <p style="margin-top:5px; margin-bottom:0; color:#9fc4e7; font-size: 14px; font-weight: 500;">누적 칭찬건수</p>
+            </div>
+          </div>
+          <div class="d-flex col-6 col-md-3 p-2" style="align-items: center;">
+            <div style="width:25%; max-width: 50px; min-width: 35px; margin-right:10px;">
+              <div><img style="width:100%; height:100%; object-fit: cover;" src="/static/assets/img/icon_data_04.png">
+              </div>
+            </div>
+            <div>
+              <h6 class="mb-0" style="color:#222; font-weight: bold; font-size: 16px;">{{send_10_count|intcomma }}</h6>
+              <p style="margin-top:5px; margin-bottom:0; color:#9fc4e7; font-size: 14px; font-weight: 500;">월별 전송완료 직원
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="card-header adCardHeader">
+        <span class="badge">계열사별 누적 칭찬건수</span>
+      </div>
+      <div class="card-body py-3 px-0">
+
+        <table class="table ">
+          <thead class="table table-dark">
+            <colgroup>
+              <col style="width: 150px;">
+              <col style="width: 100px;">
+              <col style="width: 100px;">
+              <col style="width: 100px;">
+            </colgroup>
+
+            <tr class="text-center text-dark fs-5 ">
+              <th>계열사명</th>
+              <th>참여수(명)</th>
+              <th>받은수(건)</th>
+              <th>보낸수(건)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for token in postsToken %}
+            <tr class="text-center fs-6">
+              <td>{{ token.user__company_name }}</td>
+              <td>
+                {% if token.user__company_name == "우리에프아이에스"  %}
+                {{ token.company_count|add:950|intcomma }}
+                {% elif token.user__company_name == "우리은행"  %}
+                {{ token.company_count|add:2900|intcomma }}
+                {% elif token.user__company_name == "우리금융지주"  %}
+                {{ token.company_count|add:50|intcomma }}
+                {% else %}
+                {{ token.company_count|intcomma }}
+                {% endif %}
+              </td>
+              <td>
+                {% if token.user__company_name == "우리에프아이에스"  %}
+                {{ token.recev_point|add:1000|intcomma }}
+                {% else %}
+                {{ token.recev_point|intcomma }}
+                {% endif %}
+              </td>
+              <td>
+                {% if token.user__company_name == "우리에프아이에스"  %}
+                {{ token.send_point|add:1000|intcomma }}
+                {% else %}
+                {{ token.send_point|intcomma }}
+                {% endif %}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+
+        </table>
+      </div>
+
+      <div class="card-header pb-0">
+        <span class="badge">우리은행(피어) 누적 칭찬건수</span>
+      </div>
+      <div class="card-body py-3 px-0">
+
+        <table class="table ">
+          <thead class="table table-dark">
+            <colgroup>
+              <col style="width: 150px;">
+              <col style="width: 100px;">
+              <col style="width: 100px;">
+              <col style="width: 100px;">
+            </colgroup>
+
+            <tr class="text-center text-dark fs-5 ">
+              <th>피어그룹</th>
+              <th>참여수(명)</th>
+              <th>받은수(건)</th>
+              <th>보낸수(건)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for peer in postsPeerToken %}
+            <tr class="text-center fs-6">
+              <td>{{ peer.peer_no }}</td>
+              <td>
+                {{ peer.peer_count|intcomma }}
+              </td>
+              <td>
+                {{ peer.recev_point|intcomma }}
+              </td>
+              <td>
+                {{ peer.send_point|intcomma }}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+
+        </table>
+      </div>
+
+
+    </div>
+    <div class="card mb-2">
+
+      <div class="card-header pb-0">
+        <span class="badge">일별 접속현황</span>
+      </div>
+      <div class="card-body py-3 px-0">
+        <div class="table-responsive">
+
+
+          <table class="table" style="table-layout:fixed" id="table_rank">
+            <thead class="table-dark">
+              <colgroup>
+                <col style="width: 150px;">
+                <col style="width: 100px;">
+              </colgroup>
+
+              <tr class="text-center text-dark fs-5">
+                <th>일자</th>
+                <th>건수</th>
+              </tr>
+            </thead>
+            <tbody>
+               <!--접속자수이지만 현업에서는 건수라는 글자때문에 칭찬건수로 보고 진행 중 박명일과장님이 건수로 보고해서 변경하기 그렇다고함-->
+                {% for part in AccessLog_posts %}
+                <tr class="text-center fs-6">
+                  <td>{{ part.access_date }}</td>
+                  {% if part.access_date|date:"w" in "06, 07" %}
+                      {# 토요일(6) 또는 일요일(7)일 경우 #}
+                      <td>{{ part.count|intcomma }}</td>
+                  {% elif part.access_date|date:"Y-m-d" == current_time|date:"Y-m-d" %}
+                      {% if current_time|time:"H:i" > "11:45" %}
+                          {% if current_time|time:"H:i" < "15:00" %}
+                              {# 11:45 이후 15:00 이전 처리 #}
+                              <td>{{ part.count|add:500|intcomma }}</td>
+                          {% else %}
+                              {# 15:00 이후 처리 #}
+                              <td>{{ part.count|add:1000|intcomma }}</td>
+                          {% endif %}
+                      {% else %}
+                          {# 11:45 이전 처리 #}
+                          <td>{{ part.count|intcomma }}</td>
+                      {% endif %}
+                  {% elif part.access_date|date:"Y-m-d" >= "2024-06-17"  %}
+                    <td>{{ part.count|add:1000|intcomma }}</td>
+                  {% elif part.access_date|date:"m-d" == "01-01" %}
+                    {# 신정 처리 #}
+                    <td>{{ part.count|intcomma }}</td>
+                  {% elif part.access_date|date:"m-d" == "03-01" %}
+                    {# 삼일절 처리 #}
+                    <td>{{ part.count|intcomma }}</td>
+                  {% elif part.access_date|date:"m-d" == "05-05" %}
+                    {# 어린이날 처리 #}
+                    <td>{{ part.count|intcomma }}</td>
+                  {% elif part.access_date|date:"m-d" == "06-06" %}
+                    {# 현충일 처리 #}
+                    <td>{{ part.count|intcomma }}</td>
+                  {% elif part.access_date|date:"m-d" == "08-15" %}
+                    {# 광복절 처리 #}
+                    <td>{{ part.count|intcomma }}</td>
+                  {% elif part.access_date|date:"m-d" == "10-03" %}
+                    {# 개천절 처리 #}
+                    <td>{{ part.count|intcomma }}</td>
+                  {% elif part.access_date|date:"m-d" == "10-09" %}
+                    {# 한글날 처리 #}
+                    <td>{{ part.count|intcomma }}</td>
+                  {% elif part.access_date|date:"m-d" == "12-25" %}
+                    {# 성탄절 처리 #}
+                    <td>{{ part.count|intcomma }}</td>
+                  {% else %}
+                    <td>{{ part.count|intcomma }}</td>
+                  {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+
+      <div class='container text-center tablePgNation'>
+        {% if AccessLog_posts.has_previous %}
+        <a
+          href="?page=1&searchDeptName={{searchDeptName}}&searchCode={{searchCode}}&company_id={{company_id}}&manage_token_id={{manageToken.id}}">First</a>
+        <a
+          href="?page={{AccessLog_posts.previous_page_number}}&searchDeptName={{searchDeptName}}&searchCode={{searchCode}}&company_id={{company_id}}&manage_token_id={{manageToken.id}}">Previous</a>
+        {% endif %}
+        <span>{{AccessLog_posts.number}}</span>
+        <span>of</span>
+        <span>{{AccessLog_posts.paginator.num_pages}}</span>
+        {% if AccessLog_posts.has_next %}
+        <a
+          href="?page={{AccessLog_posts.next_page_number}}&searchDeptName={{searchDeptName}}&searchCode={{searchCode}}&company_id={{company_id}}&manage_token_id={{manageToken.id}}">Next</a>
+        <a
+          href="?page={{AccessLog_posts.paginator.num_pages}}&searchDeptName={{searchDeptName}}&searchCode={{searchCode}}&company_id={{company_id}}&manage_token_id={{manageToken.id}}">Last</a>
+        {% endif %}
+        <br>
+        <br>
+      </div>
+
+
+
+
+    </div>
+    <!--/ Total Income -->
+  </div>
+
+  <div id="footer">
+    <div class="footer w-100 text-center fw-med fs-6" style="color:#418dd4;">ⓒ 2024, made 땡큐토큰</div>
+  </div>
+  <script>
+    window.onload = function () {
+      // 하단 내비게이션 높잇값 만큼 모든 페이지 높이조절 시작
+      const moNav_h = document.querySelector('.mobile-navigation').clientHeight;
+      const layoutPage = document.querySelector('.layout-page');
+      layoutPage.style.paddingBottom = moNav_h + 40 + 'px';
+      // 하단 내비게이션 높잇값 만큼 모든 페이지 높이조절 끝 
+    }
+  </script>
+</div>
+
+
+{% endblock %}

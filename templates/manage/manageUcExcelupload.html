@@ -1,0 +1,380 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excel Upload</title>
+</head>
+
+</html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
+
+<style>
+
+    /* 관리자 공통 css 시작 */
+    .mobile-navigation button .icon_home {
+      -webkit-mask: url(/static/assets/img/icon_menu_01_01.svg) no-repeat center/auto 100%;
+      mask: url(/static/assets/img/icon_menu_01_01.svg) no-repeat center/auto 100%;
+    }
+    
+    .mobile-navigation button .icon_myThank {
+      -webkit-mask: url(/static/assets/img/icon_menu_02_01.svg) no-repeat center/auto 100%;
+      mask: url(/static/assets/img/icon_menu_02_01.svg) no-repeat center/auto 100%;
+    }
+    
+    .mobile-navigation button .icon_sendThank {
+      -webkit-mask: url(/static/assets/img/icon_menu_03_01.svg) no-repeat center/auto 100%;
+      mask: url(/static/assets/img/icon_menu_03_01.svg) no-repeat center/auto 100%;
+    }
+    
+    .mobile-navigation button .icon_best {
+      -webkit-mask: url(/static/assets/img/icon_menu_04_01.svg) no-repeat center/auto 100%;
+      mask: url(/static/assets/img/icon_menu_04_01.svg) no-repeat center/auto 100%;
+    }
+    
+    .mobile-navigation button .icon_myToken {
+      -webkit-mask: url(/static/assets/img/icon_menu_05_01.svg) no-repeat center/auto 100%;
+      mask: url(/static/assets/img/icon_menu_05_01.svg) no-repeat center/auto 100%;
+    }
+    
+    #adminInfo {
+      margin-top: 15px;
+    }
+    
+    #adminInfo>div {
+      background: #edf6ff;
+      border-radius: 10px;
+    }
+    
+    #adminInfo>div h5 {
+      color: #006ed5;
+      font-weight: bold;
+    }
+    
+    #adminInfo>div p {
+      color: #222222;
+      font-weight: 500;
+    }
+    
+    .adCardHeader {}
+    
+    .adCardHeader span {
+      background: #222;
+      font-weight: 500;
+      padding: 10px;
+    }
+    
+    .adCardBody {}
+    
+    .adCardBody>div {}
+    
+    .adCardBody>div a {
+      background: #e8f7ff;
+      color: #006ed5;
+      font-weight: 500;
+    }
+    
+    .adCardBody>div a {
+      width: calc(100% - 0.5rem);
+    }
+    
+    .adCardBody>div a:hover {
+      background: #006ed5;
+      color: #fff;
+    }
+    
+    .adminPage .customBtn {
+      background: #006ed5;
+      color: #fff;
+      font-weight: 500;
+    }
+    
+    .adminPage .customBtn:hover {
+      background: #e8f7ff;
+      color: #006ed5;
+    }
+    
+    .adminPage .customBtn2 {
+      background: #e8f7ff;
+      color: #006ed5;
+      font-weight: 500;
+    }
+    
+    .adminPage .customBtn2:hover {
+      background: #006ed5;
+      color: #fff;
+    }
+    
+    
+    .adCardBody2 {}
+    
+    .adCardBody2 form label {
+      color: #222;
+      font-weight: 500;
+      font-size: 16px;
+      margin-top: 10px;
+      margin-left: 5px;
+    }
+    
+    .adCardBody2 form input,
+    .adCardBody2 form select {
+      border-color: #9fc4e7;
+    }
+    
+    .adCardBody2 form input::placeholder,
+    .adCardBody2 form input,
+    .adCardBody2 form select,
+    .adCardBody2 form select option {
+      color: #9fc4e7;
+      font-weight: 500;
+    }
+    
+    table tbody th {
+      color: #006ed5 !important;
+      font-weight: bold !important;
+      font-size: 14px !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+    
+    .adminPage div.card {
+      border: 1px solid #dde7f1;
+    }
+    
+    table tbody tr {
+      border-color: #dde7f1;
+    }
+    
+    table tbody td {
+      font-weight: 500;
+      font-size: 13px !important;
+      padding-left: 5px !important;
+      padding-right: 5px !important;
+      color: #222;
+    }
+    
+    .tablePgNation span {
+      color: #222;
+      font-weight: 500;
+    }
+    
+    .tablePgNation a {
+      color: #006ed5;
+      font-weight: bold;
+      border-bottom: 2px solid #006ed5;
+    }
+    
+    /* 관리자 공통 css 끝 */
+    </style>
+
+
+
+<div class="content-wrapper adminPage">
+    <!-- Content -->
+    <div class="container-xxl flex-grow-1 container-p-y">
+      {% if user.is_superuser %}
+  
+      <div id="adminInfo" class="col-12">
+        <div class="card mb-2">
+          <div class="card-body">
+            <h5 class="card-title">UC메신저 땡큐토큰 정보 등록</h5>
+            <p class="card-text">
+              > 포탈에서 (.xlsx)로 저장한 파일 문서복호화해서 업로드해주세요! 
+              <br>> 업로드 할 때, 채널W에 가입 안된 직원의 칭찬정보는 파일 업로드시 저장이 안됩니다.
+              <br>> 채널W 미가입 직원이 채널W 가입하면 [MY땡큐] 메뉴 접속하면 자동으로 한달 이전까지 UC칭찬 내역 확인 가능합니다.
+            </p>
+          </div>
+        </div>
+      </div>
+  
+      <div class="row">
+  
+        <div class="col-12">
+  
+          <!-- HTML5 Inputs -->
+          <div class="card mb-2">
+            <h5 class="card-header pb-2" style="font-weight: 500; color:#222; margin-left:5px;">UC메신저 땡큐토큰 엑셀 업로드</h5>
+  
+            {% if error %}
+            <div class="alert alert-danger" role="alert">
+              {{ error }}
+            </div>
+            {% endif %}
+  
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="file" name="file" accept=".xlsx, .csv">
+                    <button id="uploadButton" type="submit" class="customBtn btn" >업로드</button>
+                </form>
+  
+          <!-- 등록이 정상적으로 완료되면 아래 메시지를 표시합니다. -->
+          <br>
+          <p style="color:#222">엑셀파일 업로드 <br>처리결과: <span id="resultMessage">{% if registered_successfully %} [ {{ registered_filename }} ] 등록 완료{% endif %}</span></p>
+          
+          
+          <div>
+            <br>
+          </div>
+
+          <div class="card-header adCardHeader d-flex justify-content-between">
+            <span class="badge">{{today}} 업로드 현황 </span>
+            <span class="badge">등록성공건수: {{ insertYesCnt }}</span>
+            <span class="badge">등록실패건수: {{ insertNoCnt }}</span>
+            
+            <div class="text-end" style="width:95px; height:29px;">
+              <button type="button" style="background: url(/static/assets/img/icon_excelDown.png) no-repeat center/auto 100%; width: 100%;
+              height:100%; padding:0; margin:0; border:0;" onclick='javascript:exportToExcel("uc_messages")'></button>
+            </div>
+          </div>
+
+          <div class="card-body pb-3 px-0">
+
+            <div class="table-responsive">
+
+                <table class="table" style="table-layout:fixed" id="uc_messages">
+                  <thead class="table-dark">
+
+                    <colgroup>
+                      <col style="width: 20px;">
+                      <col style="width: 110px;">
+                      <col style="width: 110px;">
+                      <col style="width: 160px;">
+                      <col style="width: 110px;">
+                      <col style="width: 110px;">
+                      <col style="width: 110px;">
+                      <col style="width: 110px;">
+                      <col style="width: 110px;">
+                      <col style="width: 110px;">
+                      <col style="width: 110px;">
+                      <col style="width: 110px;">
+                      <col style="width: 110px;">
+                      <col style="width: 110px;">
+                      <col style="width: 110px;">
+                      <col style="width: 110px;">
+                    </colgroup>
+
+                      <tr class="text-center text-dark fs-5">
+                          <th>순번</th>
+                          <th>땡큐토큰<br>칭찬등록여부</th>
+                          <th>땡큐토큰<br>칭찬등록시간</th>
+                          <th>땡큐토큰<br>등록실패사유</th>
+                          <th>발송자<br>소속회사</th>
+                          <th>발송자<br>소속부서</th>
+                          <th>발송자<br>사번</th>
+                          <th>발송자명</th>
+                          <th>수신자<br>소속회사</th>
+                          <th>수신자<br>소속부서</th>
+                          <th>수신자<br>사번</th>
+                          <th>수신자명</th>
+                          <th>UC메신저<br>발송시간</th>
+                          <th>칭찬내용</th>
+                          <th>칭찬카드코드</th>
+                          <th>엑셀업로드시간</th>
+                          <!-- 필요한 만큼의 열 추가 -->
+                      </tr>
+                  </thead>
+                  <tbody>
+                      {% for uc_message in uc_messages %}
+                      <tr class="text-center fs-6">
+                          <td>{{ forloop.counter }}</td>
+                          <td>{{ uc_message.insert_yn }}</td>
+                          <td>{{ uc_message.insert_time }}</td>
+                          <td>{{ uc_message.insertfail_reason }}</td>
+                          <td>{{ uc_message.send_company }}</td>
+                          <td>{{ uc_message.send_department }}</td>
+                          <td>{{ uc_message.send_username }}</td>
+                          <td>{{ uc_message.send_empname }}</td>
+                          <td>{{ uc_message.recv_company }}</td>
+                          <td>{{ uc_message.recv_department }}</td>
+                          <td>{{ uc_message.recv_username }}</td>
+                          <td>{{ uc_message.recv_empname }}</td>
+                          <td>{{ uc_message.send_time }}</td>
+                          <td>{{ uc_message.send_content }}</td>
+                          <td>{{ uc_message.images_id }}</td>
+                          <td>{{ uc_message.reg_date }}</td>
+                          <!-- 필요한 만큼의 열 추가 -->
+                      </tr>
+                      {% endfor %}
+                  </tbody>
+              </table>
+        
+  
+      {% endif %}
+    </div>
+    <div id="footer">
+      <div class="footer w-100 text-center fw-med fs-6" style="color:#418dd4;">ⓒ 2024, made 땡큐토큰</div>
+    </div>
+    <script>
+      window.onload = function () {
+        // 하단 내비게이션 높잇값 만큼 모든 페이지 높이조절 시작
+        const moNav_h = document.querySelector('.mobile-navigation').clientHeight;
+        const layoutPage = document.querySelector('.layout-page');
+        layoutPage.style.paddingBottom = moNav_h + 40 + 'px';
+        // 하단 내비게이션 높잇값 만큼 모든 페이지 높이조절 끝 
+      }
+
+      document.getElementById("uploadButton").addEventListener("click", function() {
+        document.getElementById("resultMessage").innerText = "처리중...";
+      });
+      
+      function exportToExcel(tableId) {
+        // 대상 테이블의 ID를 사용하여 테이블 요소를 선택합니다.
+        var table = document.getElementById(tableId);
+        console.log("test : " + table);
+
+        if (table) {
+            // 테이블을 XLSX 형식으로 변환합니다.
+            var wb = XLSX.utils.table_to_book(table, { sheet: "Sheet1" });
+            
+            var now = new Date();
+            var currentDate = formatDate(now);
+
+            if (tableId =="uc_messages"){
+                // XLSX 파일을 저장합니다.
+                XLSX.writeFile(wb, "UC메신저_땡큐토큰등록현황_" + currentDate + ".xlsx");
+            }
+            
+        } else {
+            alert("대상 테이블을 찾을 수 없습니다.");
+        }
+      }
+      
+      function formatDate(date) {
+            var year = date.getFullYear();
+            var month = ("0" + (date.getMonth() + 1)).slice(-2);
+            var day = ("0" + date.getDate()).slice(-2);
+            return year + month + day;
+      }
+    </script>
+  </div>
+
+
+<!-- Vendors JS -->
+
+<script src="{% static 'assets/vendor/libs/typeahead-js/typeahead.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/bloodhound/bloodhound.js' %}"></script>
+
+<script src="{% static 'assets/vendor/libs/flatpickr/flatpickr.js' %}"></script>
+
+<script src="{% static 'assets/js/forms-pickers.js' %}"></script>
+
+
+<!-- Page JS -->
+<script src="{% static 'assets/js/forms-typeahead.js' %}"></script>
+<script src="{% static 'assets/js/forms-extras.js' %}"></script>
+<script src="{% static 'assets/js/extended-ui-sweetalert2.js' %}"></script>
+
+
+<!-- Vendors JS -->
+<script src="{% static 'assets/vendor/libs/autosize/autosize.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/cleavejs/cleave.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/cleavejs/cleave-phone.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/bootstrap-maxlength/bootstrap-maxlength.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/jquery-repeater/jquery-repeater.js' %}"></script>
+
+<script src="{% static 'assets/vendor/libs/sweetalert2/sweetalert2.js' %}" ></script>
+{% endblock %}

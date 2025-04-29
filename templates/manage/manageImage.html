@@ -1,0 +1,557 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+<!-- <head>
+ 
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/typeahead-js/typeahead.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/bootstrap-maxlength/bootstrap-maxlength.css' %}" />
+    
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/animate-css/animate.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/sweetalert2/sweetalert2.css' %}" />
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>	
+	
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
+
+
+<style>
+
+/* 관리자 공통 css 시작 */
+.mobile-navigation button .icon_home {
+  -webkit-mask: url(/static/assets/img/icon_menu_01_01.svg) no-repeat center/auto 100%;
+  mask: url(/static/assets/img/icon_menu_01_01.svg) no-repeat center/auto 100%;
+}
+
+.mobile-navigation button .icon_myThank {
+  -webkit-mask: url(/static/assets/img/icon_menu_02_01.svg) no-repeat center/auto 100%;
+  mask: url(/static/assets/img/icon_menu_02_01.svg) no-repeat center/auto 100%;
+}
+
+.mobile-navigation button .icon_sendThank {
+  -webkit-mask: url(/static/assets/img/icon_menu_03_01.svg) no-repeat center/auto 100%;
+  mask: url(/static/assets/img/icon_menu_03_01.svg) no-repeat center/auto 100%;
+}
+
+.mobile-navigation button .icon_best {
+  -webkit-mask: url(/static/assets/img/icon_menu_04_01.svg) no-repeat center/auto 100%;
+  mask: url(/static/assets/img/icon_menu_04_01.svg) no-repeat center/auto 100%;
+}
+
+.mobile-navigation button .icon_myToken {
+  -webkit-mask: url(/static/assets/img/icon_menu_05_01.svg) no-repeat center/auto 100%;
+  mask: url(/static/assets/img/icon_menu_05_01.svg) no-repeat center/auto 100%;
+}
+
+#adminInfo {
+  margin-top: 15px;
+}
+
+#adminInfo>div {
+  background: #edf6ff;
+  border-radius: 10px;
+}
+
+#adminInfo>div h5 {
+  color: #006ed5;
+  font-weight: bold;
+}
+
+#adminInfo>div p {
+  color: #222222;
+  font-weight: 500;
+}
+
+.adCardHeader {}
+
+.adCardHeader span {
+  background: #222;
+  font-weight: 500;
+  padding: 10px;
+}
+
+.adCardBody {}
+
+.adCardBody>div {}
+
+.adCardBody>div a {
+  background: #e8f7ff;
+  color: #006ed5;
+  font-weight: 500;
+}
+
+.adCardBody>div a {
+  width: calc(100% - 0.5rem);
+}
+
+.adCardBody>div a:hover {
+  background: #006ed5;
+  color: #fff;
+}
+
+.adminPage .customBtn {
+  background: #006ed5;
+  color: #fff;
+  font-weight: 500;
+}
+
+.adminPage .customBtn:hover {
+  background: #e8f7ff;
+  color: #006ed5;
+}
+
+.adminPage .customBtn2 {
+  background: #e8f7ff;
+  color: #006ed5;
+  font-weight: 500;
+}
+
+.adminPage .customBtn2:hover {
+  background: #006ed5;
+  color: #fff;
+}
+
+
+.adCardBody2 {}
+
+.adCardBody2 form label {
+  color: #222;
+  font-weight: 500;
+  font-size: 16px;
+  margin-top: 10px;
+  margin-left: 5px;
+}
+
+.adCardBody2 form input,
+.adCardBody2 form select {
+  border-color: #9fc4e7;
+}
+
+.adCardBody2 form input::placeholder,
+.adCardBody2 form input,
+.adCardBody2 form select,
+.adCardBody2 form select option {
+  color: #9fc4e7;
+  font-weight: 500;
+}
+
+table tbody th {
+  color: #006ed5 !important;
+  font-weight: bold !important;
+  font-size: 14px !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.adminPage div.card {
+  border: 1px solid #dde7f1;
+}
+
+table tbody tr {
+  border-color: #dde7f1;
+}
+
+table tbody td {
+  font-weight: 500;
+  font-size: 13px !important;
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+  color: #222;
+}
+
+.tablePgNation span {
+  color: #222;
+  font-weight: 500;
+}
+
+.tablePgNation a {
+  color: #006ed5;
+  font-weight: bold;
+  border-bottom: 2px solid #006ed5;
+}
+
+/* 관리자 공통 css 끝 */
+</style>
+    
+	
+<script>
+    
+
+  function form_submit() {
+      console.log('form_submit called');
+   
+
+      
+  }
+    
+ function handleUpdateClick(button) {
+    // Get the parent form element
+    var form = button.closest('form');
+    
+    // Submit the form
+    form.submit();
+  }
+
+  function handleFormSubmit(event) {
+    // Prevent the default form submission
+    event.preventDefault();
+  }
+    
+</script>
+    
+<!-- </head> -->
+<!-- Content wrapper -->
+<div class="content-wrapper adminPage">
+  <!-- Content -->
+  <div class="container-xxl flex-grow-1 container-p-y">
+    {% if user.is_superuser %}
+
+    <div id="adminInfo" class="col-12">
+      <div class="card mb-2">
+        <div class="card-body">
+          <h5 class="card-title">카드관리</h5>
+          <p class="card-text">
+            칭찬카드를 관리하는 페이지 입니다.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+
+      <div class="col-12">
+
+        <!-- HTML5 Inputs -->
+        <div class="card mb-2">
+          <h5 class="card-header pb-2" style="font-weight: 500; color:#222; margin-left:5px;">칭찬카드</h5>
+
+          {% if error %}
+          <div class="alert alert-danger" role="alert">
+            {{ error }}
+          </div>
+          {% endif %}
+
+          <div class="card-body">
+
+
+            <!-- Button trigger modal -->
+            <button type="button" style="margin-bottom:20px; margin-left:5px;" class="customBtn btn" data-bs-toggle="modal" data-bs-target="#basicModal">
+              신규등록
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="basicModal" tabindex="-1" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+
+                  <div class="adCardBody2">
+                  <form id="form-repeater" action="{% url 'manageImage' %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel1" style="font-weight: 500; color:#222; margin-left:5px;">신규 칭찬카드</h5>
+                      <button type="button" class="position-absolute btn-close closeCustom"
+                        style="background:transparent; border:0; right:15px; top:25px; box-shadow: none; transform: none !important; z-index: 2;"
+                        data-bs-dismiss="modal" aria-label="Close"><span></span></button>
+                    </div>
+
+                    <div class="modal-body">
+
+                      <div data-repeater-list="group-a">
+                        <div data-repeater-item>
+                          <div class="row">
+
+                            <input type="hidden" name="card_id" id="form-0-1" class="form-control" value="0">
+
+                            <div class="mb-3 col-6">
+                              <label class="form-label" for="form-0-0">카드그룹</label>
+                              <select name="card_code" id="form-0-0" class="form-select">
+                                <option value="1">감사</option>
+                                <option value="2">응원</option>
+                                <option value="3">축하</option>
+                                <option value="4">재미</option>
+                                <option value="5">새해</option>
+                                <option value="6">위비</option>
+                                <!--2024.01.29 카드그룹관리 위비항목 추가-->
+                                <option value="7">설날</option>
+                                <!--2024.02.05 카드그룹관리 설날항목 추가-->
+                              </select>
+                            </div>
+
+                            <div class="mb-3 col-6">
+                              <label class="form-label" for="form-0-3">공개여부</label>
+                              <select name="card_yn" id="form-0-3" class="form-select">
+                                <option value="Y">공개</option>
+                                <option value="N">비공개</option>
+                              </select>
+                            </div>
+
+                          </div> <!-- row -->
+                          <div class="row">
+
+                            <div class="mb-3 col-6">
+                              <label class="form-label" for="form-0-4">이미지</label>
+                              <div class="d-flex align-items-end gap-4">
+                                <img src="{% static 'assets/img/woori.png' %}" id="potoImg-0"
+                                  alt="user-avatar" class="d-block rounded" height="100" width="100"
+                                  id="uploadedAvatar" /> 
+                                <div class="button-wrapper">
+                                  <label for="form-0-4" class="btn me-2 p-0" tabindex="0"
+                                   style="width:50%; min-width: 100px;" >
+                                    <span class="d-sm-block">
+                                      <img src="/static/assets/img/icon_upload2.png"
+                                        style="width:100%; height:100%;">
+                                    </span>
+                                    <input type="file" id="form-0-4" name="card_image"
+                                      onChange="setPotoManagerImg(event, '0');" class="account-file-input" hidden
+                                      accept="image/png, image/jpeg, image/gif" />
+                                  </label>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="mb-3 col-lg-6 col-sm-12">
+                              <label class="form-label" for="form-0-2">상용문구</label>
+                              <input type="text" id="form-0-2" name="card_message" class="form-control"/>
+                            </div>
+
+
+                          </div>
+
+                        </div>
+                      </div>
+
+                    </div>
+                    <!--body -->
+
+                    <div class="modal-footer">
+                      <!--
+                                <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
+                                  닫기
+                                </button>
+                               -->
+                      <button name="card_regedit" class="btn customBtn">등록</button>
+                    </div>
+
+                  </form>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+
+            <!-- Form Repeater -->
+            {% for part in images %}
+
+            <div class="adCardBody2">
+            <form id="formAuthentication-{{part.id}}" class="mb-2 p-3 card border-1"
+              action="{% url 'manageImage' %}" method="POST" enctype="multipart/form-data" style="border-color:#dde7f1;">
+              {% csrf_token %}
+              <div class="row">
+                <input type="hidden" name="card_id" id="form-{{part.id}}-1" class="form-control" value="{{part.id}}">
+
+                <div class="mb-3 col-lg-6 col-xl-3 col-6 mb-0">
+                  <label class="form-label" for="form-{{part.id}}-1">카드그룹</label>
+                  <select name="card_code" id="form-{{part.id}}-0" class="form-select">
+                    <option value="1" {% if part.card_code == '1' %}selected{% endif %}>감사</option>
+                    <option value="2" {% if part.card_code == '2' %}selected{% endif %}>응원</option>
+                    <option value="3" {% if part.card_code == '3' %}selected{% endif %}>축하</option>
+                    <option value="4" {% if part.card_code == '4' %}selected{% endif %}>재미</option>
+                    <option value="5" {% if part.card_code == '5' %}selected{% endif %}>새해</option>
+                    <option value="6" {% if part.card_code == '6' %}selected{% endif %}>위비</option>
+                    <!--2024.01.29 카드그룹관리 위비항목 추가-->
+                    <option value="7" {% if part.card_code == '7' %}selected{% endif %}>설날</option>
+                    <!--2024.02.05 카드그룹관리 설날항목 추가-->
+                  </select>
+                </div>
+
+                <div class="mb-3 col-lg-6 col-xl-3 col-6 mb-0">
+                  <label class="form-label" for="form-{{part.id}}-3">공개여부</label>
+                  <select name="card_yn" id="form-{{part.id}}-3" class="form-select">
+				  {% if part.is_open == 'Y' %}
+                    <option value="Y" selected>공개</option>
+					<option value="N">비공개</option>
+                  {% else %}
+					<option value="Y">공개</option>
+					<option value="N" selected>비공개</option>
+				  {% endif %}
+                  </select>
+                </div>
+
+                <!-- <div class="mb-3 col-lg-6 col-xl-3 col-6 mb-0">
+                  <label class="form-label" for="form-{{part.id}}-2">상용문구</label>
+                  <input type="text" name="card_message" id="form-{{part.id}}-2" class="form-control"
+                    value="{{part.card_message}}">
+                </div> -->
+
+
+                <div class="mb-3 col-lg-6 col-xl-3 col-6">
+                  <label class="form-label" for="form-{{part.id}}-4">이미지</label>
+                  <div class="d-flex align-items-end gap-4">
+                    <img src="{{part.image_path}}" id="potoImg-{{part.id}}" alt="user-avatar" class="d-block rounded"
+                      height="100" width="100" id="uploadedAvatar" />
+                    <div class="button-wrapper">
+                      <label for="form-{{part.id}}-4" class="btn me-2 p-0" style="width:50%; min-width: 100px;" tabindex="0">
+                        <span class="d-sm-block">
+                          <img src="/static/assets/img/icon_upload2.png" style="width:100%; height:100%;">
+                        </span>
+                        <input type="file" id="form-{{part.id}}-4" name="card_image"
+                          onChange="setPotoManagerImg(event, '{{part.id}}');" class="account-file-input" hidden
+                          accept="image/png, image/jpeg, image/gif" />
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mb-3 col-lg-6 col-xl-3 col-sm-12">
+                  <label class="form-label" for="form-{{part.id}}-2">상용문구</label>
+                  <input type="text" name="card_message" id="form-{{part.id}}-2" class="form-control"
+                    value="{{part.card_message}}">
+                </div>
+
+                <div class="col-12 d-flex align-items-end justify-content-center justify-content-sm-end mb-0">
+                  <button type="submit" id="card_update{{part.id}}" name="card_update"
+                    class="btn customBtn me-sm-3 me-1">변경</button>
+                  <button type="submit" name="card_delete" class="btn customBtn2">삭제</button>
+
+                  <script>
+                    document.getElementById("card_update{{part.id}}").addEventListener("click", function () {
+
+                      Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: '<h4>성공적으로 등록 되었습니다.</h4>',
+                        showConfirmButton: false,
+                        timer: 10000
+                      });
+                      //form_submit();
+
+                    });
+                  </script>
+
+                </div>
+              </div>
+
+
+
+            </form>
+            </div>
+            {% endfor %}
+
+
+            <div class='container text-center tablePgNation'>
+              <br>
+              {% if images.has_previous %}
+              <a href="?page=1&item_code=">First</a>
+              <a href="?page={{images.previous_page_number}}&item_code=">Previous</a>
+              {% endif %}
+              <span>{{images.number}}</span>
+              <span>of</span>
+              <span>{{images.paginator.num_pages}}</span>
+              {% if images.has_next %}
+              <a href="?page={{images.next_page_number}}&item_code=">Next</a>
+              <a href="?page={{images.paginator.num_pages}}&item_code=">Last</a>
+              {% endif %}
+              <br>
+              <br>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    {% endif %}
+  </div>
+  <div id="footer">
+    <div class="footer w-100 text-center fw-med fs-6" style="color:#418dd4;">ⓒ 2024, made 땡큐토큰</div>
+  </div>
+  <script>
+    window.onload = function () {
+      // 하단 내비게이션 높잇값 만큼 모든 페이지 높이조절 시작
+      const moNav_h = document.querySelector('.mobile-navigation').clientHeight;
+      const layoutPage = document.querySelector('.layout-page');
+      layoutPage.style.paddingBottom = moNav_h + 40 + 'px';
+      // 하단 내비게이션 높잇값 만큼 모든 페이지 높이조절 끝 
+    }
+  </script>
+</div>
+
+
+
+<!-- Vendors JS -->
+
+<script src="{% static 'assets/vendor/libs/typeahead-js/typeahead.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/bloodhound/bloodhound.js' %}"></script>
+
+<!-- Page JS -->
+<script src="{% static 'assets/js/forms-typeahead.js' %}"></script>
+<script src="{% static 'assets/js/forms-extras.js' %}"></script>
+<script src="{% static 'assets/js/extended-ui-sweetalert2.js' %}"></script>
+
+
+<!-- Vendors JS -->
+<script src="{% static 'assets/vendor/libs/autosize/autosize.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/cleavejs/cleave.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/cleavejs/cleave-phone.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/bootstrap-maxlength/bootstrap-maxlength.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/jquery-repeater/jquery-repeater.js' %}"></script>
+
+<script src="{% static 'assets/vendor/libs/sweetalert2/sweetalert2.js' %}" ></script>
+
+
+
+
+<script>
+
+// Form Repeater
+// ! Using jQuery each loop to add dynamic id and class for inputs. You may need to improve it based on form fields.
+// -----------------------------------------------------------------------------------------------------------------
+var formRepeater = $(".form-repeater");
+
+var row = 2;
+var col = 1;
+formRepeater.on('submit', function(e) {
+  e.preventDefault();
+});
+formRepeater.repeater({
+  show: function() {
+    var fromControl = $(this).find('.form-control, .form-select');
+    var formLabel = $(this).find('.form-label');
+
+    fromControl.each(function(i) {
+      var id = 'form-repeater-' + row + '-' + col;
+      $(fromControl[i]).attr('id', id);
+      $(formLabel[i]).attr('for', id);
+      col++;
+    });
+
+    row++;
+
+    $(this).slideDown();
+  },
+  hide: function(e) {
+    confirm('[문의] 해당내용을 정말로 삭제 하실건가요?') && $(this).slideUp(e);
+  }
+});
+
+
+function setPotoManagerImg(event, id) {
+    var reader = new FileReader();
+    reader.onload = function(event) {
+        document.querySelector("#potoImg-"+id).setAttribute("src", event.target.result);
+    }
+    reader.readAsDataURL(event.target.files[0]);
+}
+
+function resetPotoImg(src, id) {
+    document.querySelector("#potoImg-"+id).setAttribute("src", src);
+    document.querySelector("#form-"+id+"-4").value = null;
+}
+
+</script>
+
+
+{% endblock %}

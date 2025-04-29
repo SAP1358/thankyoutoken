@@ -1,0 +1,825 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+
+<!--   <script>
+    window.Promise ||
+    document.write(
+      '<script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js"><\/script>'
+    )
+    window.Promise ||
+    document.write(
+      '<script src="https://cdn.jsdelivr.net/npm/eligrey-classlist-js-polyfill@1.2.20171210/classList.min.js"><\/script>'
+    )
+    window.Promise ||
+    document.write(
+      '<script src="https://cdn.jsdelivr.net/npm/findindex_polyfill_mdn"><\/script>'
+    )
+  </script>
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="{% static 'assets/vendor/libs/toastr/toastr.css' %}" />
+  <link rel="stylesheet" href="{% static 'assets/vendor/libs/animate-css/animate.css' %}" />
+
+
+  <script src="{% static 'assets/vendor/libs/clipboard/clipboard.js' %}"></script>
+  <script src="{% static 'assets/vendor/libs/moment/moment.js' %}"></script>
+  <script src="{% static 'assets/vendor/libs/idletimer/idletimer.js' %}"></script>
+  <script src="{% static 'assets/vendor/libs/numeral/numeral.js' %}"></script>
+  <script src="{% static 'assets/vendor/libs/toastr/toastr.js' %}"></script>
+
+  <script src="{% static 'assets/js/extended-ui-misc-clipboardjs.js' %}"></script>
+  <script src="{% static 'assets/js/extended-ui-misc-idle-timer.js' %}"></script>
+  <script src="{% static 'assets/js/extended-ui-misc-numeraljs.js' %}"></script> -->
+
+
+<!-- 
+  <script>
+    function copyLink(_bbsId) {
+      const textToCopy = 'https://thankyou.run.goorm.app/praiseDetail/' + _bbsId;
+      const tempInput = document.createElement('input');
+      tempInput.setAttribute('value', textToCopy);
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempInput);
+      toastr['success']('', '링크가 복사 되었습니다.');
+    }
+  </script> -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
+
+<style>
+
+/* 관리자 공통 css 시작 */
+.mobile-navigation button .icon_home {
+  -webkit-mask: url(/static/assets/img/icon_menu_01_01.svg) no-repeat center/auto 100%;
+  mask: url(/static/assets/img/icon_menu_01_01.svg) no-repeat center/auto 100%;
+}
+
+.mobile-navigation button .icon_myThank {
+  -webkit-mask: url(/static/assets/img/icon_menu_02_01.svg) no-repeat center/auto 100%;
+  mask: url(/static/assets/img/icon_menu_02_01.svg) no-repeat center/auto 100%;
+}
+
+.mobile-navigation button .icon_sendThank {
+  -webkit-mask: url(/static/assets/img/icon_menu_03_01.svg) no-repeat center/auto 100%;
+  mask: url(/static/assets/img/icon_menu_03_01.svg) no-repeat center/auto 100%;
+}
+
+.mobile-navigation button .icon_best {
+  -webkit-mask: url(/static/assets/img/icon_menu_04_01.svg) no-repeat center/auto 100%;
+  mask: url(/static/assets/img/icon_menu_04_01.svg) no-repeat center/auto 100%;
+}
+
+.mobile-navigation button .icon_myToken {
+  -webkit-mask: url(/static/assets/img/icon_menu_05_01.svg) no-repeat center/auto 100%;
+  mask: url(/static/assets/img/icon_menu_05_01.svg) no-repeat center/auto 100%;
+}
+
+#adminInfo {
+  margin-top: 15px;
+}
+
+#adminInfo>div {
+  background: #edf6ff;
+  border-radius: 10px;
+}
+
+#adminInfo>div h5 {
+  color: #006ed5;
+  font-weight: bold;
+}
+
+#adminInfo>div p {
+  color: #222222;
+  font-weight: 500;
+}
+
+.adCardHeader {}
+
+.adCardHeader span {
+  background: #222;
+  font-weight: 500;
+  padding: 10px;
+}
+
+.adCardBody {}
+
+.adCardBody>div {}
+
+.adCardBody>div a {
+  background: #e8f7ff;
+  color: #006ed5;
+  font-weight: 500;
+}
+
+.adCardBody>div a {
+  width: calc(100% - 0.5rem);
+}
+
+.adCardBody>div a:hover {
+  background: #006ed5;
+  color: #fff;
+}
+
+.adminPage .customBtn {
+  background: #006ed5;
+  color: #fff;
+  font-weight: 500;
+}
+
+.adminPage .customBtn:hover {
+  background: #e8f7ff;
+  color: #006ed5;
+}
+
+.adminPage .customBtn2 {
+  background: #e8f7ff;
+  color: #006ed5;
+  font-weight: 500;
+}
+
+.adminPage .customBtn2:hover {
+  background: #006ed5;
+  color: #fff;
+}
+
+
+.adCardBody2 {}
+
+.adCardBody2 form label {
+  color: #222;
+  font-weight: 500;
+  font-size: 16px;
+  margin-top: 10px;
+  margin-left: 5px;
+}
+
+.adCardBody2 form input,
+.adCardBody2 form select {
+  border-color: #9fc4e7;
+}
+
+.adCardBody2 form input::placeholder,
+.adCardBody2 form input,
+.adCardBody2 form select,
+.adCardBody2 form select option {
+  color: #9fc4e7;
+  font-weight: 500;
+}
+
+table tbody th {
+  color: #006ed5 !important;
+  font-weight: bold !important;
+  font-size: 14px !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.adminPage div.card {
+  border: 1px solid #dde7f1;
+}
+
+table tbody tr {
+  border-color: #dde7f1;
+}
+
+table tbody td {
+  font-weight: 500;
+  font-size: 13px !important;
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+  color: #222;
+}
+
+.tablePgNation span {
+  color: #222;
+  font-weight: 500;
+}
+
+.tablePgNation a {
+  color: #006ed5;
+  font-weight: bold;
+  border-bottom: 2px solid #006ed5;
+}
+
+/* 관리자 공통 css 끝 */
+</style>
+
+<!-- Content wrapper -->
+<div class="content-wrapper adminPage">
+  <!-- Content -->
+  <div class="container-xxl flex-grow-1 py-0">
+    {% if user.is_superuser %}
+
+
+    <div id="adminInfo" class="col-12">
+      <div class="card mb-2">
+        <div class="card-body">
+          <h5 class="card-title">회원관리</h5>
+          <p class="card-text">
+            회원정보를 관리하는 페이지 입니다.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mb-2 adCardBody2">
+      <form id="formAuthentication" class="mb-0" action="{% url 'manageSingup' %}" method="GET"
+        enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="card-body row">
+
+          <div class="col-md-4">
+            <label for="company_id" class="form-label ">계열사</label>
+            <select name="company_id" id="company_id" class="form-select">
+              <option value="20" {% if company_id == '20' %}selected{% endif %}>우리은행</option>
+              <option value="95" {% if company_id == '95' %}selected{% endif %}>우리카드</option>
+              <option value="B1" {% if company_id == 'B1' %}selected{% endif %}>우리에프아이에스</option>
+              <option value="B3" {% if company_id == 'B3' %}selected{% endif %}>우리금융지주</option>
+              <option value="C1" {% if company_id == 'C1' %}selected{% endif %}>우리프라이빗에퀴티자산운용</option>
+              <option value="C7" {% if company_id == 'C7' %}selected{% endif %}>우리펀드서비스</option>
+              <option value="C9" {% if company_id == 'C9' %}selected{% endif %}>우리신용정보</option>
+              <option value="D1" {% if company_id == 'D1' %}selected{% endif %}>우리금융경영연구소</option>
+              <option value="D2" {% if company_id == 'D2' %}selected{% endif %}>우리투자증권</option>
+              <option value="E1" {% if company_id == 'E1' %}selected{% endif %}>우리자산운용</option>
+              <option value="E3" {% if company_id == 'E3' %}selected{% endif %}>우리자산신탁</option>
+              <option value="E4" {% if company_id == 'E4' %}selected{% endif %}>우리글로벌자산운용</option>
+              <option value="E5" {% if company_id == 'E5' %}selected{% endif %}>우리금융캐피탈</option>
+              <option value="E6" {% if company_id == 'E6' %}selected{% endif %}>우리금융저축은행</option>
+              <option value="E7" {% if company_id == 'E7' %}selected{% endif %}>우리금융에프앤아이</option>
+              <option value="E8" {% if company_id == 'E8' %}selected{% endif %}>우리벤처파트너스</option>
+              <option value="W5" {% if company_id == 'W5' %}selected{% endif %}>베트남우리은행</option>
+            </select>
+
+          </div>
+
+          <!--
+                    <div class="col-md-4"> 
+                        <label class="form-label" for="searchCode">조회구분</label>
+                        <select name="searchCode" id="searchCode" class="form-select">
+                            <option value="1" {% if searchCode == '1' %}selected{% endif %}>정상</option>
+                            <option value="0" {% if searchCode == '0' %}selected{% endif %}>대기</option>
+                        </select>
+                    </div>
+                    -->
+
+          <div class="col-md-4">
+            <label class="form-label text-left">부서</label>
+            <input type="text" name="searchDeptName" id="searchDeptName" class="form-control" placeholder="부서명 입력"
+              aria-label="부서명 입력" aria-describedby="basic-addon-search31"
+              onkeydown="if (event.keyCode === 13) { searchManageMember(); return false; }"
+              value="{{searchDeptName}}" />
+          </div>
+
+          <div class="col-md-4">
+            <label class="form-label text-left">이름</label>
+            <input type="text" name="searchUserName" id="searchUserName" class="form-control" placeholder="이름 입력"
+              aria-label="이름 입력" aria-describedby="basic-addon-search31"
+              onkeydown="if (event.keyCode === 13) { searchManageMember(); return false; }"
+              value="{{searchUserName}}" />
+          </div>
+
+
+          <div class="col-md-12 mt-4 d-flex align-items-center justify-content-center">
+            <!-- Align items vertically and horizontally center -->
+            <input type="hidden" name="manage_token_id" value="{{manageToken.id}}" />
+            <button type="submit" class="customBtn btn w-25">조회</button>
+          </div>
+
+        </div>
+      </form>
+
+    </div>
+    <div class="card mb-2">
+      <div class="card-header adCardHeader d-flex justify-content-between">
+        <span class="badge">가입내역 상세</span>
+        
+        <div class="text-end" style="width:95px; height:29px;">
+          <button type="button" style="background: url(/static/assets/img/icon_excelDown.png) no-repeat center/auto 100%; width: 100%;
+          height:100%; padding:0; margin:0; border:0;" onclick='javascript:exportToExcel("table_member")'></button>
+        </div>
+      </div>
+
+      <div class="card-body pb-3 px-0">
+
+
+        <div class="table-responsive">
+
+          <table class="table" style="table-layout:fixed" id="table_member">
+            <thead class="table-dark">
+              <colgroup>
+                <col style="width: 80px;">
+                <col style="width: 100px;">
+                <col style="width: 190px;">
+                <col style="width: 100px;">
+                <col style="width: 130px;">
+                <col style="width: 120px;">
+                <col style="width: 240px;">
+                <!-- <col style="width: 130px;"> 직위 -->
+                <!-- <col style="width: 120px;"> 사번 -->
+                <!-- <col style="width: 240px;"> 가입일자-->
+                
+              </colgroup>
+
+              <tr class="text-center text-dark fs-5">
+                <th>관리</th>
+                <th>프로필</th>
+                <th>부서</th>
+                <th>이름</th>
+                <th>직위</th>
+                <th>사번</th>
+                <th>가입일자</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for part in posts %}
+              <tr class="text-center fs-6">
+                <td>
+                  <button class="btn btn-sm" style="background: #006ed5; color:#fff;"
+                   data-bs-toggle="modal" data-bs-target="#signprofileModifyModal"
+                    data-part-id="{{ part.id }}" data-part-image="{{ part.image }}"
+                    data-part-image-yn="{{ part.image_yn }}" data-part-employee-id="{{ part.employee_id }}"
+                    data-part-employee-name="{{ part.employee_name }}" data-part-position-id="{{ part.position_id }}"
+                    data-part-position-name="{{ part.position_name }}"
+                    data-part-department-id="{{ part.department_id }}"
+                    data-part-department-name="{{ part.department_name }}">변경
+                  </button>
+                </td>
+                <td>
+                  {% if part.image_yn == 'Y' %}
+                  <img src="{{ part.image }}" alt="Avatar Avatar-xs" class="avatar avatar-s ms-0 me-2 rounded-circle" />
+                  {% else %}
+                  <img src="{% static 'assets/img/profile_bee_01.png' %}" alt="Avatar"
+                    class="avatar avatar-s ms-0 me-2 rounded-circle" />
+                  {% endif %}
+                </td>
+                <td>{{ part.department_name }}</td>
+                <td>{{ part.employee_name }}</td>
+                <td>{{ part.position_name }}</td>
+                <td>{{ part.employee_id }}</td>
+                <td>{{ part.date_joined }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+
+
+      <div class='container text-center tablePgNation'>
+        {% if posts.has_previous %}
+        <a
+          href="?page=1&searchDeptName={{searchDeptName}}&searchCode={{searchCode}}&company_id={{company_id}}">First</a>
+        <a
+          href="?page={{posts.previous_page_number}}&searchDeptName={{searchDeptName}}&searchCode={{searchCode}}&company_id={{company_id}}">Previous</a>
+        {% endif %}
+        <span>{{posts.number}}</span>
+        <span>of</span>
+        <span>{{posts.paginator.num_pages}}</span>
+        {% if posts.has_next %}
+        <a
+          href="?page={{posts.next_page_number}}&searchDeptName={{searchDeptName}}&searchCode={{searchCode}}&company_id={{company_id}}">Next</a>
+        <a
+          href="?page={{posts.paginator.num_pages}}&searchDeptName={{searchDeptName}}&searchCode={{searchCode}}&company_id={{company_id}}">Last</a>
+        {% endif %}
+        <br>
+        <br>
+      </div>
+
+    </div>
+
+
+    <div class="card mb-2">
+      <div class="card-header adCardHeader"><span class="badge">계열사별 가입자 수</span></div>
+      <div class="card-body py-3 px-0">
+
+        {% for dept in companyInfo %}
+        <table class="table" style="table-layout:fixed">
+          <tbody>
+            <tr class="text-center fs-6">
+              <td>{{ dept.company_name }}</td>
+              <td>{{ dept.count }} 명</td>
+
+            </tr>
+          </tbody>
+        </table>
+        {% endfor %}
+
+      </div>
+    </div>
+
+    {% endif %}
+  </div>
+  <div id="footer">
+    <div class="footer w-100 text-center fw-med fs-6" style="color:#418dd4;">ⓒ 2024, made 땡큐토큰</div>
+  </div>
+  <script>
+    window.onload = function () {
+      // 하단 내비게이션 높잇값 만큼 모든 페이지 높이조절 시작
+      const moNav_h = document.querySelector('.mobile-navigation').clientHeight;
+      const layoutPage = document.querySelector('.layout-page');
+      layoutPage.style.paddingBottom = moNav_h + 40 + 'px';
+      // 하단 내비게이션 높잇값 만큼 모든 페이지 높이조절 끝 
+    }
+  </script>
+</div>
+
+
+<!-- profile edit modal -->
+<div>
+  <form id="ProfileformAuthentication" class="mb-3" action="{% url 'signprofileModify' %}" method="POST"
+    enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="modal fade" id="signprofileModifyModal" tabindex="-1" aria-labelledby="signprofileModifyModalLabel"
+      aria-hidden="true">
+        <div class="modal-dialog" style="padding:0;">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalToggleLabel2">프로필 사진변경</h5>
+              <button type="button" class="position-absolute btn-close closeCustom"
+                style="background:transparent; border:0; right:20px; top:25px; box-shadow: none; transform: none !important; z-index: 2;"
+                data-bs-dismiss="modal"><span></span>
+              </button>
+            </div>
+
+            <div class="modal-body">
+              <div id="porfileUplaodBox" class="d-flex align-items-end justify-content-center">
+                <div class="profileNowImg me-1" style="width:40%;">
+                  <img src="{% static 'assets/img/profile_bee_01.png' %}" id="poto_img2" alt="user-avatar" class="d-block rounded" height="100" width="100">
+                </div>
+                <div class="forPc upload d-flex forMo">
+                  <style>
+                    @media (max-width:576px) {
+                      .forMo {
+                        flex-wrap: wrap;
+                      }
+
+                      .forMo>.upLoadBox,
+                      .forMo>div {
+                        width: 100%;
+                        margin-bottom: 5px;
+                        margin-right: 0 !important;
+                      }
+                    }
+                  </style>
+                  <label for="sign_formFile" class="btn px-3 py-2 upLoadBox" tabindex="0"
+                  style="border-radius: 30px; background: #016ed5; margin-right:10px; height:39px;">
+                   <p class="text-white fw-bold d-flex m-0 align-items-center"><span class="d-block me-2"
+                        style="width:20px"><img class="w-100" src="{% static 'assets/img/icon_upload.png' %}"></span>사진
+                      업로드</p>
+                  <input type="file" id="sign_formFile" name="sign_formFile" onChange="setPotoManagerImg(event);"
+                    class="account-file-input" hidden accept="image/png, image/jpeg" />
+                </label>
+                  <div style="height:39px;">
+                    <button id="profileBtn" type="submit" class="btn fw-bold colorCustom_03 m-0 w-100"
+                      style="border-radius: 30px; background: #c8edff;">변경</button>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="profile_bee d-flex mt-3">
+                <a href="javascript:void(0);" class="clicked"
+                  style="width:calc(100% / 6); height:0; padding-bottom:calc((100% / 6) - 5px); border-radius: 100%; overflow: hidden; background:url(/static/assets/img/profile_bee_01.png) no-repeat center/cover; border:2px solid transparent;"
+                  onclick="selectManagerpoto('{% static 'assets/img/profile_bee_01.png' %}');"></a>
+                <a href="javascript:void(0);" class=""
+                  style="width:calc(100% / 6); height:0; padding-bottom:calc((100% / 6) - 5px); border-radius: 100%; overflow: hidden; background:url(/static/assets/img/profile_bee_02.png) no-repeat center/cover; border:2px solid transparent;"
+                  onclick="selectManagerpoto('{% static 'assets/img/profile_bee_02.png' %}');"></a>
+                <a href="javascript:void(0);" class=""
+                  style="width:calc(100% / 6); height:0; padding-bottom:calc((100% / 6) - 5px); border-radius: 100%; overflow: hidden; background:url(/static/assets/img/profile_bee_03.png) no-repeat center/cover; border:2px solid transparent;"
+                  onclick="selectManagerpoto('{% static 'assets/img/profile_bee_03.png' %}');"></a>
+                <a href="javascript:void(0);" class=""
+                  style="width:calc(100% / 6); height:0; padding-bottom:calc((100% / 6) - 5px); border-radius: 100%; overflow: hidden; background:url(/static/assets/img/profile_bee_04.png) no-repeat center/cover; border:2px solid transparent;"
+                  onclick="selectManagerpoto('{% static 'assets/img/profile_bee_04.png' %}');"></a>
+                <a href="javascript:void(0);" class=""
+                  style="width:calc(100% / 6); height:0; padding-bottom:calc((100% / 6) - 5px); border-radius: 100%; overflow: hidden; background:url(/static/assets/img/profile_bee_05.png) no-repeat center/cover; border:2px solid transparent;"
+                  onclick="selectManagerpoto('{% static 'assets/img/profile_bee_05.png' %}');"></a>
+                <a href="javascript:void(0);" class=""
+                  style="width:calc(100% / 6); height:0; padding-bottom:calc((100% / 6) - 5px); border-radius: 100%; overflow: hidden; background:url(/static/assets/img/profile_bee_06.png) no-repeat center/cover; border:2px solid transparent;"
+                  onclick="selectManagerpoto('{% static 'assets/img/profile_bee_06.png' %}');"></a>
+                <style>
+                  .profile_bee a.clicked {
+                    border-color: #d3f1ff !important;
+                  }
+                </style>
+              </div>
+
+              <div class="mt-3">
+                <div>
+                  <span style="background: #222;border-radius: 5px;"
+                    class="py-1 px-2 d-inline-block text-white fw-med fs-6">관리자 전용기능</span>
+                  <input type="hidden" id="sign_id" name="sign_id" value="" />
+                </div>
+
+                <div>
+                  <div class="mt-2">
+                    <span class="ms-1 d-inline-block fw-med colorCustom_01">ID</span>
+                    <input class="form-control colorCustom_05" style="border-color: #9fc4e7;" readonly type="text"
+                      value="" id="sign_employee_id" name="sign_employee_id" readonly=""
+                      onfocusin="this.style.borderColor=''" onfocusout="this.style.borderColor=''">
+                  </div>
+                  <div class="mt-2">
+                    <span class="ms-1 d-inline-block fw-med colorCustom_01">이름</span>
+                    <input class="form-control colorCustom_05" style="border-color: #9fc4e7;" type="text"
+                      value="" id="sign_employee_name" name="sign_employee_name"
+                      onfocusin="this.style.borderColor=''" onfocusout="this.style.borderColor=''">
+                  </div>
+                  <div class="mt-2">
+                    <span class="ms-1 d-inline-block fw-med colorCustom_01">부서</span>
+                    <div>
+                      <span class="chkHiddenInput twitter-typeahead" style="position: relative; display: inline-block;">
+                        <input type="hidden" id="sign_department_id" name="sign_department_id" value="" />
+                        <input name="sign_department_name" id="sign_department_name" type="text"
+                          style="border-color: #9fc4e7;" class="form-control colorCustom_05"
+                          value="">
+                      </span>
+                    </div>
+                  </div>
+                  <div class="mt-2">
+                    <span class="ms-1 d-inline-block fw-med colorCustom_01">직위</span>
+                    <div>
+                      <span class="chkHiddenInput twitter-typeahead" style="position: relative; display: inline-block;">
+                        <input type="hidden" id="sign_position_id" name="sign_position_id" value="" />
+                        <input type="text" style="border-color: #9fc4e7;" class="form-control colorCustom_05"
+                          value="" id="sign_position_name" name="sign_position_name"
+                          onfocusin="this.style.borderColor=''" onfocusout="this.style.borderColor=''">
+                      </span>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 프로필 사진변경 모달 끝 -->
+    </form>
+
+</div>
+
+
+
+<script>
+  $('#signprofileModifyModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget);
+    var modal = $(this);
+
+    //modal.find('#sign_formFile').val(button.data('part-image'));
+    if (button.data('part-image-yn') === 'Y') {
+       modal.find('#poto_img2').attr('src', button.data('part-image'));
+    }else{
+       modal.find('#poto_img2').attr('src', "{% static 'assets/img/profile_bee_01.png' %}");
+    }
+    
+    modal.find('#sign_id').val(button.data('part-id'));
+    modal.find('#sign_employee_id').val(button.data('part-employee-id'));
+    modal.find('#sign_employee_name').val(button.data('part-employee-name'));
+    modal.find('#sign_department_id').val(button.data('part-department-id'));
+    modal.find('#sign_department_name').val(button.data('part-department-name'));
+    modal.find('#sign_position_id').val(button.data('part-position-id'));
+    modal.find('#sign_position_name').val(button.data('part-position-name'));
+  });
+</script>
+
+<script>
+  
+function selectManagerpoto(currentimg)
+{
+	document.getElementById('poto_img2').src = currentimg;
+	var defaultFile = new File(["file"], currentimg, {type: "image/png, image/jpeg" });
+	const dataTeansfer = new DataTransfer();
+	dataTeansfer.items.add(defaultFile);
+	document.getElementById('sign_formFile').files = dataTeansfer.files;
+	console.log(document.getElementById('sign_formFile').files);
+}
+
+
+function setPotoManagerImg(event) {
+	document.getElementById('poto_img2').src = event.target.result;
+	var reader = new FileReader();
+	reader.onload = function(event) {
+		document.querySelector("#poto_img2").setAttribute("src", event.target.result);
+	}
+	reader.readAsDataURL(event.target.files[0]);
+}
+
+function resetPotoManagerImg(src) {
+	document.querySelector("#poto_img2").setAttribute("src", src);
+	document.querySelector("#input_formFile").value = null;
+}   
+  
+    function exportToExcel(tableId) {
+        // 대상 테이블의 ID를 사용하여 테이블 요소를 선택합니다.
+        var table = document.getElementById(tableId);
+        
+        if (table) {
+            // 테이블을 XLSX 형식으로 변환합니다.
+            var wb = XLSX.utils.table_to_book(table, { sheet: "Sheet1" });
+            
+            if (tableId =="table_member"){
+                // XLSX 파일을 저장합니다.
+                XLSX.writeFile(wb, "계열사_회원정보.xlsx");
+            }
+
+            if (tableId =="table_dept"){
+                // XLSX 파일을 저장합니다.
+                XLSX.writeFile(wb, "부서별_우수직원.xlsx");
+            }
+            
+        } else {
+            alert("대상 테이블을 찾을 수 없습니다.");
+        }
+    }
+     
+  
+  
+function viewTag(idx, json_data){
+        
+    console.log('viewTag =========');
+    
+    
+    var data = JSON.parse(json_data.replace(/&quot;/g, '"'));
+    console.log(data);
+    
+    var divhHtml = '';
+
+    // compIdx에 따라 데이터 분류
+    for (var i = 0; i < data.tag.length; i++) {
+    divhHtml += '<span class="badge bg-label-SECONDARY"> # ' + data.tag[i] + '</span>';
+    }
+
+    var setHtml = '<div class="d-flex justify-content-center align-items-center gap-2 mb-0 Pretendard">';
+    setHtml += divhHtml;
+    setHtml += '</div>';
+    
+    // tbody 엘리먼트 선택
+    var viewTagHtml = document.querySelector('#viewTag'+idx);
+    // tbody 내용 변경
+    viewTagHtml.innerHTML = setHtml;
+
+}
+    
+    
+function clickLike(idx,_compliment_id) {    
+
+    var inputData = {
+        compliment_id: _compliment_id
+        //value2: input2,
+        //value3: input3
+        
+    };
+    
+     try {
+        $.ajax({
+            type: "POST",
+            url: "/apis/praise_like/",
+            data: inputData,
+            success: function (data) {
+                console.log('### clickLike success');
+                console.log(data);
+                console.log(data.likes_count);
+                
+                // 엘리먼트 선택
+                var clickLikeHtml = document.querySelector('#clickLike'+idx);
+				
+                // tbody 내용 변경
+                clickLikeHtml.innerHTML = data.likes_count;
+                
+            },
+            error: function (e) {
+                console.log("### clickLike ERROR : ", e);
+                //alert("fail");
+            }
+      })
+      .done(function() {
+        // AJAX 요청 완료 후 처리할 작업
+      })
+      .fail(function() {
+        // AJAX 요청 실패 시 처리할 작업
+      });
+    } catch (e) {
+        alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+    }	
+	
+	//testAPI();
+}
+    
+function userAppl( _user_id, _ty, _passYn ) {    
+    
+        console.log('userAppl =========');
+
+        if(_passYn === "Y") {
+          if(confirm("비밀번호 초기화를 하시겠습니까?")) {
+            // 비밀번호 초기화 로직
+          }else{
+              return false;
+          }
+        }
+    
+        var inputData = {
+            user_id: _user_id,
+            ty: _ty,
+            passYn: _passYn
+        };
+
+         try {
+            $.ajax({
+                type: "POST",
+                url: "/apis/userAppl/",
+                data: inputData,
+                success: function (data) {
+                    console.log('### userAppl success');
+                    console.log(data);
+                    
+                    if (_passYn == "Y") {
+                        // 엘리먼트 선택
+                        var clicBtneHtml = document.querySelector('#pass'+_user_id);
+
+
+                        var spanHtml ='<button type="button" class="btn btn-xs btn-secondary" onclick="javascript:userAppl( '+_user_id+', 0, "Y" )">완료</button>';
+
+                        // tbody 내용 변경
+                        clicBtneHtml.innerHTML = spanHtml;
+                    }
+                    else
+                    {
+                        // 엘리먼트 선택
+                        var clickLikeHtml = document.querySelector('#state'+_user_id);
+
+                        if (data.ty == 1) {
+                            var spanHtml = '<span class="badge bg-primary">승인</span>';
+                        }else{
+                            var spanHtml = '<span class="badge bg-success">대기</span>';
+                        }
+
+                        // tbody 내용 변경
+                        clickLikeHtml.innerHTML = spanHtml;
+
+
+                        // 엘리먼트 선택
+                        var clicBtneHtml = document.querySelector('#stateBtn'+_user_id);
+
+                        if (data.ty == 1) {
+                            var spanHtml = '<button type="button" class="btn btn-xs btn-secondary" onclick="javascript:userAppl( '+_user_id+', 0, 0 )">취소</button>';
+                        }else{
+                            var spanHtml ='<button type="button" class="btn btn-xs btn-danger" onclick="javascript:userAppl( '+_user_id+', 1, 0 )">승인</button>';
+                        }
+
+                        // tbody 내용 변경
+                        clicBtneHtml.innerHTML = spanHtml;
+                    }
+
+
+                },
+                error: function (e) {
+                    console.log("### userAppl ERROR : ", e);
+                    //alert("fail");
+                }
+          })
+          .done(function() {
+            // AJAX 요청 완료 후 처리할 작업
+          })
+          .fail(function() {
+            // AJAX 요청 실패 시 처리할 작업
+          });
+        } catch (e) {
+            alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+        }	
+    
+}
+    
+	function viewProfile(imgYn, imgSrc, employee_id, employee_name, department_name) {
+		var profileViewModal = document.getElementById('profileViewModal');
+		var bootstrapModal = new bootstrap.Modal(profileViewModal);
+		bootstrapModal.toggle();
+		if(imgYn == "Y") {
+			document.querySelector("#profile_view_img").setAttribute("src", imgSrc);
+		} else {
+			document.querySelector("#profile_view_img").setAttribute("src", "{% static 'assets/img/profile_bee_01.png' %}");
+		}
+		document.querySelector("#span_employee_id").innerHTML = employee_id;
+		document.querySelector("#span_employee_name").innerHTML = employee_name;
+		document.querySelector("#span_department_name").innerHTML = department_name;
+	}
+    
+</script>        
+
+
+<!-- <script src="{% static 'assets/vendor/libs/cleavejs/cleave.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/cleavejs/cleave-phone.js' %}"></script>
+
+<script src="{% static 'assets/vendor/libs/apex-charts/apexcharts.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/formvalidation/dist/js/FormValidation.min.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js' %}"></script>
+
+<script src="{% static 'assets/js/cards-advance.js' %}"></script>
+<script src="{% static 'assets/js/modal-add-new-cc.js' %}"></script> -->
+
+{% endblock %}

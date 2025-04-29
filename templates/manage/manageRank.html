@@ -1,0 +1,653 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+
+<!-- <head>
+<script>
+    window.Promise ||
+    document.write(
+      '<script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js"><\/script>'
+    )
+    window.Promise ||
+    document.write(
+      '<script src="https://cdn.jsdelivr.net/npm/eligrey-classlist-js-polyfill@1.2.20171210/classList.min.js"><\/script>'
+    )
+    window.Promise ||
+    document.write(
+      '<script src="https://cdn.jsdelivr.net/npm/findindex_polyfill_mdn"><\/script>'
+    )
+</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/toastr/toastr.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/vendor/libs/animate-css/animate.css' %}" />
+    
+<link href="https://webfontworld.github.io/pretendard/Pretendard.css" rel="stylesheet">
+<style>
+    .Pretendard {
+      font-family: 'Pretendard', sans-serif;
+    }
+</style>
+    
+    
+<script src="{% static 'assets/vendor/libs/clipboard/clipboard.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/moment/moment.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/idletimer/idletimer.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/numeral/numeral.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/toastr/toastr.js' %}"></script>
+
+<script src="{% static 'assets/js/extended-ui-misc-clipboardjs.js' %}"></script>
+<script src="{% static 'assets/js/extended-ui-misc-idle-timer.js' %}"></script>
+<script src="{% static 'assets/js/extended-ui-misc-numeraljs.js' %}"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+
+    
+
+    
+<script>
+    
+    function copyLink(_bbsId) {
+      const textToCopy = 'https://thankyou.run.goorm.app/praiseDetail/' + _bbsId;
+      const tempInput = document.createElement('input');
+      tempInput.setAttribute('value', textToCopy);
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempInput);
+      toastr['success']('', '링크가 복사 되었습니다.');
+    }
+    
+
+    
+</script>
+    
+</head> -->
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
+
+<style>
+
+/* 관리자 공통 css 시작 */
+.mobile-navigation button .icon_home {
+  -webkit-mask: url(/static/assets/img/icon_menu_01_01.svg) no-repeat center/auto 100%;
+  mask: url(/static/assets/img/icon_menu_01_01.svg) no-repeat center/auto 100%;
+}
+
+.mobile-navigation button .icon_myThank {
+  -webkit-mask: url(/static/assets/img/icon_menu_02_01.svg) no-repeat center/auto 100%;
+  mask: url(/static/assets/img/icon_menu_02_01.svg) no-repeat center/auto 100%;
+}
+
+.mobile-navigation button .icon_sendThank {
+  -webkit-mask: url(/static/assets/img/icon_menu_03_01.svg) no-repeat center/auto 100%;
+  mask: url(/static/assets/img/icon_menu_03_01.svg) no-repeat center/auto 100%;
+}
+
+.mobile-navigation button .icon_best {
+  -webkit-mask: url(/static/assets/img/icon_menu_04_01.svg) no-repeat center/auto 100%;
+  mask: url(/static/assets/img/icon_menu_04_01.svg) no-repeat center/auto 100%;
+}
+
+.mobile-navigation button .icon_myToken {
+  -webkit-mask: url(/static/assets/img/icon_menu_05_01.svg) no-repeat center/auto 100%;
+  mask: url(/static/assets/img/icon_menu_05_01.svg) no-repeat center/auto 100%;
+}
+
+#adminInfo {
+  margin-top: 15px;
+}
+
+#adminInfo>div {
+  background: #edf6ff;
+  border-radius: 10px;
+}
+
+#adminInfo>div h5 {
+  color: #006ed5;
+  font-weight: bold;
+}
+
+#adminInfo>div p {
+  color: #222222;
+  font-weight: 500;
+}
+
+.adCardHeader {}
+
+.adCardHeader span {
+  background: #222;
+  font-weight: 500;
+  padding: 10px;
+}
+
+.adCardBody {}
+
+.adCardBody>div {}
+
+.adCardBody>div a {
+  background: #e8f7ff;
+  color: #006ed5;
+  font-weight: 500;
+}
+
+.adCardBody>div a {
+  width: calc(100% - 0.5rem);
+}
+
+.adCardBody>div a:hover {
+  background: #006ed5;
+  color: #fff;
+}
+
+.adminPage .customBtn {
+  background: #006ed5;
+  color: #fff;
+  font-weight: 500;
+}
+
+.adminPage .customBtn:hover {
+  background: #e8f7ff;
+  color: #006ed5;
+}
+
+.adminPage .customBtn2 {
+  background: #e8f7ff;
+  color: #006ed5;
+  font-weight: 500;
+}
+
+.adminPage .customBtn2:hover {
+  background: #006ed5;
+  color: #fff;
+}
+
+
+.adCardBody2 {}
+
+.adCardBody2 form label {
+  color: #222;
+  font-weight: 500;
+  font-size: 16px;
+  margin-top: 10px;
+  margin-left: 5px;
+}
+
+.adCardBody2 form input,
+.adCardBody2 form select {
+  border-color: #9fc4e7;
+}
+
+.adCardBody2 form input::placeholder,
+.adCardBody2 form input,
+.adCardBody2 form select,
+.adCardBody2 form select option {
+  color: #9fc4e7;
+  font-weight: 500;
+}
+
+table tbody th {
+  color: #006ed5 !important;
+  font-weight: bold !important;
+  font-size: 14px !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.adminPage div.card {
+  border: 1px solid #dde7f1;
+}
+
+table tbody tr {
+  border-color: #dde7f1;
+}
+
+table tbody td {
+  font-weight: 500;
+  font-size: 13px !important;
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+  color: #222;
+}
+
+.tablePgNation span {
+  color: #222;
+  font-weight: 500;
+}
+
+.tablePgNation a {
+  color: #006ed5;
+  font-weight: bold;
+  border-bottom: 2px solid #006ed5;
+}
+
+/* 관리자 공통 css 끝 */
+</style>
+
+
+<!-- Content wrapper -->
+<div class="content-wrapper adminPage">
+	<!-- Content -->
+	<div class="container-xxl flex-grow-1 py-1">
+    {% if user.is_superuser %}   
+        
+    <div id="adminInfo" class="col-12">
+      <div class="card mb-2">
+        <div class="card-body">
+          <h5 class="card-title">순위관리</h5>
+          <p class="card-text">
+            칭찬순위를 관리하는 페이지 입니다.
+          </p>
+        </div>
+      </div>
+    </div>
+        
+      <div class="card mb-2">
+        <div class="card-body">
+
+          <div class="mb-0 px-0 d-flex justify-content-between align-items-center">
+            <span class="">
+              {% if token_prev > 0 %}
+              <button class="btn px-0" 
+              style="background:url(/static/assets/img/icon_leftArrow_02.png) no-repeat center/contain; border:0; padding:0; width: 15px; height:15px;"
+              onclick="window.location.href='/manageRank?manage_token_id={{ token_prev }}'">
+              </button>
+              {% else %}
+              <i class='bx bx-left-arrow'></i>
+              {% endif %}
+            </span>
+
+            <span class="fw-bold">
+              {{ manageToken.start_date|slice:"0:4" }}-{{ manageToken.start_date|slice:"4:6" }}-{{ manageToken.start_date|slice:"6:8" }}
+              ~
+              {{ manageToken.end_date|slice:"0:4" }}-{{ manageToken.end_date|slice:"4:6" }}-{{ manageToken.end_date|slice:"6:8" }}
+            </span>
+            <span class="">
+              {% if token_next > 0 %}
+              <button class="btn px-0" 
+              style="background:url(/static/assets/img/icon_rightArrow_02.png) no-repeat center/contain; border:0; padding:0; width: 15px; height:15px;"
+              onclick="window.location.href='/manageRank?manage_token_id={{ token_next }}'">
+              </button>
+              {% else %}
+              <i class='bx bx-right-arrow'></i>
+              {% endif %}
+            </span>
+          </div>
+
+          <div class="adCardBody2">
+          <form id="formAuthentication" class="mb-0" action="{% url 'manageRank' %}" method="GET"
+            enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="card-body row py-0 px-0">
+
+              <div class="col-md-6">
+                <label for="company_id" class="form-label ">계열사</label>
+                <select name="company_id" id="company_id" class="form-select">
+                  <option value="20" {% if company_id == '20' %}selected{% endif %}>우리은행</option>
+                  <option value="95" {% if company_id == '95' %}selected{% endif %}>우리카드</option>
+                  <option value="B1" {% if company_id == 'B1' %}selected{% endif %}>우리에프아이에스</option>
+                  <option value="B3" {% if company_id == 'B3' %}selected{% endif %}>우리금융지주</option>
+                  <option value="C1" {% if company_id == 'C1' %}selected{% endif %}>우리프라이빗에퀴티자산운용</option>
+                  <option value="C7" {% if company_id == 'C7' %}selected{% endif %}>우리펀드서비스</option>
+                  <option value="C9" {% if company_id == 'C9' %}selected{% endif %}>우리신용정보</option>
+                  <option value="D1" {% if company_id == 'D1' %}selected{% endif %}>우리금융경영연구소</option>
+                  <option value="D2" {% if company_id == 'D2' %}selected{% endif %}>우리투자증권</option>
+                  <option value="E1" {% if company_id == 'E1' %}selected{% endif %}>우리자산운용</option>
+                  <option value="E3" {% if company_id == 'E3' %}selected{% endif %}>우리자산신탁</option>
+                  <option value="E4" {% if company_id == 'E4' %}selected{% endif %}>우리글로벌자산운용</option>
+                  <option value="E5" {% if company_id == 'E5' %}selected{% endif %}>우리금융캐피탈</option>
+                  <option value="E6" {% if company_id == 'E6' %}selected{% endif %}>우리금융저축은행</option>
+                  <option value="E7" {% if company_id == 'E7' %}selected{% endif %}>우리금융에프앤아이</option>
+                  <option value="E8" {% if company_id == 'E8' %}selected{% endif %}>우리벤처파트너스</option>
+                  <option value="W5" {% if company_id == 'W5' %}selected{% endif %}>베트남우리은행</option>
+                </select>
+
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label" for="searchPeerNo">피어번호</label>
+                <select name="searchPeerNo" id="searchPeerNo" class="form-select">
+                  <option value="" {% if searchPeerNo == '' %}selected{% endif %}>전체</option>
+                  <option value="1" {% if searchPeerNo == '1' %}selected{% endif %}>1</option>
+                  <option value="2" {% if searchPeerNo == '2' %}selected{% endif %}>2</option>
+                  <option value="3" {% if searchPeerNo == '3' %}selected{% endif %}>3</option>
+                  <option value="4" {% if searchPeerNo == '4' %}selected{% endif %}>4</option>
+                  <option value="5" {% if searchPeerNo == '5' %}selected{% endif %}>5</option>
+                  <option value="6" {% if searchPeerNo == '6' %}selected{% endif %}>6</option>
+                  <option value="7" {% if searchPeerNo == '7' %}selected{% endif %}>7</option>
+                  <option value="8" {% if searchPeerNo == '8' %}selected{% endif %}>8</option>
+                  <option value="9" {% if searchPeerNo == '9' %}selected{% endif %}>9</option>
+                  <option value="10" {% if searchPeerNo == '10' %}selected{% endif %}>10</option>
+                  <option value="11" {% if searchPeerNo == '11' %}selected{% endif %}>11</option>
+                  <option value="12" {% if searchPeerNo == '12' %}selected{% endif %}>12</option>
+                  <option value="13" {% if searchPeerNo == '13' %}selected{% endif %}>13</option>
+                  <option value="14" {% if searchPeerNo == '14' %}selected{% endif %}>14</option>
+                  <option value="15" {% if searchPeerNo == '15' %}selected{% endif %}>15</option>
+                  <option value="16" {% if searchPeerNo == '16' %}selected{% endif %}>16</option>
+                  <option value="17" {% if searchPeerNo == '17' %}selected{% endif %}>17</option>
+                  <option value="18" {% if searchPeerNo == '18' %}selected{% endif %}>18</option>
+                  <option value="19" {% if searchPeerNo == '19' %}selected{% endif %}>19</option>
+                  <option value="20" {% if searchPeerNo == '20' %}selected{% endif %}>20</option>
+                  <option value="21" {% if searchPeerNo == '21' %}selected{% endif %}>21</option>
+                  <option value="22" {% if searchPeerNo == '22' %}selected{% endif %}>22</option>
+                  <option value="23" {% if searchPeerNo == '23' %}selected{% endif %}>23</option>
+                  <option value="24" {% if searchPeerNo == '24' %}selected{% endif %}>24</option>
+                  <option value="25" {% if searchPeerNo == '25' %}selected{% endif %}>25</option>
+                  <option value="26" {% if searchPeerNo == '26' %}selected{% endif %}>26</option>
+                  <option value="27" {% if searchPeerNo == '27' %}selected{% endif %}>27</option>
+                  <option value="28" {% if searchPeerNo == '28' %}selected{% endif %}>28</option>
+                  <option value="29" {% if searchPeerNo == '29' %}selected{% endif %}>29</option>
+                  <option value="30" {% if searchPeerNo == '30' %}selected{% endif %}>30</option>
+                  <option value="31" {% if searchPeerNo == '31' %}selected{% endif %}>31</option>
+                  <option value="32" {% if searchPeerNo == '32' %}selected{% endif %}>32</option>
+                  <option value="33" {% if searchPeerNo == '33' %}selected{% endif %}>33</option>
+                  <option value="34" {% if searchPeerNo == '34' %}selected{% endif %}>34</option>
+                  <option value="35" {% if searchPeerNo == '35' %}selected{% endif %}>35</option>
+                  <option value="36" {% if searchPeerNo == '36' %}selected{% endif %}>36</option>
+                  <option value="37" {% if searchPeerNo == '37' %}selected{% endif %}>37</option>
+                  <option value="38" {% if searchPeerNo == '38' %}selected{% endif %}>38</option>
+
+                </select>
+              </div>
+
+              <div class="col-md-12 mt-4 d-flex align-items-center justify-content-center" style="padding:0;">
+                <!-- Align items vertically and horizontally center -->
+                <input type="hidden" name="manage_token_id" value="{{manageToken.id}}" />
+                <button type="submit" class="customBtn btn w-25">조회</button>
+              </div>
+            </div>
+
+          </form>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="card mb-2">
+        <div class="card-header adCardHeader d-flex justify-content-between">
+            <span class="badge">
+              우수직원 10위
+              {% if company_id == "20" %}
+              ( 피어번호 : {{searchPeerNo}} )
+              {% endif %}
+            </span>
+            <div class="text-end" style="width:95px; height:29px;">
+          <button type="button" style="background: url(/static/assets/img/icon_excelDown.png) no-repeat center/auto 100%; width: 100%;
+          height:100%; padding:0; margin:0; border:0;"
+                onclick='javascript:exportToExcel("table_dept")'></button>
+            </div>
+        </div>
+
+        <div class="card-body py-0 px-0 mb-3">
+
+          <div class="table-responsive">
+
+
+            <table class="table" style="table-layout:fixed" id="table_dept">
+              <thead class="table-dark">
+                <colgroup>
+                  <col style="width: 70px;">
+                  <col style="width: 70px;">
+                  <col style="width: 150px;">
+                  <col style="width: 150px;">
+                  <col style="width: 70px;">
+                  <col style="width: 230px;">
+                </colgroup>
+
+                <tr class="text-center text-dark fs-5">
+
+                  <th>피어그룹</th>
+                  <th>순위</th>
+                  <th>부서명</th>
+                  <th>직원명</th>
+                  <th>총포인트</th>
+                  <th>최종일</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for row in postDept %}
+                <tr class="text-center fs-6">
+
+                  <td>{{ row.searchPeerNo }}</td>
+                  <td>{{ row.rownum }}</td>
+                  <td>{{ row.department_name }}</td>
+                  <td>{{ row.employee_name }} ({{ row.employee_id }})</td>
+                  <td>{{ row.tot_point }}</td>
+                  <td>{{ row.chg_date }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+        <div class="card-header my-0 pt-0" style="color:#9fc4e7;">
+          {{dept_names}}
+        </div>
+      </div>
+    {% endif %}  
+        
+	</div>
+    <div id="footer">
+    <div class="footer w-100 text-center fw-med fs-6" style="color:#418dd4;">ⓒ 2024, made 땡큐토큰</div>
+  </div>
+  <script>
+    window.onload = function () {
+      // 하단 내비게이션 높잇값 만큼 모든 페이지 높이조절 시작
+      const moNav_h = document.querySelector('.mobile-navigation').clientHeight;
+      const layoutPage = document.querySelector('.layout-page');
+      layoutPage.style.paddingBottom = moNav_h + 40 + 'px';
+      // 하단 내비게이션 높잇값 만큼 모든 페이지 높이조절 끝 
+    }
+  </script>
+</div>
+
+<!-- profile view modal -->
+<div class="modal fade" id="viewStoryModal" tabindex="-1" aria-hidden="true">
+	<div class="modal-dialog modal-sm" role="document">
+		<div class="modal-content">
+            <div class="card">
+
+                <img id="img_story_word" src="" alt="칭찬 워드크라우드" class="img-fluid m-3 rounded">
+                
+                <div class="modal-header">
+                    <span id="span_story_date"></span>                    
+                </div>
+
+                
+                <div class="modal-body">
+                    <span id="span_story_book"></span>
+                </div>
+
+            </div>
+		</div>
+	</div>
+</div>
+<!--/ profile view modal -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
+<script>
+    
+function userStory( _user_id,_token_id,_state) {    
+    
+    //console.log('userStory =========');
+    
+    if(_state === 1) {
+      if(confirm("스토리북을 재발행 하시겠습니까?")) {
+        // 비밀번호 초기화 로직
+      }else{
+          return false;
+      }
+    }
+    
+    var inputData = {
+        user_id: _user_id,
+        token_id: _token_id
+    };                               
+    
+    //-------------
+    //loading bar
+    //-------------
+    var sttusBar = document.querySelector('#state'+_user_id);                
+    var spanHtml ='<div class="spinner-border spinner-border-sm text-primary" id="reportLoading" role="status"></div>';
+    // tbody 내용 변경
+    sttusBar.innerHTML = spanHtml;
+    
+     try {
+        $.ajax({
+            type: "POST",
+            url: "/apis/userStory/",
+            data: inputData,
+            success: function (data) {
+                //console.log('### userStory success');
+                console.log(data);
+                //console.log(data.my_story_date);
+                //console.log(data.my_story_book);
+
+                //---------------
+                // 제작버튼 활성화
+                //---------------
+                // 엘리먼트 선택
+                var clicBtneHtml = document.querySelector('#story'+_user_id);
+                var spanHtml ='<button type="button" class="btn btn-xs btn-secondary" onclick="javascript:userStory( '+_user_id+','+_token_id+',1 )">완료</button>';
+                // tbody 내용 변경
+                clicBtneHtml.innerHTML = spanHtml;
+                
+                //---------------
+                // 상태 활성화
+                //---------------
+                // 엘리먼트 선택
+                var stateBtneHtml = document.querySelector('#state'+_user_id);                
+                var spanHtml ='<button type="button" class="btn btn-xs btn-primary" onclick="javascript:viewStory(\''+data.my_story_date +'\',\''+ data.my_story_book+'\',\'' + data.image +'\' )">열람</button>';
+                // tbody 내용 변경
+                stateBtneHtml.innerHTML = spanHtml;
+                                
+
+            },
+            error: function (e) {
+                console.log("### userStory ERROR : ", e);
+                //alert("fail");
+            }
+      })
+      .done(function() {
+        // AJAX 요청 완료 후 처리할 작업
+      })
+      .fail(function() {
+        // AJAX 요청 실패 시 처리할 작업
+      });
+    } catch (e) {
+        alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+    }	
+    
+}
+    
+    
+function allUserStory() {
+    
+    console.log('allUserStory =========');
+    
+    if(confirm("일괄발행 하시겠습니까?")) {
+    // 비밀번호 초기화 로직
+    }else{
+      return false;
+    }
+    
+    var time = 0
+    var cycle = 0
+    
+    {% for part in posts %}    
+        
+        if ("{{ part.my_story_stcd }}" == "1"){
+            
+            console.log("{{ part.user.employee_name }} 님 SKIP 입니다!");
+            
+        }
+        else{
+            cycle++;
+            time = cycle * 10000;
+
+            setTimeout(function() {
+                userStory( "{{ part.user_id }}","{{ part.token_id }}",0 );
+                console.log("### [발행요청] {{ part.user.employee_name }}" + "님, 10초가 지났습니다");
+            }, time);
+        }
+
+
+     
+     
+    {% endfor %}
+    
+}
+
+     
+function viewStory(story_date, story_book, story_image) {
+    
+    console.log('viewStory =========');
+    
+    var viewStoryModal = document.getElementById('viewStoryModal');
+    var bootstrapModal = new bootstrap.Modal(viewStoryModal);
+    bootstrapModal.toggle();
+    
+    document.querySelector("#span_story_date").innerHTML = story_date;
+    document.querySelector("#span_story_book").innerHTML = story_book;
+    document.querySelector("#img_story_word").setAttribute("src", story_image);
+    
+}
+    
+
+    
+    function formatDate(input) {
+        // 입력된 값에서 숫자만 추출
+        var numericValue = input.value.replace(/\D/g, '');
+
+        // 날짜 형식으로 변환 (YYYY-MM-DD)
+        var formattedDate = numericValue.replace(/^(\d{4})(\d{2})(\d{2})$/, '$1-$2-$3');
+
+        // 변환된 날짜 값을 입력 필드에 설정
+        input.value = formattedDate;
+    }
+    
+    function exportToExcel(tableId) {
+        // 대상 테이블의 ID를 사용하여 테이블 요소를 선택합니다.
+        var table = document.getElementById(tableId);
+        
+        if (table) {
+            // 테이블을 XLSX 형식으로 변환합니다.
+            var wb = XLSX.utils.table_to_book(table, { sheet: "Sheet1" });
+            
+            if (tableId =="table_rank"){
+                // XLSX 파일을 저장합니다.
+                XLSX.writeFile(wb, "개인별_우수직원.xlsx");
+            }
+
+            if (tableId =="table_dept"){
+                // XLSX 파일을 저장합니다.
+                XLSX.writeFile(wb, "부서별_우수직원.xlsx");
+            }
+            
+        } else {
+            alert("대상 테이블을 찾을 수 없습니다.");
+        }
+    }
+     
+</script>        
+
+
+<!-- Vendors JS -->
+<script src="{% static 'assets/vendor/libs/cleavejs/cleave.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/cleavejs/cleave-phone.js' %}"></script>
+
+<script src="{% static 'assets/vendor/libs/apex-charts/apexcharts.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/formvalidation/dist/js/FormValidation.min.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js' %}"></script>
+
+<!-- Page JS -->
+<script src="{% static 'assets/js/cards-advance.js' %}"></script>
+<script src="{% static 'assets/js/modal-add-new-cc.js' %}"></script>
+
+{% endblock %}
+                                                          
