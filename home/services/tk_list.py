@@ -1,6 +1,7 @@
 ####################################################################
 # 2024-12-25 VTI   move business of tk_list from views.py
-###################################################################
+# 2025-04-23 VTI   add limit, offset in api get data tk_list
+####################################################################
 
 from datetime import datetime
 from functools import lru_cache
@@ -235,7 +236,7 @@ def select_my_list(user_id):
         """
     else:
         # Normal case: Get most recent compliment for each list_id
-        # CREATE INDEX idx_praise_composite ON wbntt.account_user_praise (is_active, praise_id, user_id, reg_date DESC, compliment_id);
+        # CREATE INDEX idx_praise_composite ON wbntt.account_user_praise (is_active, praise_id, reg_date, compliment_id, user_id);
         query = """
             SELECT list_id, compliment_id
             FROM (
@@ -264,7 +265,11 @@ def select_my_list(user_id):
         return [row[1] for row in cursor.fetchall()]
 
 
-def get_user_praise_queryset(compliment_ids, user_id):
+def get_user_praise_queryset(compliment_ids, user_id, limit, offset):
+    # ===================
+    # 2025-01-05 add limit, offset in api get data tk_list
+    # ===================
+
     """
     Returns an optimized queryset for user praise data with conditional field swapping.
     """
@@ -317,7 +322,7 @@ def get_user_praise_queryset(compliment_ids, user_id):
         .select_related('praise', 'user')
         .prefetch_related('images')
         .annotate(**annotations)
-        .order_by('-reg_date')[:100]
+        .order_by('-reg_date')[offset:offset+limit]
     )
 
 
