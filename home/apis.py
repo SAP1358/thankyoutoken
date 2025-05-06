@@ -11,6 +11,7 @@
 # 2024-06-05 윤준영 UC메신저 땡큐토큰은 제한로직에서 예외처리
 # 2024-12-17 VTI   Add a filter condition for user search to the `praise_page` API.
 # 2024-12-25 VTI   Add APIs in home, search, tk_list, rankList screen.
+# 2025-04-23 VTI   add limit, offset in api get data tk_list
 ####################################################################
 from django.shortcuts import render, HttpResponse
 from myprofile.models import User as User2
@@ -299,17 +300,23 @@ def praise_list(request):
 def get_praise_posts(request):
     # ==========================
     # 2024-12-25 Add APIs in home, search, tk_list, rankList screen.
+    # 2025-04-23 add limit, offset in api get data tk_list
     # ==========================
 
     """
     API endpoint for fetching user praise posts.
     """
     try:
+        # page and offset
+        page_number = int(request.GET.get('page', 1))
+        limit = 10
+        offset = (page_number - 1) * limit
+
         # Get compliment IDs for the current user
         compliment_ids = select_my_list(request.user.id)
 
         # Get user praise data
-        processed_queryset = get_user_praise_queryset(compliment_ids, request.user.id)
+        processed_queryset = get_user_praise_queryset(compliment_ids, request.user.id, limit, offset)
 
         # Serialize the queryset
         serialized_data = list(processed_queryset.values())
@@ -321,7 +328,8 @@ def get_praise_posts(request):
 
         return JsonResponse({
             'status': 'success',
-            'data': serialized_data
+            'data_count': len(serialized_data),
+            'data_list': serialized_data
         })
 
     except Exception as e:
