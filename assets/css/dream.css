@@ -1,0 +1,1314 @@
+@charset "utf-8";
+
+/* 지마켓 폰트 추가 시작 - 240219 */
+@font-face {
+  font-weight: light;
+  font-family: 'gm-light';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff') format('woff');
+  font-style: light;
+}
+
+@font-face {
+  font-weight: normal;
+  font-family: 'gm-med';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+  font-style: normal;
+}
+
+@font-face {
+  font-weight: bold;
+  font-family: 'gm-bold';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff') format('woff');
+  font-style: bold;
+}
+
+/* 지마켓 폰트 추가 끝 - 240219 */
+
+* {
+  letter-spacing: -0.02em;
+  /* font-family: 'Pretendard', sans-serif; */
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+.gm-med {
+  font-family: 'gm-light', 'Noto Sans KR', sans-serif !important;
+}
+
+.gm-med {
+  font-family: 'gm-med', 'Noto Sans KR', sans-serif !important;
+}
+
+.gm-bold {
+  font-family: 'gm-bold', 'Noto Sans KR', sans-serif !important;
+}
+
+.fw-med {
+  font-weight: 500 !important;
+}
+
+.allPage .colorCustom_01 {
+  color: #222 !important;
+}
+
+.allPage .colorCustom_02 {
+  color: #00367f !important;
+}
+
+.allPage .colorCustom_03 {
+  color: #006ed5 !important;
+}
+
+.allPage .colorCustom_04 {
+  color: #85b3de !important;
+}
+
+.allPage .colorCustom_05 {
+  color: #9fc4e7 !important;
+}
+
+.allPage .colorCustom_06 {
+  color: #14a8ea !important;
+}
+
+.allPage .colorCustom_07 {
+  color: #dde7f1 !important;
+}
+
+.allPage .colorCustom_08 {
+  color: #62c8fa !important;
+}
+
+.allPage {
+  background: #fbfbfb;
+}
+
+/* 공통 헤더 #layout-header CSS 시작 */
+#header {
+  background: #006ed5;
+}
+
+#header .allBg {
+  position: absolute;
+  top: 70%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #006ed5;
+}
+
+#header .departBox span {
+  color: #62c8fa;
+}
+
+#header .layout-navbar {
+  backdrop-filter: none;
+}
+
+#header .navbar-nav li>a.navBtn {
+  display: block;
+  width: clamp(25px, 5.3vw, 35px);
+  height: clamp(25px, 5.3vw, 35px);
+  padding: 0;
+}
+
+#header .navbar-nav li>a.navBtn:has(.avatar) {
+  width: clamp(60px, 10vw, 80px);
+  height: clamp(60px, 10vw, 80px);
+}
+
+#header .navbar-nav .search {
+  background: #fff;
+  -webkit-mask: url(../img/icon_search.svg) no-repeat center/contain;
+  mask: url(../img/icon_search.svg) no-repeat center/contain;
+}
+
+#header .navbar-nav .notice {
+  background: #fff;
+  -webkit-mask: url(../img/icon_notice01.svg) no-repeat center/contain;
+  mask: url(../img/icon_notice01.svg) no-repeat center/contain;
+}
+
+#header .navbar-nav li>a.navBtn span {
+  width: 100%;
+  height: 100%;
+}
+
+/* 헤더 프로필 아이콘 css 수정 - 240220 */
+#header .navbar-nav li>a.navBtn .avatar {
+  max-width: 80px;
+  max-height: 80px;
+  width: 100%;
+  height: 100%;
+}
+#header .navbar-nav li>a.navBtn .avatar img {
+  object-fit: cover;
+}
+#header .navbar-nav li>a.navBtn .forBest.avatar::after {
+  content: "";
+  position: absolute;
+  top: -10%;
+  left: 0;
+  transform: scale(1.45);
+  width: 100%;
+  height: 100%;
+  background: url(../img/rank_crown04-10.png) no-repeat center/100% auto;
+}
+
+#header .navbar-nav li>a.navBtn .forBest.best_01.avatar::after,
+#header .navbar-nav li>a.navBtn .forBest.best_02.avatar::after,
+#header .navbar-nav li>a.navBtn .forBest.best_03.avatar::after {
+  top: -4%;
+}
+
+#header .navbar-nav li>a.navBtn .forBest.best_01.avatar::after {
+  background: url(../img/rank_crown01.png) no-repeat center/100% auto;
+}
+
+#header .navbar-nav li>a.navBtn .forBest.best_02.avatar::after {
+  background: url(../img/rank_crown02.png) no-repeat center/100% auto;
+}
+
+#header .navbar-nav li>a.navBtn .forBest.best_03.avatar::after {
+  background: url(../img/rank_crown03.png) no-repeat center/100% auto;
+}
+
+#footer {
+  margin-top: 20px;
+}
+
+/* 헤더 프로필 아이콘 css 수정 끝 - 240220 */
+
+#header .navbar-nav .light {
+  content: "asdasd";
+  position: absolute;
+  right: 3px;
+  width: 6px !important;
+  height: 6px !important;
+  border-radius: 100%;
+  background: #f6484a;
+}
+
+.profileMenu,
+.noticeInner {
+  position: absolute !important;
+  top: 120% !important;
+  max-width: 700px !important;
+  min-width: auto !important;
+}
+
+.profileMenu {
+  width: 30% !important;
+}
+
+.noticeInner {
+  width: 50% !important;
+}
+
+@media (max-width:800px) {
+
+  .profileMenu,
+  .noticeInner {
+    left: auto !important;
+    right: 50% !important;
+    transform: translateX(50%) !important;
+    width: 100% !important;
+  }
+}
+
+.profileMenu {
+  padding: 0;
+}
+
+.profileMenu li~li {
+  border-top: 1px solid #dde7f1;
+}
+
+.profileMenu li a {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.profileMenu li a:hover {
+  opacity: 0.7;
+}
+
+.profileMenu li a span:first-child {
+  width: 20px;
+  height: 20px;
+  margin-right: 15px;
+  background: #85b3de;
+}
+
+.profileMenu li a span.icon_myprofile {
+  -webkit-mask: url(../img/icon_myprofile.png) no-repeat center/contain;
+  mask: url(../img/icon_myprofile.svg) no-repeat center/contain;
+}
+
+.profileMenu li a span.icon_admin {
+  -webkit-mask: url(../img/icon_admin.svg) no-repeat center/contain;
+  mask: url(../img/icon_admin.svg) no-repeat center/contain;
+}
+
+.profileMenu li a span.icon_logout {
+  -webkit-mask: url(../img/icon_logout.png) no-repeat center/contain;
+  mask: url(../img/icon_logout.svg) no-repeat center/contain;
+}
+
+.noticeInner li {
+  background: #fff !important;
+}
+
+.noticeInner li.border-bottom {
+  border-color: #14a8ea !important;
+}
+
+.noticeInner li.border-top {
+  border-color: #dde7f1 !important;
+}
+
+#divViewNotice li {
+  border-left: none;
+  border-right: none;
+  cursor: default;
+  border-color: #dde7f1;
+}
+
+#divViewNotice .quickBtn {
+  border-radius: 15px;
+  background: #d3f1ff;
+}
+
+#divViewNotice .quickBtn:hover {
+  background: #006ed5;
+  color: #fff !important;
+}
+
+@media (max-width:475px) {
+  #divViewNotice>li h6 {
+    display: block !important;
+  }
+}
+
+.searchOpenBtn {
+  cursor: pointer;
+}
+
+.searchBox.clicked .searchDetail {
+  display: block;
+}
+
+.searchBox .searchDetail {
+  display: none;
+  border-radius: 10px !important;
+}
+
+#notice {
+  display: none !important;
+}
+
+/* 공통 헤더 #layout-header CSS 끝 */
+
+
+/* 공통 레이아웃 CSS 시작 */
+#notice {
+  background: #edf6ff;
+}
+
+.closeCustom {
+  background: transparent !important;
+}
+
+.closeCustom span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  width: 60%;
+  height: 2px;
+  border-radius: 10px;
+  background: #006ed5;
+}
+
+.closeCustom span::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: rotate(90deg);
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  background: #006ed5;
+}
+
+#profile_modal .closeCustom span,
+#profile_modal .closeCustom span::after {
+  background: #4797e2;
+}
+
+.mobile-navigation {
+  position: fixed;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50%;
+  background-color: transparent;
+}
+
+@media (max-width:1440px) {
+  .nameBox {
+    padding: 0;
+  }
+
+  .departBox {
+    padding: 0;
+  }
+
+  .mobile-navigation {
+    bottom: 0px;
+    left: 0;
+    transform: none;
+    width: 100%;
+    border-top: 0px solid #ddd;
+  }
+}
+
+.mobile-navigation button {
+  margin: 0 !important;
+  padding: 15px 0 !important;
+  background: #fff;
+}
+
+.mobile-navigation button:hover {
+  background-color: #006ed5 !important;
+  border-color: #EB5C32 !important;
+}
+
+.mobile-navigation button:hover .row>span {
+  background: #fff;
+}
+
+.mobile-navigation button:hover small {
+  color: #fff !important;
+}
+
+.mobile-navigation button small {
+  padding: 0;
+  font-size: 13px;
+}
+
+.mobile-navigation button .row>span {
+  width: 30px;
+  height: 30px;
+  margin: 0 auto;
+  background: #006ed5;
+}
+
+.mobile-navigation button .icon_home {
+  -webkit-mask: url(../img/icon_menu_01_01.svg) no-repeat center/auto 100%;
+  mask: url(../img/icon_menu_01_01.svg) no-repeat center/auto 100%;
+}
+
+.mobile-navigation button .icon_myThank {
+  -webkit-mask: url(../img/icon_menu_02_01.svg) no-repeat center/auto 100%;
+  mask: url(../img/icon_menu_02_01.svg) no-repeat center/auto 100%;
+}
+
+.mobile-navigation button .icon_sendThank {
+  -webkit-mask: url(../img/icon_menu_03_01.svg) no-repeat center/auto 100%;
+  mask: url(../img/icon_menu_03_01.svg) no-repeat center/auto 100%;
+}
+
+.mobile-navigation button .icon_best {
+  -webkit-mask: url(../img/icon_menu_04_01.svg) no-repeat center/auto 100%;
+  mask: url(../img/icon_menu_04_01.svg) no-repeat center/auto 100%;
+}
+
+.mobile-navigation button .icon_myToken {
+  -webkit-mask: url(../img/icon_menu_05_01.svg) no-repeat center/auto 100%;
+  mask: url(../img/icon_menu_05_01.svg) no-repeat center/auto 100%;
+}
+
+#profile_modal .modal-content {
+  max-width: 400px;
+  margin: 0 auto;
+  background: url(../img/profile_bg.jpg) no-repeat top/cover;
+  overflow: hidden;
+}
+
+/* 공통 레이아웃 CSS 끝 */
+
+/* 공통 editCard 모달 CSS 시작 -240221 */
+#editCard .gallery-box {
+  margin: 0 auto;
+  max-width: 800px;
+  overflow-x: hidden;
+}
+
+#editCard .gallery-top {
+  width: 80%;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+#editCard .gallery-thumbs .swiper-slide {
+  opacity: 0.2;
+  cursor: pointer;
+}
+
+#editCard .gallery-thumbs .swiper-slide.swiper-slide-active {
+  opacity: 1;
+}
+
+#editCard .swiper-button-prev::after,
+#editCard .swiper-button-next::after {
+  content: none;
+}
+
+#editCard .gallery-box .object-fit img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 공통 editCard 모달 CSS 끝 - 240221 */
+
+/* 관리자 페이지 공통 CSS 시작 - 240221 */
+.adminPage .table> :not(caption)>*>* {
+  letter-spacing: -0.02em;
+}
+
+.adminPage table thead th {
+  padding: clamp(10px, 3vw, 20px) 1%;
+  color: #006ed5 !important;
+  font-size: clamp(14px, 3.5vw, 24px);
+  font-weight: bold;
+}
+
+.adminPage table tbody th,
+.adminPage table tbody td {
+  padding: clamp(10px, 3vw, 20px) 1%;
+  color: #222 !important;
+  font-size: clamp(12px, 3vw, 20px);
+  font-weight: 500;
+  word-break: keep-all;
+}
+
+.adminPage table tr {
+  text-align: center;
+  border-color: #dde7f1;
+}
+
+.adminPage table.tableCustom01 thead th,
+.adminPage table.tableCustom01 tbody td,
+.adminPage table.tableCustom01 tbody th,
+.adminPage table.tableCustom01 thead th:first-child {
+  width: 25%;
+}
+
+.adminPage table.tableCustom01 tbody th,
+.adminPage table.tableCustom01 thead th:first-child {
+  padding-right: 0;
+}
+
+
+.adminPage table.tableCustom02 thead th,
+.adminPage table.tableCustom02 tbody td,
+.adminPage table.tableCustom02 tbody th {
+  width: 50%;
+}
+
+.adminPage table.tableCustom03 thead th,
+.adminPage table.tableCustom03 tbody td,
+.adminPage table.tableCustom03 tbody th {
+  width: 25%;
+  padding: 10px 1%;
+}
+
+.adminPage #pageBtnBox a {
+  border-bottom: 2px solid #006ed5;
+  border-radius: 0;
+  padding-bottom: 5px;
+  margin: 0 2.5px;
+}
+
+.adminPage .customTitle01 {
+  display: inline-block;
+  padding: 8px 10px;
+  border-radius: 2.5px;
+  background: #222;
+  color: #fff;
+  /* font-size: 12px; */
+  font-size: clamp(12px, 3vw, 24px);
+  font-weight: 500;
+  line-height: 1;
+}
+
+.adminPage .customBtn01 {
+  width: 24%;
+  padding: 1.5% 0;
+  font-size: 16px;
+}
+
+.adminPage .customBtn01:hover {
+  background: #006ed5 !important;
+  color: #fff !important;
+}
+
+.adminPage .customBtn01.clicked {
+  background: #006ed5 !important;
+  color: #fff !important;
+}
+
+.adminPage .totalNum {
+  justify-content: space-between;
+}
+
+.adminPage .totalNum>div {
+  width: 24%;
+  margin-bottom: 1%;
+}
+
+.adminPage .totalNum>div>div:first-child {
+  max-width: 70px;
+  min-width: 60px;
+}
+
+.adminPage .totalNum>div p {
+  word-break: keep-all;
+}
+
+.adminPage .adminsearchInput>div {
+  width: 30%;
+}
+
+.adminPage input::placeholder {
+  color: #9fc4e7;
+}
+
+/* 관리자 페이지 공통 CSS 끝 - 240221 */
+
+
+
+/* #signManager CSS 시작 */
+#signManager {
+  background: #f3f3f3;
+}
+
+#signManager .loginWrap {
+  max-width: 700px;
+  width: 95%;
+}
+
+#signManager .loginWrap.card {
+  box-shadow: none;
+}
+
+#signManager .loginWrap .icon_token02 {
+  top: -4%;
+  right: 33%;
+  min-width: 30px;
+  width: 8.4%;
+}
+
+#signManager .loginWrap .icon_token03 {
+  right: 15%;
+  min-width: 50px;
+  width: 14%;
+}
+
+#signManager .loginWrap .enterBtn {
+  background: #006ed5;
+}
+
+#signManager #search_notice_wrap {
+  /* z-index: 2 !important; */
+}
+
+#signManager .mobile-navigation {
+  display: none !important;
+}
+
+/* #signManager CSS 끝 */
+
+
+/* #mainPage CSS 시작 */
+#mainPage #notice {
+  display: block !important;
+}
+
+#mainPage .card {
+  border: 2px solid #dde7f1;
+  box-shadow: none;
+}
+
+#mainPage .todayThank>div {
+  border: none;
+  background: #fff url(../img/today_thank_border.png) no-repeat center/100% 100%;
+}
+
+/* 오늘의 땡큐 카드 - 헤더 데코 */
+.allPage .todayThank .todayHeader {
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 300px;
+  width: 100%;
+}
+
+.allPage .todayThank .todayHeader img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.allPage .sendMeCard>div {
+  background: #c8edff;
+}
+
+/* 카드 - 지점 명칭 */
+.allPage .card-title {
+  font-size: 0.7rem;
+}
+
+/* 카드 - 사람 > 직위 명칭 */
+.allPage .card-text span {
+  font-size: 0.8rem;
+}
+
+/* 카드 - 해쉬태그 */
+.allPage .hash>span {
+  border-radius: 17px;
+  background: #e8f7ff;
+}
+
+.allPage .icon_right_arrow {
+  width: 25px;
+  height: 25px;
+  background: url(../img/icon_arrow.svg) no-repeat center/100% auto;
+}
+
+.allPage .heartBtn,
+.allPage .commentBtn {
+  width: 100%;
+  height: 100%;
+}
+
+.allPage .heartBtn i {
+  width: 100%;
+  height: 100%;
+  /* background: #222; */
+  /* -webkit-mask: url(../img/icon_heart_01.svg) no-repeat center/contain; */
+  /* mask: url(../img/icon_heart_01.svg) no-repeat center/contain; */
+  background: no-repeat center/100% auto;
+  background-image: url(../img/icon_heart_01.svg);
+}
+
+.allPage .heartBtn i.clicked {
+  background-image: url(../img/icon_heart_02.svg);
+}
+
+.allPage .commentBtn i {
+  width: 100%;
+  height: 100%;
+  /* background: #222; */
+  /* -webkit-mask: url(../img/icon_comment_01.svg) no-repeat center/contain; */
+  /* mask: url(../img/icon_comment_01.svg) no-repeat center/contain; */
+  background: no-repeat center/100% auto;
+  background-image: url(../img/icon_comment_01.svg);
+}
+
+.allPage .commentBtn i.clicked {
+  background-image: url(../img/icon_comment_02.svg);
+}
+
+.allPage .heartBtn i,
+.allPage .commentBtn i {
+  min-width: 20px;
+}
+
+.allPage .editBtn {
+  height: 100%;
+}
+
+.allPage .editBtn span {
+  width: 10px;
+  height: 150%;
+  background: #006ed5;
+  -webkit-mask: url(../img/icon_edit.svg) no-repeat center/auto 100%;
+  mask: url(../img/icon_edit.svg) no-repeat center/auto 100%;
+}
+
+.comment_modal .typing_comment:focus {
+  border-color: #14a8ea;
+}
+
+.comment_modal .typing_comment+button {
+  border: 1px solid #14a8ea !important;
+  background: #14a8ea !important;
+  box-shadow: none;
+}
+
+.allPage .modal-dialog {
+  top: 3%;
+  max-width: 450px;
+}
+
+/* 칭찬하기 페이지 CSS 추가 시작 - 240219*/
+#sendTkPage .cardOptionBtn button {
+  width: 100%;
+  background: #e8f7ff;
+}
+
+#sendTkPage .cardOptionBtn button.clicked {
+  background: #006ed5;
+  color: #fff !important;
+}
+
+#sendTkPage .cardOptionBtn button~button {
+  margin-left: 10px;
+}
+
+#sendTkPage .sendMessage textarea {
+  color: #006ed5;
+}
+
+#sendTkPage .sendCardSwiper {
+  overflow: hidden;
+}
+
+#sendTkPage .sendCardSwiper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#sendTkPage .sendCardSwiper .swiper-slide.picked {
+  opacity: 0.6;
+}
+
+#sendTkPage .swiperBox {
+  padding: 0 35px;
+}
+
+#sendTkPage .swiperPrev {
+  left: 0;
+}
+
+#sendTkPage .swiperNext {
+  right: 0;
+}
+
+#sendTkPage .showPhoto {
+  max-width: 300px;
+}
+
+#sendTkPage .showPhoto img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+#sendTkPage .swiperPrev::after,
+#sendTkPage .swiperNext::after {
+  color: #9fc4e7;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+#sendTkPage .sendSearchBtn::after {
+  content: none;
+}
+
+#sendTkPage .sendSearchBtn img {
+  right: 20px;
+  width: auto;
+  height: 10px;
+}
+
+#sendTkPage .sendSearch input::placeholder {
+  color: #14a8ea;
+}
+
+/* 칭찬하기 페이지 CSS 추가 끝 - 240219*/
+
+/* 우리칭찬왕 페이지 CSS 추가 시작 - 240219*/
+#bestPage .bestBtnBox button {
+  width: 32% !important;
+  padding: clamp(5px, 3.4vw, 10px);
+  background-color: #e8f7ff;
+  color: #006ed5;
+  font-size: clamp(12px, 3.4vw, 20px) !important;
+}
+
+#bestPage .bestBtnBox button.clicked {
+  background: #006ed5;
+  color: #fff;
+}
+
+#bestPage .bestBtnBox button span {
+  top: auto;
+  background: #006ed5;
+  color: #FFF;
+  z-index: 1;
+}
+
+#bestPage .bestBtnBox button.clicked span {
+  background-color: #fff;
+  color: #006ed5;
+}
+
+/* 1등~3등 개별 테두리 배경 시작 */
+#bestPage #best_01 {
+  background: #fff url(../img/rank_bg01.png) no-repeat center/100% 100%;
+}
+
+#bestPage #best_02 {
+  background: #fff url(../img/rank_bg02.png) no-repeat center/100% 100%;
+}
+
+#bestPage #best_03 {
+  background: #fff url(../img/rank_bg03.png) no-repeat center/100% 100%;
+}
+
+/* 1등~3등 개별 테두리 배경 끝 */
+
+/* 4~10등 공통 배경 시작  */
+#bestPage .rankList>div {
+  margin-top: 10px;
+  border-radius: 10px;
+  background: #e8f7ff;
+}
+
+/* 4~10등 공통 배경 시작  */
+
+#bestPage .rankList>div {
+  padding: 4% 3%;
+}
+
+#bestPage .user_logo {
+  max-width: 140px;
+  width: 20%;
+}
+
+#bestPage .user_profile {
+  position: relative;
+  width: 20%;
+  margin: 0 4%;
+}
+
+#bestPage .user_profile::after {
+  content: "";
+  position: absolute;
+  top: -10%;
+  left: 0;
+  transform: scale(1.45);
+  width: 100%;
+  height: 100%;
+}
+
+#bestPage #best_01 .user_profile::after,
+#bestPage #best_02 .user_profile::after,
+#bestPage #best_03 .user_profile::after {
+  top: -3%;
+}
+
+/* 1등~3등 개별 왕관 아이콘 시작*/
+#bestPage #best_01 .user_profile::after {
+  background-image: url(../img/rank_crown01.png);
+}
+
+#bestPage #best_02 .user_profile::after {
+  background-image: url(../img/rank_crown02.png);
+}
+
+#bestPage #best_03 .user_profile::after {
+  background-image: url(../img/rank_crown03.png);
+}
+
+/* 1등~3등 개별 왕관 아이콘 끝*/
+
+/* 4등 부터 공통 왕관 아이콘 시작*/
+#bestPage .user_profile::after {
+  background: url(../img/rank_crown04-10.png) no-repeat center/100% auto;
+}
+
+/* 4등 부터 공통 왕관 아이콘 끝*/
+
+#bestPage .user_profile img {
+  border-radius: 100%;
+}
+
+#bestPage #best_01 .hash span,
+#bestPage #best_02 .hash span,
+#bestPage #best_03 .hash span {
+  background: #e8f7ff;
+}
+
+#bestPage .hash {
+  margin-top: 3%;
+}
+
+#bestPage .hash span {
+  background: #fff;
+  /* font-size: clamp(10px, 2.5vw, 20px); */
+  font-size: clamp(8px, 2.5vw, 16px);
+}
+
+#bestPage .user_name h1 {
+  /* font-size: clamp(18px, 4.5vw, 40px); */
+  font-size: clamp(14px, 3.75vw, 24px);
+}
+
+#bestPage .user_name p {
+  /* font-size: clamp(12px, 2.5vw, 30px); */
+  font-size: clamp(10px, 2.5vw, 20px);
+}
+
+#bestPage .user_name h1,
+#bestPage .user_name p {
+  line-height: 1;
+}
+
+#bestPage .totalToken {
+  font-size: clamp(18px, 4.5vw, 40px);
+}
+
+#bestPage #best_01 .totalToken span,
+#bestPage #best_02 .totalToken span,
+#bestPage #best_03 .totalToken span {
+  color: #006ed5;
+}
+
+#bestPage .totalToken span {
+  color: #14a8ea;
+}
+
+#bestPage #rankInfo button::after {
+  content: none;
+}
+
+@media (min-width:767px) {
+  #bestPage .hash {
+    margin-top: 1%;
+  }
+
+  #bestPage .rankList>div {
+    padding: 2% 3%;
+  }
+
+  #bestPage .user_logo {
+    width: 7%;
+  }
+
+  #bestPage .user_profile {
+    width: 8.5%;
+    margin: 0 2%;
+  }
+}
+
+/* 우리칭찬왕 페이지 CSS 추가 끝 - 240219*/
+
+
+/* MY땡큐 페이지 CSS 추가 시작 - 240219*/
+#myThankPage .tkList {
+  position: relative;
+  background: #fff;
+}
+
+#myThankPage .new_tk_num {
+  position: relative;
+}
+
+#myThankPage .new_tk_num span {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: clamp(20px, 2.7vw, 25px);
+  height: 0;
+  margin-top: 5px;
+  padding-bottom: clamp(20px, 2.7vw, 25px);
+  border-radius: 100%;
+  background: #f14823;
+  color: #fff;
+  font-size: clamp(13px, 1.35vw, 16px);
+  line-height: clamp(20px, 2.7vw, 25px);
+  text-align: center;
+}
+
+/* MY땡큐 - list 페이지 CSS 추가 끝 - 240219*/
+
+/* MY땡큐 - talk 페이지 CSS 추가 시작 - 240219*/
+#myThankPage.tkTalkPage {
+  background: url(../img/tkTalk_bg.jpg) no-repeat top/cover;
+}
+
+#myThankPage.tkTalkPage .talkSendBox {
+  max-width: 70%;
+}
+
+#myThankPage.tkTalkPage .tkTalkInner {
+  position: relative;
+  background: #fff;
+}
+
+#myThankPage.tkTalkPage .tkTalkInner .leftTale {
+  top: -7px;
+  left: -7px;
+  width: 15px;
+}
+
+#myThankPage.tkTalkPage .tkTalkInner .rightTale {
+  top: -7px;
+  right: -7px;
+  width: 15px;
+}
+
+#myThankPage.tkTalkPage .hash span {
+  margin-top: 5px;
+  margin-right: 10px;
+  font-size: clamp(10px, 2.5vw, 16px);
+}
+
+
+/* MY땡큐 - talk 페이지 CSS 추가 끝 - 240219*/
+
+
+/* 나의토큰 페이지 CSS 추가 시작 - 240220*/
+#myTokenPage #remainTimeBar {}
+
+#myTokenPage #remainTimeBar>div {
+  background: #006ed5;
+}
+
+#myTokenPage .myTokenBtn button.clicked {
+  background: #006ed5;
+  color: #fff !important;
+}
+
+#myTokenPage .myTokenBtn button {
+  background: #e8f7ff;
+}
+
+#myTokenPage .myTokenBtn button.gaveTk i,
+#myTokenPage .myTokenBtn button.sendTk i {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+#myTokenPage .myTokenBtn button.gaveTk i {
+  background-color: #006ed5;
+  -webkit-mask: url(../img/icon_menu_05_01.svg) no-repeat center/auto 100%;
+  mask: url(../img/icon_menu_05_01.svg) no-repeat center/auto 100%;
+}
+
+#myTokenPage .myTokenBtn button.gaveTk.clicked i {
+  background: #fff;
+}
+
+#myTokenPage .myTokenBtn button.sendTk i {
+  background: url(../img/icon_arrow.png) no-repeat center/100% auto;
+}
+
+#myTokenPage .tokenInfo>div {
+  position: relative;
+  width: calc(100% / 3);
+}
+
+#myTokenPage .tokenInfo>div::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  height: 80%;
+  border: 1px solid #c8edff;
+}
+
+#myTokenPage .tokenInfo>div:last-child::after {
+  content: none;
+}
+
+#myTokenPage .tokenInfo>div img {
+  max-width: 100px;
+  min-width: 50px;
+  width: 30%;
+}
+
+#myTokenPage .tokenInfo>div p {
+  margin-top: 2%;
+  font-size: clamp(14px, 2.5vw, 24px);
+}
+
+#myTokenPage .tokenInfo>div span {
+  font-size: clamp(18px, 4.5vw, 32px);
+}
+
+
+#myTokenPage .myTokenList .token {
+  width: 65px;
+  height: 65px;
+  background: linear-gradient(0deg, rgba(251, 221, 102, 1) 0%, rgba(250, 160, 13, 1) 50%, rgba(251, 221, 102, 1) 100%);
+  cursor: pointer;
+}
+
+#myTokenPage .myTokenList .token .token-line {
+  width: 55px;
+  height: 55px;
+  border: 2px solid #ffffd0ed;
+}
+
+#myTokenPage .myTokenList .token span {
+  font-size: 14px;
+}
+
+#myTokenPage #coin_modal .editBtn {
+  height: 30px;
+}
+
+#myTokenPage #coin_modal .editBtn span {
+  width: 15px;
+  height: 120%;
+  background: #006ed5;
+  -webkit-mask: url(../img/icon_edit.svg) no-repeat center/auto 100%;
+  mask: url(../img/icon_edit.svg) no-repeat center/auto 100%;
+}
+
+
+/* 나의토큰 페이지 CSS 추가 끝 - 240220*/
+@media (max-width:767px) {
+  .adminPage .totalNum>div {
+    width: 49%;
+  }
+}
+
+@media (max-width:576px) {
+
+  .adminPage .customBtn01 {
+    width: 49%;
+    margin-top: 2%;
+    padding: 3% 0;
+    font-size: 14px;
+  }
+
+  .adminPage .totalNum>div>div:first-child {
+    max-width: 50px;
+    min-width: 40px;
+  }
+
+  #mainPage .card>div {
+    justify-content: space-between !important;
+  }
+
+  .allPage .forPc {
+    display: block !important;
+  }
+
+  #adUserEdit_modal .upload label,
+  #profileEdit_modal .upload label {
+    margin-bottom: 10px !important;
+    margin-right: 0 !important;
+  }
+
+  #adUserEdit_modal .profileNowImg,
+  #profileEdit_modal .profileNowImg {
+    width: 45% !important;
+  }
+
+  #porfileUplaodBox {
+    align-items: center !important;
+  }
+
+  /* 칭찬하기 페이지 CSS 추가 시작 - 240219*/
+  #sendTkPage .cardOptionBtn {
+    flex-wrap: wrap;
+  }
+
+  #sendTkPage .cardOptionBtn button {
+    width: 32%;
+    margin: 3px 0;
+    background: #e8f7ff;
+  }
+
+  #sendTkPage .cardOptionBtn button~button {
+    margin-left: 0;
+  }
+
+  /* 칭찬하기 페이지 CSS 추가 끝 - 240219*/
+
+
+  /* MY땡큐 - talk 페이지 CSS 추가 시작 - 240219*/
+  #myThankPage.tkTalkPage .talkSendBox {
+    max-width: 100%;
+  }
+
+  #myThankPage.tkTalkPage .hash {
+    flex-wrap: wrap;
+  }
+
+  #myThankPage.tkTalkPage .hash span {
+    width: 35%;
+    margin-right: 5px;
+  }
+
+  /* MY땡큐 - talk 페이지 CSS 추가 끝 - 240219*/
+
+
+  .adminPage .adminsearchInput>div {
+    width: 100%;
+  }
+}
+
+@media (max-width:440px) {
+  .adminPage .totalNum>div span {
+    font-size: 20px !important;
+  }
+
+  .adminPage .totalNum>div p {
+    font-size: 12px;
+  }
+
+  .adminPage table.tableCustom01 thead th,
+  .adminPage table.tableCustom01 tbody td {
+    width: calc(70%/3);
+  }
+
+  .adminPage table.tableCustom01 thead th:first-child,
+  .adminPage table.tableCustom01 tbody th {
+    width: 30%;
+    padding-right: 0;
+    padding-left: 2%;
+  }
+
+  .adminPage table.tableCustom03 thead th,
+  .adminPage table.tableCustom03 tbody td {
+    width: calc(70%/3);
+  }
+
+  .adminPage table.tableCustom03 thead th:nth-child(3),
+  .adminPage table.tableCustom03 tbody td:nth-child(3) {
+    width: 30%;
+  }
+
+  .allPage .todayThank .todayHeader {
+    top: -25px;
+    max-width: 250px;
+  }
+
+  .allPage .modal-dialog {
+    max-width: 350px;
+    margin: 0 auto;
+  }
+}
+
+#moreBtn {
+  position: relative;
+  display: inline-block;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background: #fbfbfb;
+  color: #666;
+  z-index: 1;
+}
