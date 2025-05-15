@@ -19,7 +19,7 @@
 <body>
   <!-- 전체 태그 감싸기 시작 -->
   <!-- 컨텐츠 시작 -->
-  <input type="hidden" id="SuccessCount" value="1">
+  <input type="hidden" id="currentPage" value="1">
   <div id="myThankPage" class="allPage layout-container flex-column">
     <div id="tk_con" class="container-xxl mt-2" style="visibility: hidden;">
       <div class="row">
@@ -31,7 +31,7 @@
     </div>
 
     <div class = "text-center">
-      <a href="javascript:viewPage();" id = "viewAddEvent" class="badge badge-danger text-dark text-center fs-3 mb-4">더보기</a>
+      <a href="javascript:getPraisePosts();" id = "viewAddEvent" class="badge badge-danger text-dark text-center fs-3 mb-4">더보기</a>
     </div>
 
     <!-- 컨텐츠 종료 -->
@@ -52,26 +52,29 @@
   
 
   <script>
-	window.addEventListener("scroll", (event) => {
-		let scroll = this.scrollY;
-		let windowscroll = document.querySelector('.layout-container');
-		
-		if (document.body.scrollHeight - 30 <= window.scrollY + window.innerHeight)
-		{
-			if ("{{addPage}}" === "N") 
-			{
-				$('#viewAddEvent').hide();
-				//console.log("연속조회 대상이 없습니다.");
-			}
-			else{
-				//console.log("viewpage 실행댐.");
-				viewPage(); // 10개 단위로 땡큐 기록 불러오기
-			}
-		}
-	});
+	let scrollTimeout; 
+    window.addEventListener("scroll", (event) => {
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout);
+      }
+    
+      scrollTimeout = setTimeout(function() {
+        const scrollPosition = $(window).scrollTop();
+        const windowHeight = $(window).height();
+        const documentHeight = $(document).height();
+        
+        if (scrollPosition + windowHeight > documentHeight * 0.8) {
+          if ("{{addPage}}" === "N") {
+            $('#viewAddEvent').hide();
+          } else {
+            getPraisePosts();
+          }
+        }
+      }, 250);
+    });
 
     $(document).ready(function() {
-      loadPosts();
+      getPraisePosts();
 
 		// 페이지 로딩이 완료되면 실행될 코드
 		// top nav 와 mobile nav 높이값을 감지해 화면 크기별 #tk_con 의 패딩 top,bottom 값 조절
@@ -90,7 +93,7 @@
 			item.style.display = 'block';
 		  }
 		});
-    setTimeout(loaddivpage, 30);
+    setTimeout(loaddivpage, 100);
     });
 
     // 토큰마크 화면 크기별 자동 조절
@@ -117,30 +120,46 @@
     window.location.href = `/tk_talk?sendId=${sendId}`;
   }
 
-  function loadPosts() {
-    $.ajax({
-      url: '/apis/tk_list/get_praise_posts',
-      method: 'GET',
-      beforeSend: function () {
-        renderSkeletons();
-      },
-      success: function(response) {
-        if (!response.data || response.data.length === 0) {
-          // Show the no message view
-          renderNoMessage();
-        } else {
-          // Render the posts
-          renderPosts(response.data);
-        }
-      },
-      error: function(xhr, status, error) {
-        console.error('Error fetching posts:', error);
-      },
-      complete: function() {
-        $('#tk_con > .row > .skeleton-container').empty();
+  function getPraisePosts() {
+      if ($("#viewAddEvent").css("display") === "none") {
+        return;
       }
-    });
-  }
+  
+      const currentPage = document.getElementById("currentPage").value;
+      
+      // increase next page count
+      const nextPage = parseInt(currentPage) + 1;
+      document.getElementById("currentPage").value = nextPage;
+
+      $.ajax({
+        url: '/apis/tk_list/get_praise_posts',
+        method: 'GET',
+        data: {
+          page: currentPage
+        },
+        beforeSend: function () {
+          renderSkeletons();
+        },
+        success: function (data) {
+          if (data.data_count === 0) {
+            $('#viewAddEvent').hide();
+            if (currentPage === 1) {
+              // first page and has no data
+              renderNoMessage();
+            }
+          } else {
+            // append posts
+            renderPosts(data.data_list);
+          }
+        },
+        error: function (xhr, status, error) {
+          console.error('Error fetching posts:', error);
+        },
+        complete: function () {
+          $('#tk_con > .row > .skeleton-item').remove();
+        }
+      });
+    }
 
   function renderNoMessage() {
     const noMessageHtml = `
@@ -164,46 +183,42 @@
   }
 
   function renderPosts(posts) {
-    const postsHtml = posts.map((part, index) => {
-      const isHidden = index >= 10;
-      const companyNameAbbr = getCompanyAbbreviation(part.user_company_name);
-      
-      return `
-        <div class="col-12 position-relative" style="z-index: 0;">
-          <div class="card-body">
-            <div class="${isHidden ? 'hiddendata' : ''}" ${isHidden ? 'style="display: none;"' : ''}>
+      const postsHtml = posts.map((part, index) => {
+        const companyNameAbbr = getCompanyAbbreviation(part.user_company_name);
+        return `
+          <div class="col-12 position-relative" style="z-index: 0;">
+            <div class="card-body">
               <div class="tkList border rounded d-flex align-items-center" style="cursor: pointer; margin-bottom:10px; padding:20px 2% 15px;"
-                onclick="viewTkTalk(${part.temp_user_id})">
-                <div class="tk_right position-absolute" style="right:2%; top:5px;">
-                  <div class="last_tk_date colorCustom_04" style="font-size: 14px;">${part.reg_date}</div>
-                  ${part.notice_count !== null ? `<div class="new_tk_num"><span>${part.notice_count}</span></div>` : ''}
-                </div>
-                <div class="overflow-hidden me-3 customSize" style="border:1px solid #d3f1ff; width: 60px; height: 60px; overflow: hidden; border-radius: 100%;">
-                  <img src="${part.user_image_yn === 'Y' ? part.user_image : '/static/assets/img/profile_icon.png'}" 
-                       alt="Avatar" style="width: 100%; height:100%; object-fit: cover;" />
-                </div>
-                <span id="chk_send_id" class="visually-hidden">${part.temp_user_id}</span>
-                <div class="overflow-hidden" style="width: 75%; margin-right:10%;">
-                  <div class="d-flex align-items-end mb-2 mt-2">
-                    <p class="mb-0 colorCustom_01 fw-med me-1" style="word-break: keep-all; line-height: 1; font-size: 18px;">
-                      ${part.user_employee_name}
-                    </p>
-                    <p class="mb-0 colorCustom_02 fw-med" style="word-break: keep-all; line-height: 1; font-size: 14px;">
-                      ${companyNameAbbr} ${part.user_department_name.slice(0, 8)}
-                    </p>
+                  onclick="viewTkTalk(${part.temp_user_id})">
+                  <div class="tk_right position-absolute" style="right:2%; top:5px;">
+                    <div class="last_tk_date colorCustom_04" style="font-size: 14px;">${part.reg_date}</div>
+                    ${part.notice_count !== null ? `<div class="new_tk_num"><span>${part.notice_count}</span></div>` : ''}
                   </div>
-                  <p style="text-overflow: ellipsis; word-wrap: break-word; font-size: 16px; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;"
-                     class="card-text mb-0 colorCustom_01">${part.content}</p>
+                  <div class="overflow-hidden me-3 customSize" style="border:1px solid #d3f1ff; width: 60px; height: 60px; overflow: hidden; border-radius: 100%;">
+                    <img src="${part.user_image_yn === 'Y' ? part.user_image : '/static/assets/img/profile_icon.png'}" 
+                         alt="Avatar" style="width: 100%; height:100%; object-fit: cover;" />
+                  </div>
+                  <span id="chk_send_id" class="visually-hidden">${part.temp_user_id}</span>
+                  <div class="overflow-hidden" style="width: 75%; margin-right:10%;">
+                    <div class="d-flex align-items-end mb-2 mt-2">
+                      <p class="mb-0 colorCustom_01 fw-med me-1" style="word-break: keep-all; line-height: 1; font-size: 18px;">
+                        ${part.user_employee_name}
+                      </p>
+                      <p class="mb-0 colorCustom_02 fw-med" style="word-break: keep-all; line-height: 1; font-size: 14px;">
+                        ${companyNameAbbr} ${part.user_department_name.slice(0, 8)}
+                      </p>
+                    </div>
+                    <p style="text-overflow: ellipsis; word-wrap: break-word; font-size: 16px; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;"
+                       class="card-text mb-0 colorCustom_01">${part.content}</p>
+                  </div>
                 </div>
-              </div>
             </div>
           </div>
-        </div>
-      `;
-    }).join('');
-    
-    $('#tk_con > .row').html(postsHtml);
-  }
+        `;
+      }).join('');
+
+      $('#tk_con > .row').append(postsHtml);
+    }
 
   function getCompanyAbbreviation(companyName) {
     const companyMap = {
@@ -229,13 +244,13 @@
   }
 
   function renderSkeletons() {
-    const container = $('#tk_con > .row > .skeleton-container');
-    container.empty(); // Clear existing content
+      const container = $('#tk_con > .row');
+      // container.empty(); // Clear existing content
 
-    // Create and append the specified number of skeleton items
-    for (let i = 0; i < 5; i++) {
+      // Create and append the specified number of skeleton items
+      for (let i = 0; i < 5; i++) {
         container.append(`
-          <div class="col-12 position-relative" style="z-index: 0;">
+          <div class="skeleton-item col-12 position-relative" style="z-index: 0;">
             <div class="card-body">
               <div>
                 <div class="tkList border rounded d-flex align-items-center" style="margin-bottom:10px; padding:20px 2% 15px;">
@@ -260,8 +275,8 @@
             </div>
           </div>
         `);
+      }
     }
-}
 
   </script>
 
