@@ -368,7 +368,7 @@ $(function() {
 <div id="sendTkPage" class="allPage layout-container flex-column">
 
   <!-- Content -->
-  <div id="con" class="container-xxl mt-2">
+  <div id="con" class=" mt-2">
     <div class="row">
       <div class="col-12 mb-2 position-relative">
 
@@ -448,7 +448,7 @@ $(function() {
 				<input type="hidden" name="input_active" value="Y">
 
 				<div class="d-flex align-items-end mb-2">
-					<h3 id="hiddenh3" class="me-2 mb-0 colorCustom_03 fw-bold">직원검색</h3>
+					<h3 id="hiddenh3" class="me-2 mb-0 fw-bold color-03">직원검색</h3>
 					<span id="hiddenspan" class="fw-med colorCustom_01"
 						style="padding:2px 3px; background: #c8edff; line-height: 1;">(가입한 직원만 검색가능/<br> 검색시 본인 이름 자동제외)</span>
 					<label type="hidden" id="chgLabelText" for="input_employee_name" class="form-label text-dark fs-6"></label>
@@ -510,7 +510,7 @@ $(function() {
 									<input id="inputCardImg" name="inputCardImg" class="form-control" onChange="addSwiperImage(event);"
 										type="file"
 										style="position:absolute; top:0;left:0;width:100%; height: 100%;  font-size:0; background:transparent; padding:0 !important; border:0 !important; opacity:0;">
-									<img src="{% static 'assets/img/sendCard_00.png' %}"></img>
+									<img src="{% static 'assets/img/vti/vti-send-card_00.png' %}"></img>
 								</div>
 								{% for part in posts_All %}
 								<div class="swiper-slide" style="height:clamp(40px,15vw,100px); cursor: pointer;"><img
@@ -531,7 +531,7 @@ $(function() {
 									<input id="inputCardImg" name="inputCardImg" class="form-control" type="file"
 										onChange="addSwiperImage(event);"
 										style="position:absolute; top:0;left:0;width:100%; height: 100%;  font-size:0; background:transparent; padding:0 !important; border:0 !important; opacity:0;">
-									<img src="{% static 'assets/img/sendCard_00.png' %}"></img>
+									<img src="{% static 'assets/img/vti/vti-send-card_00.png' %}"></img>
 								</div>
 								{% for part in posts_1 %}
 								<div class="swiper-slide" style="height:clamp(40px,15vw,100px); cursor: pointer;"><img
@@ -551,7 +551,7 @@ $(function() {
 									<input id="inputCardImg" name="inputCardImg" class="form-control" type="file"
 										onChange="addSwiperImage(event);"
 										style="position:absolute; top:0;left:0;width:100%; height: 100%;  font-size:0; background:transparent; padding:0 !important; border:0 !important; opacity:0;">
-									<img src="{% static 'assets/img/sendCard_00.png' %}"></img>
+									<img src="{% static 'assets/img/vti/vti-send-card_00.png' %}"></img>
 								</div>
 								{% for part in posts_2 %}
 								<div class="swiper-slide" style="height:clamp(40px,15vw,100px); cursor: pointer;"><img
@@ -572,7 +572,7 @@ $(function() {
 									<input id="inputCardImg" name="inputCardImg" class="form-control" type="file"
 										onChange="addSwiperImage(event);"
 										style="position:absolute; top:0;left:0;width:100%; height: 100%;  font-size:0; background:transparent; padding:0 !important; border:0 !important; opacity:0;">
-									<img src="{% static 'assets/img/sendCard_00.png' %}"></img>
+									<img src="{% static 'assets/img/vti/vti-send-card_00.png' %}"></img>
 								</div>
 								{% for part in posts_3 %}
 								<div class="swiper-slide" style="height:clamp(40px,15vw,100px); cursor: pointer;"><img
@@ -593,7 +593,7 @@ $(function() {
 									<input id="inputCardImg" name="inputCardImg" class="form-control" type="file"
 										onChange="addSwiperImage(event);"
 										style="position:absolute; top:0;left:0;width:100%; height: 100%;  font-size:0; background:transparent; padding:0 !important; border:0 !important; opacity:0;">
-									<img src="{% static 'assets/img/sendCard_00.png' %}"></img>
+									<img src="{% static 'assets/img/vti/vti-send-card_00.png' %}"></img>
 								</div>
 								{% for part in posts_4 %}
 								<div class="swiper-slide" style="height:clamp(40px,15vw,100px); cursor: pointer;"><img
@@ -614,7 +614,7 @@ $(function() {
 									<input id="inputCardImg" name="inputCardImg" class="form-control" type="file"
 										onChange="addSwiperImage(event);"
 										style="position:absolute; top:0;left:0;width:100%; height: 100%;  font-size:0; background:transparent; padding:0 !important; border:0 !important; opacity:0;">
-									<img src="{% static 'assets/img/sendCard_00.png' %}"></img>
+									<img src="{% static 'assets/img/vti/vti-send-card_00.png' %}"></img>
 								</div>
 								{% for part in posts_5 %}
 								<div class="swiper-slide" style="height:clamp(40px,15vw,100px); cursor: pointer;"><img
@@ -635,7 +635,7 @@ $(function() {
 									<input id="inputCardImg" name="inputCardImg" class="form-control" type="file"
 										onChange="addSwiperImage(event);"
 										style="position:absolute; top:0;left:0;width:100%; height: 100%;  font-size:0; background:transparent; padding:0 !important; border:0 !important; opacity:0;">
-									<img src="{% static 'assets/img/sendCard_00.png' %}"></img>
+									<img src="{% static 'assets/img/vti/vti-send-card_00.png' %}"></img>
 								</div>
 								{% for part in posts_6 %}
 								<div class="swiper-slide" style="height:clamp(40px,15vw,100px); cursor: pointer;"><img
@@ -707,13 +707,13 @@ $(function() {
 
 
             <div class="d-flex justify-content-between">
-              <button id="resetbtn" type="reset" class="btn colorCustom_03 m-0 py-3  fw-med fs-5"
-                style="width:49%; box-shadow: none; background: #e8f7ff;" data-bs-dismiss="modal">초기화</button>
+              <button id="resetbtn" type="reset" class="btn m-0 py-3  fw-med fs-5 bg-color-03 color-03"
+                style="width:49%; box-shadow: none;" data-bs-dismiss="modal">초기화</button>
               <!-- <button id="submitBtn" type="button" class="btn text-white m-0 py-3  fw-med fs-5" style="width:49%; box-shadow: none; background: #006ed5;" data-bs-toggle="modal" data-bs-target="#modalver1">등록하기</button> --> <!-- 모달 팝업 버전1 --> 
               <!-- <button id="submitBtn" type="button" class="btn text-white m-0 py-3  fw-med fs-5" style="width:49%; box-shadow: none; background: #006ed5;" data-bs-toggle="modal" data-bs-target="#modalver2">등록하기</button> --> <!-- 모달 팝업 버전2 --> 
 			  <!-- <button id="submitBtn" type="button" class="btn text-white m-0 py-3  fw-med fs-5" style="width:49%; box-shadow: none; background: #006ed5;" data-bs-toggle="modal" data-bs-target="#modalver3">등록하기</button> --> <!-- 모달 팝업 버전3 --> 
 			  <!-- <button id="submitBtn" type="button" class="btn text-white m-0 py-3  fw-med fs-5" style="width:49%; box-shadow: none; background: #006ed5;" data-bs-toggle="modal" data-bs-target="#modalver4">등록하기</button> --> <!-- 모달 팝업 버전4 --> 
-			  <button id="submitBtn" type="button" class="btn text-white m-0 py-3  fw-med fs-5" style="width:49%; box-shadow: none; background: #006ed5;" >등록하기</button>
+			  <button id="submitBtn" type="button" class="btn text-white m-0 py-3  fw-med fs-5 bg-color-10 color-00" style="width:49%; box-shadow: none;" >등록하기</button>
             </div>
           </div>
 		   
@@ -946,7 +946,7 @@ $(function() {
     const footer = document.querySelector('#footer');
     if (footer) {
       footer.innerHTML =
-        `<div class="footer w-100 text-center fw-med fs-6" style="color:#418dd4;">ⓒ 2024, made 땡큐토큰</div>`;
+        `<div class="footer w-100 text-center fw-med fs-6 color-03" style="color:#418dd4;">ⓒ 2024, made 땡큐토큰</div>`;
     }
     // 모든 페이지 footer 태그 출력 끝 - 240223
     // 공통 js 끝 - 240222
@@ -1024,7 +1024,7 @@ $(function() {
 
 /* 오늘의 땡큐 카드 - 헤더 데코 */
 .all_ .sendMeCard>div {
-  background: #c8edff;
+  background: #FFE0D0;
 }
 
 /* 카드 - 지점 명칭 */
@@ -1125,14 +1125,15 @@ $(function() {
 }
 #sendTkPage .cardOptionBtn a {
   width: 100%;
-  background: #e8f7ff;
+  background: #F2F2F2;
   font-size: 15px;
   padding:10px 5px;
+  color: #3A3A3A !important;
 }
 
 #sendTkPage .cardOptionBtn a.clicked {
-  background: #006ed5;
-  color: #fff !important;
+  background: #FFE0D0;
+  color: #FF6414 !important;
 }
 
 #sendTkPage .cardOptionBtn a~a {
@@ -1140,7 +1141,7 @@ $(function() {
 }
 
 #sendTkPage .sendMessage textarea {
-  color: #006ed5;
+  color: #3A3A3A !important;
 }
 
 #sendTkPage .sendCardSwiper {
@@ -1188,7 +1189,7 @@ $(function() {
 
 #sendTkPage .swiperPrev::after,
 #sendTkPage .swiperNext::after {
-  color: #9fc4e7;
+  color: #3A3A3A;
   font-size: 20px;
   font-weight: bold;
 }

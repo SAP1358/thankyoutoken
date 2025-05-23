@@ -1,3 +1,8 @@
+<!--
+####################################################################
+# 2024-03-26 VTI: Changed theme for PC mode and updated color concept
+####################################################################
+-->
 {% load static %}
 <!DOCTYPE html>
 <html lang="en" class="light-style" dir="ltr" data-theme="theme-default" data-assets-path="{% static 'assets/' %}"
@@ -69,6 +74,257 @@
   {% comment %} <link rel="stylesheet" href="{% static 'assets/vendor/css/pages/ui-carousel.css' %}" /> {% endcomment %}
   <!-- 드림 사용 소스 끝 -->
 
+<style>
+
+  .bg-color-00 {
+    background: #FFF !important;
+  }
+  .bg-color-01 {
+    background: #000 !important;
+  }
+  .bg-color-02 {
+    background: #777777 !important;
+  }
+  .bg-color-03 {
+    background: #F2F2F2 !important;
+  }
+  .bg-color-10 {
+    background: #FF6414 !important;
+  }
+  .bg-color-11 {
+    background: #FFE0D0 !important;
+  }
+  .bg-color-12 {
+    background: #3A3A3A !important;
+  }
+
+  .color-00 {
+    color: #FFF !important;
+  }
+  .color-01 {
+    color: #000 !important;
+  }
+  .color-02 {
+    color: #777777 !important;
+  }
+  .color-03 {
+    color: #3A3A3A !important;
+  }
+  .color-10 {
+    color: #143C96 !important;
+  }
+  .color-11 {
+    color: #FF6414 !important;
+  }
+  
+  .border-radius-8 {
+    border-radius: 8px !important;
+  }
+
+  .font-12 {
+    font-size: 12px !important;
+  }
+  .font-13 {
+    font-size: 13px !important;
+  }
+  .font-14 {
+    font-size: 14px !important;
+  }
+
+  .text-left {
+    text-align: left !important;
+  }
+</style>
+
+<style>
+  #con, #tk_con {
+    margin: 0px 50px;
+  }
+
+  @media (min-width: 1024px) {
+    #headerPC {
+      display: block !important;
+    }
+    #header {
+      display: none !important;
+    }
+    #sidebar {
+      display: block !important;
+    }
+    #content-rp {
+      padding-left: 250px !important;
+    }
+    .mobile-navigation {
+      display: none !important;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    #headerPC {
+      display: none !important;
+    }
+    #header {
+      display: block !important;
+    }
+    #sidebar {
+      display: none !important;
+    }
+    #content-rp {
+      padding-left: 0px !important;
+    }
+    .mobile-navigation {
+      display: block !important;
+    }
+  }
+
+  .cus-col {
+    flex: 0 0 auto !important;
+    width: 50% !important;
+  }
+
+  @media (max-width: 700px) { /* lg */
+    .cus-col {
+      width: 100% !important; /* col-lg-4 */
+    }
+  }
+
+  @media (min-width: 992px) { /* lg */
+    .cus-col {
+      width: 50% !important; /* col-lg-4 */
+    }
+  }
+
+  @media (min-width: 1200px) { /* xl */
+    .cus-col {
+      width: 50% !important; /* col-xl-4 */
+    }
+  }
+
+  @media (min-width: 1400px) { /* xxl */
+    .cus-col {
+      width: 33.33333% !important; /* col-xxl-3 */
+    }
+  }
+
+  @media (min-width: 1600px) { /* xxl */
+    .cus-col {
+      width: 25% !important; /* col-xxl-3 */
+    }
+  }
+
+</style>
+
+<style>
+  #sidebar button .icon_home {
+    -webkit-mask: url(/static/assets/img/icon_menu_01_02.svg) no-repeat center/auto 100%;
+    mask: url(/static/assets/img/icon_menu_01_02.svg) no-repeat center/auto 100%;
+  }
+
+  #sidebar button .icon_myThank {
+    -webkit-mask: url(/static/assets/img/icon_menu_02_01.svg) no-repeat center/auto 100%;
+    mask: url(/static/assets/img/icon_menu_02_01.svg) no-repeat center/auto 100%;
+  }
+
+  #sidebar button .icon_sendThank {
+    -webkit-mask: url(/static/assets/img/icon_menu_03_01.svg) no-repeat center/auto 100%;
+    mask: url(/static/assets/img/icon_menu_03_01.svg) no-repeat center/auto 100%;
+  }
+
+  #sidebar button .icon_best {
+    -webkit-mask: url(/static/assets/img/icon_menu_04_01.svg) no-repeat center/auto 100%;
+    mask: url(/static/assets/img/icon_menu_04_01.svg) no-repeat center/auto 100%;
+  }
+
+  #sidebar button .icon_myToken {
+    -webkit-mask: url(/static/assets/img/icon_menu_05_01.svg) no-repeat center/auto 100%;
+    mask: url(/static/assets/img/icon_menu_05_01.svg) no-repeat center/auto 100%;
+  }
+
+  #sidebar button .row>span {
+    width: 30px;
+    height: 30px;
+    margin: 0 auto;
+    background: #006ed5;
+  }
+
+  .nav-item-pc {
+    flex-wrap: nowrap;
+    padding-left: 8px;
+    line-height: 30px;
+  }
+</style>
+
+<style>
+  .light-style .select2-container--default .select2-selection {
+    border-radius: 0px !important;
+    border-top-left-radius: 8px !important;
+    border-bottom-left-radius: 8px !important;
+  }
+
+  #headerPC {
+    padding: 0 50px;
+  }
+
+  #headerPC .searchChkBtn {
+    border-radius: 0px !important;
+    border-top-right-radius: 8px !important;
+    border-bottom-right-radius: 8px !important;
+  }
+  
+
+</style>
+
+<style>
+  .layout-navbar .navbar-nav .nav-item.dropdown .dropdown-menu {
+    position: absolute !important;
+  }
+
+  .noticeInnerPC li {
+    background: #fff !important;
+  }
+
+  .noticeInnerPC li.border-bottom {
+    border-color: #14a8ea !important;
+  }
+
+  .noticeInnerPC li.border-top {
+    border-color: #dde7f1 !important;
+  }
+
+  #divViewNoticePC> li {
+    border-left: none;
+    border-right: none;
+    cursor: default;
+    border-color: #dde7f1;
+    max-height: 130px;
+  padding:10px 15px;
+  }
+
+  #divViewNoticePC>li h6 {
+    
+    word-break: keep-all;
+  }
+  /* 알림창 높이 조절 */
+  .layout-navbar .navbar-dropdown.dropdown-notifications .dropdown-notifications-list {max-height: 50vh !important;}
+  #divViewNoticePC>li h6 > span {
+    font-size: 14px;
+  }
+  #divViewNoticePC>li h6 + span {
+    font-size: 12px;
+  }
+  /* 알림창 높이 조절 */
+  #divViewNoticePC .quickBtn {
+    border-radius: 8px;
+    background: #d3f1ff;
+    font-size: 10px;
+  }
+
+  #divViewNoticePC .quickBtn:hover {
+    background: #006ed5;
+    color: #fff !important;
+  }
+</style>
+
   <style>
     body {
       min-width: 350px;
@@ -84,6 +340,80 @@
       border-radius: 0 !important;
    }
   </style>
+
+<style>
+  #headerPC .departBox span {
+    color: #62c8fa;
+    word-break: keep-all;
+  }
+
+  #headerPC .layout-navbar {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+
+  #headerPC .navbar-nav li>a.navBtn {
+    display: block;
+    width: clamp(25px, 5.3vw, 35px);
+    height: clamp(25px, 5.3vw, 35px);
+    padding: 0;
+  }
+
+  #headerPC .navbar-nav .search {
+    background: #fff;
+    -webkit-mask: url(/static/assets/img/icon_search.svg) no-repeat center/contain;
+    mask: url(/static/assets/img/icon_search.svg) no-repeat center/contain;
+  }
+
+  #headerPC .navbar-nav .notice {
+    background: #fff;
+    -webkit-mask: url(/static/assets/img/icon_notice01.svg) no-repeat center/contain;
+    mask: url(/static/assets/img/icon_notice01.svg) no-repeat center/contain;
+  }
+
+  #headerPC .navbar-nav li>a.navBtn .avatar img {
+    object-fit: cover;
+  }
+
+  #headerPC .navbar-nav li>a.navBtn .forBest.avatar::after {
+    content: "";
+    position: absolute;
+    top: -10%;
+    left: 0;
+    transform: scale(1.45);
+    width: 100%;
+    height: 100%;
+    background: url(/static/assets/img/rank_crown04-10.png) no-repeat center/100% auto;
+  }
+
+  #headerPC .navbar-nav li>a.navBtn .forBest.best_01.avatar::after,
+  #headerPC .navbar-nav li>a.navBtn .forBest.best_02.avatar::after,
+  #headerPC .navbar-nav li>a.navBtn .forBest.best_03.avatar::after {
+    top: -4%;
+  }
+
+  #headerPC .navbar-nav li>a.navBtn .forBest.best_01.avatar::after {
+    background: url(/static/assets/img/rank_crown01.png) no-repeat center/100% auto;
+  }
+
+  #headerPC .navbar-nav li>a.navBtn .forBest.best_02.avatar::after {
+    background: url(/static/assets/img/rank_crown02.png) no-repeat center/100% auto;
+  }
+
+  #headerPC .navbar-nav li>a.navBtn .forBest.best_03.avatar::after {
+    background: url(/static/assets/img/rank_crown03.png) no-repeat center/100% auto;
+  }
+
+  #headerPC .navbar-nav .light {
+      content: "asdasd";
+      position: absolute;
+      right: 3px;
+      width: 6px !important;
+      height: 6px !important;
+      border-radius: 100%;
+      background: #f6484a;
+    }
+</style>
 
   <script>
     // 2024-01-24 메시지 수신 이벤트 핸들러    
@@ -162,7 +492,7 @@
 
 </head>
 
-<body class="all_" style="overflow-y: scroll; overflow-x: hidden;">
+<body class="all_ bg-color-00" style="overflow-y: scroll; overflow-x: hidden;">
   <!-- Loading overlay -->
   <!-- <div id="loading">
     <div class="loader"></div>
@@ -170,10 +500,300 @@
 
   <!-- Content -->
   <!-- Layout wrapper -->
-  <div class="layout-wrapper layout-content-navbar layout-without-menu">
+  <div id="content-rp" class="layout-wrapper layout-content-navbar layout-without-menu">
     <!-- Layout container -->
     <div class="layout-page ">
-      <!-- Navbar -->
+      
+      <!-- Sidebar -->
+      <div id="sidebar" class="pc d-none d-xl-block position-fixed h-100 shadow bg-color-10" style="width: 250px; z-index: 9999; top: 0; left: 0;">
+        <div class="p-3 px-4">
+          <img src="{% static 'assets/img/vti/vti-logo-light.png' %}" class="img-fluid mb-2" style="width: 140px; height: 30px;" alt="Card image cap" />
+        </div>
+        <div class="btn-group-vertical w-100 p-2 py-0">
+          <ul class="nav w-100 flex-column mt-2">
+            <li class="nav-item w-100 {% if request.resolver_match.url_name == 'home' %}bg-color-11 border-radius-8{% endif %}">
+              <button type="button" class="naviBtn btn" onclick="location.href='{% url 'home' %}'">
+                {% if request.resolver_match.url_name == 'home' %}
+                <div class="d-flex">
+                  <div class="row nav-item-pc">
+                    <span class="icon_home bg-color-12"></span>
+                    <small class="color-03 fw-bold font-14 text-left">HOME</small>
+                  </div>
+                </div>
+                {% else %}
+                <div class="d-flex">
+                  <div class="row nav-item-pc">
+                    <span class="icon_home bg-color-00"></span>
+                    <small class="color-00 fw-bold font-14 text-left">HOME</small>
+                  </div>
+                </div>
+                {% endif %}
+              </button>
+            </li>
+            <li class="nav-item w-100 {% if request.resolver_match.url_name == 'tk_list' %}bg-color-11 border-radius-8{% endif %}">
+              <button type="button" class="naviBtn btn" onclick="location.href='{% url 'tk_list' %}'">
+                {% if request.resolver_match.url_name == 'tk_list' %}
+                <div class="d-flex">
+                  <div class="row nav-item-pc">
+                    <span class="icon_myThank bg-color-12"></span>
+                    <small class="color-03 fw-bold font-14 text-left">MY땡큐</small>
+                  </div>
+                </div>
+                {% else %}
+                <div class="d-flex">
+                  <div class="row nav-item-pc">
+                    <span class="icon_myThank bg-color-00"></span>
+                    <small class="color-00 fw-bold font-14 text-left">MY땡큐</small>
+                  </div>
+                </div>
+                {% endif %}
+              </button>
+            </li>
+            <li class="nav-item w-100 {% if request.resolver_match.url_name == 'praiseRegedit' %}bg-color-11 border-radius-8{% endif %}">
+              <button type="button" class="naviBtn btn" onclick="location.href='{% url 'praiseRegedit' %}'">
+                {% if request.resolver_match.url_name == 'praiseRegedit' %}
+                <div class="d-flex">
+                  <div class="row nav-item-pc">
+                    <span class="icon_sendThank bg-color-12"></span>
+                    <small class="color-03 fw-bold font-14 text-left">칭찬하기</small>
+                  </div>
+                </div>
+                {% else %}
+                <div class="d-flex">
+                  <div class="row nav-item-pc">
+                    <span class="icon_sendThank bg-color-00"></span>
+                    <small class="color-00 fw-bold font-14 text-left">칭찬하기</small>
+                  </div>
+                </div>
+                {% endif %}
+              </button>
+            </li>
+            <li class="nav-item w-100 {% if request.resolver_match.url_name == 'rankList' %}bg-color-11 border-radius-8{% endif %}">
+              <button type="button" class="naviBtn btn" onclick="location.href='{% url 'rankList' %}'">
+                {% if request.resolver_match.url_name == 'rankList' %}
+                <div class="d-flex">
+                  <div class="row nav-item-pc">
+                    <span class="icon_best bg-color-12"></span>
+                    <small class="color-03 fw-bold font-14 text-left">우리칭찬왕</small>
+                  </div>
+                </div>
+                {% else %}
+                <div class="d-flex">
+                  <div class="row nav-item-pc">
+                    <span class="icon_best bg-color-00"></span>
+                    <small class="color-00 fw-bold font-14 text-left">우리칭찬왕</small>
+                  </div>
+                </div>
+                {% endif %}
+              </button>
+            </li>
+            <li class="nav-item w-100 {% if request.resolver_match.url_name == 'myprofile' %}bg-color-11 border-radius-8{% endif %}">
+              <button type="button" class="naviBtn btn" onclick="location.href='{% url 'myprofile' %}'">
+                {% if request.resolver_match.url_name == 'myprofile' %}
+                <div class="d-flex">
+                  <div class="row nav-item-pc">
+                    <span class="icon_myToken bg-color-12"></span>
+                    <small class="color-01 fw-bold font-14 text-left">나의토큰</small>
+                  </div>
+                </div>
+                {% else %}
+                <div class="d-flex">
+                  <div class="row nav-item-pc">
+                    <span class="icon_myToken bg-color-00"></span>
+                    <small class="color-00 fw-bold font-14 text-left">나의토큰</small>
+                  </div>
+                </div>
+                {% endif %}
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Navbar PC -->
+      <div id="headerPC" class="w-100 position-relative bg-color-00">
+        <nav class="layout-navbar navbar align-items-center border-0 text-dark ms-auto p-0" id="layout-navbar" style="background:none !important; box-shadow:none;">
+          {% if user.is_authenticated %}
+          <div class="col-2 row align-items-center">
+            <div class="nameBox text-white fw-med">
+              <span class="myName fs-2 color-03 font-14"> {{user.employee_name}} <input id="tempUserId" type="hidden" value="{{user.id}}"> </span>
+              <span class="myRank fs-6 color-02 font-12">{{user.position_name}}</span>
+            </div>
+            <div class="departBox fw-med"> <span class="myDepart fs-6 color-10 font-13"> {{user.company_name}} {{user.department_name}} </span> </div>
+          </div>
+
+          {% else %}
+          <a href="{% url 'home' %}" class="app-brand-link">
+            <span class="app-brand-logo demo">
+              <span class="app-brand-text demo menu-text fw-bolder ms-0">
+                <a href="{% url 'home' %}" class="menu-link"> <img class="img-fluid mx-auto mx-0 my-0" src="{% static 'assets/img/woorifg.png' %}" style="max-height: 150px; max-width: 150px;" alt="Card image cap" /></a>
+              </span>
+            </span>
+          </a>
+          {% endif %}
+
+          <!-- Search PC -->
+          <div class="headerSearchPC container-xxl position-relative" id="searchmainPC" style="" data-select2-id="searchPC">
+            <div class="w-100" style="overflow: hidden;">
+              <form id="SearchformAuthenticationPC" class="browser-default-validation mb-0" action="{% url 'search' %}"
+                method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="d-grid d-sm-flex border-0 shadow-none">
+                  <div class="input-group input-group-merge ">
+                    <div class="col-12 d-flex justify-content-center align-items-center text-dark" style="display: none; height:39px;">
+                      <select id="select2TransPC" class="fw-med colorCustom_05 select2 form-select" data-allow-clear="true"
+                        name="input_search" id=""
+                        style="padding-left:10px; background: #fff;">
+                      </select>
+                      <!-- <span class="searchOpenBtn w-100 fs-5 colorCustom_05 fw-med" -->
+                      <!-- style="padding-left:10px; border-radius: initial; border-top-left-radius: 20px; border-bottom-left-radius: 20px; background: #fff;"></span> -->
+                      <button type="submit" class="searchChkBtn bg-color-10 btn fs-5 "
+                        style="background: #14a8ea; height: 39px; margin-right:-2px; color:#fff; min-width: 100px; padding:0;"
+                        onclick="searchDataPC()">검색</button>
+                    </div>
+                    <style>
+                          .headerSearch .select2.select2-container {position: absolute; left:0; width:calc(100% - 99px) !important;}
+                          .headerSearch button.searchChkBtn {position: absolute !important; right:0;}
+                      </style>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div class="col-1 d-flex align-items-center" id="navbar-collapse">
+            <!-- user info . -->
+            {% if user.is_authenticated %}
+            <ul class="navbar-nav flex-row align-items-center ms-auto">
+
+              <!-- 메뉴 - 알림 버튼 시작  -->
+              <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-xl-2 me-2 position-static">
+
+                <!-- 신규 알림 존재시 빨간불 들어오는 효과 -->
+                <div class="position-relative">
+                  <span id="alarmredPC" class="light position-absolute" style="display: none;"></span>
+                </div>
+
+                <a class="notice navBtn d-block dropdown-toggle hide-arrow position-relative bg-color-02" style="cursor: pointer; width:24px;height:24px;" onclick="viewNoticePC();"
+                  data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                  <span id="divCntNoticePC" class="" style="display: none;"><span class=""></span></span>
+                </a>
+
+                <ul class="dropdown-menu dropdown-menu-end py-0 w-50 noticeInnerPC" style="-webkit-user-select:none; user-select: none;">
+                  
+                  <li class="dropdown-menu-header border-bottom">
+                    <div class="dropdown-header d-flex align-items-center py-3">
+                      <h5 class="text-body mb-0 me-auto color-03 fw-bold fs-4">알림</h5>
+                    </div>
+                    <button id="closeNoticePC"  type="button" class="position-absolute btn-close closeCustom"
+                      style="background:transparent; border:0; right:10px; top:10px; padding:10px; box-shadow: none; transform: none !important; z-index: 2;"><span></span>
+                      <script> document.querySelector("#closeNoticePC").addEventListener('click',()=>{ document.querySelector('.noticeInnerPC').classList.remove('show'); }); </script>	<!--알림 종료버튼(X)-->
+                    </button>
+                  </li>
+
+                  <li class="dropdown-notifications-list scrollable-container0" style="overflow-y: scroll !important;">
+                    <div class="col-12"> <ul class="list-group list-group-flush"><div id="divViewNoticePC"></div></ul> </div>
+                    <div class="ps__rail-x" style="left: 0px; bottom: 0px;"> <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div> </div>
+                    <div class="ps__rail-y" style="top: 0px; right: 0px;"> <div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div> </div>
+                  <li class="dropdown-menu-footer border-top">
+
+                  <!-- 모든 메세지  -->
+                  <a class="totalNoticePC dropdown-item d-flex justify-content-center p-3 colorCustom_04 fw-med"><i style="font-style:normal;">전체 알림 보기</i>
+                    <span class="ms-1" style="transform:scale(0.6)">
+                      <!-- 아래 화살표로 이미지 수정 240304 -->
+                      <img class="w-100 chngArrow"
+                      src="{% static 'assets/img/icon_downArrow.png' %}"></span>
+                      <!-- 아래 화살표로 이미지 수정 240304 -->
+                  </a>
+
+                  <script>
+                    let setNPC = 0;
+                    const totalNoticePC = document.querySelector('.totalNoticePC');
+                    totalNoticePC.addEventListener('click',()=>{
+                      var allnoticesPC = document.querySelectorAll('[id=alreadynoticedPC]');
+                      console.log(allnoticesPC.length);
+                      if(setNPC == 0){
+                        totalNoticePC.querySelector('i').innerHTML = '전체 알림 접기';
+                        totalNoticePC.querySelector('span img').setAttribute('src','/static/assets/img/icon_upArrow.png');
+                        setNPC = 1;
+                        for(i = 0; i < allnoticesPC.length; i++){allnoticesPC[i].style.display = 'block';}
+                        let div = document.getElementById("divViewNoticePC");
+                        let children = div.children;
+                        for (let i = 0; i < children.length; i++) {children[i].style.display = "block";}
+                      }else {
+                        totalNoticePC.querySelector('i').innerHTML = '전체 알림 보기';
+                        totalNoticePC.querySelector('span img').setAttribute('src','/static/assets/img/icon_downArrow.png');
+                        setNPC = 0;
+                        for(i = 0; i < allnoticesPC.length; i++){allnoticesPC[i].style.display = 'none';}
+                      }
+                    });
+                  </script>	 <!--상단 알림 전체보기 화살표 위아래 꺽쇠-->
+                
+                </ul>
+              </li>
+              <!-- 메뉴 - 알림 버튼 시작 끝 -->
+
+              <!-- User -->
+              <li class="nav-item navbar-dropdown dropdown-user dropdown position-static">
+                <a class="avatarBtn navBtn nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"data-bs-toggle="dropdown">
+                  <div id="profileCrown" class="avatar avatar-lg ms-2 me-0" style="font-size: 0 !important; width: 32px; height: 32px;">
+                    {{user.image_yn}}
+                    {% if user.image_yn == 'Y' %}
+                    <img src="{{ user.image }}" class="rounded-circle" style="width:32px;height:32px;"/>
+                    {% else %}
+                    <img src="{% static 'assets/img/profile_bee_01.png' %}" class="rounded-circle" style="width:32px;height:32px;"/>
+                    {% endif %}
+                  </div>
+                </a>
+                <style>.avatarBtn img {background: #fff;}</style>
+                <!-- 프로필 -->
+                <ul class="dropdown-menu dropdown-menu-end profileMenu ">
+                  
+                  <li>
+                    <a class="dropdown-item py-3" data-bs-toggle="modal" data-bs-target="#profile_modal" onclick='javascript:openmyprofile("{{user.id}}", "{{user.image_yn}}", "{{user.image}}", "{{user.employee_id}}", "{{user.employee_name}}", "{{user.department_name}}","{{ user.position_name }}","{{ user.company_name }}")' />
+                      <span class="icon_myprofile"></span>
+                      <span class="align-middle colorCustom_04 fw-bold">마이프로필</span>
+                    </a>
+                  </li>
+
+                  {% if user.is_superuser %}
+                  <li>
+                    <a class="dropdown-item py-3" href="{% url 'manageMain' %}">
+                      <span class="icon_admin"></span>
+                      <span class="align-middle colorCustom_04 fw-bold">관리자</span>
+                    </a>
+                  </li>
+
+                  <li>
+                    <a class="dropdown-item py-3" href="javascript:{document.getElementById('logout').submit()}">
+                      <span class="icon_logout"></span>
+                      <span class="align-middle colorCustom_04 fw-bold">Log Out</span>
+                    </a>
+                  </li>
+
+                </ul>
+              </li>
+            </ul>
+            {% endif %}
+            <form id="logout" method="POST" action="{% url 'logout' %}">
+              {% csrf_token %} <input type="hidden" />
+            </form>
+            {% endif %}
+          </div>
+
+          <!-- Search Small Screens -->
+          <div class="navbar-search-wrapper search-input-wrapper d-none">
+            <input type="text" class="form-control search-input container-xxl border-0" placeholder="Search..."
+              aria-label="Search..." />
+            <i class="bx bx-x bx-sm search-toggler cursor-pointer"></i>
+          </div>
+
+        </nav>
+
+
+      </div>
+
+      <!-- Navbar Mobile -->
       <div id="header" class="w-100 p-3 py-4 position-relative">
         <span class="allBg"></span>
 
@@ -239,7 +859,7 @@
                 <ul class="dropdown-menu dropdown-menu-end py-0 w-100 noticeInner" style="-webkit-user-select:none; user-select: none;">
                   <li class="dropdown-menu-header border-bottom">
                     <div class="dropdown-header d-flex align-items-center py-3">
-                      <h5 class="text-body mb-0 me-auto colorCustom_06 fw-bold fs-4">알림</h5>
+                      <h5 class="text-body mb-0 me-auto color-03 fw-bold fs-4">알림</h5>
                     </div>
               <button id="closeNotice"  type="button" class="position-absolute btn-close closeCustom"
                 style="background:transparent; border:0; right:10px; top:10px; padding:10px; box-shadow: none; transform: none !important; z-index: 2;"><span></span>
@@ -371,6 +991,8 @@
 
 
       </div>
+
+      <!-- Search Mobile -->
       <div class="headerSearch collapse container-xxl position-relative" id="searchmain" style="" data-select2-id="search1">
         <div style="border-radius: 20px; overflow: hidden; margin-top:10px;">
           <form id="SearchformAuthentication" class="browser-default-validation mb-0" action="{% url 'search' %}"
@@ -385,8 +1007,8 @@
                   </select>
                   <!-- <span class="searchOpenBtn w-100 fs-5 colorCustom_05 fw-med" -->
                   <!-- style="padding-left:10px; border-radius: initial; border-top-left-radius: 20px; border-bottom-left-radius: 20px; background: #fff;"></span> -->
-                  <button type="submit" class="searchChkBtn btn fs-5 "
-                    style="background: #14a8ea; height: 39px; margin-right:-2px; color:#fff; min-width: 100px; border-radius: 0; padding:0;"
+                  <button type="submit" class="searchChkBtn btn fs-5 bg-color-11 color-11 "
+                    style="height: 39px; margin-right:-2px; min-width: 100px; border-radius: 0; padding:0;"
                     onclick="searchData()">검색</button>
                 </div>
                 <style>
@@ -431,15 +1053,15 @@
               {% if request.resolver_match.url_name == 'home' %}
               <div class="d-flex">
                 <div class="row">
-                  <span class="icon_home"></span>
-                  <small class="colorCustom_03 fw-med">HOME</small>
+                  <span class="icon_home bg-color-10"></span>
+                  <small class="color-11 fw-med">HOME</small>
                 </div>
               </div>
               {% else %}
               <div class="d-flex">
                 <div class="row">
-                  <span class="icon_home"></span>
-                  <small class="colorCustom_03 fw-med">HOME</small>
+                  <span class="icon_home bg-color-02"></span>
+                  <small class="color-02 fw-med">HOME</small>
                 </div>
               </div>
               {% endif %}
@@ -449,15 +1071,15 @@
               {% if request.resolver_match.url_name == 'tk_list' %}
               <div class="d-flex">
                 <div class="row">
-                  <span class="icon_myThank"></span>
-                  <small class="colorCustom_03 fw-med">MY땡큐</small>
+                  <span class="icon_myThank bg-color-10"></span>
+                  <small class="color-11 fw-med">MY땡큐</small>
                 </div>
               </div>
               {% else %}
               <div class="d-flex">
                 <div class="row">
-                  <span class="icon_myThank"></span>
-                  <small class="colorCustom_03 fw-med">MY땡큐</small>
+                  <span class="icon_myThank bg-color-02"></span>
+                  <small class="color-02 fw-med">MY땡큐</small>
                 </div>
               </div>
               {% endif %}
@@ -467,15 +1089,15 @@
               {% if request.resolver_match.url_name == 'praiseRegedit' %}
               <div class="d-flex">
                 <div class="row">
-                  <span class="icon_sendThank"></span>
-                  <small class="colorCustom_03 fw-med">칭찬하기</small>
+                  <span class="icon_sendThank bg-color-10"></span>
+                  <small class="color-11 fw-med">칭찬하기</small>
                 </div>
               </div>
               {% else %}
               <div class="d-flex">
                 <div class="row">
-                  <span class="icon_sendThank"></span>
-                  <small class="colorCustom_03 fw-med">칭찬하기</small>
+                  <span class="icon_sendThank bg-color-02"></span>
+                  <small class="color-02 fw-med">칭찬하기</small>
                 </div>
               </div>
               {% endif %}
@@ -484,15 +1106,15 @@
               {% if request.resolver_match.url_name == 'rankList' %}
               <div class="d-flex">
                 <div class="row">
-                  <span class="icon_best"></span>
-                  <small class="colorCustom_03 fw-med">우리칭찬왕</small>
+                  <span class="icon_best bg-color-10"></span>
+                  <small class="color-11 fw-med">우리칭찬왕</small>
                 </div>
               </div>
               {% else %}
               <div class="d-flex">
                 <div class="row">
-                  <span class="icon_best"></span>
-                  <small class="colorCustom_03 fw-med">우리칭찬왕</small>
+                  <span class="icon_best bg-color-02"></span>
+                  <small class="color-02 fw-med">우리칭찬왕</small>
                 </div>
               </div>
               {% endif %}
@@ -502,15 +1124,15 @@
               {% if request.resolver_match.url_name == 'myprofile' %}
               <div class="d-flex">
                 <div class="row">
-                  <span class="icon_myToken"></span>
-                  <small class="colorCustom_03 fw-med">나의토큰</small>
+                  <span class="icon_myToken bg-color-10"></span>
+                  <small class="color-11 fw-med">나의토큰</small>
                 </div>
               </div>
               {% else %}
               <div class="d-flex">
                 <div class="row">
-                  <span class="icon_myToken"></span>
-                  <small class="colorCustom_03 fw-med">나의토큰</small>
+                  <span class="icon_myToken bg-color-02"></span>
+                  <small class="color-02 fw-med">나의토큰</small>
                 </div>
               </div>
               {% endif %}
@@ -608,7 +1230,7 @@
           <div class="modal-body text-center">
             <div class="d-flex mb-2 align-items-end justify-content-center">
               <h2 id="profile_employee_name" class="colorCustom_01 fw-med mb-0 me-1">{{user.employee_name}}</h2>
-              <span id="profile_position_name" class="fs-5 colorCustom_03 fw-med" style="line-height: normal;">{{user.position_name}}</span>
+              <span id="profile_position_name" class="fs-5 color-00 fw-med" style="line-height: normal;">{{user.position_name}}</span>
             </div>
             <div class="d-flex justify-content-center">
               <span id="profile_company_name" class="colorCustom_01 fs-6 fw-med me-2">{{user.company_name}}</span>
@@ -617,7 +1239,7 @@
             <!-- 카드 프로필이 아닌, 마이프로필 클릭시 버튼 활성화 시작-->
             <div class="my-3">
             <!-- <div id="profile_change_btn" class="my-3"> -->
-              <button id="profile_change_btn" type="button" class="btn colorCustom_03 fw-bold" data-bs-toggle="modal" data-bs-dismiss="modal"
+              <button id="profile_change_btn" type="button" class="btn color-00 bg-color-10 fw-bold" data-bs-toggle="modal" data-bs-dismiss="modal"
                 data-bs-target="#profileEdit_modal" style="box-shadow: none; background: #c8edff; display: inline-flex;">프로필 사진변경</button>
                 <!-- <button id="profile_change_btn" type="button" class="btn colorCustom_03 fw-bold" data-bs-toggle="modal" data-bs-target="#profile_changedmodal"
 			  style="box-shadow: none; background: #c8edff; display: inline-flex;">프로필 사진변경</button> -->
@@ -669,7 +1291,7 @@
                     .profileNowImg img {width:100px; height:100px; object-fit: cover; border-radius: 100%; border:1px solid #d3f1ff; background: #fff;}
                   </style>
                   <label for="input_formFile" class="btn px-3 py-2 upLoadBox" tabindex="0"
-                    style="border-radius: 30px; background: #016ed5; margin-right:10px; height:39px;">
+                    style="border-radius: 8px; background: #FF6414; margin-right:10px; height:39px;">
                     <p class="text-white fw-bold d-flex m-0 align-items-center"><span class="d-block me-2" style="width:20px"><img
                           class="w-100" src="{% static 'assets/img/icon_upload.png' %}"></span>사진 업로드</p>
                     <input type="file" id="input_formFile" name="input_formFile" onChange="setPotoImg(event);"
@@ -677,8 +1299,8 @@
                   </label>
                   <div style="height:39px;">
                     <!--<button id="profileBtn" type="submit" class="btn fw-bold colorCustom_03 m-0 w-100" data-bs-toggle="modal" data-bs-target="#profile_changedmodal" -->
-                    <button id="profileBtn" type="submit" class="btn fw-bold colorCustom_03 m-0 w-100"
-                      style="border-radius: 30px; background: #c8edff;">변경</button>
+                    <button id="profileBtn" type="submit" class="btn fw-bold color-11 m-0 w-100"
+                      style="border-radius: 8px; background: #FFF; border: 1px solid #FF6414">변경</button>
                   </div>
                 </div>
               </div>
@@ -904,7 +1526,7 @@
 
     /* 공통 헤더 #layout-header CSS 시작 */
     #header {
-      background: #006ed5;
+      background: #FF6414;
     }
 
     #header .allBg {
@@ -913,11 +1535,11 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: #006ed5;
+      background: #FF6414;
     }
 
     #header .departBox span {
-      color: #62c8fa;
+      color: #FFF;
       word-break: keep-all;
     }
 
@@ -1115,7 +1737,7 @@
     }
     /* 알림창 높이 조절 */
     #divViewNotice .quickBtn {
-      border-radius: 15px;
+      border-radius: 8px;
       background: #d3f1ff;
       font-size: 10px;
     }
@@ -1165,7 +1787,7 @@
       width: 60%;
       height: 2px;
       border-radius: 10px;
-      background: #006ed5;
+      background: #3A3A3A;
     }
 
     .closeCustom span::after {
@@ -1177,7 +1799,7 @@
       width: 100%;
       height: 100%;
       border-radius: 10px;
-      background: #006ed5;
+      background: #3A3A3A;
     }
 
     #profile_modal .closeCustom span,
@@ -1221,12 +1843,13 @@
     }
 
     .mobile-navigation button:hover {
-      background-color: #006ed5 !important;
+      background-color: #FF6414 !important;
       border-color: #EB5C32 !important;
+      color: #FFF !important;
     }
 
     .mobile-navigation button:hover .row>span {
-      background: #fff;
+      background: #fff !important;
     }
 
     .mobile-navigation button:hover small {
@@ -1248,7 +1871,7 @@
     #profile_modal .modal-content {
       max-width: 400px;
       margin: 0 auto;
-      background: url(/static/assets/img/profile_bg.jpg) no-repeat top/cover;
+      background: url(/static/assets/img/vti/vti-profile-bg.jpg) no-repeat top/cover;
       overflow: hidden;
     }
 .all_ .icon_right_arrow {
@@ -1307,7 +1930,7 @@
     .all_ .editBtn span {
       width: 10px;
       height: 100%;
-      background: #006ed5;
+      background: #777777;
       -webkit-mask: url(/static/assets/img/icon_edit.svg) no-repeat center/auto 100%;
       mask: url(/static/assets/img/icon_edit.svg) no-repeat center/auto 100%;
     }
@@ -1408,6 +2031,7 @@ onfocusout="this.style.borderColor=''"
 
 	var noticetrial = 0;
 	var loadnotice = 0;
+	var loadnoticePC = 0;
 	
 	function openmyprofile(id, imgYn, imgSrc, employee_id, employee_name, department_name, position_name, company_name)
 	{
@@ -1478,6 +2102,63 @@ $(document).ready(function(){
 	});
 	
 	$("#select2Trans").css("display", "");
+	$(document).on('select2:open', () => {
+		document.querySelector('.select2-container--open .select2-search__field').focus();
+		// $(".select2-search__field").trigger('focus');
+		document.querySelector('.select2-container--open .select2-search__field').setAttribute("placeholder", "검색어를 입력해주세요.");
+	});
+
+  // SearchPC
+  $("#select2TransPC").select2({
+	ajax: {
+		allowClear: false,
+		type: "POST",
+		url: "/apis/praise_member/",
+		delay: 250,
+		dataType: 'json',
+		data: function (params) {
+			var query = {
+				employee_name: params.term,
+	id: -7, //답장하고 같이 넘기기 검색변경 2024.01
+			}
+			return query;
+		},
+		processResults: function (data) {
+
+			var resultData = data.data_list.map(function(obj){
+				return {
+					id: obj.id,
+					text: obj.company_name + " " + obj.department_name + " " +obj.employee_name + " " + obj.positon_name
+				}
+			});
+			return {
+				results: resultData
+			};
+		},
+	},
+	//allowClear: true,
+	placeholder: {
+			id: "the_predefined_value",
+			text: ""
+	},
+	minimumInputLength: 2,
+	language: {
+		noResults: function() {
+			return "검색 결과가 없습니다.";
+		},
+		searching: function(){
+			return "검색중..";
+		},
+		errorLoading: function(){
+			return "";
+		},
+	inputTooShort: function(args) { // 여기를 추가하세요
+		return "최소 " + args.minimum + "글자 이상 입력하세요.";
+	}
+		}
+	});
+	
+	$("#select2TransPC").css("display", "");
 	$(document).on('select2:open', () => {
 		document.querySelector('.select2-container--open .select2-search__field').focus();
 		// $(".select2-search__field").trigger('focus');
@@ -1656,12 +2337,64 @@ function getunreadnotice() // 초기 알림 읽은거 표기하려고 함
 
 getunreadnotice();
 
+function getunreadnoticePC()
+{
+	var inputData = {
+		notice_type: '3'
+	};
+		
+	try 
+	{
+		$.ajax({
+			type: "POST",
+			url: "/apis/myprofile_notice/",
+			data: inputData,
+			success: function (data) {
+				// console.log(data);
+				var noticeunread = 0;
+				for (var i = 0; i < data.data_list.length; i++) 
+				{
+					var currentline = data.data_list[i];
+					var check_yn = currentline.check_yn;
+					if (check_yn == 'N')
+					{
+						noticeunread = 1;
+						document.getElementById('alarmredPC').style.display = 'block';
+					}					
+				}
+				if (noticeunread == 0)
+				{
+					document.getElementById('alarmredPC').style.display = 'none';
+				}
+
+			},
+			error: function (e) {
+				console.log("### myprofile_notice ERROR : ", e);
+			}
+		})
+		.done(function() {
+			// AJAX 요청 완료 후 처리할 작업
+		})
+		.fail(function() {
+			// AJAX 요청 실패 시 처리할 작업
+		});
+	} 
+	catch (e) 
+	{
+		alert(e);
+		alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+	}	
+		
+}
+
+getunreadnoticePC();
+
 function viewNotice(){
 		
-	if (loadnotice == 0)
+	if (loadnoticePC == 0)
 	{
 		// console.log('viewNotice =========');
-		loadnotice = loadnotice + 1;
+		loadnoticePC = loadnoticePC + 1;
 		
 		var inputData = {
 				notice_type: '3'
@@ -1705,10 +2438,10 @@ function viewNotice(){
 									html += '<img src="/static/assets/img/profile_bee_01.png" style="border:1px solid #d3f1ff; object-fit:cover;" class="rounded-circle" />'
 								}
 
-								html += '</div></div><div class="flex-grow-1"><h6 class="colorCustom_03 mb-0 fw-med fs-5 d-flex justify-content-between align-items-center"><span onclick="removeli(this, '+notice_id+');">';
+								html += '</div></div><div class="flex-grow-1"><h6 class="color-03 mb-0 fw-med fs-5 d-flex justify-content-between align-items-center"><span onclick="removeli(this, '+notice_id+');">';
 								html += department_name + ' ' + employee_name + ' ' + position_name;
-								html += '</span><a class="btn btn-xs my-1 px-3 py-1 quickBtn colorCustom_03 fw-med" onclick="movetoPraiseDetail('+compliment_id+', '+notice_id+');">바로보기</a></h6><span class="mb-0 colorCustom_05 fw-med" onclick="removeliparent(this, '+notice_id+');">소중한 칭찬글을 보냈습니다.</span>';
-								html += '<br><small class="colorCustom_05">';
+								html += '</span><a class="btn btn-xs my-1 px-3 py-1 quickBtn color-00 bg-color-10 fw-med" onclick="movetoPraiseDetail('+compliment_id+', '+notice_id+');">바로보기</a></h6><span class="mb-0 color-02 fw-med" onclick="removeliparent(this, '+notice_id+');">소중한 칭찬글을 보냈습니다.</span>';
+								html += '<br><small class="color-02">';
 								html += reg_date;
 								html += '</small></div><div class="flex-shrink-0 dropdown-notifications-actions"></div><span class="badge badge-dot" style="background:#006ed5;"></span></div></li>';
 							
@@ -1726,10 +2459,10 @@ function viewNotice(){
 									html += '<img src="/static/assets/img/profile_bee_01.png" style="border:1px solid #d3f1ff; object-fit:cover;" class="rounded-circle" />'
 								}
 
-								html += '</div></div><div class="flex-grow-1"><h6 class="colorCustom_03 mb-0 fw-med fs-5 d-flex justify-content-between align-items-center"><span onclick="removeli(this, '+notice_id+');">';
+								html += '</div></div><div class="flex-grow-1"><h6 class="color-03 mb-0 fw-med fs-5 d-flex justify-content-between align-items-center"><span onclick="removeli(this, '+notice_id+');">';
 								html += department_name + ' ' + employee_name + ' ' + position_name;
-								html += '</span><a class="btn btn-xs my-1 px-3 py-1 quickBtn colorCustom_03 fw-med" onclick="movetoPraiseDetail('+compliment_id+', '+notice_id+');">바로보기</a></h6><span class="mb-0 colorCustom_05 fw-med" onclick="removeliparent(this, '+notice_id+');">소중한 칭찬글을 보냈습니다.</span>';
-								html += '<br><small class="colorCustom_05">';
+								html += '</span><a class="btn btn-xs my-1 px-3 py-1 quickBtn color-00 bg-color-10 fw-med" onclick="movetoPraiseDetail('+compliment_id+', '+notice_id+');">바로보기</a></h6><span class="mb-0 color-02 fw-med" onclick="removeliparent(this, '+notice_id+');">소중한 칭찬글을 보냈습니다.</span>';
+								html += '<br><small class="color-02">';
 								html += reg_date;
 								html += '</small></div><div class="flex-shrink-0 dropdown-notifications-actions"></div></div></li>';
 							
@@ -1739,6 +2472,110 @@ function viewNotice(){
 							
 						}
 						divViewNotice.insertAdjacentHTML('beforeend',html);
+
+					},
+					error: function (e) {
+							console.log("### myprofile_notice ERROR : ", e);
+							//alert("fail");
+					}
+				})
+				.done(function() {
+					// AJAX 요청 완료 후 처리할 작업
+				})
+				.fail(function() {
+					// AJAX 요청 실패 시 처리할 작업
+				});
+		} catch (e) {
+				alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
+		}	
+		
+	}
+		
+}
+
+function viewNoticePC(){
+		
+	if (loadnotice == 0)
+	{
+		// console.log('viewNotice =========');
+		loadnotice = loadnotice + 1;
+		
+		var inputData = {
+				notice_type: '3'
+				//value2: input2,
+				//value3: input3
+		};
+
+		try {
+				$.ajax({
+					type: "POST",
+					url: "/apis/myprofile_notice/",
+					data: inputData,
+					success: function (data) {
+						//console.log('### myprofile_notice success');
+						var divViewNoticePC = document.getElementById('divViewNoticePC');
+						var html = '';
+						// console.log(data);
+						for (var i = 0; i < data.data_list.length; i++) 
+						{
+							var currentline = data.data_list[i];
+							var image_yn = currentline.image_yn;
+							var image = currentline.image;
+							var department_name = currentline.department_name;
+							var employee_name = currentline.employee_name;
+							var position_name = currentline.position_name;
+							var reg_date = currentline.reg_date;
+							var check_yn = currentline.check_yn;	
+							var compliment_id = currentline.compliment_id;
+							var notice_id = currentline.notice_id;
+													
+							if (check_yn == 'N')
+							{
+								html += '<li class="list-group-item list-group-item-action dropdown-notifications-item"><div class="d-flex newMessage"><div class="flex-shrink-0 mt-2 me-3">';
+								html += '<div class="avatar" style="width:3rem; height:3rem;">';
+								if (image_yn == 'Y')
+								{
+									html += '<img src="'+image+'" style="border:1px solid #d3f1ff; object-fit:cover;" class="rounded-circle" />';
+								}
+								else
+								{
+									html += '<img src="/static/assets/img/profile_bee_01.png" style="border:1px solid #d3f1ff; object-fit:cover;" class="rounded-circle" />'
+								}
+
+								html += '</div></div><div class="flex-grow-1"><h6 class="color-03 mb-0 fw-med fs-5 d-flex justify-content-between align-items-center"><span onclick="removeli(this, '+notice_id+');">';
+								html += department_name + ' ' + employee_name + ' ' + position_name;
+								html += '</span><a class="btn btn-xs my-1 px-3 py-1 quickBtn color-00 bg-color-10 fw-med" onclick="movetoPraiseDetail('+compliment_id+', '+notice_id+');">바로보기</a></h6><span class="mb-0 color-02 fw-med" onclick="removeliparent(this, '+notice_id+');">소중한 칭찬글을 보냈습니다.</span>';
+								html += '<br><small class="color-02">';
+								html += reg_date;
+								html += '</small></div><div class="flex-shrink-0 dropdown-notifications-actions"></div><span class="badge badge-dot" style="background:#006ed5;"></span></div></li>';
+							
+							}
+							else
+							{
+								html += '<li id="alreadynoticedPC" class="list-group-item list-group-item-action dropdown-notifications-item" style="display: none;"><div class="d-flex newMessage"><div class="flex-shrink-0 mt-2 me-3">';
+								html += '<div class="avatar" style="width:3rem; height:3rem;">';
+								if (image_yn == 'Y')
+								{
+									html += '<img src="'+image+'" style="border:1px solid #d3f1ff; object-fit:cover;" class="rounded-circle" />';
+								}
+								else
+								{
+									html += '<img src="/static/assets/img/profile_bee_01.png" style="border:1px solid #d3f1ff; object-fit:cover;" class="rounded-circle" />'
+								}
+
+								html += '</div></div><div class="flex-grow-1"><h6 class="color-03 mb-0 fw-med fs-5 d-flex justify-content-between align-items-center"><span onclick="removeli(this, '+notice_id+');">';
+								html += department_name + ' ' + employee_name + ' ' + position_name;
+								html += '</span><a class="btn btn-xs my-1 px-3 py-1 quickBtn color-00 bg-color-10 fw-med" onclick="movetoPraiseDetail('+compliment_id+', '+notice_id+');">바로보기</a></h6><span class="mb-0 color-02 fw-med" onclick="removeliparent(this, '+notice_id+');">소중한 칭찬글을 보냈습니다.</span>';
+								html += '<br><small class="color-02">';
+								html += reg_date;
+								html += '</small></div><div class="flex-shrink-0 dropdown-notifications-actions"></div></div></li>';
+							
+							}
+							
+							
+							
+						}
+						divViewNoticePC.insertAdjacentHTML('beforeend',html);
 
 					},
 					error: function (e) {
@@ -1776,6 +2613,7 @@ function movetoPraiseDetail(compliment_id, _notice_id) // praise detail page 이
 			data: inputData,
 			success: function (data) {
 				getunreadnotice();
+				getunreadnoticePC();
 			},
 			error: function (e) {
 				console.log("### myprofile_notice ERROR : ", e);
@@ -1932,6 +2770,39 @@ $("#SearchformAuthentication").on("submit", function (event) {
 
     // 검색어 유효성 검사 (이미 검증한 부분을 여기에도 추가)
     var _employee_name = $("#select2Trans").val();
+    if (!_employee_name) {
+        Warning('필수입력 오류', '칭찬직원을 선택해 주세요.');
+        $.unblockUI();
+        return false;
+    }
+
+    // 유효한 경우 폼 제출
+    this.submit();
+}); 
+
+function searchDataPC() {    
+    $("#input_employee_id").val($("#select2TransPC").val());
+    var _employee_name = $("#select2TransPC").val();
+
+    // console.log("chk _employee_name" + _employee_name);
+    
+		if (!_employee_name) {
+			Warning('필수입력 오류','칭찬직원 입력해 주세요.');
+			$.unblockUI();  
+			return false;
+		}
+		
+	// 폼 제출
+	document.getElementById("SearchformAuthenticationPC").submit();
+	//submitForm();
+}
+
+$("#SearchformAuthenticationPC").on("submit", function (event) {
+    // 기본 제출 동작을 중지
+    event.preventDefault();
+
+    // 검색어 유효성 검사 (이미 검증한 부분을 여기에도 추가)
+    var _employee_name = $("#select2TransPC").val();
     if (!_employee_name) {
         Warning('필수입력 오류', '칭찬직원을 선택해 주세요.');
         $.unblockUI();

@@ -26,6 +26,7 @@
 # 2024-12-18 VTI   integrate feature upload image to CDN
 # 2024-12-24 VTI   fix point accumulation incorrect
 # 2024-12-25 VTI   refactor and add new functions of home, search, tk_list, rankList
+# 2025-04-24 VTI   fix logout flow and change initial record limit from 6 to 12
 ####################################################################
 from django.shortcuts import render, HttpResponse, redirect
 from myprofile.models import User as User2
@@ -138,7 +139,7 @@ summarizer = Summarizer()
 def result(request):
     return render(request, 'result.html')
 
-@login_required(login_url='/accounts/signin/')
+@login_required(login_url='/accounts/signManager/')
 @measure_execution_time
 def home_new(request):
     # ==========================
@@ -234,7 +235,7 @@ def home_new(request):
         }
     )
 
-@login_required(login_url='/accounts/signin/')
+@login_required(login_url='/accounts/signManager/')
 @measure_execution_time
 def home(request):
     # print("### [VIEW] home ####################################################")
@@ -281,7 +282,7 @@ def home(request):
     #    print(row)
 
     # 출력부 SET
-    paginator = Paginator(selectUserPraise, 6)
+    paginator = Paginator(selectUserPraise, 12)
     page = request.GET.get('page')
     posts = paginator.get_page(page)
 
@@ -304,13 +305,13 @@ def home(request):
     #-------------
     selectUserImages = UserImages.objects.filter(is_open='Y', is_active='Y').order_by('-reg_date')
     
-    paginator = Paginator(selectUserImages, 6)
+    paginator = Paginator(selectUserImages, 12)
     page = request.GET.get('page')
     images = paginator.get_page(page)
                 
     return render(request, 'home/main.html',  {'posts':posts, 'images':images, 'addPage':'Y'})           
     
-@login_required(login_url='/accounts/signin/')
+@login_required(login_url='/accounts/signManager/')
 @measure_execution_time
 def search_new(request):
     # ==========================
@@ -392,7 +393,7 @@ def search_new(request):
         }
     )
 
-@login_required(login_url='/accounts/signin/')
+@login_required(login_url='/accounts/signManager/')
 @measure_execution_time
 def search(request):
     print("### [VIEW] search ####################################################")
@@ -490,7 +491,7 @@ def search(request):
         # else:
         #     paginator = Paginator(selectUserPraise, 1000)
         # paginator = Paginator(selectUserPraise, 200) #회장님 검색시 로딩 느려서 1000>6 변경 2024.03.17, 'addPage':'N' > 'Y'로 변경해서 return
-        paginator = Paginator(selectUserPraise, 6)
+        paginator = Paginator(selectUserPraise, 12)
         page = request.GET.get('page')
         posts = paginator.get_page(page)
 
@@ -508,7 +509,7 @@ def search(request):
         #-------------
         selectUserImages = UserImages.objects.filter(is_open='Y', is_active='Y').order_by('-reg_date')
 
-        paginator = Paginator(selectUserImages, 6)
+        paginator = Paginator(selectUserImages, 12)
         page = request.GET.get('page')
         images = paginator.get_page(page)
 
@@ -520,7 +521,7 @@ def search(request):
     
     return redirect('/')
 
-@login_required(login_url='/accounts/signin/')
+@login_required(login_url='/accounts/signManager/')
 def dev(request):
 
     # print("### 1111111111")
@@ -571,7 +572,7 @@ def dev(request):
     
     return render(request, 'dev.html')
 
-@login_required(login_url='/accounts/signin/')
+@login_required(login_url='/accounts/signManager/')
 def manageMain(request):
         
     ##########################
@@ -806,7 +807,7 @@ def apitest(request):
     
     return render(request, 'apitest.html')
 
-@login_required(login_url='/accounts/signin/')
+@login_required(login_url='/accounts/signManager/')
 def htmltest(request):
     print("### [VIEW] htmltest ####################################################")
     
@@ -847,7 +848,7 @@ def htmltest(request):
     
     return render(request, 'htmltest.html', {'posts':posts})
 
-@login_required(login_url='/accounts/signin/')
+@login_required(login_url='/accounts/signManager/')
 def praiseList(request):
     print("### [VIEW] praiseList ####################################################")
     
@@ -890,7 +891,7 @@ def praiseList(request):
         
     return render(request, 'praiseList.html', {'posts':posts, 'images':images})
     
-@login_required(login_url='/accounts/signin/')
+@login_required(login_url='/accounts/signManager/')
 def praiseDetail(request, compliment_id):
     print("### [VIEW] praiseDetail ####################################################")
     
@@ -928,7 +929,7 @@ def praiseDetail(request, compliment_id):
     return render(request, 'praiseDetail.html', {'info':selectUserPraise})
 
 
-@login_required(login_url='/accounts/signin/')
+@login_required(login_url='/accounts/signManager/')
 def praiseDelete(request, compliment_id):
     print("### [VIEW] praiseDelete ####################################################")
     
@@ -1226,7 +1227,7 @@ def ChwPushCall(pushId, TITLE, MESSAGE, URL):
     return PushYN, status_code
     
 
-@login_required(login_url='/accounts/signin/')
+@login_required(login_url='/accounts/signManager/')
 @measure_execution_time
 def praiseRegedit(request):
     # print("### [VIEW] praiseRegedit ####################################################")
@@ -2229,7 +2230,7 @@ def praiseRegedit(request):
      
     return render(request, 'praiseRegedit.html', {'posts_All':posts_All,'posts_1':posts_1,'posts_2':posts_2,'posts_3':posts_3, 'posts_4':posts_4,'posts_5':posts_5,'posts_6':posts_6,'posts_7':posts_7, 'token':selectUserTokens, 'manage':selectManageTokens})
 
-@login_required(login_url='/accounts/signin/')
+@login_required(login_url='/accounts/signManager/')
 def praiseModify(request, compliment_id):
     print("### [VIEW] praiseModify ####################################################")
     
@@ -2388,7 +2389,7 @@ def praiseModify(request, compliment_id):
     return render(request, 'praiseModify.html', {'info':selectUserPraise,'posts':posts})
 
 
-@login_required(login_url='/accounts/signin/')
+@login_required(login_url='/accounts/signManager/')
 def manageImage(request):
     print("### [VIEW] manageImage ####################################################")
     
@@ -2603,7 +2604,7 @@ def manageImage(request):
             
     return render(request, 'manage/manageImage.html', {'images':images})
 
-@login_required(login_url='/accounts/signin/')
+@login_required(login_url='/accounts/signManager/')
 def manageTokens(request):
     print("### [VIEW] manageTokens ####################################################")
     
@@ -2765,7 +2766,7 @@ def manageTokens(request):
             
     return render(request, 'manage/manageTokens.html', {'tokens':tokens})
 
-@login_required(login_url='/accounts/signin/')
+@login_required(login_url='/accounts/signManager/')
 def manageTokensGroup(request):
     print("### [VIEW] manageTokensGroup ####################################################")
     
@@ -2903,7 +2904,7 @@ def manageTokensGroup(request):
             
     return render(request, 'manage/manageTokensGroup.html', {'tokens':tokens})
 
-@login_required(login_url='/accounts/signin/')
+@login_required(login_url='/accounts/signManager/')
 @measure_execution_time
 def rankList_new(request):
     # ==========================
@@ -3038,7 +3039,7 @@ def rankList_new(request):
         # **group_data
     })
 
-@login_required(login_url='/accounts/signin/')
+@login_required(login_url='/accounts/signManager/')
 @measure_execution_time
 def rankList(request):
     print("### [VIEW] rankList ####################################################")
@@ -3584,7 +3585,7 @@ def rankList(request):
             ),
             tot_point=Sum(ExpressionWrapper(F('recev_point') + F('send_point'), output_field=fields.IntegerField()))
         ).exclude(reward_skip_yn='Y'
-        ).filter(tot_point__gt=0  # 1??ъ씤??? ??댁긽 議곌굔
+        ).filter(tot_point__gt=0  # 1??ъ씨??? ??댁긽 議곌굔
         ).order_by('-tot_point'
         ).values(
             'user_id', 'employee_id', 'employee_name', 'company_id', 'company_name', 'department_name', 'position_id', 'position_name', 'user_image_yn', 'user_image', 'tot_point', 'reward_skip_yn'
@@ -3635,7 +3636,7 @@ def rankList(request):
             ),
             tot_point=Sum(ExpressionWrapper(F('recev_point') + F('send_point'), output_field=fields.IntegerField()))
         ).exclude(reward_skip_yn='Y'
-        ).filter(tot_point__gt=0  # 1??ъ씤??? ??댁긽 議곌굔
+        ).filter(tot_point__gt=0  # 1??ъ씨??? ??댁긽 議곌굔
         ).order_by('-tot_point'
         ).values(
             'user_id', 'employee_id', 'employee_name', 'company_id', 'company_name', 'department_name', 'position_id', 'position_name', 'user_image_yn', 'user_image', 'tot_point', 'reward_skip_yn'
@@ -3659,7 +3660,7 @@ def rankList(request):
     
     return render(request, 'rankList.html', {'posts':posts, 'postsGroup':postsGroup, 'postsGroupA':postsGroupA, 'postsGroupB':postsGroupB, 'postsGroupC':postsGroupC, 'postsGroupD':postsGroupD, 'manageToken':selectManageTokens, 'top3_result':top3_result,'token_prev':token_prev,'token_next':token_next,'peer_no':peer_no, 'dept_names':dept_names, 'group_start_dt':group_start_dt, 'group_end_dt':group_end_dt})
 
-@login_required(login_url='/accounts/signin/')
+@login_required(login_url='/accounts/signManager/')
 def manageMember(request):
     print("### [VIEW] manageMember ####################################################")
         
@@ -3853,7 +3854,7 @@ def manageMember(request):
     return render(request, 'manage/manageMember.html', {'posts':posts, 'manageToken':selectManageTokens, 'searchDeptName':searchDeptName, 'searchUserName':searchUserName, 'searchCode':searchCode, 'postDept':postDept, 'company_id':company_id, 'token_prev':token_prev,'token_next':token_next })
       
       
-@login_required(login_url='/accounts/signin/')
+@login_required(login_url='/accounts/signManager/')
 def manageRank(request):
     print("### [VIEW] manageRank ####################################################")
         
@@ -4107,7 +4108,7 @@ def manageRank(request):
             
     return render(request, 'manage/manageRank.html', {'dept_names':dept_names, 'manageToken':selectManageTokens, 'searchPeerNo':searchPeerNo, 'postDept':postDept, 'company_id':company_id, 'token_prev':token_prev,'token_next':token_next })
 
-@login_required(login_url='/accounts/signin/')
+@login_required(login_url='/accounts/signManager/')
 def manageSingup(request):
     print("### [VIEW] manageSingup ####################################################")
     
@@ -4191,7 +4192,7 @@ def manageSingup(request):
     
     return render(request, 'manage/manageSingup.html', {'posts':posts,'companyInfo':companyInfo,'searchDeptName':searchDeptName, 'searchUserName':searchUserName,'company_id':company_id,'searchCode':searchCode })
 
-@login_required(login_url='/accounts/signin/')
+@login_required(login_url='/accounts/signManager/')
 def manageDepartment(request):
     print("### [VIEW] manageDepartment ####################################################")
     
@@ -4255,7 +4256,7 @@ def manageDepartment(request):
     
     return render(request, 'manage/manageDepartment.html', {'posts':posts,'searchDeptName':searchDeptName,'company_id':company_id,'searchPeerNumber':searchPeerNumber })
 
-@login_required(login_url='/accounts/signin/')
+@login_required(login_url='/accounts/signManager/')
 def managePosition(request):
     print("### [VIEW] managePosition ####################################################")
     
@@ -4315,7 +4316,7 @@ def managePosition(request):
     
     return render(request, 'manage/managePosition.html', {'posts':posts,'searchPosiName':searchPosiName,'company_id':company_id, 'searchRewardYn':searchRewardYn })
 
-@login_required(login_url='/accounts/signin/')
+@login_required(login_url='/accounts/signManager/')
 @measure_execution_time
 def thankyouList_new(request):
     # ==========================
@@ -4358,7 +4359,7 @@ def thankyouList_new(request):
     })
 
 #2024.02 My땡큐 마이땡큐
-@login_required(login_url='/accounts/signin/')
+@login_required(login_url='/accounts/signManager/')
 @measure_execution_time
 def thankyouList(request):
     print("### [VIEW] tk_list thankyouList ####################################################")
@@ -4833,7 +4834,7 @@ def thankyouList(request):
     return render(request, 'tk_list.html',  {'posts':posts, 'images':images, 'addPage':'Y'})
     
  
-@login_required(login_url='/accounts/signin/')
+@login_required(login_url='/accounts/signManager/')
 @measure_execution_time
 def thankyouTalk(request):
     print("### [VIEW] tk_talk thankyouTalk ####################################################")
@@ -4843,42 +4844,42 @@ def thankyouTalk(request):
     # 출력부 SET
     #-------------
     selectUserImages_All = UserImages.objects.filter(is_open='Y', is_active='Y').order_by('-reg_date')
-    paginator0 = Paginator(selectUserImages_All, 100)
+    paginator0 = Paginator(selectUserImages_All, 12)
     page0 = request.GET.get('page0')
     posts_All = paginator0.get_page(page0)
     
     selectUserImages_1 = UserImages.objects.filter(card_code = '1', is_open='Y', is_active='Y').order_by('-reg_date')
-    paginator1 = Paginator(selectUserImages_1, 100)
+    paginator1 = Paginator(selectUserImages_1, 12)
     page1 = request.GET.get('page1')
     posts_1 = paginator1.get_page(page1)
     
     selectUserImages_2 = UserImages.objects.filter(card_code = '2', is_open='Y', is_active='Y').order_by('-reg_date')
-    paginator2 = Paginator(selectUserImages_2, 100)
+    paginator2 = Paginator(selectUserImages_2, 12)
     page2 = request.GET.get('page2')
     posts_2 = paginator2.get_page(page2)
     
     selectUserImages_3 = UserImages.objects.filter(card_code = '3', is_open='Y', is_active='Y').order_by('-reg_date')
-    paginator3 = Paginator(selectUserImages_3, 100)
+    paginator3 = Paginator(selectUserImages_3, 12)
     page3 = request.GET.get('page3')
     posts_3 = paginator3.get_page(page3)
     
     selectUserImages_4 = UserImages.objects.filter(card_code = '4', is_open='Y', is_active='Y').order_by('-reg_date')
-    paginator4 = Paginator(selectUserImages_4, 100)
+    paginator4 = Paginator(selectUserImages_4, 12)
     page4 = request.GET.get('page4')
     posts_4 = paginator4.get_page(page4)
     
     selectUserImages_5 = UserImages.objects.filter(card_code = '5', is_open='Y', is_active='Y').order_by('-reg_date')
-    paginator5 = Paginator(selectUserImages_5, 100)
+    paginator5 = Paginator(selectUserImages_5, 12)
     page5 = request.GET.get('page5')
     posts_5 = paginator5.get_page(page5)
 
     selectUserImages_6 = UserImages.objects.filter(card_code = '6', is_open='Y', is_active='Y').order_by('-reg_date')
-    paginator6 = Paginator(selectUserImages_6, 100)
+    paginator6 = Paginator(selectUserImages_6, 12)
     page6 = request.GET.get('page6')
     posts_6 = paginator6.get_page(page6) #2024.01.29 카드그룹관리 위비항목 추가
 
     selectUserImages_7 = UserImages.objects.filter(card_code = '7', is_open='Y', is_active='Y').order_by('-reg_date')
-    paginator7 = Paginator(selectUserImages_7, 100)
+    paginator7 = Paginator(selectUserImages_7, 12)
     page7 = request.GET.get('page7')
     posts_7 = paginator7.get_page(page7) #2024.02.05 카드그룹관리 설날항목 추가
     
@@ -4916,7 +4917,7 @@ def thankyouTalk(request):
 
 
         # Paginate the queryset
-        paginator = Paginator(selectUserPraise, 100)
+        paginator = Paginator(selectUserPraise, 12)
         page = request.GET.get('page')
         posts = paginator.get_page(page)
 
@@ -4975,7 +4976,7 @@ def thankyouTalk(request):
         #-------------
         selectUserImages = UserImages.objects.filter(is_open='Y', is_active='Y').order_by('-reg_date')
         
-        paginator = Paginator(selectUserImages, 100)
+        paginator = Paginator(selectUserImages, 12)
         page = request.GET.get('page')
         images = paginator.get_page(page)
 
@@ -5131,7 +5132,7 @@ def thankyouTalk(request):
             #-------------
             selectUserImages = UserImages.objects.filter(is_open='Y', is_active='Y').order_by('-reg_date')
 
-            paginator = Paginator(selectUserImages, 100)
+            paginator = Paginator(selectUserImages, 12)
             page = request.GET.get('page')
             posts = paginator.get_page(page)
 
@@ -5588,7 +5589,7 @@ def thankyouTalk(request):
                 #-------------
                 selectUserImages = UserImages.objects.filter(is_open='Y', is_active='Y').order_by('-reg_date')
 
-                paginator = Paginator(selectUserImages, 100)
+                paginator = Paginator(selectUserImages, 12)
                 page = request.GET.get('page')
                 posts = paginator.get_page(page)
                 
@@ -5609,7 +5610,7 @@ def thankyouTalk(request):
             #-------------
             selectUserImages = UserImages.objects.filter(is_open='Y', is_active='Y').order_by('-reg_date')
 
-            paginator = Paginator(selectUserImages, 100)
+            paginator = Paginator(selectUserImages, 12)
             page = request.GET.get('page')
             posts = paginator.get_page(page)
 
@@ -5658,7 +5659,7 @@ def thankyouTalk(request):
     return render(request, 'tk_talk.html',  {'posts':posts, 'images':images, 'addPage':'Y', 'user_info': user_info, 'posts_All':posts_All,'posts_1':posts_1,'posts_2':posts_2,'posts_3':posts_3, 'posts_4':posts_4,'posts_5':posts_5,'posts_6':posts_6,'posts_7':posts_7, 'token':selectUserTokens, 'manage':selectManageTokens})
 
 
-@login_required(login_url='/accounts/signin/')
+@login_required(login_url='/accounts/signManager/')
 def manageThankyouWeeks(request):
     print("### [VIEW] manageThankyouWeeks ####################################################")
     
@@ -5807,7 +5808,7 @@ def manageThankyouWeeks(request):
 
 
 
-@login_required(login_url='/accounts/signin/')
+@login_required(login_url='/accounts/signManager/')
 def manageUcExcelupload(request):
     print("### [VIEW] manageUcExcelupload ####################################################")
     

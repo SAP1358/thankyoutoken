@@ -1,3 +1,8 @@
+<!--
+####################################################################
+# 2024-03-26 VTI: Changed theme for PC mode and updated color concept
+####################################################################
+-->
 {% extends 'base.html' %}
 {% block body %}
 {% load static %}
@@ -31,7 +36,7 @@
 <!-- Content wrapper -->
 <div id="bestPage" class="allPage layout-container flex-column">
   <!-- Content -->
-  <div id="con" class="container-xxl mt-2">
+  <div id="con" class=" mt-2">
     <div class="row">
       <div id="loadingdiv" class="col-12 mb-2 position-relative" style="z-index: 0; visibility: hidden;">
         <div class="card py-3 px-2">
@@ -148,7 +153,7 @@
                     <div id="rankInfo" class="accordion card-footer p-0" id="accordionExample">
                       <div class="accordion-item p-2">
                         <h2 class="accordion-header px-0" id="headingOne">
-                          <button class="accordion-button colorCustom_06 fw-bold mb-1 p-0" type="button"
+                          <button class="accordion-button color-03 fw-bold mb-1 p-0" type="button"
                             data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
                             aria-controls="collapseOne">
                             ⓘ {{user.company_name}} 이용안내
@@ -179,7 +184,7 @@
                             <div id="rankInfo" class="accordion card-footer p-0" id="accordionExample">
                               <div class="accordion-item p-2">
                                 <h2 class="accordion-header px-0" id="headingOne">
-                                  <button class="accordion-button colorCustom_06 fw-bold mb-1 p-0" type="button"
+                                  <button class="accordion-button color-03 fw-bold mb-1 p-0" type="button"
                                     data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
                                     aria-controls="collapseOne">
                                     ⓘ {{user.company_name}} 이용안내
@@ -217,7 +222,7 @@
                                     <div id="rankInfo" class="accordion card-footer p-0" id="accordionExample">
                                       <div class="accordion-item p-2">
                                         <h2 class="accordion-header px-0" id="headingOne">
-                                          <button class="accordion-button colorCustom_06 fw-bold mb-1 p-0" type="button"
+                                          <button class="accordion-button color-03 fw-bold mb-1 p-0" type="button"
                                             data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
                                             aria-controls="collapseOne">
                                             ⓘ {{user.company_name}} 이용안내
@@ -246,7 +251,7 @@
                                     <div id="rankInfo" class="accordion card-footer p-0" id="accordionExample">
                                       <div class="accordion-item p-2">
                                         <h2 class="accordion-header px-0" id="headingOne">
-                                          <button class="accordion-button colorCustom_06 fw-bold mb-1 p-0" type="button"
+                                          <button class="accordion-button color-03 fw-bold mb-1 p-0" type="button"
                                             data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
                                             aria-controls="collapseOne">
                                             ⓘ {{user.company_name}} 이용안내
@@ -276,7 +281,7 @@
                                     <div id="rankInfo" class="accordion card-footer p-0" id="accordionExample">
                                       <div class="accordion-item p-2">
                                         <h2 class="accordion-header px-0" id="headingOne">
-                                          <button class="accordion-button colorCustom_06 fw-bold mb-1 p-0" type="button"
+                                          <button class="accordion-button color-03 fw-bold mb-1 p-0" type="button"
                                             data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
                                             aria-controls="collapseOne">
                                             ⓘ {{user.company_name}} 이용안내
@@ -305,7 +310,7 @@
                                     <div id="rankInfo" class="accordion card-footer p-0" id="accordionExample">
                                       <div class="accordion-item p-2">
                                         <h2 class="accordion-header px-0" id="headingOne">
-                                          <button class="accordion-button colorCustom_06 fw-bold mb-1 p-0" type="button"
+                                          <button class="accordion-button color-03 fw-bold mb-1 p-0" type="button"
                                             data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
                                             aria-controls="collapseOne">
                                             ⓘ {{user.company_name}} 이용안내
@@ -1017,7 +1022,7 @@ function loaddivpage()
     const footer = document.querySelector('#footer');
     if (footer) {
       footer.innerHTML =
-        '<div class="footer w-100 text-center fw-med fs-6" style="color:#418dd4;">ⓒ 2024, made 땡큐토큰</div>';
+        '<div class="footer w-100 text-center fw-med fs-6 color-03" style="color:#418dd4;">ⓒ 2024, made 땡큐토큰</div>';
     }
     // 모든 페이지 footer 태그 출력 끝 - 240223
 	document.getElementById("loadingdiv").style.visibility = 'visible';
@@ -1131,40 +1136,42 @@ function loaddivpage()
   #bestPage .bestBtnBox button {
     width: 100%;
     padding: clamp(5px, 3.4vw, 10px);
-    background-color: #e8f7ff;
-    color: #006ed5;
+    background: #F2F2F2;
+    color: #3A3A3A;
     word-break: keep-all;
     font-size: clamp(10px, 2vw, 14px) !important;
   }
 
   #bestPage .bestBtnBox button.clicked {
-    background: #006ed5;
-    color: #fff;
+    background: #FFE0D0 !important;
+    color: #FF6414 !important;
   }
 
   #bestPage .bestBtnBox button span {
     top: auto;
-    background: #006ed5;
-    color: #FFF;
+    background: #F2F2F2;
+    color: #3A3A3A;
+    border: 1px solid #FFF;
     z-index: 1;
   }
 
   #bestPage .bestBtnBox button.clicked span {
-    background-color: #fff;
-    color: #006ed5;
+    background: #FFE0D0;
+    color: #FF6414;
+    border: 1px solid #FFF;
   }
 
   /* 1등~3등 개별 테두리 배경 시작 */
   #bestPage #best_01 {
-    background: #fff url(/static/assets/img/rank_bg01.png) no-repeat center/100% 100%;
+    background: #fff url(/static/assets/img/vti/vti-rank-bg01.png) no-repeat center/100% 100%;
   }
 
   #bestPage #best_02 {
-    background: #fff url(/static/assets/img/rank_bg02.png) no-repeat center/100% 100%;
+    background: #fff url(/static/assets/img/vti/vti-rank-bg02.png) no-repeat center/100% 100%;
   }
 
   #bestPage #best_03 {
-    background: #fff url(/static/assets/img/rank_bg03.png) no-repeat center/100% 100%;
+    background: #fff url(/static/assets/img/vti/vti-rank-bg03.png) no-repeat center/100% 100%;
   }
 
   /* 1등~3등 개별 테두리 배경 끝 */
@@ -1173,7 +1180,7 @@ function loaddivpage()
   #bestPage .rankList>div {
     margin-top: 7px;
     border-radius: 10px;
-    background: #e8f7ff;
+    background: #FFF;
     padding: 15px 2%;
   }
   @media (max-width:500px) {

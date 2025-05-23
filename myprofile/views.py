@@ -9,6 +9,7 @@
 # 2024-06-20 윤준영 UC메신저 기능
 # 2024-12-10 VTI   compress image when upload
 # 2024-12-18 VTI   integrate feature upload image to CDN
+# 2025-04-24 VTI   fix logout flow and change initial record limit from 6 to 12
 ####################################################################
 from django.shortcuts import render, redirect, HttpResponse
 from myprofile.models import User
@@ -528,7 +529,7 @@ def logout(request):
     return render(request, 'accounts/signManager.html')
 
 
-@login_required(login_url='/accounts/signin/')
+@login_required(login_url='/accounts/signManager/')
 @measure_execution_time
 def myprofile(request):
     print("### [VIEW] myprofile ####################################################")
@@ -1160,7 +1161,7 @@ def save_image(file, path, filename):
 
     return file_path
 
-@login_required(login_url='/accounts/signin/')
+@login_required(login_url='/accounts/signManager/')
 def myprofileModify(request):
     print("### [VIEW] myprofileModify ####################################################")
     
@@ -1284,7 +1285,7 @@ def myprofileModify(request):
     return render(request, 'myprofileModify.html', {'info':info,})
 
 
-@login_required(login_url='/accounts/signin/')
+@login_required(login_url='/accounts/signManager/')
 def signprofileModify(request):
     print("### [VIEW] signprofileModify ####################################################")
     

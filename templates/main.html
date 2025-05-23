@@ -1,8 +1,3 @@
-<!--
-####################################################################
-# 2024-03-26 VTI: Changed theme for PC mode and updated color concept
-####################################################################
--->
 {% extends 'base.html' %}
 {% block body %}
 {% load static %}
@@ -16,10 +11,76 @@
   <meta name="viewport"
     content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
+  <script>
+    window.Promise ||
+      document.write(
+        '<script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js"><\/script>'
+      )
+    window.Promise ||
+      document.write(
+        '<script src="https://cdn.jsdelivr.net/npm/eligrey-classlist-js-polyfill@1.2.20171210/classList.min.js"><\/script>'
+      )
+    window.Promise ||
+      document.write(
+        '<script src="https://cdn.jsdelivr.net/npm/findindex_polyfill_mdn"><\/script>'
+      )
+  </script>
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
   <!-- Vendors JS -->
-  <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
-  <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+  <!-- <script src="{% static 'assets/vendor/libs/swiper/swiper.js' %}"></script> -->
+  <script src="https://cdn.wooriwbn.com/thb/wooribank/2024/03/01/cdn/css/main/swiper.js"></script>
+  
+  <!-- Page JS -->
+  <!--<script src="{% static 'assets/js/forms-editors.js' %}"></script> 
+<script src="{% static 'assets/js/forms-selects.js' %}"></script>
+<script src="{% static 'assets/js/form-validation.js' %}"></script>
+<script src="{% static 'assets/js/form-layouts.js' %}"></script> -->
+
+<!--2024.03.01 해당 문제로 forms-typeahead.js 주석처리 jQuery.Deferred exception: isRtl is not defined ReferenceError: isRtl is not defined -->
+  <!-- <script src="{% static 'assets/js/forms-typeahead.js' %}"></script> -->
+<!--2024.03.01 해당 문제로 forms-typeahead.js 주석처리 jQuery.Deferred exception: isRtl is not defined ReferenceError: isRtl is not defined -->
+  <!-- <script src="{% static 'assets/vendor/libs/sweetalert2/sweetalert2.js' %}"></script> -->
+  <script src="{% static 'assets/vendor/libs/select2/select2.js' %}"></script>
+
+  <!-- 드림 사용 소스 -->
+  <!--
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+</script>
+<!--<script src="{% static 'assets/js/main.js' %}"></script> -->
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/apex-charts.css' %}" /> -->
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/bootstrap-datepicker.css' %}" /> 20240304 -->
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/boxicons.css' %}" /> -->
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/core.css' %}" /> -->
+  <!-- <link rel="stylesheet" href="https://cdn.wooriwbn.com/thb/wooribank/2024/03/01/cdn/css/dream/core.css" /> -->
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/datatables.bootstrap5.css' %}" /> -->
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/datatables.checkboxes.css' %}" /> -->
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/demo.css' %}" /> -->
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/flag-icons.css' %}" /> -->
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/fontawesome.css' %}" /> -->
+  <!-- <link rel="stylesheet" href="https://cdn.wooriwbn.com/thb/wooribank/2024/03/01/cdn/css/dream/fontawesome.css" /> -->
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/perfect-scrollbar.css' %}" /> -->
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/responsive.bootstrap5.css' %}" /> -->
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/select2.css' %}" /> -->
+  <link rel="stylesheet" href="https://cdn.wooriwbn.com/thb/wooribank/2024/03/01/cdn/css/dream/select2.css" />
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/spinkit.css' %}" /> -->
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/sweetalert2.css' %}" /> -->
+  <!-- <link rel="stylesheet" href="https://cdn.wooriwbn.com/thb/wooribank/2024/03/01/cdn/css/dream/sweetalert2.css" /> -->
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/theme-default.css' %}" /> -->
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/typeahead.css' %}" /> -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+  <!-- 드림 사용 소스 끝 -->
+
+  
 </head>
+
 
 <body class="all_">
   <!-- Content -->
@@ -28,22 +89,7 @@
     <span id="hiddenUserId" class="visually-hidden">{{ user.id }}</span>
     <div id="con" class=" mt-2">
       <!-- 2024.01.04 공지사항 -->
-      <div class="alert alert-dismissible fade show mt-3 mb-1 text-dark bg-color-11" role="alert" style="background: #edf6ff;">
-        <h3 class="fw-bold fs-2 color-11">공지사항</h3>
-        <p class="fw-med fs-6 mb-0" style="color:#222;"> 땡큐토큰을 통해 칭찬과 감사의 문화 확산에 동참해주셔서 감사합니다.
-          <!-- <br>땡큐토큰을 통해 칭찬과 감사의 문화가 확산하는데 동참해주셔서 감사합니다. -->
-        </p>
-        <button type="button" class="btn-close closeCustom" data-bs-dismiss="alert" aria-label="Close"
-          style="z-index: 1; width:0.3em; height: 0.3em;"><span></span>
-        </button>
-      </div>
-      <!-- <div class="alert alert-dismissible fade show mt-3 mb-1 text-dark bg-color-11" role="alert" style="background: #edf6ff;">
-        <h3 class="fw-bold fs-2" style="color:#006ed5;">공지사항</h3>
-        <p class="fw-med fs-6 mb-0" style="color:#222;"><땡큐토큰 X 에버랜드> 스팟이벤트<br>1. 땡큐토큰(UC메신저) 월 20개 송부<br>2.안내게시에 '가족 애정댓글' 달기<br>&nbsp; -> 8.17(토) 에버랜드로 GOGO!</p>
-        <button type="button" class="btn-close closeCustom" data-bs-dismiss="alert" aria-label="Close"
-          style="z-index: 1; width:0.3em; height: 0.3em;"><span></span>
-        </button>
-      </div> -->
+
       <!-- <div class="alert alert-dismissible fade show mt-3 mb-1 text-dark bg-color-11" role="alert" style="background: #edf6ff;">
         <h3 class="fw-bold fs-2" style="color:#006ed5;">공지사항</h3>
         <p class="fw-med fs-6 mb-0" style="color:#222;">★MLB서울시리즈 직관의 기회<br>★(~3.12까지)<br>1. 3월 배정된 땡큐토큰 20개 소진 <br>2. 포탈 또는 채널W 內 'MLB이벤트 게시'에 땡큐토큰 4행시 참여</p>
@@ -52,27 +98,13 @@
         </button>
       </div> -->
 
-      <!-- <div class="alert alert-dismissible fade show mt-3 mb-1 text-dark bg-color-11" role="alert" style="background: #edf6ff;">
+      <div class="alert alert-dismissible fade show mt-3 mb-1 text-dark bg-color-11" role="alert" style="background: #edf6ff;">
         <h3 class="fw-bold fs-2" style="color:#006ed5;">공지사항</h3>
-        <p class="fw-med fs-6 mb-0" style="color:#222;">7월 중 땡큐토큰 "20개"를 먼저 소진하는 선착순 임직원 500명에게 백화점상품권 1만원권을 드립니다.</p>
+        <p class="fw-med fs-6 mb-0" style="color:#222;">3월 중 땡큐토큰 "20개"를 먼저 소진하는 선착순 임직원 500명에게 백화점상품권 1만원권을 드립니다.</p>
         <button type="button" class="btn-close closeCustom" data-bs-dismiss="alert" aria-label="Close"
           style="z-index: 1; width:0.3em; height: 0.3em;"><span></span>
         </button>
-      </div> -->
-      <!-- <div class="alert alert-dismissible fade show mt-3 mb-1 text-dark bg-color-11" role="alert" style="background: #edf6ff;">
-        <h3 class="fw-bold fs-2" style="color:#006ed5;">공지사항</h3>
-        <p class="fw-med fs-6 mb-0" style="color:#222;">★5월 땡큐토큰 스팟이벤트 안내★<br>1. 5월 땡큐토큰 20개 사용<br>2. 우리가족 애정댓글 남기기(전체게시 참조)<br>3. 추첨을 통해 총 10명에게 외식상품권(30만원) 증정</p>
-        <button type="button" class="btn-close closeCustom" data-bs-dismiss="alert" aria-label="Close"
-          style="z-index: 1; width:0.3em; height: 0.3em;"><span></span>
-        </button>
-      </div>        -->
-      <!-- <div class="alert alert-dismissible fade show mt-3 mb-1 text-dark bg-color-11" role="alert" style="background: #edf6ff;">
-        <h3 class="fw-bold fs-2" style="color:#006ed5;">공지사항</h3>
-        <p class="fw-med fs-6 mb-0" style="color:#222;">[스팟이벤트 "1+1 땡큐주간" 실시]<br>- 기간 : 6.24(월) ~ 6.28(금), 5영업일간<br>- 매월 4째주에 땡큐토큰 발송시,<br>&nbsp; 토큰이 한 개 더 자동충전!<br>동일인에게 채널W, UC메신저 중복 발송시 포인트는 1포인트만 인정</p>
-        <button type="button" class="btn-close closeCustom" data-bs-dismiss="alert" aria-label="Close"
-          style="z-index: 1; width:0.3em; height: 0.3em;"><span></span>
-        </button>
-      </div>    -->
+      </div>
 <!-- 
       <div id = "goVideo" class="alert alert-dismissible fade show mt-3 mb-1 text-dark bg-color-11 text-center" role="alert" style="background: #edf6ff;">
         <h3 class="fw-bold fs-2" style="color:#006ed5;">땡큐토큰 감동영상 <br>바로가기(클릭)</h3>
@@ -88,7 +120,7 @@
 
       <div id="cardWrap" class="row pt-5">
 
-        {% comment %} {% for part in posts %}
+        {% for part in posts %}
 
         {% if part.todaythanks_showyn == "Y" %}
         <div class="chkCard todayThank cus-col col-xl-4 col-md-4 mb-2">
@@ -124,8 +156,8 @@
                     신용정보
                     {% elif part.user_company_name == "우리금융경영연구소" %}
                     연구소
-                    {% elif part.user_company_name == "우리투자증권" %}
-                    우투
+                    {% elif part.user_company_name == "우리종합금융" %}
+                    종금
                     {% elif part.user_company_name == "우리자산운용" %}
                     자산운용
                     {% elif part.user_company_name == "우리자산신탁" %}
@@ -178,8 +210,8 @@
                     신용정보
                     {% elif part.praise_company_name == "우리금융경영연구소" %}
                     연구소
-                    {% elif part.praise_company_name == "우리투자증권" %}
-                    우투
+                    {% elif part.praise_company_name == "우리종합금융" %}
+                    종금
                     {% elif part.praise_company_name == "우리자산운용" %}
                     자산운용
                     {% elif part.praise_company_name == "우리자산신탁" %}
@@ -212,7 +244,7 @@
                   <!-- .photoCard 유저 포토 카드 -->
                   <div style="width:80px; height:80px; overflow: hidden; border-radius: 10px; margin-right:10px;">
                     <img id="cardmodalimg{{part.compliment_id}}" style="object-fit: cover; height: 100%; width: 100%;"
-                      src="{{part.image_path}}" class="img-fluid" oncontextmenu="return false;">
+                      src="{{part.image_path}}" class="img-fluid">
                   </div>
                   <!-- <div class="overflow-hidden" style="width: calc(100% - 90px);"> 와 동일한 태그 전부 <div class="overflow-hidden" style="width: calc(100% - 90px);"> 로 수정 240304 -->
                     <div class="overflow-hidden" style="width: calc(100% - 90px);">
@@ -268,12 +300,7 @@
                   <div class="dropdown-menu dropdown-menu-end" aria-labelledby="conversionRate"
                     data-popper-placement="bottom-end"
                     style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate(0px, 25px);">
-					          <input id="modify_content{{part.compliment_id}}" type="hidden" value="'{{part.content}}'"></input>
-                    {% if user.is_superuser and part.todaythanks_showyn == "Y" %}
-                      <a class="dropdown-item"   onclick="todayThankyouSet('{{part.compliment_id}}','N');">투데이땡큐해제</a>
-                    {% elif user.is_superuser and part.todaythanks_showyn != "Y" %}
-                      <a class="dropdown-item"   onclick="todayThankyouSet('{{part.compliment_id}}','Y');">투데이땡큐등록</a>
-                    {% endif %}
+					<input id="modify_content{{part.compliment_id}}" type="hidden" value="'{{part.content}}'"></input>																	   
                     <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
                       data-bs-target="#editCard"
                       onclick="praiseModifyPop('{{part.compliment_id}}','{{part.image_path}}','{{part.content}}','{{part.images_id}}');">수정하기</a>
@@ -320,8 +347,8 @@
                     신용정보
                     {% elif part.user_company_name == "우리금융경영연구소" %}
                     연구소
-                    {% elif part.user_company_name == "우리투자증권" %}
-                    우투
+                    {% elif part.user_company_name == "우리종합금융" %}
+                    종금
                     {% elif part.user_company_name == "우리자산운용" %}
                     자산운용
                     {% elif part.user_company_name == "우리자산신탁" %}
@@ -374,8 +401,8 @@
                     신용정보
                     {% elif part.praise_company_name == "우리금융경영연구소" %}
                     연구소
-                    {% elif part.praise_company_name == "우리투자증권" %}
-                    우투
+                    {% elif part.praise_company_name == "우리종합금융" %}
+                    종금
                     {% elif part.praise_company_name == "우리자산운용" %}
                     자산운용
                     {% elif part.praise_company_name == "우리자산신탁" %}
@@ -408,7 +435,7 @@
                   onclick="viewToken('{{part.compliment_id}}','{{part.todaythanks_showyn}}','{{part.user_id}}','{{part.praise_id}}','{{part.user_employee_name}}', '{{part.praise_employee_name}}', '{{part.content}}', '{{ part.user_image }}', '{{ part.praise_image }}','{{part.user_image_yn}}','{{part.praise_image_yn}}','{% static 'assets/img/profile_bee_01.png' %}', '{{part.image_path}}', '{{part.likes_count}}', '{{part.comment_count}}', '{{part.reg_date|date:'Y-m-d'}}');">
                   <div style="width:80px; height:80px; overflow: hidden; border-radius: 10px; margin-right:10px;">
                     <img id="cardmodalimg{{part.compliment_id}}" style="object-fit: cover; height: 100%; width: 100%;" src="{{part.image_path}}"
-                      class="img-fluid" oncontextmenu="return false;">
+                      class="img-fluid">
                   </div>
                   <div class="overflow-hidden" style="width: calc(100% - 90px);">
                     <p id="pcard_desc{{part.compliment_id}}" style="min-height: 50px; text-overflow: ellipsis; word-wrap: break-word; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;"
@@ -462,12 +489,7 @@
                   <div class="dropdown-menu dropdown-menu-end" aria-labelledby="conversionRate"
                     data-popper-placement="bottom-end"
                     style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate(0px, 25px);">
-					          <input id="modify_content{{part.compliment_id}}" type="hidden" value="'{{part.content}}'"></input>
-                    {% if user.is_superuser and part.todaythanks_showyn == "Y" %}
-                      <a class="dropdown-item"   onclick="todayThankyouSet('{{part.compliment_id}}','N');">투데이땡큐해제</a>
-                    {% elif user.is_superuser and part.todaythanks_showyn != "Y" %}
-                      <a class="dropdown-item"   onclick="todayThankyouSet('{{part.compliment_id}}','Y');">투데이땡큐등록</a>
-                    {% endif %}
+					<input id="modify_content{{part.compliment_id}}" type="hidden" value="'{{part.content}}'"></input>
                     <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
                       data-bs-target="#editCard"
                       onclick="praiseModifyPop('{{part.compliment_id}}','{{part.image_path}}','{{part.content}}','{{part.images_id}}');">수정하기</a>
@@ -513,8 +535,8 @@
                     신용정보
                     {% elif part.user_company_name == "우리금융경영연구소" %}
                     연구소
-                    {% elif part.user_company_name == "우리투자증권" %}
-                    우투
+                    {% elif part.user_company_name == "우리종합금융" %}
+                    종금
                     {% elif part.user_company_name == "우리자산운용" %}
                     자산운용
                     {% elif part.user_company_name == "우리자산신탁" %}
@@ -567,8 +589,8 @@
                     신용정보
                     {% elif part.praise_company_name == "우리금융경영연구소" %}
                     연구소
-                    {% elif part.praise_company_name == "우리투자증권" %}
-                    우투
+                    {% elif part.praise_company_name == "우리종합금융" %}
+                    종금
                     {% elif part.praise_company_name == "우리자산운용" %}
                     자산운용
                     {% elif part.praise_company_name == "우리자산신탁" %}
@@ -601,7 +623,7 @@
                   onclick="viewToken('{{part.compliment_id}}','{{part.todaythanks_showyn}}','{{part.user_id}}','{{part.praise_id}}','{{part.user_employee_name}}', '{{part.praise_employee_name}}', '{{part.content}}', '{{ part.user_image }}', '{{ part.praise_image }}','{{part.user_image_yn}}','{{part.praise_image_yn}}','{% static 'assets/img/profile_bee_01.png' %}', '{{part.image_path}}', '{{part.likes_count}}', '{{part.comment_count}}', '{{part.reg_date|date:'Y-m-d'}}');">
                   <div style="width:80px; height:80px; overflow: hidden; border-radius: 10px; margin-right:10px;">
                     <img id="cardmodalimg{{part.compliment_id}}" style="object-fit: cover; height: 100%; width: 100%;" src="{{part.image_path}}"
-                      class="img-fluid" oncontextmenu="return false;">
+                      class="img-fluid">
                   </div>
                   <div class="overflow-hidden" style="width: calc(100% - 90px);">
                     <p id="pcard_desc{{part.compliment_id}}" style="min-height: 50px; text-overflow: ellipsis; word-wrap: break-word; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;"
@@ -654,12 +676,7 @@
                   <div class="dropdown-menu dropdown-menu-end" aria-labelledby="conversionRate"
                     data-popper-placement="bottom-end"
                     style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate(0px, 25px);">
-					          <input id="modify_content{{part.compliment_id}}" type="hidden" value="'{{part.content}}'"></input>																			   
-                    {% if user.is_superuser and part.todaythanks_showyn == "Y" %}
-                      <a class="dropdown-item"   onclick="todayThankyouSet('{{part.compliment_id}}','N');">투데이땡큐해제</a>
-                    {% elif user.is_superuser and part.todaythanks_showyn != "Y" %}
-                      <a class="dropdown-item"   onclick="todayThankyouSet('{{part.compliment_id}}','Y');">투데이땡큐등록</a>
-                    {% endif %}
+					<input id="modify_content{{part.compliment_id}}" type="hidden" value="'{{part.content}}'"></input>																			   
                     <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
                       data-bs-target="#editCard"
                       onclick="praiseModifyPop('{{part.compliment_id}}','{{part.image_path}}','{{part.content}}','{{part.images_id}}');">수정하기</a>
@@ -685,7 +702,7 @@
             </div>
           </div>
         </div>
-        {% endif %} {% endcomment %}
+        {% endif %}
       </div>
       <!-- 나에게 온 토큰카드를 제외한 전체 토큰카드 끝  -->
 
@@ -699,36 +716,6 @@
 </body>
 
 </html>
-
-<!-- 땡큐주간 칭찬 후 토큰 추가 알림  1+1 땡큐주간-->
-<div class="modal fade" id="chargingModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-  <div class="modal-content">
-    <div class="modal-header text-center">
-    <h1 class="modal-title w-100 mb-0 fw-med" id="exampleModalLabel">1+1 땡큐주간</h1>
-    <button type="button" class="position-absolute btn-close closeCustom"
-      style="background:transparent; border:0; right:20px; top:25px; box-shadow: none; transform: none !important; z-index: 2;"
-      data-bs-dismiss="modal">
-      <span></span>
-    </button>
-    </div>
-    <div class="modal-body p-0 pt-2">
-    <div class="d-flex align-items-center justify-content-center">
-      <span class="me-2" style="width: 10%; min-width: 40px;"><img class="w-100"
-        src="{% static 'assets/img/icon_token05.png' %}"></span>
-      <p class="gm-bold colorCustom_03 mb-0" style="font-size: 29px; border-bottom:2px solid #006ed5;">1토큰 지급완료!
-      </p>
-      <span class="ms-2" style="width: 10%; min-width: 40px;"><img class="w-100"
-        src="{% static 'assets/img/icon_token04.png' %}"></span>
-    </div>
-    <div class="text-center mt-4">
-      <p class="gm-bold colorCustom_06" style="font-size: 80px; line-height: 1;"><span class="gm-med">+</span>1
-      </p>
-    </div>
-    </div>
-  </div>
-  </div>
-</div>
 
 
 <input id="hiddenidval" type="hidden"></input> <!-- 좋아요,댓글 ID값 넘기기용 -->
@@ -766,7 +753,7 @@
             class="img-fluid rounded w-100">
         </div>
         <div class="p-3 text-center rounded mt-3" style="border:1px solid #dde7f1">
-          <p id="card_short_content" class="text-dark mb-0 fw-med colorCustom_01" style="word-break: keep-all;"></p>
+          <p id="card_short_content" class="text-dark mb-0 fw-med colorCustom_01"></p>
         </div>
       </div>
       <div class="modal-footer p-0 mt-2 d-flex justify-content-between align-items-center">
@@ -850,7 +837,8 @@
     <div class="swiper-container gallery-thumbs">
       <div class="swiper-wrapper">
         {% for part in images %}
-		<input id="modify_thumb_path" type="hidden" value="{{part.image_path}}"></input>																		  
+		<input id="modify_thumb_path" type="hidden" value="{{part.image_path}}"></input>	
+		<input id="modify_thumb_idval" type="hidden" value="{{part.id}}"></input>
         <div class="swiper-slide " name="input_swiper_id" value="{{part.id}}">
           <p class="object-fit"><img id="modify_thumb" style="width:100%; height:100%; object-fit: cover;" value="{{part.id}}"></p> <!-- src="{{part.image_path}}" -->
         </div>
@@ -891,7 +879,7 @@
             <button type="button" class="btn colorCustom_03 m-0 py-2  fw-med fs-5"
               style="width:49%; box-shadow: none; background: #e8f7ff;" data-bs-dismiss="modal">닫기</button>
             <button type="button" class="btn text-white m-0 py-2  fw-med fs-5"
-            style="width:49%; box-shadow: none; background: #006ed5;" onclick="praiseModifyAct()">저장</button> <!-- data-bs-toggle="modal" data-bs-target="#chkToken_modal" -->
+             style="width:49%; box-shadow: none; background: #006ed5;" onclick="praiseModifyAct()">저장</button> <!-- data-bs-toggle="modal" data-bs-target="#chkToken_modal" -->
       </div>
     </div>
   </div>
@@ -909,7 +897,7 @@
         <h5 class="gm-bold"
           style="display: inline-block;     margin: 15px 0 20px; font-size: 35px; border-bottom:2px solid #006ed5; color:#006ed5; word-break: keep-all;">정말 삭제 하시겠습니까?</h5>
       </div>
-      <input id="hreflocsave" type="hidden"></input>
+	  <input id="hreflocsave" type="hidden"></input>
       <!-- <div class="txt" style="text-align: center; margin:10px 0;">
         <P class="fw-med" style="word-break: keep-all; color:#222;"></P>
       </div> -->
@@ -943,33 +931,6 @@
 	  </div>
 </div>																							
             <script>
-              
-              document.addEventListener("DOMContentLoaded", function () {
-                  // 이미지에 대한 우클릭 방지
-                  document.querySelectorAll('.no-download').forEach(img => {
-                      img.addEventListener('contextmenu', function (e) {
-                          e.preventDefault();
-                      });
-
-                      // 드래그 방지
-                      img.addEventListener('dragstart', function (e) {
-                          e.preventDefault();
-                      });
-                  });
-
-                  // 전체 문서에 대해 우클릭 방지 (선택적 적용)
-                  document.addEventListener("contextmenu", function (e) {
-                      e.preventDefault();
-                  });
-
-                  // F12(개발자 도구) 차단 (완벽하게 막기는 어렵지만 추가 가능)
-                  document.addEventListener("keydown", function (e) {
-                      if (e.key === "F12" || (e.ctrlKey && e.shiftKey && e.key === "I")) {
-                          e.preventDefault();
-                      }
-                  });
-              });
-
               $(document).ready(function () {
                 
                 var swiperTopNum = $('#editCard .gallery-top').find('.swiper-slide');
@@ -1068,9 +1029,38 @@
   
 <script>
 
-	$(document).ready(function () {
-		viewFirstPage();
-	});
+	$(document).ready(function () 
+	{
+		 $.ajax({
+            type: "POST",
+            url: "/apis/crown_profile/",
+            delay: 250,
+            dataType: 'json',
+            data: '',
+            success: function (data) {
+				console.log(data);
+                /*
+				var chkProfileCrown = document.getElementById('profileCrown');
+                if( data.my_position == '1'){
+                  chkProfileCrown.className = 'avatar avatar-lg ms-2 me-0 forBest best_01';
+                }else if(data.my_position == '2'){
+                  chkProfileCrown.className = 'avatar avatar-lg ms-2 me-0 forBest best_02';
+                }else if(data.my_position == '3'){
+                  chkProfileCrown.className = 'avatar avatar-lg ms-2 me-0 forBest best_03';
+                }                 */
+            },
+            error: function (e) {
+
+            }
+        })
+        .done(function() {
+        // AJAX 요청 완료 후 처리할 작업
+        })
+        .fail(function() {
+        // AJAX 요청 실패 시 처리할 작업
+        });
+
+	}); 
 
 	String.prototype.replaceAll = function(org, dest) 
 	{     
@@ -1092,39 +1082,22 @@
 		checkAndSetButtonVisibility();
 	});
 
-  let scrollTimeout; 
 	window.addEventListener("scroll", (event) => {
-    if (scrollTimeout) {
-      clearTimeout(scrollTimeout);
-    }
-  
-    scrollTimeout = setTimeout(function() {
-      const scrollPosition = $(window).scrollTop();
-      const windowHeight = $(window).height();
-      const documentHeight = $(document).height();
-      
-      if (scrollPosition + windowHeight > documentHeight * 0.8) {
-        if ("{{addPage}}" === "N") {
-          $('#moreBtn').hide();
-        } else {
-          viewPage(); // 10개 단위로 땡큐 기록 불러오기
-        }
-      }
-    }, 250);
-	});
-	
-  //땡큐주간이면 칭찬 후 메인 화면에서 토큰 추가 알림 모달 팝업
-  document.addEventListener("DOMContentLoaded", function() {
-		const urlParams = new URLSearchParams(window.location.search);
-    const showThkWeekModal = urlParams.get('showThkWeekModal');
-    console.log("showThkWeekModal 접속 확인 : " + showThkWeekModal);
-    if(showThkWeekModal === 'true'){
-      var modal = document.getElementById("chargingModal");
-      console.log("### modal : "+modal);
-      var bsModal = new bootstrap.Modal(modal);
-      bsModal.show();
-    }
-
+		let scroll = this.scrollY;
+		let windowscroll = document.querySelector('.layout-container');
+		
+		if (document.body.scrollHeight - 30 <= window.scrollY + window.innerHeight)
+		{
+			if ("{{addPage}}" === "N") 
+			{
+				$('#moreBtn').hide();
+				//console.log("연속조회 대상이 없습니다.");
+			}
+			else{
+				//console.log("viewpage 실행댐.");
+				viewPage(); // 10개 단위로 땡큐 기록 불러오기
+			}
+		}
 	});
 	
 
@@ -1389,50 +1362,9 @@
 		}	
 	}
 
-  function todayThankyouSet(idx, yn)
-  {
-    var inputData = {
-			compliment_id: idx,
-			chg_yn: yn
-		};
-
-    try {
-			$.ajax({
-				type: "POST",
-				url: "/apis/change_todaythankyou/",
-				data: inputData,
-				success: function (data) {
-					console.log('### change_todaythankyou success data', data);
-
-          if(data.updated == 'Y'){
-            alert('투데이 땡큐 등록이 완료되었습니다.');
-          }else{
-            alert('투데이 땡큐 해제가 완료되었습니다.');
-          }
-          
-          window.location.href = "{%url 'home'%}";
-
-				},
-				error: function (e) {
-					console.log("### change_todaythankyou ERROR : ", e);
-					//alert("fail");
-				}
-		  })
-		  .done(function() {
-			// AJAX 요청 완료 후 처리할 작업
-		  })
-		  .fail(function() {
-			// AJAX 요청 실패 시 처리할 작업
-		  });
-		} catch (e) {
-			alert('[오류] TodayThankyou 변경시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
-		}	
-
-  }
-
 	function praiseModifyPop(idx, editcard_photo_img, editcard_short_content, images_id) // 칭찬하기 수정 팝업 이벤트'
 	{    
-    var mdthumb = document.querySelectorAll("#modify_thumb_path");
+		var mdthumb = document.querySelectorAll("#modify_thumb_path");
 		var mdthumb_img = document.querySelectorAll("#modify_thumb");
 		var mdgallery_img = document.querySelectorAll("#modify_gallery");
 		
@@ -1441,6 +1373,12 @@
 			mdthumb_img[m].src = mdthumb[m].value;
 			mdgallery_img[m].src = mdthumb[m].value;
 		}
+		
+		console.log('images_id : ', images_id);
+		//document.querySelector('.swiper-slide-active').value = images_id;
+		document.getElementById("modify_gallery").src = editcard_photo_img;
+		document.getElementById("modify_thumb").src = editcard_photo_img;
+		
 		//short_content = String(editcard_short_content).replaceAll('<br>', '\n');
 		short_content = String(document.getElementById('modify_content'+String(idx)).value).replaceAll('<br>', '\n');
 		if (short_content[0] == "'" && short_content[short_content.length-1] == "'")
@@ -1493,9 +1431,10 @@
 	function praiseModifyAct() {    // 칭찬하기 수정 처리 이벤트
 		var compliment_id = document.querySelector('#compliment_id');  // 칭찬 ID
 		var content = $("#modalPraiseModify_content").val();
-		var images_id = document.querySelector('.swiper-slide-active[name="input_swiper_id"]').getAttribute('value');
-		var newimgsrc = document.querySelector('.swiper-slide-active[name="input_swiper_id"]').querySelector("p").querySelector("img").src;
-		//console.log('praise modify act');
+		var images_id = document.querySelector('.swiper-slide-active').getAttribute('value');
+		var newimgsrc = document.querySelector('.swiper-slide-active').querySelector("p").querySelector("img").src;
+		//var newimgsrc = document.getElementById("modify_gallery").src;
+		
 
 		var inputData = {
 			compliment_id : compliment_id.value,
@@ -1520,14 +1459,9 @@
 					//console.log(data);
 					document.getElementById('pcard_desc'+String(compliment_id.value)).innerHTML = data.short_content;
 					document.getElementById('modify_content'+String(compliment_id.value)).value = content;
-					document.getElementById('cardmodalimg'+String(compliment_id.value)).src = newimgsrc;					
+					document.getElementById('cardmodalimg'+String(compliment_id.value)).src = newimgsrc;
 					
-          alert('칭찬 카드가 수정 되었습니다'); // 칭찬 카드 수정 완료 알럿, 	chkToken_modal 모달을 검색 해주세요 모달 사용시, 이부분 주석처리 해주세요 
-          // var modal = document.getElementById("editCard"); //해당코드로 하면 닫힘이 안됨
-          // var bsModal = new bootstrap.Modal(modal);
-          // bsModal.hide();
-          $('#editCard').modal('hide'); //칭찬카드 수정하고 바로 닫힘 모달 닫기시 사용
-
+					alert('칭찬 카드가 수정 되었습니다'); // 칭찬 카드 수정 완료 알럿, 	chkToken_modal 모달을 검색 해주세요 모달 사용시, 이부분 주석처리 해주세요 			
 				},
 				error: function (e) {
 					console.log("### praise_modify ERROR : ", e);
@@ -1892,351 +1826,14 @@
 			alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
 		}
 	}
-
-  function renderSkeletons() {
-    const container = $("#cardWrap");
-
-    for (let i = 0; i < 12; i++) {
-      const counter = i + 1;
-        container.append(`
-          <div class="skeleton-item chkCard cus-col col-xl-4 col-md-4 mb-2">
-          <div class="card cardList">
-            <div class="card-body p-3 d-flex justify-content-center align-items-center">
-              <div class="d-flex align-items-center" style="width: -webkit-fill-available;">
-                <a class="me-2" href="#" style="width: 32px; height: 32px; border-radius: 100%;">
-                  <div class="skeleton-avatar"></div>
-                </a>
-                <div style="width: 50%;">
-                  <p class="card-title colorCustom_02 mb-1 fw-med skeleton-line"></p>
-                  <h6 class="card-text colorCustom_01 skeleton-line"></h6>
-                </div>
-              </div>
-              <span class="mx-2 d-block icon_right_arrow"></span>
-              <div class="d-flex align-items-center" style="width: -webkit-fill-available;">
-                <a class="me-2" href="#" style="width: 32px; height: 32px; border-radius: 100%;">
-                  <div class="skeleton-avatar"></div>
-                </a>
-                <div style="width: 50%;">
-                  <p class="card-title colorCustom_02 mb-1 fw-med skeleton-line"></p>
-                  <h6 class="card-text colorCustom_01 skeleton-line"></h6>
-                </div>
-              </div>
-            </div>
-            <div class="card-body px-0 py-3 mx-3" style="border-top:1px solid #777777;">
-              <div class="mb-3">
-                <a class="d-flex">
-                  <div style="width:80px; height:80px; overflow: hidden; border-radius: 10px; margin-right:10px;">
-                    <div class="skeleton-card-icon"></div>
-                  </div>
-                  <div class="overflow-hidden" style="width: calc(100% - 90px);">
-                    <p style="min-height: 50px; text-overflow: ellipsis; word-wrap: break-word; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;"
-                      class="card-text mb-0 colorCustom_01 fw-med skeleton-content"></p>
-                  </div>
-                </a>
-              </div>
-              <div class="card-body p-0 d-flex justify-content-between">
-                <div class="d-flex" style="align-items: center; width: -webkit-fill-available;">
-                  <a class="d-flex heartBtn btn p-0 me-2 skeleton-like"></a>
-                  <a class="d-flex commentBtn btn p-0 me-2 skeleton-comment"></a>
-                </div>
-                <div class="position-relative">
-                  <a class="btn p-0 me-1 fw-med colorCustom_01 skeleton-date"></a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        `);
-    }
-  }
-
-  function viewFirstPage() {    
-    const input_search = "{{search_employee_name}}";
-    const exist_todaythanks = "{{exist_todaythanks}}";
-
-		try {
-			$.ajax({
-				type: "GET",
-				url: `/apis/praise_first_page${input_search ? "_search" : ""}/`,
-        data: { input_search, exist_todaythanks },
-        beforeSend: function () {
-          renderSkeletons();
-        },
-				success: function (data) {
-					//console.log('### viewPage success');
-					
-					if (data.data_count === 0) {
-						$('#moreBtn').hide();
-						$('#cardWrap').html(`
-              <div class="card cardList">
-                <div class="card-body p-3 d-flex justify-content-center align-items-center">
-                  <div class="d-flex align-items-center">
-                    칭찬글이 없습니다
-                  </div>
-                </div>
-              </div>
-            `);
-					}
-					
-					var html = '';
-					for (var i = 0; i < data.data_list.length; i++) {
-									
-						var user_image_yn		 = data.data_list[i].user_image_yn;
-						var user_image			 = data.data_list[i].user_image;
-						var user_employee_id	 = data.data_list[i].user_employee_id;
-						var user_employee_name 	 = data.data_list[i].user_employee_name;
-						var user_department_name = data.data_list[i].user_department_name;
-						var user_position_name   = data.data_list[i].user_position_name;
-						var user_company_name    = data.data_list[i].user_company_name;
-						
-						var praise_image 		 = data.data_list[i].praise_image;
-						var praise_image_yn 	 = data.data_list[i].praise_image_yn;
-						var praise_employee_id 	 = data.data_list[i].praise_employee_id;
-						var praise_employee_name   = data.data_list[i].praise_employee_name;
-						var praise_department_name = data.data_list[i].praise_department_name;
-						var praise_position_name   = data.data_list[i].praise_position_name;
-						var praise_company_name    = data.data_list[i].praise_company_name;
-						
-						var image_path 			 = data.data_list[i].image_path;
-						var content 			 = data.data_list[i].content;
-						var short_content     	 = String(data.data_list[i].short_content);
-						var tag 	             = data.data_list[i].tag;
-						
-						var compliment_id 	     = data.data_list[i].compliment_id;
-						var comment_count 	     = data.data_list[i].comment_count;
-						var likes_count 	     = data.data_list[i].likes_count;
-						var praise_id 	         = data.data_list[i].praise_id;
-						var user_id 	         = data.data_list[i].user_id;
-						var like_yn 	         = data.data_list[i].like_yn;
-            var images_id			 = data.data_list[i].images_id;
-												
-						var reg_date 	         = data.data_list[i].reg_date;
-						var todaythanks_showyn 	 = data.data_list[i].todaythanks_showyn;
-						
-						var user_company_name_short;
-
-						if (user_company_name === "우리은행") {
-							user_company_name_short = "은행";
-						} else if (user_company_name === "우리카드") {
-							user_company_name_short = "카드";
-						} else if (user_company_name === "우리에프아이에스") {
-							user_company_name_short = "FIS";
-						} else if (user_company_name === "우리금융지주") {
-							user_company_name_short = "지주";
-						} else if (user_company_name === "우리프라이빗에퀴티자산운용") {
-							user_company_name_short = "PE";
-						} else if (user_company_name === "우리펀드서비스") {
-							user_company_name_short = "펀드";
-						} else if (user_company_name === "우리신용정보") {
-							user_company_name_short = "신용정보";
-						} else if (user_company_name === "우리금융경영연구소") {
-							user_company_name_short = "연구소";
-						} else if (user_company_name === "우리투자증권") {
-							user_company_name_short = "우투";
-						} else if (user_company_name === "우리자산운용") {
-							user_company_name_short = "자산운용";
-						} else if (user_company_name === "우리자산신탁") {
-							user_company_name_short = "자산신탁";
-						} else if (user_company_name === "우리글로벌자산운용") {
-							user_company_name_short = "글로벌";
-						} else if (user_company_name === "우리금융캐피탈") {
-							user_company_name_short = "캐피탈";
-						} else if (user_company_name === "우리금융저축은행") {
-							user_company_name_short = "저축은행";
-						} else if (user_company_name === "우리금융에프앤아이") {
-							user_company_name_short = "F&I";
-						} else if (user_company_name === "우리벤처파트너스") {
-							user_company_name_short = "벤처";
-						} else {
-							user_company_name_short = user_company_name;
-						}
-						
-						var praise_company_name_short;
-
-						if (praise_company_name === "우리은행") {
-							praise_company_name_short = "은행";
-						} else if (praise_company_name === "우리카드") {
-							praise_company_name_short = "카드";
-						} else if (praise_company_name === "우리에프아이에스") {
-							praise_company_name_short = "FIS";
-						} else if (praise_company_name === "우리금융지주") {
-							praise_company_name_short = "지주";
-						} else if (praise_company_name === "우리프라이빗에퀴티자산운용") {
-							praise_company_name_short = "PE";
-						} else if (praise_company_name === "우리펀드서비스") {
-							praise_company_name_short = "펀드";
-						} else if (praise_company_name === "우리신용정보") {
-							praise_company_name_short = "신용정보";
-						} else if (praise_company_name === "우리금융경영연구소") {
-							praise_company_name_short = "연구소";
-						} else if (praise_company_name === "우리투자증권") {
-							praise_company_name_short = "우투";
-						} else if (praise_company_name === "우리자산운용") {
-							praise_company_name_short = "자산운용";
-						} else if (praise_company_name === "우리자산신탁") {
-							praise_company_name_short = "자산신탁";
-						} else if (praise_company_name === "우리글로벌자산운용") {
-							praise_company_name_short = "글로벌";
-						} else if (praise_company_name === "우리금융캐피탈") {
-							praise_company_name_short = "캐피탈";
-						} else if (praise_company_name === "우리금융저축은행") {
-							praise_company_name_short = "저축은행";
-						} else if (praise_company_name === "우리금융에프앤아이") {
-							praise_company_name_short = "F&I";
-						} else if (praise_company_name === "우리벤처파트너스") {
-							praise_company_name_short = "벤처";
-						} else {
-							praise_company_name_short = praise_company_name;
-						}
-						
-						short_content = short_content.replace(/\n/g," ");
-						short_content = short_content.replace(/\s+/g, ' '," ");
-						short_content = short_content.replace(/\s/g, ' '," ");
-																		
-						if (todaythanks_showyn == "Y") {
-							html += '<div class="chkCard todayThank cus-col col-xl-4 col-md-4 mb-2">';
-						}
-						else if (praise_id == "{{ user.id}}") {
-							html += '<div class="chkCard sendMeCard cus-col col-xl-4 col-md-4 mb-2">';
-						}
-						else{
-							html += '<div class="chkCard cus-col col-xl-4 col-md-4 mb-2">';
-						}
-						
-						if (todaythanks_showyn == "Y") {
-							html += `<div class="card cardList"><span class="todayHeader position-absolute"><img class="w-100"
-                src="/static/assets/img/today_thank_header.png" alt=""></span>`;
-						}
-            else {
-              html += '<div class="card cardList">';
-            }
-
-              html += '<div class="card-body p-3 d-flex justify-content-center align-items-center"><div class="d-flex align-items-center">';
-              html += '<a class="me-2" style="width: 32px; height: 32px; border-radius: 100%; border:1px solid #d3f1ff; overflow: hidden;" href="#" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#profile_modal">';
-						if(user_image_yn == 'Y')
-						{
-							html += '<img src="'+user_image+'" class="img-fluid" onclick=\'javascript:viewProfile("'+user_id+'", "'+user_image_yn+'", "'+user_image+'", "'+user_employee_id+'", "'+user_employee_name+'", "'+user_department_name+'", "'+user_position_name+'", "'+user_company_name+'")\'/>';
-							
-						}
-						else
-						{
-							html += '<img src="/static/assets/img/profile_bee_01.png" class="img-fluid" onclick=\'javascript:viewProfile("'+user_id+'", "'+user_image_yn+'", "'+user_image+'", "'+user_employee_id+'", "'+user_employee_name+'", "'+user_department_name+'", "'+user_position_name+'", "'+user_company_name+'")\'/>';
-						}
-						html += '</a><div><p class="card-title colorCustom_02 m-0 fw-med">'+user_company_name_short + ' ' + user_department_name.substring(0, 8)+'</p>';
-					    html += '<h6 class="card-text colorCustom_01" style="font-size: 12px;">'+user_employee_name+'<span class="fw-bold colorCustom_03" style="font-size: 10px;">' + ' ' + user_position_name+'</span></h6></div></div>';
-              html += '<span class="mx-2 d-block icon_right_arrow"></span><div class="d-flex align-items-center"><a class="me-2" style="width: 32px; height: 32px; border-radius: 100%; border:1px solid #d3f1ff; overflow: hidden;" href="#" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#profile_modal">';
-						if(praise_image_yn == 'Y'){
-							html += '<img src="'+praise_image+'" class="img-fluid" onclick=\'javascript:viewProfile("'+praise_id+'", "'+praise_image_yn+'", "'+praise_image+'", "'+praise_employee_id+'", "'+praise_employee_name+'", "'+praise_department_name+'", "'+praise_position_name+'", "'+praise_company_name+'")\' />';
-						}else{
-							html += '<img src="/static/assets/img/profile_bee_01.png" class="img-fluid" onclick=\'javascript:viewProfile("'+praise_id+'", "'+praise_image_yn+'", "'+praise_image+'", "'+praise_employee_id+'", "'+praise_employee_name+'", "'+praise_department_name+'", "'+praise_position_name+'", "'+praise_company_name+'")\' />';
-						}
-												
-						html += '</a><div><p class="card-title colorCustom_02 m-0 fw-med">'+praise_company_name_short + ' ' + praise_department_name.substring(0, 8)+'</p>';
-						html += '<h6 class="card-text colorCustom_01" style="font-size: 12px;">'+praise_employee_name+'<span class="fw-bold colorCustom_03" style="font-size: 10px;">' + ' ' + praise_position_name +'</span></h6></div></div></div>';
-						htmlcheckpoint1 = '<div class="card-body px-0 py-3 mx-3" style="border-top:1px solid #777777;"><div class="mb-3"><a data-bs-toggle="modal" data-bs-target="#card_modal" href="#" class="d-flex" onclick=\'viewToken("'+compliment_id+'","'+todaythanks_showyn+'","'+user_id+'","'+praise_id+'","'+user_employee_name+'", "'+praise_employee_name+'", "'+content+'", "'+user_image+'", "'+praise_image+'", "'+user_image_yn+'", "'+praise_image_yn+'", "/static/assets/img/profile_bee_01.png", "'+image_path+'", "'+likes_count+'", "'+comment_count+'", "'+reg_date.slice(0, 10)+'");\'/>';
-						html += htmlcheckpoint1;
-						<!-- 요부분 수정 했음 -->
-						html += '<div style="width:80px; height:80px; overflow: hidden; border-radius: 10px; margin-right:10px;"><img id="cardmodalimg'+compliment_id+'" style="object-fit: cover; height: 100%; width: 100%;" src="'+image_path+'" class="img-fluid"></div>';
-						html += '<div class="overflow-hidden" style="width: calc(100% - 90px);"><p id="pcard_desc'+compliment_id+'" style="min-height: 50px; text-overflow: ellipsis; word-wrap: break-word; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;" class="card-text mb-0 colorCustom_01 fw-med">'+short_content+'</p><div id="viewTag'+compliment_id+'"></div></div>';
-						html += '</a></div>';
-						html += '<div class="card-body p-0 d-flex justify-content-between"><div class="d-flex" style="align-items: center;">';
-						html += '<a href="javascript:void(0);" onclick="clickLike('+compliment_id+');" class="d-flex heartBtn btn p-0 me-2">';
-						if (like_yn == 1)
-						{
-							html += '<i id="clickIconLike'+compliment_id+'" class="me-1 clicked"></i>';
-						}
-						else
-						{
-							html += '<i id="clickIconLike'+compliment_id+'" class="me-1"></i>';
-						}
-						<!-- 요부분 아래부분 다 수정했음 -->
-						
-						html += '<span id="clickLike'+compliment_id+'" class="fw-med colorCustom_01">'+likes_count+'</span></a>';
-						html += '<a href="#" class="d-flex commentBtn btn p-0 me-2" data-bs-toggle="modal" data-bs-target="#modalPraiseComment" onclick="praiseCommentPop(0,'+compliment_id+', '+praise_id+');">';
-						if (String(comment_count) == '0')
-						{
-							html += '<i id="clickIconComment'+compliment_id+'" class="me-1">';
-						}
-						else
-						{
-							html += '<i id="clickIconComment'+compliment_id+'" class="me-1 clicked">';
-						}
-						
-						html += '</i><span id="clickComment'+compliment_id+'" class="fw-med colorCustom_01">'+comment_count+'</span></a>';
-						if ("{{user.id}}" == praise_id)
-						{
-							html += '<a href="/praiseRegedit/?userId='+user_id+'" class="replyBtn fw-med d-flex p-0 colorCustom_01" style="font-size: 12px;"><i class="me-1"></i>답장하기</a>';
-						}
-						
-						html += '</div><div class="position-relative"><a href="#" class="btn p-0 me-1 fw-med colorCustom_01" style="cursor:default;">';
-						if(String(user_id) == '15893')
-						{
-							asd = 1;
-						}
-						else
-						{
-							html += '<span>'+reg_date.slice(0, 10)+'</span>';
-						}
-						html += '</a>';
-						//////////////////////////
-						var currentuid = String("{{user.id}}");
-						var currentsuperuid = String("{{user.is_superuser}}");
-						if ("{{user.id}}" == user_id || "{{user.is_superuser}}" == "True")
-						{
-							html += '<button class="btn p-0 editBtn" type="button" id="conversionRate" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="d-block"></span></button>';
-							html += '<div class="dropdown-menu dropdown-menu-end" aria-labelledby="conversionRate" data-popper-placement="bottom-end" style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate(0px, 25px);">';
-							html += '<input id="modify_content'+compliment_id+'" type="hidden" value="'+content+'"></input>';
-              if( "{{user.is_superuser}}" == "True" && todaythanks_showyn == 'Y' ){
-                  html += '<a class="dropdown-item" onclick="todayThankyouSet(\''+compliment_id+'\',\'N\');">투데이땡큐해제</a>';
-              }else if("{{user.is_superuser}}" == "True" && todaythanks_showyn != 'Y' ){
-                  html +='<a class="dropdown-item" onclick="todayThankyouSet(\''+compliment_id+'\',\'Y\');">투데이땡큐등록</a>';
-              }
-							html += '<a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#editCard" onclick="praiseModifyPop(\''+compliment_id+'\',\''+image_path+'\',\''+content+'\',\''+images_id+'\' );">수정하기</a>';
-							//html += '<a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deletCard" onclick="confirmDelete(\'/praiseDelete/'+compliment_id+'\');">삭제하기</a></div>'; 
-							html += '<a class="dropdown-item" onclick="confirmDelete(\'/praiseDelete/'+compliment_id+'\');">삭제하기</a></div>';
-						}	
-						///////////////////////////
-						html += '</div></div></div></div></div>';		
-						
-					}
-					
-					//$('.container-xxl mt-2').append(html);
-					//document.getElementById('cardWrap').append(stringToHTML(html));
-					document.getElementById('cardWrap').insertAdjacentHTML('beforeend',html);
-					
-				},
-				error: function (e) {
-					console.log("### testAPI ERROR : ", e);
-					//alert("fail");
-				},
-        complete: function() {
-          $('#cardWrap').find('.skeleton-item').remove();
-        }
-		  })
-		  .done(function() {
-			  // AJAX 요청 완료 후 처리할 작업
-		  })
-		  .fail(function() {
-			  // AJAX 요청 실패 시 처리할 작업
-		  });
-		} catch (e) {
-			alert('[오류] DB적재시 내부오류가 발생했습니다. \n잠시 후 이용하시기 바랍니다.');
-		}	
-	}
 	
 		
 	function viewPage() {    
-    if ($("#moreBtn").css("display") === "none") {
-      return;
-    }
-
 		// console.log('### viewPage CALL ###');
 				
 		var _SuccessCount = document.getElementById("SuccessCount").value;
 		var inputData = {
-			pageNumber: parseInt(_SuccessCount),
-      input_search: "{{search_employee_name}}",
-      exist_todaythanks: "{{exist_todaythanks}}"
+			pageNumber      :  parseInt(_SuccessCount),
 		};
 		
 		_SuccessCount = parseInt(_SuccessCount) + 1;    
@@ -2246,12 +1843,9 @@
 							
 		try {
 			$.ajax({
-				type: "GET",
+				type: "POST",
 				url: "/apis/praise_page/", 
 				data: inputData,
-        beforeSend: function() {
-          renderSkeletons();
-        },
 				success: function (data) {
 					//console.log('### viewPage success');
 					
@@ -2289,7 +1883,7 @@
 						var praise_id 	         = data.data_list[i].praise_id;
 						var user_id 	         = data.data_list[i].user_id;
 						var like_yn 	         = data.data_list[i].like_yn;
-            var images_id			 = data.data_list[i].images_id;
+						var images_id			 = data.data_list[i].images_id;
 												
 						var reg_date 	         = data.data_list[i].reg_date;
 						var todaythanks_showyn 	 = data.data_list[i].todaythanks_showyn;
@@ -2312,8 +1906,8 @@
 							user_company_name_short = "신용정보";
 						} else if (user_company_name === "우리금융경영연구소") {
 							user_company_name_short = "연구소";
-						} else if (user_company_name === "우리투자증권") {
-							user_company_name_short = "우투";
+						} else if (user_company_name === "우리종합금융") {
+							user_company_name_short = "종금";
 						} else if (user_company_name === "우리자산운용") {
 							user_company_name_short = "자산운용";
 						} else if (user_company_name === "우리자산신탁") {
@@ -2350,8 +1944,8 @@
 							praise_company_name_short = "신용정보";
 						} else if (praise_company_name === "우리금융경영연구소") {
 							praise_company_name_short = "연구소";
-						} else if (praise_company_name === "우리투자증권") {
-							praise_company_name_short = "우투";
+						} else if (praise_company_name === "우리종합금융") {
+							praise_company_name_short = "종금";
 						} else if (praise_company_name === "우리자산운용") {
 							praise_company_name_short = "자산운용";
 						} else if (praise_company_name === "우리자산신탁") {
@@ -2370,7 +1964,7 @@
 							praise_company_name_short = praise_company_name;
 						}
 						
-						short_content = short_content.replace(/\n/g," ");
+						short_content = short_content.replace(/n/g," ");
 						short_content = short_content.replace(/\s+/g, ' '," ");
 						short_content = short_content.replace(/\s/g, ' '," ");
 																		
@@ -2380,9 +1974,9 @@
 						else{
 							html += '<div class="chkCard cus-col col-xl-4 col-md-4 mb-2">';
 						}
-						
+
 						html += '<div class="card cardList"><div class="card-body p-3 d-flex justify-content-center align-items-center"><div class="d-flex align-items-center">';
-              html += '<a class="me-2" style="width: 32px; height: 32px; border-radius: 100%; border:1px solid #d3f1ff; overflow: hidden;" href="#" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#profile_modal">';
+						html += '<a class="me-2" style="width: 32px; height: 32px; border-radius: 100%; border:1px solid #d3f1ff; overflow: hidden;" href="#" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#profile_modal">';
 						if(user_image_yn == 'Y')
 						{
 							html += '<img src="'+user_image+'" class="img-fluid" onclick=\'javascript:viewProfile("'+user_id+'", "'+user_image_yn+'", "'+user_image+'", "'+user_employee_id+'", "'+user_employee_name+'", "'+user_department_name+'", "'+user_position_name+'", "'+user_company_name+'")\'/>';
@@ -2394,7 +1988,7 @@
 						}
 						html += '</a><div><p class="card-title colorCustom_02 m-0 fw-med">'+user_company_name_short + ' ' + user_department_name.substring(0, 8)+'</p>';
 					    html += '<h6 class="card-text colorCustom_01" style="font-size: 12px;">'+user_employee_name+'<span class="fw-bold colorCustom_03" style="font-size: 10px;">' + ' ' + user_position_name+'</span></h6></div></div>';
-              html += '<span class="mx-2 d-block icon_right_arrow"></span><div class="d-flex align-items-center"><a class="me-2" style="width: 32px; height: 32px; border-radius: 100%; border:1px solid #d3f1ff; overflow: hidden;" href="#" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#profile_modal">';
+						html += '<span class="mx-2 d-block icon_right_arrow"></span><div class="d-flex align-items-center"><a class="me-2" style="width: 32px; height: 32px; border-radius: 100%; border:1px solid #d3f1ff; overflow: hidden;" href="#" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#profile_modal">';
 						if(praise_image_yn == 'Y'){
 							html += '<img src="'+praise_image+'" class="img-fluid" onclick=\'javascript:viewProfile("'+praise_id+'", "'+praise_image_yn+'", "'+praise_image+'", "'+praise_employee_id+'", "'+praise_employee_name+'", "'+praise_department_name+'", "'+praise_position_name+'", "'+praise_company_name+'")\' />';
 						}else{
@@ -2456,11 +2050,6 @@
 							html += '<button class="btn p-0 editBtn" type="button" id="conversionRate" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="d-block"></span></button>';
 							html += '<div class="dropdown-menu dropdown-menu-end" aria-labelledby="conversionRate" data-popper-placement="bottom-end" style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate(0px, 25px);">';
 							html += '<input id="modify_content'+compliment_id+'" type="hidden" value="'+content+'"></input>';
-              if( "{{user.is_superuser}}" == "True" && todaythanks_showyn == 'Y' ){
-                  html += '<a class="dropdown-item" onclick="todayThankyouSet(\''+compliment_id+'\',\'N\');">투데이땡큐해제</a>';
-              }else if("{{user.is_superuser}}" == "True" && todaythanks_showyn != 'Y' ){
-                  html +='<a class="dropdown-item" onclick="todayThankyouSet(\''+compliment_id+'\',\'Y\');">투데이땡큐등록</a>';
-              }
 							html += '<a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#editCard" onclick="praiseModifyPop(\''+compliment_id+'\',\''+image_path+'\',\''+content+'\',\''+images_id+'\' );">수정하기</a>';
 							//html += '<a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deletCard" onclick="confirmDelete(\'/praiseDelete/'+compliment_id+'\');">삭제하기</a></div>'; 
 							html += '<a class="dropdown-item" onclick="confirmDelete(\'/praiseDelete/'+compliment_id+'\');">삭제하기</a></div>';
@@ -2478,10 +2067,7 @@
 				error: function (e) {
 					console.log("### testAPI ERROR : ", e);
 					//alert("fail");
-				},
-        complete: function() {
-          $('#cardWrap').find('.skeleton-item').remove();
-        }
+				}
 		  })
 		  .done(function() {
 			  // AJAX 요청 완료 후 처리할 작업
@@ -2570,10 +2156,7 @@
 	{
 		try
 		{
-			//일괄발송 20240913
-      // short_content_new = String(document.getElementById('modify_content'+String(compliment_id)).value).replaceAll('<br>', '\n');
-			short_content_new = String(document.getElementById('modify_content'+String(compliment_id)).value);
-
+			short_content_new = String(document.getElementById('modify_content'+String(compliment_id)).value).replaceAll('<br>', '\n');
 			if (short_content_new[0] == "'" && short_content_new[short_content_new.length-1] == "'")
 			{
 				short_content_new = short_content_new.substring(1, short_content_new.length-1);
@@ -2651,10 +2234,24 @@
 
 
 <!-- Vendors JS -->
-<script defer src="{% static 'assets/vendor/libs/formvalidation/dist/js/FormValidation.min.js' %}"></script>
-<script defer src="{% static 'assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js' %}"></script>
-<script defer src="{% static 'assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js' %}"></script>
-<script defer src="{% static 'assets/js/ui-carousel.js' %}"></script>
+<!-- <script src="{% static 'assets/vendor/libs/cleavejs/cleave.js' %}"></script> -->
+<!-- <script src="{% static 'assets/vendor/libs/cleavejs/cleave-phone.js' %}"></script> -->
+<!-- <script src="{% static 'assets/vendor/libs/apex-charts/apexcharts.js' %}"></script> -->
+<!-- <script src="https://cdn.wooriwbn.com/thb/wooribank/2024/03/01/cdn/css/previous/apexcharts.js"></script> -->
+<script src="{% static 'assets/vendor/libs/formvalidation/dist/js/FormValidation.min.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js' %}"></script>
+<script src="{% static 'assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js' %}"></script>
+<!-- <script src="{% static 'assets/vendor/libs/quill/katex.js' %}"></script> -->
+<!-- <script src="https://cdn.wooriwbn.com/thb/wooribank/2024/03/01/cdn/css/main/katex.js"></script> -->
+<!-- <script src="{% static 'assets/vendor/libs/quill/quill.js' %}"></script> -->
+<!-- <script src="https://cdn.wooriwbn.com/thb/wooribank/2024/03/01/cdn/css/main/quill.js"></script> -->
+<script src="{% static 'assets/vendor/libs/swiper/swiper.js' %}"></script>
+<script src="{% static 'assets/js/ui-carousel.js' %}"></script>
+<!-- <script src="{% static 'assets/vendor/libs/block-ui/block-ui.js' %}"></script> -->
+<!-- Page JS -->
+<!--<script src="{% static 'assets/js/cards-advance.js' %}"></script> -->
+<!--<script src="{% static 'assets/js/modal-add-new-cc.js' %}"></script> -->
+
 
 <!--<script>
 		// Quill 모듈 초기화  현재 사용중인 id 가 modalPraiseRegedit_content 인 요소가 없어 주석처리 해둠
@@ -2671,7 +2268,7 @@
 			}
 		}); */
 	</script> -->
-  <style>
+<style>
     .all_ #mainPage .heartBtn i,
     .all_ #mainPage .commentBtn i {
       width: 20px;
@@ -2897,95 +2494,6 @@
       color: #666;
       z-index: 1;
     }
-
-    .skeleton-item > .cardList > .card-body:first-child > div:first-child {
-      justify-content: flex-end;
-    }
-  
-    .skeleton-avatar {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-      background-size: 200% 100%;
-      animation: shimmer 1.5s infinite;
-    }
-  
-    .skeleton-card-icon {
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-      background-size: 200% 100%;
-      animation: shimmer 1.5s infinite;
-    }
-  
-    .skeleton-content {
-      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-      background-size: 200% 100%;
-      animation: shimmer 1.5s infinite;
-      border-radius: 4px;
-    }
-  
-    .skeleton-line {
-      height: 16px;
-      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-      background-size: 200% 100%;
-      animation: shimmer 1.5s infinite;
-      border-radius: 4px;
-      margin-bottom: 8px;
-    }
-  
-    .skeleton-date {
-      width: 76px;
-      height: 22px;
-      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-      background-size: 200% 100%;
-      animation: shimmer 1.5s infinite;
-      border-radius: 4px;
-    }
-  
-    .skeleton-like,
-    .skeleton-comment {
-      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-      background-size: 200% 100%;
-      animation: shimmer 1.5s infinite;
-      border-radius: 4px;
-      width: 10%;
-      height: 22px;
-    }
-  
-    .skeleton-line:last-child {
-      width: 50%;
-      margin-bottom: 0;
-    }
-  
-    .skeleton-rank {
-      width: 40px;
-      height: 40px;
-      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-      background-size: 200% 100%;
-      animation: shimmer 1.5s infinite;
-      border-radius: 4px;
-    }
-  
-    @keyframes shimmer {
-      0% {
-        background-position: 200% 0;
-      }
-      100% {
-        background-position: -200% 0;
-      }
-    }
-
-    @media (max-width:576px) {
-      .skeleton-item > .cardList > .card-body:first-child > div:first-child {
-        justify-content: flex-start;
-      }
-
-      .skeleton-item > .cardList > .card-body:first-child > div:last-child {
-        justify-content: flex-end;
-      }
-    }
   </style>
 <style>
   .rank_crown_01,
@@ -3027,8 +2535,8 @@
   /* 4-10등 class */
   .rank_crown_04_10::after {
     background: url(/static/assets/img/rank_crown04-10.png) no-repeat center/100% auto;
-    }
-  </style>
+  }
+</style>
 
   <script>
     function copyLink(_bbsId) {
@@ -3055,7 +2563,7 @@
       })
     }
 
-    function modalconfirmDelete()
+	function modalconfirmDelete()
 	{
 		window.location = document.getElementById("hreflocsave").value;
 	}
@@ -3075,6 +2583,7 @@
 		{
 			asd = 1;
 		}  
+
     }
   </script>
 
