@@ -1,6 +1,7 @@
 ####################################################################
 # 2024-12-25 VTI   move business of tk_list from views.py
-# 2025-04-23 VTI   add limit, offset in api get data tk_list
+# 2025-01-05 VTI   add limit, offset in api get data tk_list
+# 2025-04-24 VTI   fix logout flow and change initial record limit from 6 to 12
 ####################################################################
 
 from datetime import datetime

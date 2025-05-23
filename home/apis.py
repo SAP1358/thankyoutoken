@@ -12,6 +12,7 @@
 # 2024-12-17 VTI   Add a filter condition for user search to the `praise_page` API.
 # 2024-12-25 VTI   Add APIs in home, search, tk_list, rankList screen.
 # 2025-04-23 VTI   add limit, offset in api get data tk_list
+# 2025-04-24 VTI   fix logout flow and change initial record limit from 6 to 12
 ####################################################################
 from django.shortcuts import render, HttpResponse
 from myprofile.models import User as User2
@@ -533,18 +534,18 @@ def praise_first_page(request):
                 .select_related('praise', 'images', 'user')
                 .annotate(**annotations)
                 .values()
-                .order_by('-reg_date')[:5]
+                .order_by('-reg_date')[:11]
             )
         )
     else:
-        # If no records with first condition, get 6 records from second condition
+        # If no records with first condition, get 12 records from second condition
         results = list(
             base_query
             .filter(Q(todaythanks_showyn='N') | Q(todaythanks_showyn__isnull=True))
             .select_related('praise', 'images', 'user')
             .annotate(**annotations)
             .values()
-            .order_by('-reg_date')[:6]
+            .order_by('-reg_date')[:12]
         )
     
     # Process content
@@ -613,7 +614,7 @@ def praise_first_page_search(request):
         .select_related('praise', 'images', 'user')
         .annotate(**annotations)
         .values()
-        .order_by('-reg_date')[:6]
+        .order_by('-reg_date')[:12]
     )
     
     # Process content
@@ -669,9 +670,9 @@ def praise_page_new(request):
     
     # Annotate and get paginated results
     if user_id or exist_todaythanks != 'Y':
-        offset = (page_number * 10) + 6
+        offset = (page_number * 10) + 12
     else:
-        offset = (page_number * 10) + 5
+        offset = (page_number * 10) + 11
 
     selectUserPraise = selectUserPraise.select_related('praise', 'images').annotate(
         praise_employee_name=F('praise__employee_name'),
@@ -693,7 +694,7 @@ def praise_page_new(request):
             When(compliment_id__in=liked_compliments, then=1),
             default=0,
         )  
-    ).order_by('-reg_date')[offset:offset + 10]
+    ).order_by('-reg_date')[offset:offset + 12]
 
     # Build data list
     data_list = []

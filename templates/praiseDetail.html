@@ -1,3 +1,8 @@
+<!--
+####################################################################
+# 2024-03-26 VTI: Changed theme for PC mode and updated color concept
+####################################################################
+-->
 {% extends 'base.html' %}
 {% block body %}
 {% load static %}
@@ -78,7 +83,7 @@
 <!-- Content wrapper -->
 <div class="content-wrapper">
 <!-- Content -->
-<div id="con" class="container-xxl flex-grow-1 py-1" style="max-width: 500px; visibility: hidden;">
+<div id="con" class=" flex-grow-1 py-1" style="max-width: 500px; visibility: hidden; margin: 0 auto !important;">
 	
 		<!-- Main elements -->
 		<div class="card px-2" style="max-width: 500px;">
@@ -189,7 +194,7 @@
 				</div>
 			</div>
 			<div class="w-100 text-center px-4 mb-4">
-				<button id="replyButton" class="btn w-100 text-white py-2" style="background: #006ed5;"
+				<button id="replyButton" class="btn w-100 text-white py-2 mx-auto" style="background: #FF6414;;"
 					class="btn btn-label-secondary" onclick="window.replySend()">답장</button>
 			</div>
 
@@ -203,7 +208,7 @@
 		
         
 </div>
-<div id="footer"><div class="footer w-100 text-center fw-med fs-6" style="color:#418dd4;">ⓒ 2024, made 땡큐토큰</div></div>
+<div id="footer"><div class="footer w-100 text-center fw-med fs-6 color-03" style="color:#418dd4;">ⓒ 2024, made 땡큐토큰</div></div>
     <script>
         window.onload = function () {
   // 하단 내비게이션 높잇값 만큼 모든 페이지 높이조절 시작
@@ -942,7 +947,7 @@ function clearAllElementsById(id) {
 
     #mainPage .todayThank>div {
       border: none;
-      background: #fff url(/static/assets/img/today_thank_border.png) no-repeat center/100% 100%;
+      background: #fff url(/static/assets/img/vti/vti-border-today.png) no-repeat center/100% 100%;
     }
 
     #mainPage .photoCard {

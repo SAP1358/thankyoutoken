@@ -1,3 +1,8 @@
+<!--
+####################################################################
+# 2024-03-26 VTI: Changed theme for PC mode and updated color concept
+####################################################################
+-->
 {% extends 'base.html' %}
 {% block body %}
 {% load static %}
@@ -84,7 +89,7 @@
 			</script>
 			{% endif %}
 
-  	<div id="con" class="container-xxl mt-5">
+  	<div id="con" class=" mt-5">
   		<div class="row">
   			<div class="col-12 mb-2 position-relative" style="z-index: 0;">
   				{% for part in posts %}
@@ -92,12 +97,12 @@
   				<div class="card-header position-relative">
   					<div class="d-flex align-items-end justify-content-center">
 						{% if part.praise_id == user.id %}
-						<h3 class="mb-0 text-white fw-med me-2" style="line-height: 1;">{{ part.user_employee_name }}</h3>
-						<span class="colorCustom_08 fw-med" style="line-height: 1;">{{ part.user_company_name }}
+						<h3 class="mb-0 color-01 fw-med me-2" style="line-height: 1;">{{ part.user_employee_name }}</h3>
+						<span class="color-03 fw-med" style="line-height: 1;">{{ part.user_company_name }}
 						  {{ part.user_department_name }}</span>
 					  {% else %}
-						<h3 class="mb-0 text-white fw-med me-2" style="line-height: 1;">{{ part.praise_employee_name }}</h3>
-						<span class="colorCustom_08 fw-med" style="line-height: 1;">{{ part.praise_company_name }}
+						<h3 class="mb-0 color-01 fw-med me-2" style="line-height: 1;">{{ part.praise_employee_name }}</h3>
+						<span class="color-03 fw-med" style="line-height: 1;">{{ part.praise_company_name }}
 						  {{ part.praise_department_name }}</span>
 					  {% endif %}
   					</div>
@@ -131,10 +136,10 @@
   							</div>
   							<div style="margin-right:10%;" class="talkSendBox">
   								<div class="d-flex align-items-end mb-3" style="">
-  									<h3 class="mb-0 text-white fw-med"
+  									<h3 class="mb-0 color-01 fw-med"
   										style="line-height: 1; font-size: clamp(14px,3.4vw,24px); margin-right:1%;">
   										{{ part.user_employee_name }}</h3>
-  									<span class="colorCustom_08 fw-med"
+  									<span class="color-03 fw-med"
   										style="line-height: 1; font-size: clamp(12px,2.5vw,16px);">{{ part.user_company_name}}
   										{{ part.user_department_name }}</span>
   								</div>
@@ -234,7 +239,7 @@
 
   		</div>
   	</div>
-	  <div id="footer"><div class="footer w-100 text-center fw-med fs-6" style="color:#418dd4;  padding-bottom:120px;">ⓒ 2024, made 땡큐토큰</div></div>
+	  <div id="footer"><div class="footer w-100 text-center fw-med fs-6 color-03" style="color:#418dd4;  padding-bottom:120px;">ⓒ 2024, made 땡큐토큰</div></div>
     <span id="hiddenChkSubmitYn" class="visually-hidden">N</span> <!--칭찬하기 제어-->
 		<a href="#start"></a>
 		<!-- <script>
@@ -319,7 +324,7 @@
 													<input id="inputCardImg" name="inputCardImg" class="form-control" onChange="addSwiperImage(event);"
 														type="file"
 														style="position:absolute; top:0;left:0;width:100%; height: 100%;  font-size:0; background:transparent; padding:0 !important; border:0 !important; opacity:0;">
-													<img src="{% static 'assets/img/sendCard_00.png' %}"></img>
+													<img src="{% static 'assets/img/vti/vti-send-card_00.png' %}"></img>
 												</div>
 												{% for part in posts_All %}
 												<div class="swiper-slide" style="height:clamp(40px,15vw,100px); cursor: pointer;"><img
@@ -340,7 +345,7 @@
 													<input id="inputCardImg" name="inputCardImg" class="form-control" type="file"
 														onChange="addSwiperImage(event);"
 														style="position:absolute; top:0;left:0;width:100%; height: 100%;  font-size:0; background:transparent; padding:0 !important; border:0 !important; opacity:0;">
-													<img src="{% static 'assets/img/sendCard_00.png' %}"></img>
+													<img src="{% static 'assets/img/vti/vti-send-card_00.png' %}"></img>
 												</div>
 												{% for part in posts_1 %}
 												<div class="swiper-slide" style="height:clamp(40px,15vw,100px); cursor: pointer;"><img
@@ -360,7 +365,7 @@
 													<input id="inputCardImg" name="inputCardImg" class="form-control" type="file"
 														onChange="addSwiperImage(event);"
 														style="position:absolute; top:0;left:0;width:100%; height: 100%;  font-size:0; background:transparent; padding:0 !important; border:0 !important; opacity:0;">
-													<img src="{% static 'assets/img/sendCard_00.png' %}"></img>
+													<img src="{% static 'assets/img/vti/vti-send-card_00.png' %}"></img>
 												</div>
 												{% for part in posts_2 %}
 												<div class="swiper-slide" style="height:clamp(40px,15vw,100px); cursor: pointer;"><img
@@ -381,7 +386,7 @@
 													<input id="inputCardImg" name="inputCardImg" class="form-control" type="file"
 														onChange="addSwiperImage(event);"
 														style="position:absolute; top:0;left:0;width:100%; height: 100%;  font-size:0; background:transparent; padding:0 !important; border:0 !important; opacity:0;">
-													<img src="{% static 'assets/img/sendCard_00.png' %}"></img>
+													<img src="{% static 'assets/img/vti/vti-send-card_00.png' %}"></img>
 												</div>
 												{% for part in posts_3 %}
 												<div class="swiper-slide" style="height:clamp(40px,15vw,100px); cursor: pointer;"><img
@@ -402,7 +407,7 @@
 													<input id="inputCardImg" name="inputCardImg" class="form-control" type="file"
 														onChange="addSwiperImage(event);"
 														style="position:absolute; top:0;left:0;width:100%; height: 100%;  font-size:0; background:transparent; padding:0 !important; border:0 !important; opacity:0;">
-													<img src="{% static 'assets/img/sendCard_00.png' %}"></img>
+													<img src="{% static 'assets/img/vti/vti-send-card_00.png' %}"></img>
 												</div>
 												{% for part in posts_4 %}
 												<div class="swiper-slide" style="height:clamp(40px,15vw,100px); cursor: pointer;"><img
@@ -423,7 +428,7 @@
 													<input id="inputCardImg" name="inputCardImg" class="form-control" type="file"
 														onChange="addSwiperImage(event);"
 														style="position:absolute; top:0;left:0;width:100%; height: 100%;  font-size:0; background:transparent; padding:0 !important; border:0 !important; opacity:0;">
-													<img src="{% static 'assets/img/sendCard_00.png' %}"></img>
+													<img src="{% static 'assets/img/vti/vti-send-card_00.png' %}"></img>
 												</div>
 												{% for part in posts_5 %}
 												<div class="swiper-slide" style="height:clamp(40px,15vw,100px); cursor: pointer;"><img
@@ -444,7 +449,7 @@
 													<input id="inputCardImg" name="inputCardImg" class="form-control" type="file"
 														onChange="addSwiperImage(event);"
 														style="position:absolute; top:0;left:0;width:100%; height: 100%;  font-size:0; background:transparent; padding:0 !important; border:0 !important; opacity:0;">
-													<img src="{% static 'assets/img/sendCard_00.png' %}"></img>
+													<img src="{% static 'assets/img/vti/vti-send-card_00.png' %}"></img>
 												</div>
 												{% for part in posts_6 %}
 												<div class="swiper-slide" style="height:clamp(40px,15vw,100px); cursor: pointer;"><img
