@@ -1,37 +1,460 @@
 <!--
 ####################################################################
-# 2024-03-26 VTI: Changed theme for PC mode and updated color concept
+# 2024-05-30 VTI: Changed theme for PC mode and updated color concept
 ####################################################################
 -->
+
 {% extends 'base.html' %}
 {% block body %}
 {% load static %}
 
 <head>
 
-  <!-- Page CSS -->
-  <link rel="stylesheet" href="{% static 'assets/vendor/css/pages/page-profile.css' %}" />
+<!-- Page CSS -->
+<link rel="stylesheet" href="{% static 'assets/vendor/css/pages/page-profile.css' %}" />
 
-  {% comment %}
-  <link href="https://webfontworld.github.io/pretendard/Pretendard.css" rel="stylesheet"> {% endcomment %}
+{% comment %} <link href="https://webfontworld.github.io/pretendard/Pretendard.css" rel="stylesheet"> {% endcomment %}
 
-  <!-- 드림 사용 소스 -->
-  {% comment %}
-  <link rel="stylesheet" href="{% static 'assets/css/apex-charts.css' %}" /> {% endcomment %}
-  <link rel="stylesheet" href="{% static 'assets/css/bootstrap-datepicker.css' %}" />
-  <!-- 드림 사용 소스 끝 -->
+<!-- 드림 사용 소스 -->
+{% comment %} <link rel="stylesheet" href="{% static 'assets/css/apex-charts.css' %}" /> {% endcomment %}
+<link rel="stylesheet" href="{% static 'assets/css/bootstrap-datepicker.css' %}" />
+<!-- 드림 사용 소스 끝 -->
+
+</head>
+
+<body>
+  <!-- 전체 태그 감싸기 시작 -->
+  <!-- 컨텐츠 시작 -->
+  <input type="hidden" id="currentPage" value="1">
+  <div id="myThankPage" class="allPage layout-container flex-column">
+
+    <!--
+    <div id="tk_con" class="container-xxl mt-2" style="visibility: hidden;">
+    -->
+    <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+    <div id="tk_con" class="mt-2" style="visibility: hidden;">
+
+      <div class="row">
+        <div class="skeleton-container">
+          <!-- jQuery will inject skeleton items here -->
+        </div>
+        <!-- Posts will be loaded here dynamically -->
+      </div>
+    </div>
+
+    <div class = "text-center">
+
+      <!--
+      <a href="javascript:getPraisePosts();" id = "viewAddEvent" class="badge badge-danger text-dark text-center fs-3 mb-4">더보기</a>
+      -->
+      <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+      <a href="javascript:getPraisePosts();" id = "viewAddEvent" class="badge badge-danger text-center fs-3 mb-4 mt-5 bg-color-02 color-00 border-radius-8">더보기</a>
+
+    </div>
+
+    <!-- 컨텐츠 종료 -->
+
+    <!--
+    <div id="footer"><div class="footer w-100 text-center fw-med fs-6" style="color:#418dd4;">ⓒ 2024, made 땡큐토큰</div></div>
+    -->
+    <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+    <div id="footer"><div class="footer w-100 text-center fw-med fs-6 color-03" style="color:#418dd4;">ⓒ 2024, made 땡큐토큰</div></div>
+
+    <script>
+        window.onload = function () {
+  // 하단 내비게이션 높잇값 만큼 모든 페이지 높이조절 시작
+      const moNav_h = document.querySelector('.mobile-navigation').clientHeight;
+      const layoutPage = document.querySelector('.layout-page');
+      layoutPage.style.paddingBottom = moNav_h + 40 + 'px';
+  // 하단 내비게이션 높잇값 만큼 모든 페이지 높이조절 끝 
+  }
+
+    </script>
+  </div>
+  <!-- 전체 태그 감싸기 종료 -->
+  <!-- </div> -->
+  
+
+  <script>
+	let scrollTimeout; 
+    window.addEventListener("scroll", (event) => {
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout);
+      }
+    
+      scrollTimeout = setTimeout(function() {
+        const scrollPosition = $(window).scrollTop();
+        const windowHeight = $(window).height();
+        const documentHeight = $(document).height();
+        
+        if (scrollPosition + windowHeight > documentHeight * 0.8) {
+          if ("{{addPage}}" === "N") {
+            $('#viewAddEvent').hide();
+          } else {
+            getPraisePosts();
+          }
+        }
+      }, 250);
+    });
+
+    $(document).ready(function() {
+      getPraisePosts();
+
+		// 페이지 로딩이 완료되면 실행될 코드
+		// top nav 와 mobile nav 높이값을 감지해 화면 크기별 #tk_con 의 패딩 top,bottom 값 조절
+		//const chk_top_nav_h = document.querySelector('#top_nav').clientHeight;
+		//const chk_mo_nav_h = document.querySelector('.mobile-navigation').clientHeight;
+		//const con = document.querySelector('#tk_con');
+		//con.style.paddingTop = chk_top_nav_h + 10 + 'px'
+		//con.style.paddingBottom = chk_mo_nav_h + 10 + 'px'
+
+		// 페이지 로딩시 읽지 않은 토큰톡이 있을 경우 CSS style 적용 없을경우 style - display:none 처리
+		const new_tk_num = document.querySelectorAll('.new_tk_num span');
+		new_tk_num.forEach(item => {
+		  if (item.textContent.trim() === "") {
+			item.style.display = 'none';
+		  } else {
+			item.style.display = 'block';
+		  }
+		});
+    setTimeout(loaddivpage, 100);
+    });
+
+    // 토큰마크 화면 크기별 자동 조절
+    function tk_left_H() {
+      const tk_left = document.querySelectorAll('.tkBox .tk_left');
+      tk_left.forEach(item => {
+        const tk_left_w = tk_left[0].clientWidth;
+        item.style.paddingBottom = tk_left_w + 'px';
+      });
+    }
+    tk_left_H();
+
+    window.addEventListener("resize", () => {
+      tk_left_H();
+    })
+
+    function loaddivpage()
+	{
+		document.getElementById("tk_con").style.visibility = 'visible';
+		document.getElementById("header").style.visibility = 'visible';
+	}
+
+  function viewTkTalk(sendId) {
+    window.location.href = `/tk_talk?sendId=${sendId}`;
+  }
+
+  function getPraisePosts() {
+      if ($("#viewAddEvent").css("display") === "none") {
+        return;
+      }
+  
+      const currentPage = document.getElementById("currentPage").value;
+      
+      // increase next page count
+      const nextPage = parseInt(currentPage) + 1;
+      document.getElementById("currentPage").value = nextPage;
+
+      $.ajax({
+        url: '/apis/tk_list/get_praise_posts',
+        method: 'GET',
+        data: {
+          page: currentPage
+        },
+        beforeSend: function () {
+          renderSkeletons();
+        },
+        success: function (data) {
+          if (data.data_count === 0) {
+            $('#viewAddEvent').hide();
+            if (currentPage === 1) {
+              // first page and has no data
+              renderNoMessage();
+            }
+          } else {
+            // append posts
+            renderPosts(data.data_list);
+          }
+        },
+        error: function (xhr, status, error) {
+          console.error('Error fetching posts:', error);
+        },
+        complete: function () {
+          $('#tk_con > .row > .skeleton-item').remove();
+        }
+      });
+    }
+
+  function renderNoMessage() {
+    const noMessageHtml = `
+      <style>
+        body:has(#myThankPage .noMessage) {
+          background: url(/static/assets/img/tkTalk_bg.jpg) no-repeat top/cover;
+        }
+      </style>
+      <div class="noMessage">
+        <div class="col-12">
+          <div class="position-relative">
+            <img style="width:100%; max-width:640px; margin:0 auto; display:block;" src="/static/assets/img/bg_noMessage.png">
+            <button onclick="window.location.href='/praiseRegedit'" style="position: absolute; max-width:400px; width:62.5%; bottom:5%; left:50%; transform: translateX(-50%); border:0; background: none;">
+              <img style="width:100%;" src="/static/assets/img/btn_goToTk.png">
+            </button>
+          </div>
+        </div>
+      </div>`;
+    
+    $('#postsContainer').html(noMessageHtml);
+  }
+
+  /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+    
+    return `${year}-${month}-${day} • ${hours}:${minutes}:${seconds}`;
+  };
+
+  function renderPosts(posts) {
+      const postsHtml = posts.map((part, index) => {
+        const companyNameAbbr = getCompanyAbbreviation(part.user_company_name);
+
+        /*
+        return `
+          <div class="col-12 position-relative" style="z-index: 0;">
+            <div class="card-body">
+              <div class="tkList border rounded d-flex align-items-center" style="cursor: pointer; margin-bottom:10px; padding:20px 2% 15px;"
+                  onclick="viewTkTalk(${part.temp_user_id})">
+                  <div class="tk_right position-absolute" style="right:2%; top:5px;">
+                    <div class="last_tk_date colorCustom_04" style="font-size: 14px;">${part.reg_date}</div>
+                    ${part.notice_count !== null ? `<div class="new_tk_num"><span>${part.notice_count}</span></div>` : ''}
+                  </div>
+                  <div class="overflow-hidden me-3 customSize" style="border:1px solid #d3f1ff; width: 60px; height: 60px; overflow: hidden; border-radius: 100%;">
+                    <img src="${part.user_image_yn === 'Y' ? part.user_image : '/static/assets/img/profile_icon.png'}" 
+                         alt="Avatar" style="width: 100%; height:100%; object-fit: cover;" />
+                  </div>
+                  <span id="chk_send_id" class="visually-hidden">${part.temp_user_id}</span>
+                  <div class="overflow-hidden" style="width: 75%; margin-right:10%;">
+                    <div class="d-flex align-items-end mb-2 mt-2">
+                      <p class="mb-0 colorCustom_01 fw-med me-1" style="word-break: keep-all; line-height: 1; font-size: 18px;">
+                        ${part.user_employee_name}
+                      </p>
+                      <p class="mb-0 colorCustom_02 fw-med" style="word-break: keep-all; line-height: 1; font-size: 14px;">
+                        ${companyNameAbbr} ${part.user_department_name.slice(0, 8)}
+                      </p>
+                    </div>
+                    <p style="text-overflow: ellipsis; word-wrap: break-word; font-size: 16px; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;"
+                       class="card-text mb-0 colorCustom_01">${part.content}</p>
+                  </div>
+                </div>
+            </div>
+          </div>
+        `;
+        */
+        /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+        return `
+          <div class="col-12 position-relative" style="z-index: 0;">
+            <div class="card-body">
+              <div class="tkList border rounded d-flex align-items-center" style="cursor: pointer; margin-bottom:10px; padding:20px 2% 15px;"
+                  onclick="viewTkTalk(${part.temp_user_id})">
+                  <div class="tk_right position-absolute" style="right:2%; top:5px;">
+                    <div class="last_tk_date color-03" style="font-size: 14px;">${formatDate(part.reg_date)}</div>
+                    ${part.notice_count !== null ? `<div class="new_tk_num"><span>${part.notice_count}</span></div>` : ''}
+                  </div>
+                  <div class="overflow-hidden me-3 customSize" style="border:1px solid #d3f1ff; width: 60px; height: 60px; overflow: hidden; border-radius: 100%;">
+                    <img src="${part.user_image_yn === 'Y' ? part.user_image : '/static/assets/img/profile_icon.png'}" 
+                         alt="Avatar" style="width: 100%; height:100%; object-fit: cover;" />
+                  </div>
+                  <span id="chk_send_id" class="visually-hidden">${part.temp_user_id}</span>
+                  <div class="overflow-hidden" style="width: 75%; margin-right:10%;">
+                    <div class="d-flex align-items-end mb-2 mt-2">
+                      <p class="mb-0 colorCustom_01 fw-med me-1" style="word-break: keep-all; line-height: 1; font-size: 16px; color:#3A3A3A !important">
+                        ${part.user_employee_name}
+                      </p>
+                      <p class="mb-0 colorCustom_02 fw-med" style="word-break: keep-all; line-height: 1; font-size: 14px;">
+                        ${companyNameAbbr} ${part.user_department_name.slice(0, 8)}
+                      </p>
+                    </div>
+                    <p style="text-overflow: ellipsis; word-wrap: break-word; font-size: 16px; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; color:#3A3A3A !important"
+                       class="card-text mb-0 colorCustom_01">${part.content}</p>
+                  </div>
+                </div>
+            </div>
+          </div>
+        `;
+
+      }).join('');
+
+      $('#tk_con > .row').append(postsHtml);
+    }
+
+  function getCompanyAbbreviation(companyName) {
+    const companyMap = {
+      "우리에프아이에스": "FIS",
+      "우리은행": "은행",
+      "우리카드": "카드",
+      "우리금융지주": "지주",
+      "우리프라이빗에퀴티자산운용": "PE",
+      "우리펀드서비스": "펀드",
+      "우리신용정보": "신용정보",
+      "우리금융경영연구소": "연구소",
+      "우리투자증권": "우투",
+      "우리자산운용": "자산운용",
+      "우리자산신탁": "자산신탁",
+      "우리글로벌자산운용": "글로벌",
+      "우리금융캐피탈": "캐피탈",
+      "우리금융저축은행": "저축은행",
+      "우리금융에프앤아이": "F&I",
+      "우리벤처파트너스": "벤처"
+    };
+    
+    return companyMap[companyName] || companyName;
+  }
+
+  function renderSkeletons() {
+      const container = $('#tk_con > .row');
+      // container.empty(); // Clear existing content
+
+      // Create and append the specified number of skeleton items
+      for (let i = 0; i < 5; i++) {
+        container.append(`
+          <div class="skeleton-item col-12 position-relative" style="z-index: 0;">
+            <div class="card-body">
+              <div>
+                <div class="tkList border rounded d-flex align-items-center" style="margin-bottom:10px; padding:20px 2% 15px;">
+                  <div class="tk_right position-absolute" style="right:2%; top:5px;">
+                    <div class="last_tk_date colorCustom_04 skeleton-timestamp" style="font-size: 14px;"></div>
+                  </div>
+                  <div class="overflow-hidden me-3 customSize" style="width: 60px; height: 60px; overflow: hidden; border-radius: 100%;">
+                    <div class="skeleton-avatar"></div>
+                  </div>
+                  <div class="overflow-hidden" style="width: 75%; margin-right:10%;">
+                    <div class="d-flex align-items-end mb-2 mt-2 skeleton-line">
+                      <p class="mb-0 colorCustom_01 fw-med me-1" style="word-break: keep-all; line-height: 1; font-size: 18px;">
+                      </p>
+                      <p class="mb-0 colorCustom_02 fw-med" style="word-break: keep-all; line-height: 1; font-size: 14px;">
+                      </p>
+                    </div>
+                    <p style="text-overflow: ellipsis; word-wrap: break-word; font-size: 16px; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;"
+                      class="card-text mb-0 colorCustom_01 skeleton-line"></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `);
+      }
+    }
+
+  </script>
+
+  <script>
+  //2024.02
+
+  //페이지 처리
+  /*
+	const waypoint = new Waypoint({
+	element: document.querySelector('.layout-container'),
+	offset: 'bottom-in-view',
+	handler: function(direction) {
+	//alert('스크롤이 마지막 위치에 도달했습니다!');
+		console.log(direction);
+		if (direction === 'down' && waypointstarted == 1) 
+		{
+			console.log("addPage = " + "{{addPage}}" );  
+			if ("{{addPage}}" === "N") 
+			{
+				$('#viewAddEvent').hide();
+				console.log("연속조회 대상이 없습니다.");
+			}
+			else{
+				viewPage(); // 10개 단위로 땡큐 기록 불러오기
+				//document.querySelector('.infinite-more-link').click();  
+			}
+		}
+	},
+	continuous: true // continuous를 true로 설정하여 여러번 실행되도록 합니다. 
+
+}); */
+
+
+function viewPage() {    
+	//console.log('### my thankyou 마이땡큐 viewPage CALL ###');
+  // main page의 viewPage() 는 전체 유저의 땡큐 data를 API 에서 가져오고 여기에서는 본인 것만 나눠서 보여주는 기능이기 때문에
+  // 깔금하게 날리고 다시 만들었습니다
+
+  var elements = document.querySelectorAll("#hiddendata");
+  var hiddencount = 0;
+  for (var i = 0; i < elements.length; i++) {
+    var element = elements[i]; // 현재 요소
+    // 더보기 기능 (show 로 변경)
+    var style = window.getComputedStyle(element);
+    if (style.display === 'none' && hiddencount < 5) {
+        // Return the first hidden element found
+        element.style.display = 'block';
+        hiddencount = hiddencount + 1;
+
+    }
+  }
+  
+}
+
+
+
+  </script>
+
+<script>
+    // 신규 떙큐 톡이 있을 시 숫자 + 원형 배경 아이콘 생성 시작 - 240221
+    const new_tk_num = document.querySelectorAll('.new_tk_num span');
+    new_tk_num.forEach(item => {
+      if (item.textContent.trim() === "") {
+        item.style.display = 'none';
+      } else {
+        item.style.display = 'block';
+      }
+    });
+    // 신규 떙큐 톡이 있을 시 숫자 + 원형 배경 아이콘 생성 끝 - 240221
+
+    //console.log("scriptStart");
+    // 공통 js 시작 - 240222
+    var doc = document;
+
+    function chkHiddenInput() {
+      //부서, 직위 서브 찾기 탭 생성 시작
+      const chkHiddenInputs = document.querySelectorAll('.chkHiddenInput');
+      document.addEventListener('click', (event) => {
+        const clickedElement = event.target;
+        const isChkHiddenInput = clickedElement.classList.contains('chkHiddenInput') || clickedElement.closest(
+          '.chkHiddenInput');
+
+        chkHiddenInputs.forEach((item, index) => {
+          const editSearchBox = item.querySelector('.editSearchBox');
+
+          if (!isChkHiddenInput || item !== clickedElement.closest('.chkHiddenInput')) {
+            editSearchBox.classList.add('d-none');
+          } else {
+            editSearchBox.classList.remove('d-none');
+          }
+        });
+      });
+      //부서, 직위 서브 찾기 탭 생성 끝
+    }
+    chkHiddenInput();
+
+    // 검색 아이콘 클릭시 검색 서브 input 탭 닫기 끝
+
+
+
+  </script>
+
 
   <style>
-    .select2.select2-container {
-      position: absolute;
-      left: 0;
-      width: calc(100% - 99px) !important;
-    }
-
-    button.searchChkBtn {
-      position: absolute !important;
-      right: 0;
-    }
+.select2.select2-container {position: absolute; left:0; width:calc(100% - 99px) !important;}
+    button.searchChkBtn {position: absolute !important; right:0;}
 
     .allPage .sendMeCard>div {
       background: #c8edff;
@@ -326,278 +749,12 @@
       0% {
         background-position: 200% 0;
       }
-
       100% {
         background-position: -200% 0;
       }
     }
   </style>
 
-</head>
-
-<body>
-  <!-- 전체 태그 감싸기 시작 -->
-  <!-- 컨텐츠 시작 -->
-  <input type="hidden" id="currentPage" value="1">
-  <div id="myThankPage" class="allPage layout-container flex-column">
-    <div id="tk_con" class="mt-2" style="visibility: hidden;">
-      <div class="row">
-        <!-- Posts will be loaded here dynamically -->
-      </div>
-    </div>
-    <div class="text-center">
-      <a href="javascript:getPraisePosts();" id="viewAddEvent"
-        class="badge badge-danger text-dark text-center fs-3 mb-4 bg-color-02 color-00 border-radius-8">더보기</a>
-    </div>
-    <!-- 컨텐츠 종료 -->
-    <div id="footer">
-      <div class="footer w-100 text-center fw-med fs-6 color-03" style="color:#418dd4;">ⓒ 2024, made 땡큐토큰</div>
-    </div>
-  </div>
-  <!-- 전체 태그 감싸기 종료 -->
-  <!-- </div> -->
-
-  <!-- utilities -->
-  <script>
-    function getCompanyAbbreviation(companyName) {
-      const companyMap = {
-        "우리에프아이에스": "FIS",
-        "우리은행": "은행",
-        "우리카드": "카드",
-        "우리금융지주": "지주",
-        "우리프라이빗에퀴티자산운용": "PE",
-        "우리펀드서비스": "펀드",
-        "우리신용정보": "신용정보",
-        "우리금융경영연구소": "연구소",
-        "우리투자증권": "우투",
-        "우리자산운용": "자산운용",
-        "우리자산신탁": "자산신탁",
-        "우리글로벌자산운용": "글로벌",
-        "우리금융캐피탈": "캐피탈",
-        "우리금융저축은행": "저축은행",
-        "우리금융에프앤아이": "F&I",
-        "우리벤처파트너스": "벤처"
-      };
-      if (companyMap[companyName]) return companyMap[companyName];
-      return companyName;
-    }
-
-    function viewTkTalk(sendId) {
-      window.location.href = `/tk_talk?sendId=${sendId}`;
-    }
-  </script>
-
-  <!-- renderers -->
-  <script>
-    function renderNoMessage() {
-      const noMessageHtml = `
-        <style>
-          body:has(#myThankPage .noMessage) {
-            background: url(/static/assets/img/tkTalk_bg.jpg) no-repeat top/cover;
-          }
-        </style>
-        <div class="noMessage">
-          <div class="col-12">
-            <div class="position-relative">
-              <img style="width:100%; max-width:640px; margin:0 auto; display:block;" src="/static/assets/img/bg_noMessage.png">
-              <button onclick="window.location.href='/praiseRegedit'" style="position: absolute; max-width:400px; width:62.5%; bottom:5%; left:50%; transform: translateX(-50%); border:0; background: none;">
-                <img style="width:100%;" src="/static/assets/img/btn_goToTk.png">
-              </button>
-            </div>
-          </div>
-        </div>`;
-      $('#tk_con').html(noMessageHtml);
-    }
-
-    function renderPosts(posts) {
-      const postsHtml = posts.map((post, index) => {
-        const companyNameAbbr = getCompanyAbbreviation(post.user_company_name);
-        return `
-          <div class="col-12 position-relative" style="z-index: 0;">
-            <div class="card-body">
-              <div class="tkList border rounded d-flex align-items-center" style="cursor: pointer; margin-bottom:10px; padding:20px 2% 15px;"
-                  onclick="viewTkTalk(${post.temp_user_id})">
-                  <div class="tk_right position-absolute" style="right:2%; top:5px;">
-                    <div class="last_tk_date color-03" style="font-size: 14px;">${post.reg_date}</div>
-                    ${post.notice_count !== null ? `<div class="new_tk_num"><span>${post.notice_count}</span></div>` : ''}
-                  </div>
-                  <div class="overflow-hidden me-3 customSize" style="border:1px solid #d3f1ff; width: 60px; height: 60px; overflow: hidden; border-radius: 100%;">
-                    <img src="${post.user_image_yn === 'Y' ? post.user_image : '/static/assets/img/profile_icon.png'}" 
-                         alt="Avatar" style="width: 100%; height:100%; object-fit: cover;" />
-                  </div>
-                  <span id="chk_send_id" class="visually-hidden">${post.temp_user_id}</span>
-                  <div class="overflow-hidden" style="width: 75%; margin-right:10%;">
-                    <div class="d-flex align-items-end mb-2 mt-2">
-                      <p class="mb-0 colorCustom_01 fw-med me-1" style="word-break: keep-all; line-height: 1; font-size: 18px;">
-                        ${post.user_employee_name}
-                      </p>
-                      <p class="mb-0 colorCustom_02 fw-med" style="word-break: keep-all; line-height: 1; font-size: 14px;">
-                        ${companyNameAbbr} ${post.user_department_name.slice(0, 8)}
-                      </p>
-                    </div>
-                    <p style="text-overflow: ellipsis; word-wrap: break-word; font-size: 16px; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;"
-                       class="card-text mb-0 colorCustom_01">${post.content}</p>
-                  </div>
-                </div>
-            </div>
-          </div>
-        `;
-      }).join('');
-
-      $('#tk_con > .row').append(postsHtml);
-    }
-
-    function renderSkeletons() {
-      const container = $('#tk_con > .row');
-      // container.empty(); // Clear existing content
-
-      // Create and append the specified number of skeleton items
-      for (let i = 0; i < 5; i++) {
-        container.append(`
-          <div class="skeleton-item col-12 position-relative" style="z-index: 0;">
-            <div class="card-body">
-              <div>
-                <div class="tkList border rounded d-flex align-items-center" style="margin-bottom:10px; padding:20px 2% 15px;">
-                  <div class="tk_right position-absolute" style="right:2%; top:5px;">
-                    <div class="last_tk_date color-03 skeleton-timestamp" style="font-size: 14px;"></div>
-                  </div>
-                  <div class="overflow-hidden me-3 customSize" style="width: 60px; height: 60px; overflow: hidden; border-radius: 100%;">
-                    <div class="skeleton-avatar"></div>
-                  </div>
-                  <div class="overflow-hidden" style="width: 75%; margin-right:10%;">
-                    <div class="d-flex align-items-end mb-2 mt-2 skeleton-line">
-                      <p class="mb-0 colorCustom_01 fw-med me-1" style="word-break: keep-all; line-height: 1; font-size: 18px;">
-                      </p>
-                      <p class="mb-0 colorCustom_02 fw-med" style="word-break: keep-all; line-height: 1; font-size: 14px;">
-                      </p>
-                    </div>
-                    <p style="text-overflow: ellipsis; word-wrap: break-word; font-size: 16px; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;"
-                      class="card-text mb-0 colorCustom_01 skeleton-line"></p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        `);
-      }
-    }
-  </script>
-
-  <script>
-    function getPraisePosts() {
-      if ($("#viewAddEvent").css("display") === "none") {
-        return;
-      }
-  
-      const currentPage = document.getElementById("currentPage").value;
-      
-      // increase next page count
-      const nextPage = parseInt(currentPage) + 1;
-      document.getElementById("currentPage").value = nextPage;
-
-      $.ajax({
-        url: '/apis/tk_list/get_praise_posts',
-        method: 'GET',
-        data: {
-          page: currentPage
-        },
-        beforeSend: function () {
-          renderSkeletons();
-        },
-        success: function (data) {
-          if (data.data_count === 0) {
-            $('#viewAddEvent').hide();
-            if (currentPage === 1) {
-              // first page and has no data
-              renderNoMessage();
-            }
-          } else {
-            // append posts
-            renderPosts(data.data_list);
-          }
-        },
-        error: function (xhr, status, error) {
-          console.error('Error fetching posts:', error);
-        },
-        complete: function () {
-          $('#tk_con > .row > .skeleton-item').remove();
-        }
-      });
-    }
-
-    $(document).ready(function () {
-      getPraisePosts();
-
-      // 페이지 로딩이 완료되면 실행될 코드
-      // top nav 와 mobile nav 높이값을 감지해 화면 크기별 #tk_con 의 패딩 top,bottom 값 조절
-      //const chk_top_nav_h = document.querySelector('#top_nav').clientHeight;
-      //const chk_mo_nav_h = document.querySelector('.mobile-navigation').clientHeight;
-      //const con = document.querySelector('#tk_con');
-      //con.style.paddingTop = chk_top_nav_h + 10 + 'px'
-      //con.style.paddingBottom = chk_mo_nav_h + 10 + 'px'
-
-      const new_tk_num = document.querySelectorAll('.new_tk_num span');
-      // 신규 떙큐 톡이 있을 시 숫자 + 원형 배경 아이콘 생성
-      new_tk_num.forEach(item => {
-        if (item.textContent.trim() === "") {
-          item.style.display = 'none';
-        } else {
-          item.style.display = 'block';
-        }
-      });
-      // 페이지 로딩시 읽지 않은 토큰톡이 있을 경우 CSS style 적용 없을경우 style - display:none 처리
-      new_tk_num.forEach(item => {
-        if (item.textContent.trim() === "") {
-          item.style.display = 'none';
-        } else {
-          item.style.display = 'block';
-        }
-      });
-      setTimeout(function loaddivpage() {
-        document.getElementById("tk_con").style.visibility = 'visible';
-        document.getElementById("header").style.visibility = 'visible';
-      }, 100);
-    });
-
-    window.onload = function () {
-      // 하단 내비게이션 높잇값 만큼 모든 페이지 높이조절 시작
-      const moNav_h = document.querySelector('.mobile-navigation').clientHeight;
-      const layoutPage = document.querySelector('.layout-page');
-      layoutPage.style.paddingBottom = moNav_h + 40 + 'px';
-      // 하단 내비게이션 높잇값 만큼 모든 페이지 높이조절 끝
-    }
-
-    window.addEventListener("resize", () => {
-      // responsive layout when resizing
-      // 토큰마크 화면 크기별 자동 조절
-      const tk_left = document.querySelectorAll('.tkBox .tk_left');
-      tk_left.forEach(item => {
-        const tk_left_w = tk_left[0].clientWidth;
-        item.style.paddingBottom = tk_left_w + 'px';
-      });
-    })
-
-    let scrollTimeout; 
-    window.addEventListener("scroll", (event) => {
-      if (scrollTimeout) {
-        clearTimeout(scrollTimeout);
-      }
-    
-      scrollTimeout = setTimeout(function() {
-        const scrollPosition = $(window).scrollTop();
-        const windowHeight = $(window).height();
-        const documentHeight = $(document).height();
-        
-        if (scrollPosition + windowHeight > documentHeight * 0.8) {
-          if ("{{addPage}}" === "N") {
-            $('#viewAddEvent').hide();
-          } else {
-            getPraisePosts();
-          }
-        }
-      }, 250);
-    });
-  </script>
 
 </body>
 

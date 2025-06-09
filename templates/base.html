@@ -1,8 +1,9 @@
 <!--
 ####################################################################
-# 2024-03-26 VTI: Changed theme for PC mode and updated color concept
+# 2024-05-30 VTI: Changed theme for PC mode and updated color concept
 ####################################################################
 -->
+
 {% load static %}
 <!DOCTYPE html>
 <html lang="en" class="light-style" dir="ltr" data-theme="theme-default" data-assets-path="{% static 'assets/' %}"
@@ -74,7 +75,20 @@
   {% comment %} <link rel="stylesheet" href="{% static 'assets/vendor/css/pages/ui-carousel.css' %}" /> {% endcomment %}
   <!-- 드림 사용 소스 끝 -->
 
+<!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+<script>
+  $(document).ready(function() {
+    $('#input_company_id').select2({
+      minimumResultsForSearch: Infinity,
+      dropdownParent: $('#profileEdit_modal')
+    });
+  });
+</script>
+
+<!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
 <style>
+  .headerSearchPC .select2.select2-container {position: absolute; left:0; width:calc(100% - 105px) !important;}
+  .headerSearchPC button.searchChkBtn {position: absolute !important; right:5px;}
 
   .bg-color-00 {
     background: #FFF !important;
@@ -134,11 +148,18 @@
   .text-left {
     text-align: left !important;
   }
-</style>
 
-<style>
   #con, #tk_con {
     margin: 0px 50px;
+  }
+
+  @media (min-width: 1200px) {
+
+    #card_modal > div > .modal-content {
+      margin-left: 200px;
+      width: 90%;
+    }
+
   }
 
   @media (min-width: 1024px) {
@@ -152,14 +173,16 @@
       display: block !important;
     }
     #content-rp {
-      padding-left: 250px !important;
+      {% if user.is_authenticated %}
+        padding-left: 250px !important;
+      {% endif %}
     }
     .mobile-navigation {
       display: none !important;
     }
   }
 
-  @media (max-width: 1024px) {
+  @media (max-width: 1200px) {
     #headerPC {
       display: none !important;
     }
@@ -194,50 +217,47 @@
     }
   }
 
-  @media (min-width: 1200px) { /* xl */
+  @media (min-width: 1400px) { /* xl */
     .cus-col {
       width: 50% !important; /* col-xl-4 */
     }
   }
 
-  @media (min-width: 1400px) { /* xxl */
+  @media (min-width: 1600px) { /* xxl */
     .cus-col {
       width: 33.33333% !important; /* col-xxl-3 */
     }
   }
 
-  @media (min-width: 1600px) { /* xxl */
+  @media (min-width: 4000px) { /* xxl */
     .cus-col {
       width: 25% !important; /* col-xxl-3 */
     }
   }
 
-</style>
-
-<style>
   #sidebar button .icon_home {
-    -webkit-mask: url(/static/assets/img/icon_menu_01_02.svg) no-repeat center/auto 100%;
-    mask: url(/static/assets/img/icon_menu_01_02.svg) no-repeat center/auto 100%;
+    -webkit-mask: url(/static/assets/img/vti/home.png) no-repeat center/auto 80%;
+    mask: url(/static/assets/img/vti/home.png) no-repeat center/auto 80%;
   }
 
   #sidebar button .icon_myThank {
-    -webkit-mask: url(/static/assets/img/icon_menu_02_01.svg) no-repeat center/auto 100%;
-    mask: url(/static/assets/img/icon_menu_02_01.svg) no-repeat center/auto 100%;
+    -webkit-mask: url(/static/assets/img/vti/message.png) no-repeat center/auto 80%;
+    mask: url(/static/assets/img/vti/message.png) no-repeat center/auto 80%;
   }
 
   #sidebar button .icon_sendThank {
-    -webkit-mask: url(/static/assets/img/icon_menu_03_01.svg) no-repeat center/auto 100%;
-    mask: url(/static/assets/img/icon_menu_03_01.svg) no-repeat center/auto 100%;
+    -webkit-mask: url(/static/assets/img/vti/PencilSimpleLine.png) no-repeat center/auto 80%;
+    mask: url(/static/assets/img/vti/PencilSimpleLine.png) no-repeat center/auto 80%;
   }
 
   #sidebar button .icon_best {
-    -webkit-mask: url(/static/assets/img/icon_menu_04_01.svg) no-repeat center/auto 100%;
-    mask: url(/static/assets/img/icon_menu_04_01.svg) no-repeat center/auto 100%;
+    -webkit-mask: url(/static/assets/img/vti/Trophy.png) no-repeat center/auto 80%;
+    mask: url(/static/assets/img/vti/Trophy.png) no-repeat center/auto 80%;
   }
 
   #sidebar button .icon_myToken {
-    -webkit-mask: url(/static/assets/img/icon_menu_05_01.svg) no-repeat center/auto 100%;
-    mask: url(/static/assets/img/icon_menu_05_01.svg) no-repeat center/auto 100%;
+    -webkit-mask: url(/static/assets/img/vti/Database.png) no-repeat center/auto 80%;
+    mask: url(/static/assets/img/vti/Database.png) no-repeat center/auto 80%;
   }
 
   #sidebar button .row>span {
@@ -252,13 +272,89 @@
     padding-left: 8px;
     line-height: 30px;
   }
-</style>
 
-<style>
+  #headerPC .navbar-nav .light {
+    content: "asdasd";
+    position: absolute;
+    right: 3px;
+    width: 6px !important;
+    height: 6px !important;
+    border-radius: 100%;
+    background: #f6484a;
+  }
+
+
   .light-style .select2-container--default .select2-selection {
-    border-radius: 0px !important;
-    border-top-left-radius: 8px !important;
-    border-bottom-left-radius: 8px !important;
+    border-radius: 8px !important;
+  }
+
+  .select2-container--default .select2-results__option[aria-selected="true"] {
+    background-color: #FFF !important;
+    color: #FF6414 !important;
+    font-weight: 500 !important;
+  }
+  .select2-dropdown--below {
+    margin-top:5px;
+  }
+  .select2-dropdown {
+    border-radius: 8px !important;
+  }
+  .select2-container--default .select2-selection--single {
+      height: 45px;
+      border: 2px solid #e0e0e0 !important;        
+      border-radius: 18px !important;             
+      transition: all 0.3s ease;
+  }
+
+  /* Khi focus vào select */
+  .select2-container--default.select2-container--focus .select2-selection--single {
+      border-color: #CCCCCC !important;
+  }
+  .select2-container--default.select2-container--focus .select2-selection, .select2-container--default.select2-container--open .select2-selection {
+    border-color: #FF6414 !important;
+  }
+
+  .select2-dropdown {
+      border: 2px solid #e0e0e0;
+      border-top: none;
+  }
+
+  /* Dropdown container */
+  .select2-dropdown {
+      border: 2px solid #e0e0e0;
+      border-top: none;
+      border-radius: 0 0 12px 12px;
+      max-height: 250px; 
+      overflow: hidden;
+  }
+
+  .select2-results {
+      max-height: 200px !important;
+      overflow-y: auto !important;
+      padding: 0;
+  } 
+
+  /* Custom scrollbar */
+  .select2-results::-webkit-scrollbar {
+      width: 8px;
+  }
+  .select2-results::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 4px;
+  }
+  .select2-results::-webkit-scrollbar-thumb {
+      background: #c1c1c1;
+      border-radius: 4px;
+      transition: background 0.3s ease;
+  }
+  .select2-results::-webkit-scrollbar-thumb:hover {
+      background: #a8a8a8;
+  }
+
+  /* Firefox scrollbar */
+  .select2-results {
+      scrollbar-width: thin;
+      scrollbar-color: #c1c1c1 #f1f1f1;
   }
 
   #headerPC {
@@ -267,14 +363,11 @@
 
   #headerPC .searchChkBtn {
     border-radius: 0px !important;
-    border-top-right-radius: 8px !important;
-    border-bottom-right-radius: 8px !important;
+    border-radius: 8px !important;
   }
   
 
-</style>
 
-<style>
   .layout-navbar .navbar-nav .nav-item.dropdown .dropdown-menu {
     position: absolute !important;
   }
@@ -284,7 +377,7 @@
   }
 
   .noticeInnerPC li.border-bottom {
-    border-color: #14a8ea !important;
+    border-color: #CCCCCC !important;
   }
 
   .noticeInnerPC li.border-top {
@@ -341,6 +434,7 @@
    }
   </style>
 
+<!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
 <style>
   #headerPC .departBox span {
     color: #62c8fa;
@@ -403,16 +497,33 @@
   #headerPC .navbar-nav li>a.navBtn .forBest.best_03.avatar::after {
     background: url(/static/assets/img/rank_crown03.png) no-repeat center/100% auto;
   }
+  #select-company-container .select2-container {
+    width: 100% !important; 
+    position: relative !important;
+  }
 
-  #headerPC .navbar-nav .light {
-      content: "asdasd";
-      position: absolute;
-      right: 3px;
-      width: 6px !important;
-      height: 6px !important;
-      border-radius: 100%;
-      background: #f6484a;
-    }
+  .light-style .select2-container--default .select2-selection--single .select2-selection__clear {
+    line-height: 34px !important;
+  }
+
+  .select2-container--default .select2-selection--single .select2-selection__arrow b {
+    top: 36% !important;
+  }
+
+  .form-control, .form-select, .select2-selection.select2-selection--single {
+    border: 1px solid #E0E0E0 !important;
+  }
+
+  .form-control:focus, .form-select:focus {
+    border-color: #FF6414 !important;
+  }
+
+  .adCardBody>div a:hover {
+    background: #FFE0D0 !important;
+    color: #FF6414 !important;
+    border-color: #FFE0D0 !important;
+  }
+
 </style>
 
   <script>
@@ -492,7 +603,12 @@
 
 </head>
 
+<!--
+<body class="all_" style="overflow-y: scroll; overflow-x: hidden;">
+-->
+<!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
 <body class="all_ bg-color-00" style="overflow-y: scroll; overflow-x: hidden;">
+
   <!-- Loading overlay -->
   <!-- <div id="loading">
     <div class="loader"></div>
@@ -500,19 +616,27 @@
 
   <!-- Content -->
   <!-- Layout wrapper -->
+
+  <!--
+  <div class="layout-wrapper layout-content-navbar layout-without-menu">
+  -->
+  <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
   <div id="content-rp" class="layout-wrapper layout-content-navbar layout-without-menu">
+
     <!-- Layout container -->
     <div class="layout-page ">
-      
+
+      <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
       <!-- Sidebar -->
+      {% if user.is_authenticated %}
       <div id="sidebar" class="pc d-none d-xl-block position-fixed h-100 shadow bg-color-10" style="width: 250px; z-index: 9999; top: 0; left: 0;">
         <div class="p-3 px-4">
           <img src="{% static 'assets/img/vti/vti-logo-light.png' %}" class="img-fluid mb-2" style="width: 140px; height: 30px;" alt="Card image cap" />
         </div>
         <div class="btn-group-vertical w-100 p-2 py-0">
           <ul class="nav w-100 flex-column mt-2">
-            <li class="nav-item w-100 {% if request.resolver_match.url_name == 'home' %}bg-color-11 border-radius-8{% endif %}">
-              <button type="button" class="naviBtn btn" onclick="location.href='{% url 'home' %}'">
+            <li class="nav-item w-100 {% if request.resolver_match.url_name == 'home' %}bg-color-11 border-radius-8{% endif %}" onclick="location.href='{% url 'home' %}'">
+              <button type="button" class="naviBtn btn" >
                 {% if request.resolver_match.url_name == 'home' %}
                 <div class="d-flex">
                   <div class="row nav-item-pc">
@@ -530,8 +654,8 @@
                 {% endif %}
               </button>
             </li>
-            <li class="nav-item w-100 {% if request.resolver_match.url_name == 'tk_list' %}bg-color-11 border-radius-8{% endif %}">
-              <button type="button" class="naviBtn btn" onclick="location.href='{% url 'tk_list' %}'">
+            <li class="nav-item w-100 {% if request.resolver_match.url_name == 'tk_list' %}bg-color-11 border-radius-8{% endif %}" onclick="location.href='{% url 'tk_list' %}'">
+              <button type="button" class="naviBtn btn" >
                 {% if request.resolver_match.url_name == 'tk_list' %}
                 <div class="d-flex">
                   <div class="row nav-item-pc">
@@ -549,8 +673,8 @@
                 {% endif %}
               </button>
             </li>
-            <li class="nav-item w-100 {% if request.resolver_match.url_name == 'praiseRegedit' %}bg-color-11 border-radius-8{% endif %}">
-              <button type="button" class="naviBtn btn" onclick="location.href='{% url 'praiseRegedit' %}'">
+            <li class="nav-item w-100 {% if request.resolver_match.url_name == 'praiseRegedit' %}bg-color-11 border-radius-8{% endif %}" onclick="location.href='{% url 'praiseRegedit' %}'">
+              <button type="button" class="naviBtn btn" >
                 {% if request.resolver_match.url_name == 'praiseRegedit' %}
                 <div class="d-flex">
                   <div class="row nav-item-pc">
@@ -568,8 +692,8 @@
                 {% endif %}
               </button>
             </li>
-            <li class="nav-item w-100 {% if request.resolver_match.url_name == 'rankList' %}bg-color-11 border-radius-8{% endif %}">
-              <button type="button" class="naviBtn btn" onclick="location.href='{% url 'rankList' %}'">
+            <li class="nav-item w-100 {% if request.resolver_match.url_name == 'rankList' %}bg-color-11 border-radius-8{% endif %}" onclick="location.href='{% url 'rankList' %}'">
+              <button type="button" class="naviBtn btn" >
                 {% if request.resolver_match.url_name == 'rankList' %}
                 <div class="d-flex">
                   <div class="row nav-item-pc">
@@ -587,8 +711,8 @@
                 {% endif %}
               </button>
             </li>
-            <li class="nav-item w-100 {% if request.resolver_match.url_name == 'myprofile' %}bg-color-11 border-radius-8{% endif %}">
-              <button type="button" class="naviBtn btn" onclick="location.href='{% url 'myprofile' %}'">
+            <li class="nav-item w-100 {% if request.resolver_match.url_name == 'myprofile' %}bg-color-11 border-radius-8{% endif %}" onclick="location.href='{% url 'myprofile' %}'">
+              <button type="button" class="naviBtn btn" >
                 {% if request.resolver_match.url_name == 'myprofile' %}
                 <div class="d-flex">
                   <div class="row nav-item-pc">
@@ -609,31 +733,17 @@
           </ul>
         </div>
       </div>
+      {% endif %}
 
+      <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
       <!-- Navbar PC -->
+      {% if user.is_authenticated %}
       <div id="headerPC" class="w-100 position-relative bg-color-00">
         <nav class="layout-navbar navbar align-items-center border-0 text-dark ms-auto p-0" id="layout-navbar" style="background:none !important; box-shadow:none;">
-          {% if user.is_authenticated %}
-          <div class="col-2 row align-items-center">
-            <div class="nameBox text-white fw-med">
-              <span class="myName fs-2 color-03 font-14"> {{user.employee_name}} <input id="tempUserId" type="hidden" value="{{user.id}}"> </span>
-              <span class="myRank fs-6 color-02 font-12">{{user.position_name}}</span>
-            </div>
-            <div class="departBox fw-med"> <span class="myDepart fs-6 color-10 font-13"> {{user.company_name}} {{user.department_name}} </span> </div>
-          </div>
-
-          {% else %}
-          <a href="{% url 'home' %}" class="app-brand-link">
-            <span class="app-brand-logo demo">
-              <span class="app-brand-text demo menu-text fw-bolder ms-0">
-                <a href="{% url 'home' %}" class="menu-link"> <img class="img-fluid mx-auto mx-0 my-0" src="{% static 'assets/img/woorifg.png' %}" style="max-height: 150px; max-width: 150px;" alt="Card image cap" /></a>
-              </span>
-            </span>
-          </a>
-          {% endif %}
+          
 
           <!-- Search PC -->
-          <div class="headerSearchPC container-xxl position-relative" id="searchmainPC" style="" data-select2-id="searchPC">
+          <div class="headerSearchPC container-xxl position-relative" id="searchmainPC" data-select2-id="searchPC" style="padding: 0; margin: 0 !important; max-width: 60%; ">
             <div class="w-100" style="overflow: hidden;">
               <form id="SearchformAuthenticationPC" class="browser-default-validation mb-0" action="{% url 'search' %}"
                 method="POST" enctype="multipart/form-data">
@@ -652,8 +762,8 @@
                         onclick="searchDataPC()">검색</button>
                     </div>
                     <style>
-                          .headerSearch .select2.select2-container {position: absolute; left:0; width:calc(100% - 99px) !important;}
-                          .headerSearch button.searchChkBtn {position: absolute !important; right:0;}
+                          .headerSearch .select2.select2-container {position: absolute; left:0; width:calc(100% - 105px) !important;}
+                          .headerSearch button.searchChkBtn {position: absolute !important; right:5px;}
                       </style>
                   </div>
                 </div>
@@ -661,13 +771,13 @@
             </div>
           </div>
 
-          <div class="col-1 d-flex align-items-center" id="navbar-collapse">
+          <div class="col-3 d-flex align-items-center" id="navbar-collapse" style="justify-content: flex-end;">
             <!-- user info . -->
             {% if user.is_authenticated %}
-            <ul class="navbar-nav flex-row align-items-center ms-auto">
+            <ul class="navbar-nav flex-row align-items-center ms-auto" style="justify-content: flex-end;">
 
               <!-- 메뉴 - 알림 버튼 시작  -->
-              <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-xl-2 me-2 position-static">
+              <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-xl-2 me-2 position-static" >
 
                 <!-- 신규 알림 존재시 빨간불 들어오는 효과 -->
                 <div class="position-relative">
@@ -698,7 +808,7 @@
                   <li class="dropdown-menu-footer border-top">
 
                   <!-- 모든 메세지  -->
-                  <a class="totalNoticePC dropdown-item d-flex justify-content-center p-3 colorCustom_04 fw-med"><i style="font-style:normal;">전체 알림 보기</i>
+                  <a class="totalNoticePC dropdown-item d-flex justify-content-center p-3 fw-med"><i style="font-style:normal; color: #3A3A3A !important">전체 알림 보기</i>
                     <span class="ms-1" style="transform:scale(0.6)">
                       <!-- 아래 화살표로 이미지 수정 240304 -->
                       <img class="w-100 chngArrow"
@@ -734,9 +844,9 @@
               <!-- 메뉴 - 알림 버튼 시작 끝 -->
 
               <!-- User -->
-              <li class="nav-item navbar-dropdown dropdown-user dropdown position-static">
+              <li class="nav-item navbar-dropdown dropdown-user dropdown position-static" style="margin-right: 8px;">
                 <a class="avatarBtn navBtn nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"data-bs-toggle="dropdown">
-                  <div id="profileCrown" class="avatar avatar-lg ms-2 me-0" style="font-size: 0 !important; width: 32px; height: 32px;">
+                  <div id="profileCrown" class="avatar avatar-lg ms-2 me-0" style="font-size: 0 !important; width: 32px; height: 32px; margin-left: 0 !important;">
                     {{user.image_yn}}
                     {% if user.image_yn == 'Y' %}
                     <img src="{{ user.image }}" class="rounded-circle" style="width:32px;height:32px;"/>
@@ -752,7 +862,7 @@
                   <li>
                     <a class="dropdown-item py-3" data-bs-toggle="modal" data-bs-target="#profile_modal" onclick='javascript:openmyprofile("{{user.id}}", "{{user.image_yn}}", "{{user.image}}", "{{user.employee_id}}", "{{user.employee_name}}", "{{user.department_name}}","{{ user.position_name }}","{{ user.company_name }}")' />
                       <span class="icon_myprofile"></span>
-                      <span class="align-middle colorCustom_04 fw-bold">마이프로필</span>
+                      <span class="align-middle color-03 fw-bold">마이프로필</span>
                     </a>
                   </li>
 
@@ -760,18 +870,38 @@
                   <li>
                     <a class="dropdown-item py-3" href="{% url 'manageMain' %}">
                       <span class="icon_admin"></span>
-                      <span class="align-middle colorCustom_04 fw-bold">관리자</span>
+                      <span class="align-middle color-03 fw-bold">관리자</span>
                     </a>
                   </li>
 
                   <li>
                     <a class="dropdown-item py-3" href="javascript:{document.getElementById('logout').submit()}">
                       <span class="icon_logout"></span>
-                      <span class="align-middle colorCustom_04 fw-bold">Log Out</span>
+                      <span class="align-middle color-03 fw-bold">Log Out</span>
                     </a>
                   </li>
 
                 </ul>
+              </li>
+              <li class="nav-item position-static" style="width: 100px;">
+                  {% if user.is_authenticated %}
+                  <div class="row align-items-center">
+                    <div class="nameBox text-white fw-med">
+                      <span class="myName fs-2 color-03 font-14"> {{user.employee_name}} <input id="tempUserId" type="hidden" value="{{user.id}}"> </span>
+                      <span class="myRank fs-6 color-02 font-12">{{user.position_name}}</span>
+                    </div>
+                    <div class="departBox fw-med"> <span class="myDepart fs-6 color-10 font-13"> {{user.company_name}} {{user.department_name}} </span> </div>
+                  </div>
+
+                  {% else %}
+                  <a href="{% url 'home' %}" class="app-brand-link">
+                    <span class="app-brand-logo demo">
+                      <span class="app-brand-text demo menu-text fw-bolder ms-0">
+                        <a href="{% url 'home' %}" class="menu-link"> <img class="img-fluid mx-auto mx-0 my-0" src="{% static 'assets/img/woorifg.png' %}" style="max-height: 150px; max-width: 150px;" alt="Card image cap" /></a>
+                      </span>
+                    </span>
+                  </a>
+                  {% endif %}
               </li>
             </ul>
             {% endif %}
@@ -792,8 +922,9 @@
 
 
       </div>
+      {% endif %}
 
-      <!-- Navbar Mobile -->
+      <!-- Navbar -->
       <div id="header" class="w-100 p-3 py-4 position-relative">
         <span class="allBg"></span>
 
@@ -859,7 +990,13 @@
                 <ul class="dropdown-menu dropdown-menu-end py-0 w-100 noticeInner" style="-webkit-user-select:none; user-select: none;">
                   <li class="dropdown-menu-header border-bottom">
                     <div class="dropdown-header d-flex align-items-center py-3">
+
+                      <!--
+                      <h5 class="text-body mb-0 me-auto colorCustom_06 fw-bold fs-4">알림</h5>
+                      -->
+                      <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
                       <h5 class="text-body mb-0 me-auto color-03 fw-bold fs-4">알림</h5>
+
                     </div>
               <button id="closeNotice"  type="button" class="position-absolute btn-close closeCustom"
                 style="background:transparent; border:0; right:10px; top:10px; padding:10px; box-shadow: none; transform: none !important; z-index: 2;"><span></span>
@@ -951,7 +1088,13 @@
                 <li>
                   <a class="dropdown-item py-3" data-bs-toggle="modal" data-bs-target="#profile_modal" onclick='javascript:openmyprofile("{{user.id}}", "{{user.image_yn}}", "{{user.image}}", "{{user.employee_id}}", "{{user.employee_name}}", "{{user.department_name}}","{{ user.position_name }}","{{ user.company_name }}")' />
                     <span class="icon_myprofile"></span>
+
+                    <!--
                     <span class="align-middle colorCustom_04 fw-bold">마이프로필</span>
+                    -->
+                    <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+                    <span class="align-middle color-03 fw-bold">마이프로필</span>
+                    
                   </a>
                 </li>
 
@@ -959,7 +1102,13 @@
                 <li>
                   <a class="dropdown-item py-3" href="{% url 'manageMain' %}">
                     <span class="icon_admin"></span>
+
+                    <!--
                     <span class="align-middle colorCustom_04 fw-bold">관리자</span>
+                    -->
+                    <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+                    <span class="align-middle color-03 fw-bold">관리자</span>
+                    
                   </a>
                 </li>
 
@@ -967,7 +1116,13 @@
                 <li>
                   <a class="dropdown-item py-3" href="javascript:{document.getElementById('logout').submit()}">
                     <span class="icon_logout"></span>
+
+                    <!--
                     <span class="align-middle colorCustom_04 fw-bold">Log Out</span>
+                    -->
+                    <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+                    <span class="align-middle color-03 fw-bold">Log Out</span>
+
                   </a>
                 </li>
               </ul>
@@ -991,8 +1146,6 @@
 
 
       </div>
-
-      <!-- Search Mobile -->
       <div class="headerSearch collapse container-xxl position-relative" id="searchmain" style="" data-select2-id="search1">
         <div style="border-radius: 20px; overflow: hidden; margin-top:10px;">
           <form id="SearchformAuthentication" class="browser-default-validation mb-0" action="{% url 'search' %}"
@@ -1007,13 +1160,29 @@
                   </select>
                   <!-- <span class="searchOpenBtn w-100 fs-5 colorCustom_05 fw-med" -->
                   <!-- style="padding-left:10px; border-radius: initial; border-top-left-radius: 20px; border-bottom-left-radius: 20px; background: #fff;"></span> -->
+                  
+                  <!--
+                  <button type="submit" class="searchChkBtn btn fs-5 "
+                    style="background: #14a8ea; height: 39px; margin-right:-2px; color:#fff; min-width: 100px; border-radius: 0; padding:0;"
+                    onclick="searchData()">검색</button>
+                  -->
+                  <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
                   <button type="submit" class="searchChkBtn btn fs-5 bg-color-11 color-11 "
                     style="height: 39px; margin-right:-2px; min-width: 100px; border-radius: 0; padding:0;"
                     onclick="searchData()">검색</button>
+
                 </div>
+
+                {% comment %}
                 <style>
                       .headerSearch .select2.select2-container {position: absolute; left:0; width:calc(100% - 99px) !important;}
                       .headerSearch button.searchChkBtn {position: absolute !important; right:0;}
+                  </style>
+                {% endcomment %}
+                <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+                <style>
+                      .headerSearch .select2.select2-container {position: absolute; left:0; width:calc(100% - 105px) !important;}
+                      .headerSearch button.searchChkBtn {position: absolute !important; right:5px;}
                   </style>
 
                 <!-- <div>
@@ -1053,15 +1222,29 @@
               {% if request.resolver_match.url_name == 'home' %}
               <div class="d-flex">
                 <div class="row">
+                  
+                  <!--
+                  <span class="icon_home"></span>
+                  <small class="colorCustom_03 fw-med">HOME</small>
+                  -->
+                  <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
                   <span class="icon_home bg-color-10"></span>
                   <small class="color-11 fw-med">HOME</small>
+
                 </div>
               </div>
               {% else %}
               <div class="d-flex">
                 <div class="row">
+
+                  <!--
+                  <span class="icon_home"></span>
+                  <small class="colorCustom_03 fw-med">HOME</small>
+                  -->
+                  <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
                   <span class="icon_home bg-color-02"></span>
                   <small class="color-02 fw-med">HOME</small>
+                  
                 </div>
               </div>
               {% endif %}
@@ -1071,15 +1254,29 @@
               {% if request.resolver_match.url_name == 'tk_list' %}
               <div class="d-flex">
                 <div class="row">
+                  
+                  <!--
+                  <span class="icon_myThank"></span>
+                  <small class="colorCustom_03 fw-med">MY땡큐</small>
+                  -->
+                  <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
                   <span class="icon_myThank bg-color-10"></span>
                   <small class="color-11 fw-med">MY땡큐</small>
+
                 </div>
               </div>
               {% else %}
               <div class="d-flex">
                 <div class="row">
+                  
+                  <!--
+                  <span class="icon_myThank"></span>
+                  <small class="colorCustom_03 fw-med">MY땡큐</small>
+                  -->
+                  <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
                   <span class="icon_myThank bg-color-02"></span>
                   <small class="color-02 fw-med">MY땡큐</small>
+
                 </div>
               </div>
               {% endif %}
@@ -1089,15 +1286,29 @@
               {% if request.resolver_match.url_name == 'praiseRegedit' %}
               <div class="d-flex">
                 <div class="row">
+                  
+                  <!--
+                  <span class="icon_sendThank"></span>
+                  <small class="colorCustom_03 fw-med">칭찬하기</small>
+                  -->
+                  <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
                   <span class="icon_sendThank bg-color-10"></span>
                   <small class="color-11 fw-med">칭찬하기</small>
+
                 </div>
               </div>
               {% else %}
               <div class="d-flex">
                 <div class="row">
+                  
+                  <!--
+                  <span class="icon_sendThank"></span>
+                  <small class="colorCustom_03 fw-med">칭찬하기</small>
+                  -->
+                  <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
                   <span class="icon_sendThank bg-color-02"></span>
                   <small class="color-02 fw-med">칭찬하기</small>
+
                 </div>
               </div>
               {% endif %}
@@ -1106,15 +1317,29 @@
               {% if request.resolver_match.url_name == 'rankList' %}
               <div class="d-flex">
                 <div class="row">
+                  
+                  <!--
+                  <span class="icon_best"></span>
+                  <small class="colorCustom_03 fw-med">우리칭찬왕</small>
+                  -->
+                  <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
                   <span class="icon_best bg-color-10"></span>
                   <small class="color-11 fw-med">우리칭찬왕</small>
+
                 </div>
               </div>
               {% else %}
               <div class="d-flex">
                 <div class="row">
+                  
+                  <!--
+                  <span class="icon_best"></span>
+                  <small class="colorCustom_03 fw-med">우리칭찬왕</small>
+                  -->
+                  <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
                   <span class="icon_best bg-color-02"></span>
                   <small class="color-02 fw-med">우리칭찬왕</small>
+
                 </div>
               </div>
               {% endif %}
@@ -1124,15 +1349,29 @@
               {% if request.resolver_match.url_name == 'myprofile' %}
               <div class="d-flex">
                 <div class="row">
+                  
+                  <!--
+                  <span class="icon_myToken"></span>
+                  <small class="colorCustom_03 fw-med">나의토큰</small>
+                  -->
+                  <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
                   <span class="icon_myToken bg-color-10"></span>
                   <small class="color-11 fw-med">나의토큰</small>
+
                 </div>
               </div>
               {% else %}
               <div class="d-flex">
                 <div class="row">
+                  
+                  <!--
+                  <span class="icon_myToken"></span>
+                  <small class="colorCustom_03 fw-med">나의토큰</small>
+                  -->
+                  <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
                   <span class="icon_myToken bg-color-02"></span>
                   <small class="color-02 fw-med">나의토큰</small>
+
                 </div>
               </div>
               {% endif %}
@@ -1230,7 +1469,13 @@
           <div class="modal-body text-center">
             <div class="d-flex mb-2 align-items-end justify-content-center">
               <h2 id="profile_employee_name" class="colorCustom_01 fw-med mb-0 me-1">{{user.employee_name}}</h2>
+
+              <!--
+              <span id="profile_position_name" class="fs-5 colorCustom_03 fw-med" style="line-height: normal;">{{user.position_name}}</span>
+              -->
+              <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
               <span id="profile_position_name" class="fs-5 color-00 fw-med" style="line-height: normal;">{{user.position_name}}</span>
+
             </div>
             <div class="d-flex justify-content-center">
               <span id="profile_company_name" class="colorCustom_01 fs-6 fw-med me-2">{{user.company_name}}</span>
@@ -1239,8 +1484,15 @@
             <!-- 카드 프로필이 아닌, 마이프로필 클릭시 버튼 활성화 시작-->
             <div class="my-3">
             <!-- <div id="profile_change_btn" class="my-3"> -->
+              
+              <!--
+              <button id="profile_change_btn" type="button" class="btn colorCustom_03 fw-bold" data-bs-toggle="modal" data-bs-dismiss="modal"
+                data-bs-target="#profileEdit_modal" style="box-shadow: none; background: #c8edff; display: inline-flex;">프로필 사진변경</button>
+              -->
+              <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
               <button id="profile_change_btn" type="button" class="btn color-00 bg-color-10 fw-bold" data-bs-toggle="modal" data-bs-dismiss="modal"
                 data-bs-target="#profileEdit_modal" style="box-shadow: none; background: #c8edff; display: inline-flex;">프로필 사진변경</button>
+
                 <!-- <button id="profile_change_btn" type="button" class="btn colorCustom_03 fw-bold" data-bs-toggle="modal" data-bs-target="#profile_changedmodal"
 			  style="box-shadow: none; background: #c8edff; display: inline-flex;">프로필 사진변경</button> -->
             </div>
@@ -1260,7 +1512,13 @@
         <div class="modal-dialog modal-dialog" style="padding:0;">
           <div class="modal-content">
             <div class="modal-header">
+
+              <!--
               <h5 class="modal-title" id="exampleModalToggleLabel2">프로필 사진변경</h5>
+              -->
+              <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+              <h5 class="modal-title color-03" id="exampleModalToggleLabel2">프로필 사진변경</h5>
+
               <button type="button" class="position-absolute btn-close closeCustom"
                 style="background:transparent; border:0; right:20px; top:25px; box-shadow: none; transform: none !important; z-index: 2;"
                 data-bs-dismiss="modal"><span></span>
@@ -1290,17 +1548,36 @@
                     }
                     .profileNowImg img {width:100px; height:100px; object-fit: cover; border-radius: 100%; border:1px solid #d3f1ff; background: #fff;}
                   </style>
+
+                  <!--
                   <label for="input_formFile" class="btn px-3 py-2 upLoadBox" tabindex="0"
-                    style="border-radius: 8px; background: #FF6414; margin-right:10px; height:39px;">
+                    style="border-radius: 30px; background: #016ed5; margin-right:10px; height:39px;">
                     <p class="text-white fw-bold d-flex m-0 align-items-center"><span class="d-block me-2" style="width:20px"><img
                           class="w-100" src="{% static 'assets/img/icon_upload.png' %}"></span>사진 업로드</p>
                     <input type="file" id="input_formFile" name="input_formFile" onChange="setPotoImg(event);"
                       class="account-file-input" hidden="" accept="image/png, image/jpeg">
                   </label>
+                  -->
+                  <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+                  <label for="input_formFile" class="btn px-3 py-2 upLoadBox" tabindex="0"
+                    style="border-radius: 8px; background: #FF6414; margin-right:10px; height:39px; width: 150px">
+                    <p class="text-white fw-bold d-flex m-0 align-items-center"><span class="d-block me-2" style="width:20px"><img
+                          class="w-100" src="{% static 'assets/img/vti/Upload.png' %}"></span>사진 업로드</p>
+                    <input type="file" id="input_formFile" name="input_formFile" onChange="setPotoImg(event);"
+                      class="account-file-input" hidden="" accept="image/png, image/jpeg">
+                  </label>
+
                   <div style="height:39px;">
                     <!--<button id="profileBtn" type="submit" class="btn fw-bold colorCustom_03 m-0 w-100" data-bs-toggle="modal" data-bs-target="#profile_changedmodal" -->
-                    <button id="profileBtn" type="submit" class="btn fw-bold color-11 m-0 w-100"
-                      style="border-radius: 8px; background: #FFF; border: 1px solid #FF6414">변경</button>
+
+                    <!--
+                    <button id="profileBtn" type="submit" class="btn fw-bold colorCustom_03 m-0 w-100"
+                      style="border-radius: 30px; background: #c8edff;">변경</button>
+                    -->
+                    <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+                    <button id="profileBtn" type="submit" class="btn fw-bold color-11 m-0"
+                      style="border-radius: 8px; background: #FFF; border: 1px solid #FF6414; width:150px">변경</button>
+
                   </div>
                 </div>
               </div>
@@ -1318,26 +1595,60 @@
               {% if user.is_superuser %} 
               <div class="mt-3">
                 <div>
+
+                  <!--
                   <span style="background: #222;border-radius: 5px;"
                     class="py-1 px-2 d-inline-block text-white fw-med fs-6">관리자 전용기능</span>
+                  -->
+                  <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+                  <span style="background: #D0E4FF;border-radius: 5px; color: #3A3A3A"
+                    class="py-1 px-2 d-inline-block fw-med fs-6">관리자 전용기능</span>
+
                 </div>
                 <div>
                   <div class="mt-2">
+
+                    <!--
                     <span class="ms-1 d-inline-block fw-med colorCustom_01">ID</span>
                     <input class="form-control colorCustom_05" style="border-color: #9fc4e7;" readonly type="text"
                       value="{{user.employee_id}}" id="base_employee_id" name="base_employee_id" readonly=""
                       onfocusin="this.style.borderColor=''" onfocusout="this.style.borderColor=''">
+                    -->
+                    <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+                    <span class="ms-1 d-inline-block fw-med" style="color: #0F0F0F">ID</span>
+                    <input class="form-control" style="border-color: #DEDFE0; color: #747475" readonly type="text" disabled
+                      value="{{user.employee_id}}" id="base_employee_id" name="base_employee_id" readonly=""
+                      onfocusin="this.style.borderColor=''" onfocusout="this.style.borderColor=''">
+
                   </div>
                   <div class="mt-2">
+
+                    <!--
                     <span class="ms-1 d-inline-block fw-med colorCustom_01">이름</span>
                     <input class="form-control colorCustom_05" style="border-color: #9fc4e7;" type="text"
                       value="{{user.employee_name}}" id="input_employee_name" name="input_employee_name"
                       onfocusin="this.style.borderColor=''" onfocusout="this.style.borderColor=''">
+                    -->
+                    <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+                    <span class="ms-1 d-inline-block fw-med" style="color: #0F0F0F">이름</span>
+                    <input class="form-control" style="border-color: #DEDFE0; color: #747475" type="text"
+                      value="{{user.employee_name}}" id="input_employee_name" name="input_employee_name"
+                      onfocusin="this.style.borderColor=''" onfocusout="this.style.borderColor=''">
+
                   </div>
+
+                  <!--
                   <div class="mt-2">
                     <span class="ms-1 d-inline-block fw-med colorCustom_01">회사</span>
                     <select name="input_company_id" id="input_company_id" class="form-select"
                       style="border-color: #9fc4e7;">
+                  -->
+                  <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+                  <div class="mt-2" id="select-company-container">
+                    <span class="ms-1 d-inline-block fw-med" style="color: #0F0F0F">회사</span>
+                    <select name="input_company_id" id="input_company_id" class="form-select"
+                      style="border-color: #DEDFE0; color: #747475">
+
                       <option value="20" {% if user.company_id == '20' %}selected{% endif %}>우리은행</option>
                       <option value="95" {% if user.company_id == '95' %}selected{% endif %}>우리카드</option>
                       <option value="B1" {% if user.company_id == 'B1' %}selected{% endif %}>우리에프아이에스</option>
@@ -1358,9 +1669,17 @@
                     </select>
                   </div>
                   <div class="mt-2">
+
+                    <!--
                     <span class="ms-1 d-inline-block fw-med colorCustom_01">부서</span>
+                    -->
+                    <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+                    <span class="ms-1 d-inline-block fw-med" style="color: #0F0F0F">부서</span>
+
                     <div>
                       <span class="chkHiddenInput twitter-typeahead" style="position: relative; display: inline-block;">
+
+                        <!--
                         <input type="text" style="border-color: #9fc4e7;" class="form-control colorCustom_05"
                           value="{{user.department_name}}" readonly>
 						<input name="input_department_id" id="input_department_id" type="hidden" style="border-color: #9fc4e7;" class="form-control colorCustom_05"
@@ -1368,19 +1687,46 @@
                         <div
                           class="editSearchBox position-absolute form-control w-100 h-100 shadow d-none colorCustom_05"
                           style="z-index:1; margin-top:3px; border-color:#9fc4e7;"></div>
+                        -->
+                        <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+                        <input type="text" style="border-color: #DEDFE0; color: #747475" class="form-control"
+                          value="{{user.department_name}}" readonly>
+            <input name="input_department_id" id="input_department_id" type="hidden" style="border-color: #DEDFE0; color: #747475" class="form-control"
+                          value="{{user.department_id}}">
+                        <div
+                          class="editSearchBox position-absolute form-control w-100 h-100 shadow d-none"
+                          style="z-index:1; margin-top:3px; border-color:#DEDFE0; color: #747475"></div>
+
                       </span>
                     </div>
                   </div>
                   <div class="mt-2">
+
+                    <!--
                     <span class="ms-1 d-inline-block fw-med colorCustom_01">직위</span>
+                    -->
+                    <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+                    <span class="ms-1 d-inline-block fw-med" style="color: #0F0F0F">직위</span>
+
                     <div>
                       <span class="chkHiddenInput twitter-typeahead" style="position: relative; display: inline-block;">
+
+                        <!--
                         <input type="text" style="border-color: #9fc4e7;" class="form-control colorCustom_05" value="{{user.position_name}}" readonly>
                         <input type="hidden" style="border-color: #9fc4e7;" class="form-control colorCustom_05"
                           id="input_position_id" name="input_position_id"  value="{{user.position_id}}">
                         <div
                           class="editSearchBox position-absolute form-control w-100 h-100 shadow colorCustom_05 d-none"
                           style="z-index:1; margin-top:3px; border-color:#9fc4e7;">차장</div>
+                        -->
+                        <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+                        <input type="text" style="border-color: #DEDFE0; color: #747475" class="form-control" value="{{user.position_name}}" readonly>
+                        <input type="hidden" style="border-color: #DEDFE0; color: #747475" class="form-control"
+                          id="input_position_id" name="input_position_id"  value="{{user.position_id}}">
+                        <div
+                          class="editSearchBox position-absolute form-control w-100 h-100 shadow d-none"
+                          style="z-index:1; margin-top:3px; border-color:#DEDFE0; color: #747475">차장</div>
+
                       </span>
                     </div>
                     {% endif %}
@@ -1526,7 +1872,13 @@
 
     /* 공통 헤더 #layout-header CSS 시작 */
     #header {
+
+      /*
+      background: #006ed5;
+      */
+      /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
       background: #FF6414;
+
     }
 
     #header .allBg {
@@ -1535,11 +1887,23 @@
       left: 0;
       width: 100%;
       height: 100%;
+
+      /*
+      background: #006ed5;
+      */
+      /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
       background: #FF6414;
+
     }
 
     #header .departBox span {
+      
+      /*
+      color: #62c8fa;
+      */
+      /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
       color: #FFF;
+
       word-break: keep-all;
     }
 
@@ -1638,8 +2002,14 @@
     .profileMenu,
     .noticeInner {
       position: absolute !important;
+
+      /*
       top: 120% !important;
       max-width: 700px !important;
+      */
+      /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+      top: 100% !important;
+
       min-width: auto !important;
     }
 
@@ -1663,43 +2033,95 @@
     }
 
     .profileMenu {
+
+      /*
       padding: 0;
+      */
+      /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+      padding: 12px;
+      border-radius: 8px;
+      max-width: 230px;
+
     }
 
     .profileMenu li~li {
+
+      /*
       border-top: 1px solid #dde7f1;
+      */
+      /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+      color: #3A3A3A;
+
     }
 
     .profileMenu li a {
       display: flex;
       align-items: center;
       cursor: pointer;
+
+      /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+      color: #3A3A3A !important;
+
     }
 
     .profileMenu li a:hover {
+
+      /*
       opacity: 0.7;
+      */
+      /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+      background-color: #FFE0D0;
+      border-radius: 8px;
+
     }
 
     .profileMenu li a span:first-child {
       width: 20px;
       height: 20px;
       margin-right: 15px;
+
+      /*
       background: #85b3de;
+      */
+      /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+      background: #3A3A3A;
+
     }
 
     .profileMenu li a span.icon_myprofile {
+
+      /*
       -webkit-mask: url(/static/assets/img/icon_myprofile.svg) no-repeat center/contain;
       mask: url(/static/assets/img/icon_myprofile.svg) no-repeat center/contain;
+      */
+      /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+      -webkit-mask: url(/static/assets/img/vti/User.png) no-repeat center/contain;
+      mask: url(/static/assets/img/vti/User.png) no-repeat center/contain;
+
     }
 
     .profileMenu li a span.icon_admin {
+
+      /*
       -webkit-mask: url(/static/assets/img/icon_admin.svg) no-repeat center/contain;
       mask: url(/static/assets/img/icon_admin.svg) no-repeat center/contain;
+      */
+      /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+      -webkit-mask: url(/static/assets/img/vti/setting.png) no-repeat center/contain;
+      mask: url(/static/assets/img/vti/setting.png) no-repeat center/contain;
+
     }
 
     .profileMenu li a span.icon_logout {
+
+      /*
       -webkit-mask: url(/static/assets/img/icon_logout.svg) no-repeat center/contain;
       mask: url(/static/assets/img/icon_logout.svg) no-repeat center/contain;
+      */
+      /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+      -webkit-mask: url(/static/assets/img/vti/SignOut.png) no-repeat center/contain;
+      mask: url(/static/assets/img/vti/SignOut.png) no-repeat center/contain;
+
     }
 
     .noticeInner li {
@@ -1737,7 +2159,13 @@
     }
     /* 알림창 높이 조절 */
     #divViewNotice .quickBtn {
+
+      /*
       border-radius: 8px;
+      */
+      /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+      border-radius: 15px;
+
       background: #d3f1ff;
       font-size: 10px;
     }
@@ -1787,7 +2215,13 @@
       width: 60%;
       height: 2px;
       border-radius: 10px;
+
+      /*
+      background: #006ed5;
+      */
+      /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
       background: #3A3A3A;
+
     }
 
     .closeCustom span::after {
@@ -1799,7 +2233,13 @@
       width: 100%;
       height: 100%;
       border-radius: 10px;
+
+      /*
+      background: #006ed5;
+      */
+      /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
       background: #3A3A3A;
+
     }
 
     #profile_modal .closeCustom span,
@@ -1817,13 +2257,14 @@
     }
 
     @media (max-width:1440px) {
-      .nameBox {
+
+      /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+      /* .nameBox {
         padding: 0;
       }
-
       .departBox {
         padding: 0;
-      }
+      } */
 
       .mobile-navigation {
         bottom: 0px;
@@ -1843,13 +2284,25 @@
     }
 
     .mobile-navigation button:hover {
-      background-color: #FF6414 !important;
-      border-color: #EB5C32 !important;
+
+      /*
+      background-color: #006ed5 !important;
+      */
+      /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
       color: #FFF !important;
+      background-color: #FF6414 !important;
+
+      border-color: #EB5C32 !important;
     }
 
     .mobile-navigation button:hover .row>span {
+
+      /*
+      background: #fff;
+      */
+      /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
       background: #fff !important;
+
     }
 
     .mobile-navigation button:hover small {
@@ -1871,13 +2324,27 @@
     #profile_modal .modal-content {
       max-width: 400px;
       margin: 0 auto;
+
+      /*
+      background: url(/static/assets/img/profile_bg.jpg) no-repeat top/cover;
+      */
+      /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
       background: url(/static/assets/img/vti/vti-profile-bg.jpg) no-repeat top/cover;
+
       overflow: hidden;
     }
 .all_ .icon_right_arrow {
+
+      /*
       width: 25px;
       height: 25px;
       background: url(/static/assets/img/icon_arrow.svg) no-repeat center/100% auto;
+      */
+      /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+      width: 13px;
+      height: 13px;
+      background: url(/static/assets/img/vti/vector.png) no-repeat center/100% auto;
+
     }
 
     .all_ .heartBtn,
@@ -1930,12 +2397,19 @@
     .all_ .editBtn span {
       width: 10px;
       height: 100%;
+
+      /*
+      background: #006ed5;
+      */
+      /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
       background: #777777;
+
       -webkit-mask: url(/static/assets/img/icon_edit.svg) no-repeat center/auto 100%;
       mask: url(/static/assets/img/icon_edit.svg) no-repeat center/auto 100%;
     }
     /* 공통 레이아웃 CSS 끝 */
   </style>
+
 
 
   <!-- dead code 모음, 주석 처리 모음 -->
@@ -2031,6 +2505,8 @@ onfocusout="this.style.borderColor=''"
 
 	var noticetrial = 0;
 	var loadnotice = 0;
+
+  /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
 	var loadnoticePC = 0;
 	
 	function openmyprofile(id, imgYn, imgSrc, employee_id, employee_name, department_name, position_name, company_name)
@@ -2108,6 +2584,7 @@ $(document).ready(function(){
 		document.querySelector('.select2-container--open .select2-search__field').setAttribute("placeholder", "검색어를 입력해주세요.");
 	});
 
+  /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
   // SearchPC
   $("#select2TransPC").select2({
 	ajax: {
@@ -2337,6 +2814,7 @@ function getunreadnotice() // 초기 알림 읽은거 표기하려고 함
 
 getunreadnotice();
 
+/* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
 function getunreadnoticePC()
 {
 	var inputData = {
@@ -2387,14 +2865,15 @@ function getunreadnoticePC()
 		
 }
 
+/* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
 getunreadnoticePC();
 
 function viewNotice(){
 		
-	if (loadnoticePC == 0)
+	if (loadnotice == 0)
 	{
 		// console.log('viewNotice =========');
-		loadnoticePC = loadnoticePC + 1;
+		loadnotice = loadnotice + 1;
 		
 		var inputData = {
 				notice_type: '3'
@@ -2438,10 +2917,22 @@ function viewNotice(){
 									html += '<img src="/static/assets/img/profile_bee_01.png" style="border:1px solid #d3f1ff; object-fit:cover;" class="rounded-circle" />'
 								}
 
-								html += '</div></div><div class="flex-grow-1"><h6 class="color-03 mb-0 fw-med fs-5 d-flex justify-content-between align-items-center"><span onclick="removeli(this, '+notice_id+');">';
+								/*
+                html += '</div></div><div class="flex-grow-1"><h6 class="colorCustom_03 mb-0 fw-med fs-5 d-flex justify-content-between align-items-center"><span onclick="removeli(this, '+notice_id+');">';
+                */
+                /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+                html += '</div></div><div class="flex-grow-1"><h6 class="color-03 mb-0 fw-med fs-5 d-flex justify-content-between align-items-center"><span onclick="removeli(this, '+notice_id+');">';
+                
 								html += department_name + ' ' + employee_name + ' ' + position_name;
-								html += '</span><a class="btn btn-xs my-1 px-3 py-1 quickBtn color-00 bg-color-10 fw-med" onclick="movetoPraiseDetail('+compliment_id+', '+notice_id+');">바로보기</a></h6><span class="mb-0 color-02 fw-med" onclick="removeliparent(this, '+notice_id+');">소중한 칭찬글을 보냈습니다.</span>';
-								html += '<br><small class="color-02">';
+
+                /*
+                html += '</span><a class="btn btn-xs my-1 px-3 py-1 quickBtn colorCustom_03 fw-med" onclick="movetoPraiseDetail('+compliment_id+', '+notice_id+');">바로보기</a></h6><span class="mb-0 colorCustom_05 fw-med" onclick="removeliparent(this, '+notice_id+');">소중한 칭찬글을 보냈습니다.</span>';
+								html += '<br><small class="colorCustom_05">';
+                */
+                /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+                html += '</span><a class="btn btn-xs my-1 px-3 py-1 quickBtn color-00 bg-color-10 fw-med" onclick="movetoPraiseDetail('+compliment_id+', '+notice_id+');">바로보기</a></h6><span class="mb-0 color-10 fw-med" onclick="removeliparent(this, '+notice_id+');">소중한 칭찬글을 보냈습니다.</span>';
+								html += '<br><small class="color-10">';
+
 								html += reg_date;
 								html += '</small></div><div class="flex-shrink-0 dropdown-notifications-actions"></div><span class="badge badge-dot" style="background:#006ed5;"></span></div></li>';
 							
@@ -2459,10 +2950,22 @@ function viewNotice(){
 									html += '<img src="/static/assets/img/profile_bee_01.png" style="border:1px solid #d3f1ff; object-fit:cover;" class="rounded-circle" />'
 								}
 
-								html += '</div></div><div class="flex-grow-1"><h6 class="color-03 mb-0 fw-med fs-5 d-flex justify-content-between align-items-center"><span onclick="removeli(this, '+notice_id+');">';
+								/*
+                html += '</div></div><div class="flex-grow-1"><h6 class="colorCustom_03 mb-0 fw-med fs-5 d-flex justify-content-between align-items-center"><span onclick="removeli(this, '+notice_id+');">';
+                */
+                /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+                html += '</div></div><div class="flex-grow-1"><h6 class="color-03 mb-0 fw-med fs-5 d-flex justify-content-between align-items-center"><span onclick="removeli(this, '+notice_id+');">';
+
 								html += department_name + ' ' + employee_name + ' ' + position_name;
-								html += '</span><a class="btn btn-xs my-1 px-3 py-1 quickBtn color-00 bg-color-10 fw-med" onclick="movetoPraiseDetail('+compliment_id+', '+notice_id+');">바로보기</a></h6><span class="mb-0 color-02 fw-med" onclick="removeliparent(this, '+notice_id+');">소중한 칭찬글을 보냈습니다.</span>';
-								html += '<br><small class="color-02">';
+
+								/*
+                html += '</span><a class="btn btn-xs my-1 px-3 py-1 quickBtn colorCustom_03 fw-med" onclick="movetoPraiseDetail('+compliment_id+', '+notice_id+');">바로보기</a></h6><span class="mb-0 colorCustom_05 fw-med" onclick="removeliparent(this, '+notice_id+');">소중한 칭찬글을 보냈습니다.</span>';
+								html += '<br><small class="colorCustom_05">';
+                */
+                /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+                html += '</span><a class="btn btn-xs my-1 px-3 py-1 quickBtn color-00 bg-color-10 fw-med" onclick="movetoPraiseDetail('+compliment_id+', '+notice_id+');">바로보기</a></h6><span class="mb-0 color-10 fw-med" onclick="removeliparent(this, '+notice_id+');">소중한 칭찬글을 보냈습니다.</span>';
+								html += '<br><small class="color-10">';
+
 								html += reg_date;
 								html += '</small></div><div class="flex-shrink-0 dropdown-notifications-actions"></div></div></li>';
 							
@@ -2493,12 +2996,13 @@ function viewNotice(){
 		
 }
 
+/* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
 function viewNoticePC(){
 		
-	if (loadnotice == 0)
+	if (loadnoticePC == 0)
 	{
 		// console.log('viewNotice =========');
-		loadnotice = loadnotice + 1;
+		loadnoticePC = loadnoticePC + 1;
 		
 		var inputData = {
 				notice_type: '3'
@@ -2542,12 +3046,12 @@ function viewNoticePC(){
 									html += '<img src="/static/assets/img/profile_bee_01.png" style="border:1px solid #d3f1ff; object-fit:cover;" class="rounded-circle" />'
 								}
 
-								html += '</div></div><div class="flex-grow-1"><h6 class="color-03 mb-0 fw-med fs-5 d-flex justify-content-between align-items-center"><span onclick="removeli(this, '+notice_id+');">';
+								html += '</div></div><div class="flex-grow-1" style="display: flex; justify-content: space-between; align-items: center"><div><h6 class="color-03 mb-0 fw-med fs-5 d-flex justify-content-between align-items-center"><span onclick="removeli(this, '+notice_id+');">';
 								html += department_name + ' ' + employee_name + ' ' + position_name;
-								html += '</span><a class="btn btn-xs my-1 px-3 py-1 quickBtn color-00 bg-color-10 fw-med" onclick="movetoPraiseDetail('+compliment_id+', '+notice_id+');">바로보기</a></h6><span class="mb-0 color-02 fw-med" onclick="removeliparent(this, '+notice_id+');">소중한 칭찬글을 보냈습니다.</span>';
-								html += '<br><small class="color-02">';
+								html += '</span></h6><span class="mb-0 color-10 fw-med" onclick="removeliparent(this, '+notice_id+');">소중한 칭찬글을 보냈습니다.</span>';
+								html += '<br><small class="color-10">';
 								html += reg_date;
-								html += '</small></div><div class="flex-shrink-0 dropdown-notifications-actions"></div><span class="badge badge-dot" style="background:#006ed5;"></span></div></li>';
+								html += '</small></div><div style="display: flex"><a class="btn btn-xs my-1 px-3 py-1 quickBtn color-00 bg-color-10 fw-med" onclick="movetoPraiseDetail('+compliment_id+', '+notice_id+');">바로보기</a><div class="flex-shrink-0 dropdown-notifications-actions"></div><span class="badge badge-dot" style="background:#006ed5;"></span></div></div></div></li>';
 							
 							}
 							else
@@ -2562,13 +3066,12 @@ function viewNoticePC(){
 								{
 									html += '<img src="/static/assets/img/profile_bee_01.png" style="border:1px solid #d3f1ff; object-fit:cover;" class="rounded-circle" />'
 								}
-
-								html += '</div></div><div class="flex-grow-1"><h6 class="color-03 mb-0 fw-med fs-5 d-flex justify-content-between align-items-center"><span onclick="removeli(this, '+notice_id+');">';
+                html += '</div></div><div class="flex-grow-1" style="display: flex; justify-content: space-between; align-items: center"><div><h6 class="color-03 mb-0 fw-med fs-5 d-flex justify-content-between align-items-center"><span onclick="removeli(this, '+notice_id+');">';
 								html += department_name + ' ' + employee_name + ' ' + position_name;
-								html += '</span><a class="btn btn-xs my-1 px-3 py-1 quickBtn color-00 bg-color-10 fw-med" onclick="movetoPraiseDetail('+compliment_id+', '+notice_id+');">바로보기</a></h6><span class="mb-0 color-02 fw-med" onclick="removeliparent(this, '+notice_id+');">소중한 칭찬글을 보냈습니다.</span>';
-								html += '<br><small class="color-02">';
+								html += '</span></h6><span class="mb-0 color-10 fw-med" onclick="removeliparent(this, '+notice_id+');">소중한 칭찬글을 보냈습니다.</span>';
+								html += '<br><small class="color-10">';
 								html += reg_date;
-								html += '</small></div><div class="flex-shrink-0 dropdown-notifications-actions"></div></div></li>';
+								html += '</small></div><div style="display: flex"><a class="btn btn-xs my-1 px-3 py-1 quickBtn color-00 bg-color-10 fw-med" onclick="movetoPraiseDetail('+compliment_id+', '+notice_id+');">바로보기</a><div class="flex-shrink-0 dropdown-notifications-actions"></div><span class="badge badge-dot" style="background:#006ed5;"></span></div></div></div></li>';
 							
 							}
 							
@@ -2780,6 +3283,7 @@ $("#SearchformAuthentication").on("submit", function (event) {
     this.submit();
 }); 
 
+/* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
 function searchDataPC() {    
     $("#input_employee_id").val($("#select2TransPC").val());
     var _employee_name = $("#select2TransPC").val();
@@ -2797,6 +3301,7 @@ function searchDataPC() {
 	//submitForm();
 }
 
+/* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
 $("#SearchformAuthenticationPC").on("submit", function (event) {
     // 기본 제출 동작을 중지
     event.preventDefault();

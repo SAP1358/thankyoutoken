@@ -1,8 +1,9 @@
 <!--
 ####################################################################
-# 2024-03-26 VTI: Changed theme for PC mode and updated color concept
+# 2024-05-30 VTI: Changed theme for PC mode and updated color concept
 ####################################################################
 -->
+
 {% extends 'base.html' %}
 {% block body %}
 {% load static %}
@@ -19,6 +20,14 @@
   <!-- Vendors JS -->
   <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
   <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+
+  <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+  <style>
+    .dropdown-item:hover, .dropdown-item:focus {
+      background-color: #FFE0D0 !important;
+    }
+  </style>
+
 </head>
 
 <body class="all_">
@@ -27,24 +36,39 @@
     <input type="hidden" id="SuccessCount" value="1">
     <span id="hiddenUserId" class="visually-hidden">{{ user.id }}</span>
     <div id="con" class=" mt-2">
-      <!-- 2024.01.04 공지사항 -->
+
+      <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
       <div class="alert alert-dismissible fade show mt-3 mb-1 text-dark bg-color-11" role="alert" style="background: #edf6ff;">
-        <h3 class="fw-bold fs-2 color-11">공지사항</h3>
-        <p class="fw-med fs-6 mb-0" style="color:#222;"> 땡큐토큰을 통해 칭찬과 감사의 문화 확산에 동참해주셔서 감사합니다.
+        <h3 class="fw-bold fs-2 color-11" style="margin-bottom: 12px;">공지사항</h3>
+        <p class="fw-med fs-6 mb-0" style="color:#3A3A3A; font-weight: 400 !important;"> 땡큐토큰을 통해 칭찬과 감사의 문화 확산에 동참해주셔서 감사합니다.
           <!-- <br>땡큐토큰을 통해 칭찬과 감사의 문화가 확산하는데 동참해주셔서 감사합니다. -->
+        </p>
+        <button type="button" class="btn-close closeCustom"  aria-label="Close"
+          style="z-index: 1; width:30px; height: 30px; padding:0; position: absolute; top:10px; right: 16px" ><span></span>
+        </button>
+      </div>
+
+      <!-- 2024.01.04 공지사항 -->
+      <!--
+      <div class="alert alert-dismissible fade show mt-3 mb-1 text-dark" role="alert" style="background: #edf6ff;">
+        <h3 class="fw-bold fs-2" style="color:#006ed5;">공지사항</h3>
+        <p class="fw-med fs-6 mb-0" style="color:#222;"> 땡큐토큰을 통해 칭찬과 감사의 문화 확산에 동참해주셔서 감사합니다.
+          <br>땡큐토큰을 통해 칭찬과 감사의 문화가 확산하는데 동참해주셔서 감사합니다.
         </p>
         <button type="button" class="btn-close closeCustom" data-bs-dismiss="alert" aria-label="Close"
           style="z-index: 1; width:0.3em; height: 0.3em;"><span></span>
         </button>
       </div>
-      <!-- <div class="alert alert-dismissible fade show mt-3 mb-1 text-dark bg-color-11" role="alert" style="background: #edf6ff;">
+      -->
+
+      <!-- <div class="alert alert-dismissible fade show mt-3 mb-1 text-dark" role="alert" style="background: #edf6ff;">
         <h3 class="fw-bold fs-2" style="color:#006ed5;">공지사항</h3>
         <p class="fw-med fs-6 mb-0" style="color:#222;"><땡큐토큰 X 에버랜드> 스팟이벤트<br>1. 땡큐토큰(UC메신저) 월 20개 송부<br>2.안내게시에 '가족 애정댓글' 달기<br>&nbsp; -> 8.17(토) 에버랜드로 GOGO!</p>
         <button type="button" class="btn-close closeCustom" data-bs-dismiss="alert" aria-label="Close"
           style="z-index: 1; width:0.3em; height: 0.3em;"><span></span>
         </button>
       </div> -->
-      <!-- <div class="alert alert-dismissible fade show mt-3 mb-1 text-dark bg-color-11" role="alert" style="background: #edf6ff;">
+      <!-- <div class="alert alert-dismissible fade show mt-3 mb-1 text-dark" role="alert" style="background: #edf6ff;">
         <h3 class="fw-bold fs-2" style="color:#006ed5;">공지사항</h3>
         <p class="fw-med fs-6 mb-0" style="color:#222;">★MLB서울시리즈 직관의 기회<br>★(~3.12까지)<br>1. 3월 배정된 땡큐토큰 20개 소진 <br>2. 포탈 또는 채널W 內 'MLB이벤트 게시'에 땡큐토큰 4행시 참여</p>
         <button type="button" class="btn-close closeCustom" data-bs-dismiss="alert" aria-label="Close"
@@ -52,21 +76,21 @@
         </button>
       </div> -->
 
-      <!-- <div class="alert alert-dismissible fade show mt-3 mb-1 text-dark bg-color-11" role="alert" style="background: #edf6ff;">
+      <!-- <div class="alert alert-dismissible fade show mt-3 mb-1 text-dark" role="alert" style="background: #edf6ff;">
         <h3 class="fw-bold fs-2" style="color:#006ed5;">공지사항</h3>
         <p class="fw-med fs-6 mb-0" style="color:#222;">7월 중 땡큐토큰 "20개"를 먼저 소진하는 선착순 임직원 500명에게 백화점상품권 1만원권을 드립니다.</p>
         <button type="button" class="btn-close closeCustom" data-bs-dismiss="alert" aria-label="Close"
           style="z-index: 1; width:0.3em; height: 0.3em;"><span></span>
         </button>
       </div> -->
-      <!-- <div class="alert alert-dismissible fade show mt-3 mb-1 text-dark bg-color-11" role="alert" style="background: #edf6ff;">
+      <!-- <div class="alert alert-dismissible fade show mt-3 mb-1 text-dark" role="alert" style="background: #edf6ff;">
         <h3 class="fw-bold fs-2" style="color:#006ed5;">공지사항</h3>
         <p class="fw-med fs-6 mb-0" style="color:#222;">★5월 땡큐토큰 스팟이벤트 안내★<br>1. 5월 땡큐토큰 20개 사용<br>2. 우리가족 애정댓글 남기기(전체게시 참조)<br>3. 추첨을 통해 총 10명에게 외식상품권(30만원) 증정</p>
         <button type="button" class="btn-close closeCustom" data-bs-dismiss="alert" aria-label="Close"
           style="z-index: 1; width:0.3em; height: 0.3em;"><span></span>
         </button>
       </div>        -->
-      <!-- <div class="alert alert-dismissible fade show mt-3 mb-1 text-dark bg-color-11" role="alert" style="background: #edf6ff;">
+      <!-- <div class="alert alert-dismissible fade show mt-3 mb-1 text-dark" role="alert" style="background: #edf6ff;">
         <h3 class="fw-bold fs-2" style="color:#006ed5;">공지사항</h3>
         <p class="fw-med fs-6 mb-0" style="color:#222;">[스팟이벤트 "1+1 땡큐주간" 실시]<br>- 기간 : 6.24(월) ~ 6.28(금), 5영업일간<br>- 매월 4째주에 땡큐토큰 발송시,<br>&nbsp; 토큰이 한 개 더 자동충전!<br>동일인에게 채널W, UC메신저 중복 발송시 포인트는 1포인트만 인정</p>
         <button type="button" class="btn-close closeCustom" data-bs-dismiss="alert" aria-label="Close"
@@ -74,7 +98,7 @@
         </button>
       </div>    -->
 <!-- 
-      <div id = "goVideo" class="alert alert-dismissible fade show mt-3 mb-1 text-dark bg-color-11 text-center" role="alert" style="background: #edf6ff;">
+      <div id = "goVideo" class="alert alert-dismissible fade show mt-3 mb-1 text-dark text-center" role="alert" style="background: #edf6ff;">
         <h3 class="fw-bold fs-2" style="color:#006ed5;">땡큐토큰 감동영상 <br>바로가기(클릭)</h3>
         <button type="button" class="btn-close closeCustom" data-bs-dismiss="alert" aria-label="Close"
           style="z-index: 1; width:0.3em; height: 0.3em;"><span></span>
@@ -91,7 +115,7 @@
         {% comment %} {% for part in posts %}
 
         {% if part.todaythanks_showyn == "Y" %}
-        <div class="chkCard todayThank cus-col col-xl-4 col-md-4 mb-2">
+        <div class="chkCard todayThank col-lg-4 col-md-6 mb-2">
           <div class="card cardList">
             <span class="todayHeader position-absolute"><img class="w-100"
                 src="{% static 'assets/img/today_thank_header.png' %}" alt=""></span>
@@ -205,7 +229,7 @@
                 </div>
               </div>
             </div>
-            <div class="card-body px-0 py-3 mx-3" style="border-top:1px solid #777777;">
+            <div class="card-body px-0 py-3 mx-3" style="border-top:1px solid #14a8ea;">
               <div class="mb-3">
                 <a data-bs-toggle="modal" data-bs-target="#card_modal" href="#" class="d-flex"
                   onclick="viewToken('{{part.compliment_id}}','{{part.todaythanks_showyn}}','{{part.user_id}}','{{part.praise_id}}','{{part.user_employee_name}}', '{{part.praise_employee_name}}', '{{part.content}}', '{{ part.user_image }}', '{{ part.praise_image }}','{{part.user_image_yn}}','{{part.praise_image_yn}}','{% static 'assets/img/profile_bee_01.png' %}', '{{part.image_path}}', '{{part.likes_count}}', '{{part.comment_count}}', '{{part.reg_date|date:'Y-m-d'}}');">
@@ -289,7 +313,7 @@
 
         <!-- .sendMeCard : 나에게 온 토큰카드 배경 색상 #c8edff 시작-->
         {% elif part.praise_id == user.id and part.todaythanks_showyn != "Y" %}
-        <div class="chkCard sendMeCard cus-col col-xl-4 col-md-4 mb-2">
+        <div class="chkCard sendMeCard col-lg-4 col-md-6 mb-2">
           <div class="card cardList">
             <div class="card-body p-3 d-flex justify-content-center align-items-center">
               <div class="d-flex align-items-center">
@@ -402,7 +426,7 @@
 
               </div>
             </div>
-            <div class="card-body px-0 py-3 mx-3" style="border-top:1px solid #777777;">
+            <div class="card-body px-0 py-3 mx-3" style="border-top:1px solid #14a8ea;">
               <div class="mb-3">
                 <a data-bs-toggle="modal" data-bs-target="#card_modal" href="#" class="d-flex"
                   onclick="viewToken('{{part.compliment_id}}','{{part.todaythanks_showyn}}','{{part.user_id}}','{{part.praise_id}}','{{part.user_employee_name}}', '{{part.praise_employee_name}}', '{{part.content}}', '{{ part.user_image }}', '{{ part.praise_image }}','{{part.user_image_yn}}','{{part.praise_image_yn}}','{% static 'assets/img/profile_bee_01.png' %}', '{{part.image_path}}', '{{part.likes_count}}', '{{part.comment_count}}', '{{part.reg_date|date:'Y-m-d'}}');">
@@ -482,7 +506,7 @@
         </div>
         {% else %}
         <!-- 나에게 온 토큰카드를 제외한 전체 토큰카드 시작  -->
-        <div class="chkCard cus-col col-xl-4 col-md-4 mb-2">
+        <div class="chkCard col-lg-4 col-md-6 mb-2">
           <div class="card cardList">
             <div class="card-body p-3 d-flex justify-content-center align-items-center">
               <div class="d-flex align-items-center">
@@ -595,7 +619,7 @@
 
               </div>
             </div>
-            <div class="card-body px-0 py-3 mx-3" style="border-top:1px solid #777777;">
+            <div class="card-body px-0 py-3 mx-3" style="border-top:1px solid #14a8ea;">
               <div class="mb-3">
                 <a data-bs-toggle="modal" data-bs-target="#card_modal" href="#" class="d-flex"
                   onclick="viewToken('{{part.compliment_id}}','{{part.todaythanks_showyn}}','{{part.user_id}}','{{part.praise_id}}','{{part.user_employee_name}}', '{{part.praise_employee_name}}', '{{part.content}}', '{{ part.user_image }}', '{{ part.praise_image }}','{{part.user_image_yn}}','{{part.praise_image_yn}}','{% static 'assets/img/profile_bee_01.png' %}', '{{part.image_path}}', '{{part.likes_count}}', '{{part.comment_count}}', '{{part.reg_date|date:'Y-m-d'}}');">
@@ -689,12 +713,24 @@
       </div>
       <!-- 나에게 온 토큰카드를 제외한 전체 토큰카드 끝  -->
 
+      <!--
+      <div class="text-center"><a id="moreBtn" class="badge badge-danger text-center fs-3 mb-4 mt-5"
+          onclick="viewPage();">더보기</a>
+      </div>
+      -->
+      <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
       <div class="text-center"><a id="moreBtn" class="badge badge-danger text-center fs-3 mb-4 mt-5 bg-color-02 color-00 border-radius-8"
           onclick="viewPage();">더보기</a>
       </div>
+      
     </div>
 
+    <!--
+    <div id="footer"><div class="footer w-100 text-center fw-med fs-6" style="color:#418dd4;">ⓒ 2024, made 땡큐토큰</div></div>
+    -->
+    <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
     <div id="footer"><div class="footer w-100 text-center fw-med fs-6 color-03" style="color:#418dd4;">ⓒ 2024, made 땡큐토큰</div></div>
+    
   </div>
 </body>
 
@@ -753,8 +789,15 @@
 
           <p id="card_user_employee_name" class="m-0 fw-med colorCustom_01" style="font-size: 14px;"></p>
         </div>
+        
+        <!--
         <span style="width: 25px; height: 25px; margin-left: 1rem; margin-right: 1rem;"><img
             src="{% static 'assets/img/icon_arrow.svg' %}"></span>
+        -->
+        <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+        <span style="width: 25px; height: 25px; margin-left: 1rem; margin-right: 1rem;"><img
+          src="{% static 'assets/img/vti/vector.png' %}"></span>
+
         <div class="d-flex align-items-center">
           <img id="card_praise_image" style="width: 32px; height: 32px; border-radius: 100%; object-fit: cover; border:1px solid #d3f1ff" src="{% static 'assets/img/profile_bee_01.png' %}"
             class="img-fluid me-2">
@@ -817,9 +860,18 @@
       </div>
       <div class="modal-footer px-2">
         <div class="input-group input-group-merge">
+          
+          <!--
           <input id="comment_content" type="text" class="typing_comment form-control" placeholder="댓글 작성" aria-label="Recipient's username"
             aria-describedby="button-addon2">
           <button class="btn btn-danger" type="button" id="button-addon2" onclick="praiseCommentRegedit()">등록</button>
+          -->
+          <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+          <input id="comment_content" type="text" class="typing_comment form-control" placeholder="댓글 작성" aria-label="Recipient's username"
+            aria-describedby="button-addon2" style="color: #3A3A3A; border: 1px solid #CCCCCC">
+          <button class="btn" type="button" id="button-addon2" onclick="praiseCommentRegedit()" 
+          style="background: #FF6414 !important; color: #FFFFFF !important; border: 0 !important">등록</button>
+
         </div>
       </div>
     </div>
@@ -881,17 +933,33 @@
 		<div id="employeeId" style="display: none;"></div>
 		
             <div id="editcard_short_content" class="card my-2">
+              
+              <!--
               <textarea class="form-control" id="modalPraiseModify_content"
                 style="min-height: 200px; height:200px;"></textarea>
+              -->
+              <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+              <textarea class="form-control" id="modalPraiseModify_content"
+                style="min-height: 200px; height:200px; border: 1px solid #CCCCCC; background: #F2F2F2; color: #777777"></textarea>
+
             </div>
         </div>
       </div>
 
                 <div class="modal-footer px-3 d-flex justify-content-between">
+
+            <!--
             <button type="button" class="btn colorCustom_03 m-0 py-2  fw-med fs-5"
               style="width:49%; box-shadow: none; background: #e8f7ff;" data-bs-dismiss="modal">닫기</button>
             <button type="button" class="btn text-white m-0 py-2  fw-med fs-5"
-            style="width:49%; box-shadow: none; background: #006ed5;" onclick="praiseModifyAct()">저장</button> <!-- data-bs-toggle="modal" data-bs-target="#chkToken_modal" -->
+            style="width:49%; box-shadow: none; background: #006ed5;" onclick="praiseModifyAct()">저장</button> 
+            -->
+            <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+            <button type="button" class="btn m-0 py-2  fw-med fs-5"
+              style="width:49%; box-shadow: none; background: #F0F2FA; color: #FF6414" data-bs-dismiss="modal">닫기</button>
+            <button type="button" class="btn text-white m-0 py-2  fw-med fs-5"
+            style="width:49%; box-shadow: none; background: #FF6414; color: #FCFCFC" onclick="praiseModifyAct()">저장</button> <!-- data-bs-toggle="modal" data-bs-target="#chkToken_modal" -->
+
       </div>
     </div>
   </div>
@@ -1799,6 +1867,8 @@
 						html += '<div class="d-flex align-items-center"><div class="d-flex align-items-center">';
 						html += '<img style="width:25px; height: 25px; object-fit: cover; border-radius: 100%; margin-right:5px;" src="'+user_image+'" alt="">';
 						html += '<p class="fw-bold m-0 p-0" style="color:#222; font-size: 14px;">'+user_employee_name+'</p>';
+
+            /*
 						html += `
             </div><span class="" style="color:lightgray; font-size: 10px; margin-left:5px;">`+regDate+`</span></div>
             <div>
@@ -1807,6 +1877,16 @@
            
 						</div>
             <p id="spanComment${item.comment_id}">${item.comment_content}</p></div> `;
+            */
+            /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+            html += `
+            </div><span class="" style="color:#777777; font-size: 10px; margin-left:5px;">`+regDate+`</span></div>
+            <div>
+               ${ {{user.id}} === item.user_id ? '<button type="button" id="buttonComment'+item.comment_id+'" style="background: #F0F2FA; color: #FF6414; padding: 2px 16px; border-radius: 8px !important;" class="btn btn-xs rounded-pill me-2" onclick="praiseCommentModifyView(\''+item.compliment_id+'\',\''+item.comment_id+'\')">수정</button><button type="button" style="background: #FF6414; color: #FCFCFC; padding: 2px 16px; border-radius: 8px !important;" class="btn btn-xs rounded-pill me-2 btn-label-danger" onclick="praiseCommentDelete(\''+item.compliment_id+'\',\''+item.comment_id+'\')">삭제</button>' : ''}
+                            </div>
+           
+						</div>
+            <p style="color: #3A3A3A;" id="spanComment${item.comment_id}">${item.comment_content}</p></div> `;
 		  
 					}
 					targetdoc.insertAdjacentHTML('beforeend',html);
@@ -1896,10 +1976,68 @@
   function renderSkeletons() {
     const container = $("#cardWrap");
 
+    /*
+    for (let i = 0; i < 6; i++) {
+    */
+    /* 2025-05-30 VTI change initial record limit from 6 to 12 */
     for (let i = 0; i < 12; i++) {
+
       const counter = i + 1;
+
+        /*
         container.append(`
-          <div class="skeleton-item chkCard cus-col col-xl-4 col-md-4 mb-2">
+          <div class="skeleton-item chkCard col-lg-4 col-md-6 mb-2">
+          <div class="card cardList">
+            <div class="card-body p-3 d-flex justify-content-center align-items-center">
+              <div class="d-flex align-items-center" style="width: -webkit-fill-available;">
+                <a class="me-2" href="#" style="width: 32px; height: 32px; border-radius: 100%;">
+                  <div class="skeleton-avatar"></div>
+                </a>
+                <div style="width: 50%;">
+                  <p class="card-title colorCustom_02 mb-1 fw-med skeleton-line"></p>
+                  <h6 class="card-text colorCustom_01 skeleton-line"></h6>
+                </div>
+              </div>
+              <span class="mx-2 d-block icon_right_arrow"></span>
+              <div class="d-flex align-items-center" style="width: -webkit-fill-available;">
+                <a class="me-2" href="#" style="width: 32px; height: 32px; border-radius: 100%;">
+                  <div class="skeleton-avatar"></div>
+                </a>
+                <div style="width: 50%;">
+                  <p class="card-title colorCustom_02 mb-1 fw-med skeleton-line"></p>
+                  <h6 class="card-text colorCustom_01 skeleton-line"></h6>
+                </div>
+              </div>
+            </div>
+            <div class="card-body px-0 py-3 mx-3" style="border-top:1px solid #14a8ea;">
+              <div class="mb-3">
+                <a class="d-flex">
+                  <div style="width:80px; height:80px; overflow: hidden; border-radius: 10px; margin-right:10px;">
+                    <div class="skeleton-card-icon"></div>
+                  </div>
+                  <div class="overflow-hidden" style="width: calc(100% - 90px);">
+                    <p style="min-height: 50px; text-overflow: ellipsis; word-wrap: break-word; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;"
+                      class="card-text mb-0 colorCustom_01 fw-med skeleton-content"></p>
+                  </div>
+                </a>
+              </div>
+              <div class="card-body p-0 d-flex justify-content-between">
+                <div class="d-flex" style="align-items: center; width: -webkit-fill-available;">
+                  <a class="d-flex heartBtn btn p-0 me-2 skeleton-like"></a>
+                  <a class="d-flex commentBtn btn p-0 me-2 skeleton-comment"></a>
+                </div>
+                <div class="position-relative">
+                  <a class="btn p-0 me-1 fw-med colorCustom_01 skeleton-date"></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        `);
+        */
+        /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+        container.append(`
+          <div class="skeleton-item chkCard cus-col col-lg-4 col-md-6 mb-2">
           <div class="card cardList">
             <div class="card-body p-3 d-flex justify-content-center align-items-center">
               <div class="d-flex align-items-center" style="width: -webkit-fill-available;">
@@ -1947,6 +2085,7 @@
           </div>
         </div>
         `);
+
     }
   }
 
@@ -2094,13 +2233,31 @@
 						short_content = short_content.replace(/\s/g, ' '," ");
 																		
 						if (todaythanks_showyn == "Y") {
-							html += '<div class="chkCard todayThank cus-col col-xl-4 col-md-4 mb-2">';
+
+              /*
+							html += '<div class="chkCard todayThank col-lg-4 col-md-6 mb-2">';
+              */
+              /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+              html += '<div class="chkCard todayThank cus-col col-lg-4 col-md-6 mb-2">';
+
 						}
 						else if (praise_id == "{{ user.id}}") {
-							html += '<div class="chkCard sendMeCard cus-col col-xl-4 col-md-4 mb-2">';
+
+              /*
+							html += '<div class="chkCard sendMeCard col-lg-4 col-md-6 mb-2">';
+              */
+              /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+              html += '<div class="chkCard sendMeCard cus-col col-lg-4 col-md-6 mb-2">';
+
 						}
 						else{
-							html += '<div class="chkCard cus-col col-xl-4 col-md-4 mb-2">';
+
+              /*
+							html += '<div class="chkCard col-lg-4 col-md-6 mb-2">';
+              */
+              /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+              html += '<div class="chkCard cus-col col-lg-4 col-md-6 mb-2">';
+
 						}
 						
 						if (todaythanks_showyn == "Y") {
@@ -2111,8 +2268,14 @@
               html += '<div class="card cardList">';
             }
 
+              /*
               html += '<div class="card-body p-3 d-flex justify-content-center align-items-center"><div class="d-flex align-items-center">';
               html += '<a class="me-2" style="width: 32px; height: 32px; border-radius: 100%; border:1px solid #d3f1ff; overflow: hidden;" href="#" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#profile_modal">';
+              */
+              /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+              html += '<div class="card-body p-3 d-flex justify-content-between align-items-center"><div class="d-flex align-items-center"  style="width: 44%">';
+              html += '<a class="me-2" style="width: 40px; height: 40px; border-radius: 100%; border:1px solid #d3f1ff; overflow: hidden;" href="#" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#profile_modal">';
+
 						if(user_image_yn == 'Y')
 						{
 							html += '<img src="'+user_image+'" class="img-fluid" onclick=\'javascript:viewProfile("'+user_id+'", "'+user_image_yn+'", "'+user_image+'", "'+user_employee_id+'", "'+user_employee_name+'", "'+user_department_name+'", "'+user_position_name+'", "'+user_company_name+'")\'/>';
@@ -2122,18 +2285,33 @@
 						{
 							html += '<img src="/static/assets/img/profile_bee_01.png" class="img-fluid" onclick=\'javascript:viewProfile("'+user_id+'", "'+user_image_yn+'", "'+user_image+'", "'+user_employee_id+'", "'+user_employee_name+'", "'+user_department_name+'", "'+user_position_name+'", "'+user_company_name+'")\'/>';
 						}
+
+            /*            
 						html += '</a><div><p class="card-title colorCustom_02 m-0 fw-med">'+user_company_name_short + ' ' + user_department_name.substring(0, 8)+'</p>';
 					    html += '<h6 class="card-text colorCustom_01" style="font-size: 12px;">'+user_employee_name+'<span class="fw-bold colorCustom_03" style="font-size: 10px;">' + ' ' + user_position_name+'</span></h6></div></div>';
               html += '<span class="mx-2 d-block icon_right_arrow"></span><div class="d-flex align-items-center"><a class="me-2" style="width: 32px; height: 32px; border-radius: 100%; border:1px solid #d3f1ff; overflow: hidden;" href="#" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#profile_modal">';
+            */
+            /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+            html += '</a><div ><p class="card-title colorCustom_02 m-0 fw-med" style="font-size: 14px; font-weight: 400 !important;">'+user_company_name_short + ' ' + user_department_name.substring(0, 8)+'</p>';
+					    html += '<h6 class="card-text colorCustom_01" style="font-size: 14px; font-weight: 400 !important;">'+user_employee_name+'<span class="fw-bold colorCustom_03" style="font-size: 10px;">' + ' ' + user_position_name+'</span></h6></div></div>';
+              html += '<span class="mx-2 d-block icon_right_arrow"></span><div class="d-flex align-items-center" style="width:44%"><a class="me-2" style="width: 40px; height: 40px; border-radius: 100%; border:1px solid #d3f1ff; overflow: hidden;" href="#" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#profile_modal">';
+
 						if(praise_image_yn == 'Y'){
 							html += '<img src="'+praise_image+'" class="img-fluid" onclick=\'javascript:viewProfile("'+praise_id+'", "'+praise_image_yn+'", "'+praise_image+'", "'+praise_employee_id+'", "'+praise_employee_name+'", "'+praise_department_name+'", "'+praise_position_name+'", "'+praise_company_name+'")\' />';
 						}else{
 							html += '<img src="/static/assets/img/profile_bee_01.png" class="img-fluid" onclick=\'javascript:viewProfile("'+praise_id+'", "'+praise_image_yn+'", "'+praise_image+'", "'+praise_employee_id+'", "'+praise_employee_name+'", "'+praise_department_name+'", "'+praise_position_name+'", "'+praise_company_name+'")\' />';
 						}
 												
+            /*
 						html += '</a><div><p class="card-title colorCustom_02 m-0 fw-med">'+praise_company_name_short + ' ' + praise_department_name.substring(0, 8)+'</p>';
 						html += '<h6 class="card-text colorCustom_01" style="font-size: 12px;">'+praise_employee_name+'<span class="fw-bold colorCustom_03" style="font-size: 10px;">' + ' ' + praise_position_name +'</span></h6></div></div></div>';
+						htmlcheckpoint1 = '<div class="card-body px-0 py-3 mx-3" style="border-top:1px solid #14a8ea;"><div class="mb-3"><a data-bs-toggle="modal" data-bs-target="#card_modal" href="#" class="d-flex" onclick=\'viewToken("'+compliment_id+'","'+todaythanks_showyn+'","'+user_id+'","'+praise_id+'","'+user_employee_name+'", "'+praise_employee_name+'", "'+content+'", "'+user_image+'", "'+praise_image+'", "'+user_image_yn+'", "'+praise_image_yn+'", "/static/assets/img/profile_bee_01.png", "'+image_path+'", "'+likes_count+'", "'+comment_count+'", "'+reg_date.slice(0, 10)+'");\'/>';
+            */
+            /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+            html += '</a><div ><p class="card-title colorCustom_02 m-0 fw-med" style="font-size: 14px; font-weight: 400 !important;">'+praise_company_name_short + ' ' + praise_department_name.substring(0, 8)+'</p>';
+						html += '<h6 class="card-text colorCustom_01" style="font-size: 14px; font-weight: 400 !important;">'+praise_employee_name+'<span class="fw-bold colorCustom_03" style="font-size: 10px;">' + ' ' + praise_position_name +'</span></h6></div></div></div>';
 						htmlcheckpoint1 = '<div class="card-body px-0 py-3 mx-3" style="border-top:1px solid #777777;"><div class="mb-3"><a data-bs-toggle="modal" data-bs-target="#card_modal" href="#" class="d-flex" onclick=\'viewToken("'+compliment_id+'","'+todaythanks_showyn+'","'+user_id+'","'+praise_id+'","'+user_employee_name+'", "'+praise_employee_name+'", "'+content+'", "'+user_image+'", "'+praise_image+'", "'+user_image_yn+'", "'+praise_image_yn+'", "/static/assets/img/profile_bee_01.png", "'+image_path+'", "'+likes_count+'", "'+comment_count+'", "'+reg_date.slice(0, 10)+'");\'/>';
+
 						html += htmlcheckpoint1;
 						<!-- 요부분 수정 했음 -->
 						html += '<div style="width:80px; height:80px; overflow: hidden; border-radius: 10px; margin-right:10px;"><img id="cardmodalimg'+compliment_id+'" style="object-fit: cover; height: 100%; width: 100%;" src="'+image_path+'" class="img-fluid"></div>';
@@ -2168,7 +2346,12 @@
 							html += '<a href="/praiseRegedit/?userId='+user_id+'" class="replyBtn fw-med d-flex p-0 colorCustom_01" style="font-size: 12px;"><i class="me-1"></i>답장하기</a>';
 						}
 						
+            /*
 						html += '</div><div class="position-relative"><a href="#" class="btn p-0 me-1 fw-med colorCustom_01" style="cursor:default;">';
+            */
+            /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+            html += '</div><div class="position-relative"><a href="#" class="btn p-0 me-1 fw-med colorCustom_01" style="cursor:default; margin-right: 10px !important">';
+
 						if(String(user_id) == '15893')
 						{
 							asd = 1;
@@ -2375,14 +2558,32 @@
 						short_content = short_content.replace(/\s/g, ' '," ");
 																		
 						if (praise_id == "{{ user.id}}") {
-							html += '<div class="chkCard sendMeCard cus-col col-xl-4 col-md-4 mb-2">';
+
+              /*
+							html += '<div class="chkCard sendMeCard col-lg-4 col-md-6 mb-2">';
+              */
+              /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+              html += '<div class="chkCard sendMeCard cus-col col-lg-4 col-md-6 mb-2">';
+              
 						}
 						else{
-							html += '<div class="chkCard cus-col col-xl-4 col-md-4 mb-2">';
+
+              /*
+							html += '<div class="chkCard col-lg-4 col-md-6 mb-2">';
+              */
+              /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+              html += '<div class="chkCard cus-col col-lg-4 col-md-6 mb-2">';
+              
 						}
-						
+            
+            /*
 						html += '<div class="card cardList"><div class="card-body p-3 d-flex justify-content-center align-items-center"><div class="d-flex align-items-center">';
               html += '<a class="me-2" style="width: 32px; height: 32px; border-radius: 100%; border:1px solid #d3f1ff; overflow: hidden;" href="#" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#profile_modal">';
+            */
+            /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+            html += '<div class="card cardList"><div class="card-body p-3 d-flex justify-content-between align-items-center"><div class="d-flex align-items-center" style="width: 44%">';
+              html += '<a class="me-2" style="width: 40px; height: 40px; border-radius: 100%; border:1px solid #d3f1ff; overflow: hidden;" href="#" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#profile_modal">';
+
 						if(user_image_yn == 'Y')
 						{
 							html += '<img src="'+user_image+'" class="img-fluid" onclick=\'javascript:viewProfile("'+user_id+'", "'+user_image_yn+'", "'+user_image+'", "'+user_employee_id+'", "'+user_employee_name+'", "'+user_department_name+'", "'+user_position_name+'", "'+user_company_name+'")\'/>';
@@ -2392,24 +2593,45 @@
 						{
 							html += '<img src="/static/assets/img/profile_bee_01.png" class="img-fluid" onclick=\'javascript:viewProfile("'+user_id+'", "'+user_image_yn+'", "'+user_image+'", "'+user_employee_id+'", "'+user_employee_name+'", "'+user_department_name+'", "'+user_position_name+'", "'+user_company_name+'")\'/>';
 						}
+
+            /*
 						html += '</a><div><p class="card-title colorCustom_02 m-0 fw-med">'+user_company_name_short + ' ' + user_department_name.substring(0, 8)+'</p>';
 					    html += '<h6 class="card-text colorCustom_01" style="font-size: 12px;">'+user_employee_name+'<span class="fw-bold colorCustom_03" style="font-size: 10px;">' + ' ' + user_position_name+'</span></h6></div></div>';
               html += '<span class="mx-2 d-block icon_right_arrow"></span><div class="d-flex align-items-center"><a class="me-2" style="width: 32px; height: 32px; border-radius: 100%; border:1px solid #d3f1ff; overflow: hidden;" href="#" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#profile_modal">';
+            */
+            /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+            html += '</a><div ><p class="card-title colorCustom_02 m-0 fw-med" style="font-size: 14px; font-weight: 400 !important;">'+user_company_name_short + ' ' + user_department_name.substring(0, 8)+'</p>';
+					    html += '<h6 class="card-text colorCustom_01" style="font-size: 14px; font-weight: 400 !important">'+user_employee_name+'<span class="fw-bold colorCustom_03" style="font-size: 10px;">' + ' ' + user_position_name+'</span></h6></div></div>';
+              html += '<span class="mx-2 d-block icon_right_arrow"></span><div class="d-flex align-items-center" style="width: 44%"><a class="me-2" style="width: 40px; height: 40px; border-radius: 100%; border:1px solid #d3f1ff; overflow: hidden;" href="#" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#profile_modal">';
+
 						if(praise_image_yn == 'Y'){
 							html += '<img src="'+praise_image+'" class="img-fluid" onclick=\'javascript:viewProfile("'+praise_id+'", "'+praise_image_yn+'", "'+praise_image+'", "'+praise_employee_id+'", "'+praise_employee_name+'", "'+praise_department_name+'", "'+praise_position_name+'", "'+praise_company_name+'")\' />';
 						}else{
 							html += '<img src="/static/assets/img/profile_bee_01.png" class="img-fluid" onclick=\'javascript:viewProfile("'+praise_id+'", "'+praise_image_yn+'", "'+praise_image+'", "'+praise_employee_id+'", "'+praise_employee_name+'", "'+praise_department_name+'", "'+praise_position_name+'", "'+praise_company_name+'")\' />';
 						}
-												
+
+            /*
 						html += '</a><div><p class="card-title colorCustom_02 m-0 fw-med">'+praise_company_name_short + ' ' + praise_department_name.substring(0, 8)+'</p>';
 						html += '<h6 class="card-text colorCustom_01" style="font-size: 12px;">'+praise_employee_name+'<span class="fw-bold colorCustom_03" style="font-size: 10px;">' + ' ' + praise_position_name +'</span></h6></div></div></div>';
+						htmlcheckpoint1 = '<div class="card-body px-0 py-3 mx-3" style="border-top:1px solid #14a8ea;"><div class="mb-3"><a data-bs-toggle="modal" data-bs-target="#card_modal" href="#" class="d-flex" onclick=\'viewToken("'+compliment_id+'","'+todaythanks_showyn+'","'+user_id+'","'+praise_id+'","'+user_employee_name+'", "'+praise_employee_name+'", "'+content+'", "'+user_image+'", "'+praise_image+'", "'+user_image_yn+'", "'+praise_image_yn+'", "/static/assets/img/profile_bee_01.png", "'+image_path+'", "'+likes_count+'", "'+comment_count+'", "'+reg_date.slice(0, 10)+'");\'/>';
+            */
+            /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+            html += '</a><div ><p class="card-title colorCustom_02 m-0 fw-med" style="font-size: 14px; font-weight: 400 !important;">'+praise_company_name_short + ' ' + praise_department_name.substring(0, 8)+'</p>';
+						html += '<h6 class="card-text colorCustom_01" style="font-size: 14px; font-weight: 400 !important;">'+praise_employee_name+'<span class="fw-bold colorCustom_03" style="font-size: 10px;">' + ' ' + praise_position_name +'</span></h6></div></div></div>';
 						htmlcheckpoint1 = '<div class="card-body px-0 py-3 mx-3" style="border-top:1px solid #777777;"><div class="mb-3"><a data-bs-toggle="modal" data-bs-target="#card_modal" href="#" class="d-flex" onclick=\'viewToken("'+compliment_id+'","'+todaythanks_showyn+'","'+user_id+'","'+praise_id+'","'+user_employee_name+'", "'+praise_employee_name+'", "'+content+'", "'+user_image+'", "'+praise_image+'", "'+user_image_yn+'", "'+praise_image_yn+'", "/static/assets/img/profile_bee_01.png", "'+image_path+'", "'+likes_count+'", "'+comment_count+'", "'+reg_date.slice(0, 10)+'");\'/>';
+
 						html += htmlcheckpoint1;
 						<!-- 요부분 수정 했음 -->
 						html += '<div style="width:80px; height:80px; overflow: hidden; border-radius: 10px; margin-right:10px;"><img id="cardmodalimg'+compliment_id+'" style="object-fit: cover; height: 100%; width: 100%;" src="'+image_path+'" class="img-fluid"></div>';
 						html += '<div class="overflow-hidden" style="width: calc(100% - 90px);"><p id="pcard_desc'+compliment_id+'" style="min-height: 50px; text-overflow: ellipsis; word-wrap: break-word; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;" class="card-text mb-0 colorCustom_01 fw-med">'+short_content+'</p><div id="viewTag'+compliment_id+'"></div></div>';
 						html += '</a></div>';
+
+            /*
 						html += '<div class="card-body p-0 d-flex justify-content-between"><div class="d-flex" style="align-items: center;">';
+            */
+            /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+            html += '<div class="card-body p-0 d-flex justify-content-between" style="gap: 8px;"><div class="d-flex" style="align-items: center;">';
+            
 						html += '<a href="javascript:void(0);" onclick="clickLike('+compliment_id+');" class="d-flex heartBtn btn p-0 me-2">';
 						if (like_yn == 1)
 						{
@@ -2755,6 +2977,13 @@
       box-shadow: none;
     }
 
+    /*
+    #mainPage .todayThank>div {
+      border: none;
+      background: #fff url(/static/assets/img/today_thank_border.png) no-repeat center/100% 100%;
+    }
+    */
+    /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
     #mainPage .todayThank>div {
       border: none;
       background: #fff url(/static/assets/img/vti/vti-border-today.png) no-repeat center/100% 100%;
@@ -2772,8 +3001,18 @@
     }
 
     /* 오늘의 땡큐 카드 - 헤더 데코 */
+    /*
     .all_ .todayThank .todayHeader {
       top: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 300px;
+      width: 100%;
+    }
+    */
+    /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+    .all_ .todayThank .todayHeader {
+      top: -25px;
       left: 50%;
       transform: translateX(-50%);
       max-width: 300px;
@@ -2785,6 +3024,12 @@
       object-fit: contain;
     }
 
+    /*
+    .all_ .sendMeCard>div {
+      background: #c8edff;
+    }
+    */
+    /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
     .all_ .sendMeCard>div {
       background: #FFE0D0;
     }

@@ -1,3 +1,9 @@
+<!--
+####################################################################
+# 2024-05-30 VTI: Changed theme for PC mode and updated color concept
+####################################################################
+-->
+
 {% extends 'base.html' %}
 {% block body %}
 {% load static %}
@@ -52,6 +58,108 @@
     
 <!-- </head> -->
 
+<!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+<style>
+
+  #adminInfo>div {
+    background: #FFE0D0 !important;
+    border-radius: 10px;
+  }
+
+  #adminInfo>div h5 {
+    color: #FF6414 !important;
+    font-weight: bold;
+  }
+
+  .adCardHeader span {
+    font-weight: 700 !important;
+    padding: 5px !important;
+    color: #3A3A3A !important;
+    font-size: 18px !important;
+  }
+
+  .adCardBody>div a {
+    background: #F2F2F2 !important;
+    color: #3A3A3A !important;
+    font-weight: 500;
+    border: 1px solid #CCCCCC !important;
+  }
+
+  .adCardBody>div a:hover {
+    background: #FFE0D0;
+    color: #FF6414;
+  }
+
+  .adminPage .customBtn {
+    background: #F2F2F2;
+    color: #3A3A3A;
+    font-weight: 500;
+  }
+
+  .adminPage .customBtn:hover {
+    background: #FFE0D0;
+    color: #FF6414;
+  }
+
+  .adminPage .customBtn2 {
+    background: #F2F2F2;
+    color: #3A3A3A;
+    font-weight: 500;
+  }
+
+  .adminPage .customBtn2:hover {
+    background: #FFE0D0;
+    color: #FF6414;
+  }
+
+  table tbody th {
+    color: #3A3A3A !important;
+    font-weight: bold !important;
+    font-size: 14px !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .tablePgNation a {
+    color: #3A3A3A !important;
+    font-weight: bold;
+    border-bottom: 2px solid #3A3A3A !important;
+  }
+  .date-input-wrapper #start_date-form::placeholder {
+    color: #777777;
+  }
+  .date-input-wrapper #end_date-form::placeholder {
+    color: #777777;
+  }
+
+  .date-input-wrapper {
+    position: relative;
+  }
+
+  .date-input-wrapper::after {
+    content: "";
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    width: 16px;
+    height: 16px;
+    background-image: url(/static/assets/img/vti/CalendarBlank.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.6;
+  }
+
+  .modal-footer .customBtn {
+    background: #FF6414  !important;
+    color: #FFFFFF  !important;
+    font-weight: 500;
+  }
+
+</style>
+
 <style>
 
 /* 관리자 공통 css 시작 */
@@ -85,12 +193,12 @@
 }
 
 #adminInfo>div {
-  background: #FFE0D0;
+  background: #edf6ff;
   border-radius: 10px;
 }
 
 #adminInfo>div h5 {
-  color: #FF6414;
+  color: #006ed5;
   font-weight: bold;
 }
 
@@ -102,10 +210,9 @@
 .adCardHeader {}
 
 .adCardHeader span {
-  font-weight: 700;
-  padding: 5px;
-  color: #3A3A3A;
-  font-size: 18px;
+  background: #222;
+  font-weight: 500;
+  padding: 10px;
 }
 
 .adCardBody {}
@@ -113,10 +220,9 @@
 .adCardBody>div {}
 
 .adCardBody>div a {
-  background: #F2F2F2;
-  color: #3A3A3A;
+  background: #e8f7ff;
+  color: #006ed5;
   font-weight: 500;
-  border: 1px solid #CCCCCC;
 }
 
 .adCardBody>div a {
@@ -124,30 +230,30 @@
 }
 
 .adCardBody>div a:hover {
-  background: #FFE0D0;
-  color: #FF6414;
+  background: #006ed5;
+  color: #fff;
 }
 
 .adminPage .customBtn {
-  background: #F2F2F2;
-  color: #3A3A3A;
+  background: #006ed5;
+  color: #fff;
   font-weight: 500;
 }
 
 .adminPage .customBtn:hover {
-  background: #FFE0D0;
-  color: #FF6414;
+  background: #e8f7ff;
+  color: #006ed5;
 }
 
 .adminPage .customBtn2 {
-  background: #F2F2F2;
-  color: #3A3A3A;
+  background: #e8f7ff;
+  color: #006ed5;
   font-weight: 500;
 }
 
 .adminPage .customBtn2:hover {
-  background: #FFE0D0;
-  color: #FF6414;
+  background: #006ed5;
+  color: #fff;
 }
 
 
@@ -175,7 +281,7 @@
 }
 
 table tbody th {
-  color: #3A3A3A !important;
+  color: #006ed5 !important;
   font-weight: bold !important;
   font-size: 14px !important;
   padding-left: 0 !important;
@@ -204,9 +310,9 @@ table tbody td {
 }
 
 .tablePgNation a {
-  color: #3A3A3A;
+  color: #006ed5;
   font-weight: bold;
-  border-bottom: 2px solid #3A3A3A;
+  border-bottom: 2px solid #006ed5;
 }
 
 /* 관리자 공통 css 끝 */
@@ -214,7 +320,13 @@ table tbody td {
 <!-- Content wrapper -->
 <div class="content-wrapper adminPage">
   <!-- Content -->
+
+  <!--
   <div class="container-xxl flex-grow-1 container-p-y">
+  -->
+  <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+  <div class="flex-grow-1 container-p-y" style="margin: 0px 50px;">
+
     {% if user.is_superuser %}
 
     <div id="adminInfo" class="col-12">
@@ -234,7 +346,9 @@ table tbody td {
 
         <!-- HTML5 Inputs -->
         <div class="card mb-2">
-          <h5 class="card-header pb-2" style="font-weight: 500; color:#222; margin-left:5px;">토큰설정</h5>
+          
+          <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+          <!-- <h5 class="card-header pb-2" style="font-weight: 500; color:#222; margin-left:5px;">토큰설정</h5> -->
 
           {% if error %}
           <div class="alert alert-danger" role="alert">
@@ -242,14 +356,25 @@ table tbody td {
           </div>
           {% endif %}
 
+          <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+          <div class="d-flex justify-content-between align-items-center card-header">
+            <h5 class="" style="font-weight: 500; color:#3A3A3A; margin: 0;">토큰설정</h5>
+            <!-- Button trigger modal -->
+             <button type="button" class="customBtn btn" data-bs-toggle="modal" data-bs-target="#basicModal" style="background-color: #FF6414; color: #FCFCFC;">
+              신규등록
+            </button>
+          </div>
           <div class="card-body">
 
 
+            <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
             <!-- Button trigger modal -->
+            <!--
             <button type="button" style="margin-bottom:20px; margin-left:5px;" class="customBtn btn"
               data-bs-toggle="modal" data-bs-target="#basicModal">
               신규등록
             </button>
+            -->
 
             <!-- Modal -->
             <div class="modal fade" id="basicModal" tabindex="-1" aria-hidden="true">
@@ -277,14 +402,31 @@ table tbody td {
 
                             <div class="mb-6 col-lg-6 col-xl-6 col-6 mb-0">
                               <label class="form-label" for="start_date-form">시작일자</label>
+
+                              <!--
                               <input type="text" name="manage_start_date" id="start_date-form" class="form-control"
                                 placeholder="시작일자" />
+                              -->
+                              <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+                              <div class="date-input-wrapper">
+                                  <input type="text" name="manage_start_date" id="start_date-form" class="form-control" style="border: 1px solid #CCCCCC !important; color: #777777;"
+                                placeholder="시작일자" />
+                              </div>
+
                             </div>
 
                             <div class="mb-6 col-lg-6 col-xl-6 col-6 mb-0">
                               <label class="form-label" for="end_date-form">종료일자</label>
+
+                              <!--
                               <input type="text" name="manage_end_date" id="end_date-form" class="form-control"
                                 placeholder="종료일자" />
+                              -->
+                              <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+                              <div class="date-input-wrapper">
+                                <input type="text" name="manage_end_date" id="end_date-form" class="form-control" style="border: 1px solid #CCCCCC !important; color: #777777;" placeholder="종료일자" />
+                              </div>
+
                             </div>
 
 
@@ -328,22 +470,50 @@ table tbody td {
               <div class="row">
                 <input type="hidden" name="token_id" id="form-{{part.id}}-1" class="form-control" value="{{part.id}}">
 
+                <!--
                 <div class="mb-3 col-lg-6 col-xl-3 col-6 mb-0">
                   <label class="form-label" for="start_date-{{part.id}}">시작일자</label>
                   <input type="text" name="manage_start_date" id="start_date-{{part.id}}" class="form-control"
                     value="{{ part.start_date|slice:'0:4' }}-{{ part.start_date|slice:'4:6' }}-{{ part.start_date|slice:'6:8'}}">
                 </div>
+                -->
+                <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+                <div class="mb-3 col-lg-6 col-xl-6 col-6 mb-0">
+                  <label class="form-label" for="start_date-{{part.id}}">시작일자</label>
+                  <div class="date-input-wrapper">
+                    <input type="text" name="manage_start_date" id="start_date-{{part.id}}" class="form-control" style="border: 1px solid #CCCCCC !important; color: #777777;"
+                    value="{{ part.start_date|slice:'0:4' }}-{{ part.start_date|slice:'4:6' }}-{{ part.start_date|slice:'6:8'}}">
+                  </div>  
+                </div>
 
+                <!--
                 <div class="mb-3 col-lg-6 col-xl-3 col-6 mb-0">
                   <label class="form-label" for="end_date-{{part.id}}">종료일자</label>
                   <input type="text" name="manage_end_date" id="end_date-{{part.id}}" class="form-control"
                     value="{{ part.end_date|slice:'0:4' }}-{{ part.end_date|slice:'4:6' }}-{{ part.end_date|slice:'6:8'}}">
                 </div>
+                -->
+                <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+                <div class="mb-3 col-lg-6 col-xl-6 col-6 mb-0">
+                  <label class="form-label" for="end_date-{{part.id}}">종료일자</label>
+                  <div class="date-input-wrapper">
+                  <input type="text" name="manage_end_date" id="end_date-{{part.id}}" class="form-control" style="border: 1px solid #CCCCCC !important; color: #777777;"
+                    value="{{ part.end_date|slice:'0:4' }}-{{ part.end_date|slice:'4:6' }}-{{ part.end_date|slice:'6:8'}}">
+                    </div>  
+                </div>
+
 
                 <div class="col-12 d-flex align-items-end justify-content-center justify-content-sm-end mb-0">
+
+                  <!--
                   <button type="submit" id="token_update{{part.id}}" name="token_update"
                     class="btn customBtn me-sm-3 me-1">변경</button>
                   <button type="submit" name="token_delete" class="btn customBtn2">삭제</button>
+                  -->
+                  <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+                  <button type="submit" id="token_update{{part.id}}" name="token_update"  style="background-color: #FFE0D0; color: #FF6414;"
+                    class="btn customBtn me-sm-3 me-1">변경</button>
+                  <button type="submit" name="token_delete" class="btn customBtn2" style="background-color: #FF6414; color: #FCFCFC;">삭제</button>
 
                   <script>
                     document.getElementById("token_update{{part.id}}").addEventListener("click", function () {
@@ -402,7 +572,14 @@ table tbody td {
     {% endif %}
   </div>
   <div id="footer">
+    
+    <!--
+    <div class="footer w-100 text-center fw-med fs-6" style="color:#418dd4;">ⓒ 2024, made 땡큐토큰</div>
+    -->
+
+    <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
     <div class="footer w-100 text-center fw-med fs-6 color-03" style="color:#418dd4;">ⓒ 2024, made 땡큐토큰</div>
+
   </div>
   <script>
     window.onload = function () {

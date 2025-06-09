@@ -12,7 +12,7 @@
 # 2024-12-17 VTI   Add a filter condition for user search to the `praise_page` API.
 # 2024-12-25 VTI   Add APIs in home, search, tk_list, rankList screen.
 # 2025-04-23 VTI   add limit, offset in api get data tk_list
-# 2025-04-24 VTI   fix logout flow and change initial record limit from 6 to 12
+# 2025-05-30 VTI   change initial record limit from 6 to 12
 ####################################################################
 from django.shortcuts import render, HttpResponse
 from myprofile.models import User as User2
@@ -483,6 +483,7 @@ def get_group_data(request):
 def praise_first_page(request):
     # ==========================
     # 2024-12-25 Add APIs in home, search, tk_list, rankList screen.
+    # 2025-05-30 VTI change initial record limit from 6 to 12
     # ==========================
 
     # Get search parameters
@@ -634,6 +635,7 @@ def praise_first_page_search(request):
 def praise_page_new(request):
     # ==========================
     # 2024-12-25 refactor API praise page
+    # 2025-05-30 VTI change initial record limit from 6 to 12
     # ==========================
 
     # Get input parameters with default value
