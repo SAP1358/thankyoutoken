@@ -1,9 +1,20 @@
+<!--
+####################################################################
+# 2024-05-30 VTI: Changed theme for PC mode and updated color concept
+####################################################################
+-->
+
 {% extends 'base.html' %}
 {% block body %}
 {% load static %}
 {% load humanize %}
 
 <style>
+
+	/* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+	.color-10 {
+		color: #143C96 !important;
+	}
 
     .modal-dialog-scrollable {
         max-height: calc(100% - var(--bs-modal-margin) * 2);
@@ -78,7 +89,12 @@
 <!-- Content wrapper -->
 <div class="content-wrapper">
 <!-- Content -->
+
+<!--
 <div id="con" class="container-xxl flex-grow-1 py-1" style="max-width: 500px; visibility: hidden;">
+-->
+<!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+<div id="con" class=" flex-grow-1 py-1" style="max-width: 500px; visibility: hidden; margin: 0 auto !important;">
 	
 		<!-- Main elements -->
 		<div class="card px-2" style="max-width: 500px;">
@@ -105,14 +121,29 @@
 							{% endif %}
 
 
+							<!--
 							<p class="m-0 fw-med fs-5 colorCustom_01" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#profile_modal"
 								onclick='javascript:viewProfile("{{info.user_id}}", "{{info.user_image_yn}}", "{{info.user_image}}", "{{info.user_employee_id}}", "{{info.user_employee_name}}", "{{info.user_department_name}}","{{ info.user_position_name }}","{{ info.user_company_name }}")'>
 								{{ info.user_employee_name }}</p>
+							-->
+							<!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+							<div data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#profile_modal"
+								onclick='javascript:viewProfile("{{info.user_id}}", "{{info.user_image_yn}}", "{{info.user_image}}", "{{info.user_employee_id}}", "{{info.user_employee_name}}", "{{info.user_department_name}}","{{ info.user_position_name }}","{{ info.user_company_name }}")'>
+								<p style="margin: 0;" class="color-10">{{info.user_department_name}}</p>
+								<p style="margin: 0;" >
+								{{ info.user_employee_name }} <span class="color-10">{{info.user_position_name}}</span></p>
+							</div>
+
 						</div>
 
 
+						<!--
 						<span style="width: 25px; height: 25px; margin-left: 1rem; margin-right: 1rem;"><img
 								src="/static/assets/img/icon_arrow.svg"></span>
+						-->
+						<!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+						<span style="width: 25px; height: 25px; margin-left: 1rem; margin-right: 1rem;"><img
+								src="/static/assets/img/vti/vector.png"></span>
 
 						<div class="d-flex align-items-center">
 							{% if info.praise_image_yn == 'Y' %}
@@ -124,9 +155,20 @@
 								src="{% static 'assets/img/profile_bee_01.png' %}" class="img-fluid me-2" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#profile_modal"
 								onclick='javascript:viewProfile("{{info.praise_id}}", "{{info.praise_image_yn}}", "{{info.praise_image}}", "{{info.praise_employee_id}}", "{{info.praise_employee_name}}", "{{info.praise_department_name}}","{{ info.praise_position_name }}","{{ info.praise_company_name }}")' />
 							{% endif %}
+							
+							<!--
 							<p class="m-0 fw-med fs-5 colorCustom_01" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#profile_modal"
 								onclick='javascript:viewProfile("{{info.praise_id}}", "{{info.praise_image_yn}}", "{{info.praise_image}}", "{{info.praise_employee_id}}", "{{info.praise_employee_name}}", "{{info.praise_department_name}}","{{ info.praise_position_name }}","{{ info.praise_company_name }}")'>
 								{{ info.praise_employee_name }}
+							-->
+							<!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+							<div data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#profile_modal"
+								onclick='javascript:viewProfile("{{info.user_id}}", "{{info.user_image_yn}}", "{{info.user_image}}", "{{info.user_employee_id}}", "{{info.user_employee_name}}", "{{info.user_department_name}}","{{ info.user_position_name }}","{{ info.user_company_name }}")'>
+								<p style="margin: 0;" class="color-10">{{info.praise_department_name}}</p>
+								<p style="margin: 0;">
+								{{ info.praise_employee_name }} <span class="color-10">{{info.praise_position_name}}</span></p>
+							</div>
+
 						</div>
 					</div>
 				</div>
@@ -139,7 +181,13 @@
 
 			<div class=" px-4">
 				<div class="card mx-0 lex-grow-0 p-3 border border-1 shadow-none">
+
+					<!--
 					<div class="text-dark text-center" id="token_content">
+					-->
+					<!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+					<div class="text-dark text-center" id="token_content" style="color: #3A3A3A !important;">
+
 						{{info.content}}
 					</div>
 				</div>
@@ -163,7 +211,13 @@
 						{% else %}
 						<i class="me-1" id="clickIconLike{{ info.compliment_id }}"></i>
 						{% endif %}
+
+						<!--
 						<span id="clickLike{{ info.compliment_id }}" class="fw-med colorCustom_01">{{info.likes_count}}</span>
+						-->
+						<!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+						<span id="clickLike{{ info.compliment_id }}" class="fw-med colorCustom_01" style="color: #3A3A3A !important;">{{info.likes_count}}</span>
+
 					</a>
 					<a href="javascript:void(0);" class="d-flex commentBtn btn p-0 me-2" data-bs-toggle="modal"
                     data-bs-target="#modalPraiseComment"
@@ -176,7 +230,12 @@
 						</i>
 						{% endif %}
 
+						<!--
 						<span id="clickComment{{ info.compliment_id }}" class="fw-med colorCustom_01">{{info.comment_count}}</span>
+						-->
+						<!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+						<span id="clickComment{{ info.compliment_id }}" class="fw-med colorCustom_01" style="color: #3A3A3A !important;">{{info.comment_count}}</span>
+
 					</a>
 
 					<input type="hidden" id="hiddenLikeYn{{info.compliment_id}}" value="{{info.like_yn}}" />
@@ -185,12 +244,25 @@
 				</div>
 
 				<div class="">
+					
+					<!--
 					<a href="#" class="btn p-0 me-1 fw-med colorCustom_01"><span>{{ info.reg_date|date:"Y-m-d" }}</span></a>
+					-->
+					<!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+					<a href="#" class="btn p-0 me-1 fw-med colorCustom_01" style="color: #3A3A3A !important;"><span>{{ info.reg_date|date:"Y-m-d" }}</span></a>
+
 				</div>
 			</div>
 			<div class="w-100 text-center px-4 mb-4">
+
+				<!--
 				<button id="replyButton" class="btn w-100 text-white py-2" style="background: #006ed5;"
 					class="btn btn-label-secondary" onclick="window.replySend()">답장</button>
+				-->
+				<!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+				<button id="replyButton" class="btn w-100 text-white py-2 mx-auto" style="background: #FF6414;;"
+					class="btn btn-label-secondary" onclick="window.replySend()">답장</button>
+
 			</div>
 
 			<!----------------------------------------------------------->
@@ -203,7 +275,13 @@
 		
         
 </div>
+
+<!--
 <div id="footer"><div class="footer w-100 text-center fw-med fs-6" style="color:#418dd4;">ⓒ 2024, made 땡큐토큰</div></div>
+-->
+<!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+<div id="footer"><div class="footer w-100 text-center fw-med fs-6 color-03" style="color:#418dd4;">ⓒ 2024, made 땡큐토큰</div></div>
+
     <script>
         window.onload = function () {
   // 하단 내비게이션 높잇값 만큼 모든 페이지 높이조절 시작
@@ -241,7 +319,13 @@
         <div class="input-group input-group-merge">
           <input id="comment_content" type="text" class="typing_comment form-control" placeholder="댓글 작성" aria-label="Recipient's username"
             aria-describedby="button-addon2">
+
+		  <!--
           <button class="btn btn-danger" type="button" id="button-addon2" onclick="praiseCommentRegedit()">등록</button>
+		  -->
+		  <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+		  <button class="btn btn-danger" type="button" id="button-addon2" onclick="praiseCommentRegedit()" style="background: #FF6414 !important; color: #FFFFFF !important; border: 0 !important">등록</button>
+
         </div>
       </div>
     </div>
@@ -940,9 +1024,16 @@ function clearAllElementsById(id) {
       box-shadow: none;
     }
 
-    #mainPage .todayThank>div {
+    /*
+	#mainPage .todayThank>div {
       border: none;
       background: #fff url(/static/assets/img/today_thank_border.png) no-repeat center/100% 100%;
+    }
+	*/
+	/* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+	#mainPage .todayThank>div {
+      border: none;
+      background: #fff url(/static/assets/img/vti/vti-border-today.png) no-repeat center/100% 100%;
     }
 
     #mainPage .photoCard {

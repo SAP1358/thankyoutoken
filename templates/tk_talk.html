@@ -1,3 +1,9 @@
+<!--
+####################################################################
+# 2024-05-30 VTI: Changed theme for PC mode and updated color concept
+####################################################################
+-->
+
 {% extends 'base.html' %}
 {% block body %}
 {% load static %}
@@ -23,7 +29,13 @@
 
 <body>
   <!-- 전체 태그 감싸기 시작 -->
+  
+  <!--
   <div id="myThankPage" class="allPage tkTalkPage layout-container flex-column">
+  -->
+  <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+	<div id="myThankPage" class="allPage tkTalkPage layout-container flex-column" style="position: relative;">
+
   	<!-- 컨텐츠 시작 -->
 
 		{% if manage.id == 0 or manage.id == null %}
@@ -84,27 +96,62 @@
 			</script>
 			{% endif %}
 
-  	<div id="con" class="container-xxl mt-5">
+  	<!--
+      <div id="con" class="container-xxl mt-5">
+    -->
+    <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+    <div id="con" class=" mt-5">
+
   		<div class="row">
   			<div class="col-12 mb-2 position-relative" style="z-index: 0;">
   				{% for part in posts %}
   				{% if forloop.counter == 1 %}
-  				<div class="card-header position-relative">
+  				
+          <!--
+          <div class="card-header position-relative">
+          -->
+          <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+          <div class="card-header position-relative" style="border-bottom: 1px solid #CCCCCC; padding-bottom: 8px">
+
   					<div class="d-flex align-items-end justify-content-center">
 						{% if part.praise_id == user.id %}
-						<h3 class="mb-0 text-white fw-med me-2" style="line-height: 1;">{{ part.user_employee_name }}</h3>
+
+						<!--
+            <h3 class="mb-0 text-white fw-med me-2" style="line-height: 1;">{{ part.user_employee_name }}</h3>
 						<span class="colorCustom_08 fw-med" style="line-height: 1;">{{ part.user_company_name }}
 						  {{ part.user_department_name }}</span>
+            -->
+            <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+            <h3 class="mb-0 color-03 fw-med me-2" style="line-height: 1;">{{ part.user_employee_name }}</h3>
+						<span class="color-02 fw-med" style="line-height: 1;">{{ part.user_company_name }}
+						  {{ part.user_department_name }}</span>
+
 					  {% else %}
-						<h3 class="mb-0 text-white fw-med me-2" style="line-height: 1;">{{ part.praise_employee_name }}</h3>
+
+						<!--
+            <h3 class="mb-0 text-white fw-med me-2" style="line-height: 1;">{{ part.praise_employee_name }}</h3>
 						<span class="colorCustom_08 fw-med" style="line-height: 1;">{{ part.praise_company_name }}
 						  {{ part.praise_department_name }}</span>
+            -->
+            <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+            <h3 class="mb-0 color-03 fw-med me-2" style="line-height: 1;">{{ part.praise_employee_name }}</h3>
+						<span class="color-02 fw-med" style="line-height: 1;">{{ part.praise_company_name }}
+						  {{ part.praise_department_name }}</span>
+
 					  {% endif %}
   					</div>
   					<!-- MY땡큐 대화목록 페이지로 돌아가기 버튼 시작 -->
-  					<div class="position-absolute" style="top:50%; transform: translateY(-50%); width: 15px; cursor: pointer;"
+
+  					<!--
+            <div class="position-absolute" style="top:50%; transform: translateY(-50%); width: 15px; cursor: pointer;"
   						onclick="location.href='{% url 'tk_list' %}'"><img class="w-100"
   							src="{% static 'assets/img/icon_historyBack.png' %}"></div>
+            -->
+            <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+            <div class="position-absolute" style="top:50%; transform: translateY(-50%); width: 15px; cursor: pointer;"
+  						onclick="location.href='{% url 'tk_list' %}'"><img width=24 height=24
+  							src="{% static 'assets/img/vti/CaretLeft.png' %}"></div>
+
   					<!-- MY땡큐 대화목록 페이지로 돌아가기 버튼 끝 -->
   				</div>
   				{% endif %}
@@ -117,18 +164,35 @@
   					{% if part.praise_id == user.id %}
 					<span id="token_user_id" class="visually-hidden">{{part.user_id}}</span>
   					<div class="tkTalk my-5">
-  						<div class="tkSendTime text-center"><span class="text-white p-2 px-4"
+  						
+              <!--
+              <div class="tkSendTime text-center"><span class="text-white p-2 px-4"
   								style="border-radius: 20px; background:rgba(0,0,0,0.2); font-size: clamp(12px,2.5vw,16px);">{{part.reg_date|date:"Y-m-d H:i:s"}}</span>
   						</div>
+              -->
+              <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+              <div class="tkSendTime text-center"><span class="p-2 px-4"
+  								style="border-radius: 8px; background:#F2F3F5; font-size: clamp(12px,2.5vw,16px); color: #3A3A3A">{{part.reg_date|date:"Y-m-d H:i:s"}}</span>
+  						</div>
+
   						<div class="d-flex mt-3">
+              <!--
 							<div class="me-3 customSize overflow-hidden" style="border:1px solid #d3f1ff; background: #fff; width:50px; height:50px; border-radius: 100%; overflow: hidden;">
-  								{% if part.user_image_yn == 'Y' %}
-  								<img src="{{ part.user_image }}" class="w-100 img-fluid" style="height:100%; object-fit: cover;" href="#" data-bs-toggle="modal" data-bs-target="#profile_modal" onclick="viewuserprofile('{{ part.user_image }}','{{ part.user_employee_name }}','{{ part.user_position_name }}','{{ part.user_company_name}}','{{ part.user_department_name }}');"/>
-  								{% else %}
-  								<img src="{% static 'assets/img/profile_bee_01.png' %}" class="w-100 img-fluid" href="#" data-bs-toggle="modal" data-bs-target="#profile_modal" onclick="viewuserprofile('{% static 'assets/img/profile_bee_01.png' %}','{{ part.user_employee_name }}','{{ part.user_position_name }}','{{ part.user_company_name}}','{{ part.user_department_name }}');"
-  									style="height:100%; object-fit: cover;" />
-  								{% endif %}
-  							</div>
+              -->
+              <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+  							<div style="margin-right:10%;" class="talkSendBox">
+  								<div class="d-flex align-items-center mb-1" style="gap: 8px">
+									<div style="border:1px solid #d3f1ff; background: #fff; width:40px; height:40px; border-radius: 100%; overflow: hidden;">
+
+											{% if part.user_image_yn == 'Y' %}
+											<img src="{{ part.user_image }}" class="w-100 img-fluid" style="height:100%; object-fit: cover;" href="#" data-bs-toggle="modal" data-bs-target="#profile_modal" onclick="viewuserprofile('{{ part.user_image }}','{{ part.user_employee_name }}','{{ part.user_position_name }}','{{ part.user_company_name}}','{{ part.user_department_name }}');"/>
+											{% else %}
+											<img src="{% static 'assets/img/profile_bee_01.png' %}" class="w-100 img-fluid" href="#" data-bs-toggle="modal" data-bs-target="#profile_modal" onclick="viewuserprofile('{% static 'assets/img/profile_bee_01.png' %}','{{ part.user_employee_name }}','{{ part.user_position_name }}','{{ part.user_company_name}}','{{ part.user_department_name }}');"
+												style="height:100%; object-fit: cover;" />
+											{% endif %}
+									</div>
+
+                <!--
   							<div style="margin-right:10%;" class="talkSendBox">
   								<div class="d-flex align-items-end mb-3" style="">
   									<h3 class="mb-0 text-white fw-med"
@@ -138,11 +202,32 @@
   										style="line-height: 1; font-size: clamp(12px,2.5vw,16px);">{{ part.user_company_name}}
   										{{ part.user_department_name }}</span>
   								</div>
+                -->
+                <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+									<div class="d-flex justify-content-center align-items-center">
+									<h3 class="mb-0 color-03 fw-med"
+  										style="line-height: 1; font-size: clamp(14px,3.4vw,24px); margin-right:1%;">
+  										{{ part.user_employee_name }}</h3>
+  									<span class="color-10 fw-med"
+  										style="line-height: 1; font-size: clamp(12px,2.5vw,16px); white-space: nowrap;">{{ part.user_company_name}}
+  										{{ part.user_department_name }}</span>
+									</div>
+                </div>
 
-  								<div class="tkTalkInner border d-flex align-items-start pb-3"
+  								<!--
+                  <div class="tkTalkInner border d-flex align-items-start pb-3"
   									style=" border-radius: 10px; width:100%; margin-bottom:10px; padding:10px;">
-  									<span class="position-absolute leftTale"><img class="w-100"
+                  -->
+                  <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+                  <div class="tkTalkInner border d-flex align-items-start pb-3"
+  									style=" border-radius: 10px; width:100%; margin-bottom:10px; padding:10px; margin-left: 48px;">
+
+									<!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+  									<!--
+									<span class="position-absolute leftTale"><img class="w-100"
   											src="{% static 'assets/img/icon_tale.png' %}"></span>
+									-->
+									
   									<div class="overflow-hidden me-2"
   										style="width:70px; height:50px; border-radius: 8px; overflow: hidden;">
   										<img src="{{ part.image_path }}" style="width:100%; height:100%; object-fit: cover;">
@@ -168,15 +253,34 @@
 
   					{% if part.praise_id != user.id %}
   					<div class="tkTalk tkTalk_02 my-5">
-  						<div class="tkSendTime text-center"><span class="text-white p-2 px-4"
+
+  						<!--
+              <div class="tkSendTime text-center"><span class="text-white p-2 px-4"
   								style="border-radius: 20px; background:rgba(0,0,0,0.2); font-size: clamp(12px,2.5vw,16px);">{{part.reg_date|date:"Y-m-d H:i:s"}}</span>
   						</div>
+              -->
+              <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+              <div class="tkSendTime text-center"><span class="p-2 px-4"
+  								style="border-radius: 8px; background: #F2F3F5; font-size: clamp(12px,2.5vw,16px); color: #3A3A3A">{{part.reg_date|date:"Y-m-d H:i:s"}}</span>
+  						</div>
+
   						<div class="d-flex mt-4" style="justify-content: flex-end;">
   							<div class="talkSendBox">
+
+								<!--
   								<div class="tkTalkInner border d-flex align-items-start"
   									style=" border-radius: 10px; width:100%; margin-bottom:10px; padding:10px; background: #c8edff;">
+								-->
+								<!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+								<div class="tkTalkInner border d-flex align-items-start"
+  									style=" border-radius: 10px; width:100%; margin-bottom:10px; padding:10px; background: #FFE0D0;">
+
+									<!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+									<!--
   									<span class="position-absolute rightTale"><img class="w-100"
   											src="{% static 'assets/img/icon_rightTale.png' %}"></span>
+									-->
+											
   									<div class="overflow-hidden me-3"
   										style="width:70px; height:50px; border-radius: 8px; overflow: hidden;">
   										<img src="{{ part.image_path }}" style="width:100%; height:100%; object-fit: cover;">
@@ -203,10 +307,19 @@
   					{% if forloop.last %}
   					{% if part.praise_id == user.id %}
 						<div id="replyBtn" class="text-center" style="width: 35%; margin:0 auto; max-width: 200px; min-width: 150px;">
+
+							<!--
 							<button style="border:0; padding:0; border-radius: 40px; font-size: clamp(14px,3vw,22px); background:#fff"
 								class="py-3 w-100 fw-bold colorCustom_03" onclick="window.replySend()">답장하기 <span class="d-inline-block"
 									style="margin-left:1%; width:16px; height:10px;">
 									<img class="w-100" src="{% static 'assets/img/icon_back.png' %}"></span></button>
+							-->
+							<!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+							<button style="border:0; padding:0; border-radius: 8px; font-size: clamp(14px,3vw,22px); background:#FF6414"
+								class="py-3 w-100 fw-bold color-00" onclick="window.replySend()">답장하기 <span class="d-inline-block"
+									style="margin-left:1%; width:16px; height:10px;">
+									<img class="w-100" style="margin: 0 5px 2px 2px; transform: scale(1.2); transform-origin: top left;" src="{% static 'assets/img/vti/icon_back.png' %}"></span></button>
+
 						</div>
 						<div class="reply-container" style="display: none;">
 							<div id="cardView-confirmed" class="showPhoto-confirmed">
@@ -214,6 +327,8 @@
 								<img id="viewImg-confirmed" src="{{posts_All.0.image_path}}" value="{{posts_All.0.id}}" data-bs-toggle="modal" data-bs-target="#card_modal" />
 								<div class="swiper-button-next swiperNext-confirmed" role="button" data-bs-toggle="modal" data-bs-target="#card_modal"></div>
 							</div>
+
+							<!--
 							<button type="button" onclick="window.closeReply()" class="position-absolute btn-close closeCustom"
 								style="background:transparent; border:0; right:5px; top:-175.75px; box-shadow: none; transform: none !important; z-index:10">
 								<span></span>
@@ -224,6 +339,19 @@
 								<button id="resetBtn" type="reset" class="btn h-[30px] m-0 fw-med fs-5" onclick="window.sendCardResetBtn()" style="box-shadow: none; background: #e8f7ff;">초기화</button>
 								<button id="submitBtn" type="button" class="btn h-[30px] text-white m-0 fw-med fs-5" style="box-shadow: none; background: #006ed5;">등록하기</button>
 							</div>
+							-->
+							<!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+							<button type="button" onclick="window.closeReply()" class="position-absolute btn-close closeCustom"
+								style="background:transparent; border:0; right:5px; bottom:100px; box-shadow: none; transform: none !important; z-index:10; width: 20px; height: 20px;">
+								<span></span>
+							</button>
+							<textarea class="form-control mb-3" id="praiseRegedit_content" style="height: 100%; margin-bottom: 10px; border: 1px solid #CCCCCC; background-color: #F2F2F2;color: #777777" onclick="textareaUpward();" maxlength="100"></textarea>
+							<a data-bs-toggle="modal" data-bs-target="#card_modal" href="#" class="d-flex"><div class="open-icons" onclick="openChooseCard()"></div></a>
+							<div class="send-reply-container">
+								<button id="resetBtn" type="reset" class="btn h-[30px] m-0 fw-med fs-5" onclick="window.sendCardResetBtn()" style="box-shadow: none; background: #e8f7ff; display:none">초기화</button>
+								<button id="submitBtn" type="button" class="btn m-0 fw-med fs-5" style="box-shadow: none; background: #FF6414; color: #FCFCFC; border-radius: 8px; padding: 8px 16px">등록하기</button>
+							</div>
+
 						</div>
   					{% endif %}
   					{% endif %}
@@ -234,7 +362,12 @@
 
   		</div>
   	</div>
+
+	  <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+	  <!--
 	  <div id="footer"><div class="footer w-100 text-center fw-med fs-6" style="color:#418dd4;  padding-bottom:120px;">ⓒ 2024, made 땡큐토큰</div></div>
+	  -->
+
     <span id="hiddenChkSubmitYn" class="visually-hidden">N</span> <!--칭찬하기 제어-->
 		<a href="#start"></a>
 		<!-- <script>
@@ -252,9 +385,17 @@
 					<form id="formAuthentication" name="formAuthentication" class="browser-default-validation mb-0"
 							action="{% url 'tk_talk' %}" method="POST" enctype="multipart/form-data">
 							{% csrf_token %}
+
+						<!--
 						<button type="button" class="button-choose-card btn h-[30px] text-white m-0 fw-med fs-5"
 							style="box-shadow: none; background: #006ed5;"
 							data-bs-dismiss="modal" onclick="chooseCard()">선택</button>
+						-->
+						<!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+						<button type="button" class="button-choose-card btn h-[30px] text-white m-0 fw-med fs-5"
+							style="box-shadow: none; background: #FF6414;"
+							data-bs-dismiss="modal" onclick="chooseCard()">선택</button>
+						
 						<div>
 							<div class="card-header">
 								<input type="hidden" name="input_swiper_id" id="input_swiper_id" value="">
@@ -319,7 +460,13 @@
 													<input id="inputCardImg" name="inputCardImg" class="form-control" onChange="addSwiperImage(event);"
 														type="file"
 														style="position:absolute; top:0;left:0;width:100%; height: 100%;  font-size:0; background:transparent; padding:0 !important; border:0 !important; opacity:0;">
+													
+													<!--
 													<img src="{% static 'assets/img/sendCard_00.png' %}"></img>
+													-->
+													<!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+													<img src="{% static 'assets/img/vti/vti-send-card_00.png' %}"></img>
+
 												</div>
 												{% for part in posts_All %}
 												<div class="swiper-slide" style="height:clamp(40px,15vw,100px); cursor: pointer;"><img
@@ -340,7 +487,13 @@
 													<input id="inputCardImg" name="inputCardImg" class="form-control" type="file"
 														onChange="addSwiperImage(event);"
 														style="position:absolute; top:0;left:0;width:100%; height: 100%;  font-size:0; background:transparent; padding:0 !important; border:0 !important; opacity:0;">
+													
+													<!--
 													<img src="{% static 'assets/img/sendCard_00.png' %}"></img>
+													-->
+													<!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+													<img src="{% static 'assets/img/vti/vti-send-card_00.png' %}"></img>
+
 												</div>
 												{% for part in posts_1 %}
 												<div class="swiper-slide" style="height:clamp(40px,15vw,100px); cursor: pointer;"><img
@@ -360,7 +513,13 @@
 													<input id="inputCardImg" name="inputCardImg" class="form-control" type="file"
 														onChange="addSwiperImage(event);"
 														style="position:absolute; top:0;left:0;width:100%; height: 100%;  font-size:0; background:transparent; padding:0 !important; border:0 !important; opacity:0;">
+													
+													<!--
 													<img src="{% static 'assets/img/sendCard_00.png' %}"></img>
+													-->
+													<!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+													<img src="{% static 'assets/img/vti/vti-send-card_00.png' %}"></img>
+
 												</div>
 												{% for part in posts_2 %}
 												<div class="swiper-slide" style="height:clamp(40px,15vw,100px); cursor: pointer;"><img
@@ -381,7 +540,13 @@
 													<input id="inputCardImg" name="inputCardImg" class="form-control" type="file"
 														onChange="addSwiperImage(event);"
 														style="position:absolute; top:0;left:0;width:100%; height: 100%;  font-size:0; background:transparent; padding:0 !important; border:0 !important; opacity:0;">
+													
+													<!--
 													<img src="{% static 'assets/img/sendCard_00.png' %}"></img>
+													-->
+													<!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+													<img src="{% static 'assets/img/vti/vti-send-card_00.png' %}"></img>
+
 												</div>
 												{% for part in posts_3 %}
 												<div class="swiper-slide" style="height:clamp(40px,15vw,100px); cursor: pointer;"><img
@@ -402,7 +567,13 @@
 													<input id="inputCardImg" name="inputCardImg" class="form-control" type="file"
 														onChange="addSwiperImage(event);"
 														style="position:absolute; top:0;left:0;width:100%; height: 100%;  font-size:0; background:transparent; padding:0 !important; border:0 !important; opacity:0;">
+													
+													<!--
 													<img src="{% static 'assets/img/sendCard_00.png' %}"></img>
+													-->
+													<!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+													<img src="{% static 'assets/img/vti/vti-send-card_00.png' %}"></img>
+
 												</div>
 												{% for part in posts_4 %}
 												<div class="swiper-slide" style="height:clamp(40px,15vw,100px); cursor: pointer;"><img
@@ -423,7 +594,13 @@
 													<input id="inputCardImg" name="inputCardImg" class="form-control" type="file"
 														onChange="addSwiperImage(event);"
 														style="position:absolute; top:0;left:0;width:100%; height: 100%;  font-size:0; background:transparent; padding:0 !important; border:0 !important; opacity:0;">
+													
+													<!--
 													<img src="{% static 'assets/img/sendCard_00.png' %}"></img>
+													-->
+													<!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+													<img src="{% static 'assets/img/vti/vti-send-card_00.png' %}"></img>
+
 												</div>
 												{% for part in posts_5 %}
 												<div class="swiper-slide" style="height:clamp(40px,15vw,100px); cursor: pointer;"><img
@@ -444,7 +621,13 @@
 													<input id="inputCardImg" name="inputCardImg" class="form-control" type="file"
 														onChange="addSwiperImage(event);"
 														style="position:absolute; top:0;left:0;width:100%; height: 100%;  font-size:0; background:transparent; padding:0 !important; border:0 !important; opacity:0;">
+													
+													<!--
 													<img src="{% static 'assets/img/sendCard_00.png' %}"></img>
+													-->
+													<!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+													<img src="{% static 'assets/img/vti/vti-send-card_00.png' %}"></img>
+
 												</div>
 												{% for part in posts_6 %}
 												<div class="swiper-slide" style="height:clamp(40px,15vw,100px); cursor: pointer;"><img
@@ -470,6 +653,8 @@
 		</div>
   </div>
 
+  <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+  <div id="footer"><div class="footer w-100 text-center fw-med fs-6 color-03" style="color:#418dd4;">ⓒ 2024, made 땡큐토큰</div></div>
 
   <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
@@ -479,6 +664,11 @@
     button.searchChkBtn {position: absolute !important; right:0;}  
 .comment_modal .typing_comment:focus {
   border-color: #14a8ea;
+}
+
+/* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+.footer-with-margin {
+    margin-top: 200px !important;
 }
 
 .comment_modal .typing_comment+button {
@@ -550,8 +740,19 @@ body:has(#myThankPage.tkTalkPage) {
   background: #fff !important;
 }
 
+/*
 #myThankPage.tkTalkPage #praiseRegedit_content {
   height: 100px !important;
+	position: absolute;
+	z-index: 1;
+	border: 0;
+	box-shadow: unset;
+	resize: none;
+}
+*/
+/* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+#myThankPage.tkTalkPage #praiseRegedit_content {
+  height: 120px !important;
 	position: absolute;
 	z-index: 1;
 	border: 0;
@@ -575,6 +776,8 @@ body:has(#myThankPage.tkTalkPage) {
 #myThankPage.tkTalkPage .cardOptionBtn {
   /* overflow-x: hidden; */
 }
+
+/*
 #myThankPage.tkTalkPage .cardOptionBtn a {
   width: 100%;
   background: #e8f7ff;
@@ -590,6 +793,26 @@ body:has(#myThankPage.tkTalkPage) {
 #myThankPage.tkTalkPage .cardOptionBtn a~a {
   margin-left: 10px;
 }
+*/
+
+/* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+#myThankPage.tkTalkPage .cardOptionBtn a {
+  width: 100%;
+  background: #FFE0D0;
+  font-size: 15px;
+  padding:10px 5px;
+  color: #FF6414 !important;
+}
+
+#myThankPage.tkTalkPage .cardOptionBtn a.clicked {
+  background: #FF6414;
+  color: #fff !important;
+}
+
+#myThankPage.tkTalkPage .cardOptionBtn a~a {
+  margin-left: 10px;
+}
+
 
 #myThankPage.tkTalkPage .reply-container textarea {
   color: #006ed5;
@@ -693,10 +916,20 @@ body:has(#myThankPage.tkTalkPage) {
   color: #14a8ea;
 }
 
+/*
 #myThankPage.tkTalkPage #cardView-confirmed {
   position: absolute;
 	z-index: 10;
 	top: -185px;
+	display: flex;
+	gap: 16px;
+}
+*/
+/* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+#myThankPage.tkTalkPage #cardView-confirmed {
+  /* position: absolute; */
+	z-index: 10;
+	/* top: -185px; */
 	display: flex;
 	gap: 16px;
 }
@@ -705,6 +938,7 @@ body:has(#myThankPage.tkTalkPage) {
   cursor: pointer;
 }
 
+/*
 #myThankPage.tkTalkPage .reply-container {
 	background-color: white;
   height: 138px !important;
@@ -717,7 +951,22 @@ body:has(#myThankPage.tkTalkPage) {
 	transform: translateX(-50%);
 	border-radius: 0 0 0.375rem 0.375rem;
 }
+*/
+/* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+#myThankPage.tkTalkPage .reply-container {
+	background-color: white;
+  height: 138px !important;
+	/* position: fixed; */
+	bottom: 6rem;
+	/* max-width: 1440px; */
+	/* width: 100%; */
+	z-index: 1;
+	left: 50%;
+	/* transform: translateX(-40%); */
+	border-radius: 0 0 0.375rem 0.375rem;
+}
 
+/*
 #myThankPage.tkTalkPage .open-icons {
 	background: #006ed5;
 	-webkit-mask: url(/static/assets/img/icon_smile.svg) no-repeat center/contain;
@@ -729,10 +978,36 @@ body:has(#myThankPage.tkTalkPage) {
 	margin: 4px;
 	z-index: 10;
 }
+*/
+/* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+#myThankPage.tkTalkPage .open-icons {
+	background: #006ed5;
+	-webkit-mask: url(/static/assets/img/icon_smile.svg) no-repeat center/contain;
+	mask: url(/static/assets/img/icon_smile.svg) no-repeat center/contain;
+	position: absolute;
+	bottom: -160px;
+	width: 30px;
+	height: 30px;
+	margin: 4px;
+	z-index: 10;
+}
 
+/*
 #myThankPage.tkTalkPage .send-reply-container {
 	position: fixed;
 	bottom: 0;
+	right: 0;
+	z-index: 10;
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 4px;
+}
+*/
+/* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+#myThankPage.tkTalkPage .send-reply-container {
+	position: absolute;
+	bottom: -160px;
 	right: 0;
 	z-index: 10;
 	display: flex;
@@ -760,6 +1035,7 @@ body:has(#myThankPage.tkTalkPage) {
 	}
 }
 
+/*
 @media (max-width: 1440px) {
 	#myThankPage.tkTalkPage .reply-container {
 		bottom: 5rem;
@@ -775,6 +1051,16 @@ body:has(#myThankPage.tkTalkPage) {
 	#myThankPage.tkTalkPage .send-reply-container {
 		bottom: 5.5rem;
 	}
+}
+*/
+/* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+@media (max-width: 1440px) {
+	#myThankPage.tkTalkPage .reply-container {
+		left: 0;
+		transform: unset;
+		border-radius: 0;
+	}
+
 }
 
 @media (max-width:576px) {
@@ -1258,7 +1544,12 @@ body:has(#myThankPage.tkTalkPage) {
 		
 		//window.location.href = url;	
 
+		/*
 		$('#footer').css('padding-bottom', '320px');
+		*/
+		/* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+		$('#footer').addClass('footer-with-margin')
+
 		window.scrollTo(0, document.body.scrollHeight);
 
 		$(".reply-container").show();
@@ -1267,6 +1558,9 @@ body:has(#myThankPage.tkTalkPage) {
 
 	function closeReply() {
 		$('#footer').css('padding-bottom', '0');
+
+		/* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+		$('#footer').removeClass('footer-with-margin')
 
 		$("#replyBtn").show();
 		$(".reply-container").hide();

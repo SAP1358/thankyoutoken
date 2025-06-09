@@ -1,3 +1,9 @@
+<!--
+####################################################################
+# 2024-05-30 VTI: Changed theme for PC mode and updated color concept
+####################################################################
+-->
+
 {% extends 'base.html' %}
 {% block body %}
 {% load static %}
@@ -49,6 +55,15 @@
   </script> -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
+
+<!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+<script>
+  $(document).ready(function() {
+    $('#company_id').select2({
+      minimumResultsForSearch: Infinity
+    });
+  });
+</script>
 
 <style>
 
@@ -170,6 +185,8 @@
   font-weight: 500;
 }
 
+/* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+/*
 table tbody th {
   color: #006ed5 !important;
   font-weight: bold !important;
@@ -177,6 +194,7 @@ table tbody th {
   padding-left: 0 !important;
   padding-right: 0 !important;
 }
+*/
 
 .adminPage div.card {
   border: 1px solid #dde7f1;
@@ -208,10 +226,128 @@ table tbody td {
 /* 관리자 공통 css 끝 */
 </style>
 
+<!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+<style>
+
+  #adminInfo>div {
+    background: #FFE0D0 !important;
+    border-radius: 10px;
+  }
+
+  #adminInfo>div h5 {
+    color: #FF6414 !important;
+    font-weight: bold;
+  }
+
+  .adCardHeader span {
+    font-weight: 700 !important;
+    padding: 5px !important;
+    color: #3A3A3A !important;
+    font-size: 18px !important;
+    background: none !important;
+  }
+
+  .adCardBody>div a {
+    background: #F2F2F2 !important;
+    color: #3A3A3A !important;
+    font-weight: 500;
+    border: 1px solid #CCCCCC !important;
+  }
+
+  .adCardBody>div a:hover {
+    background: #FFE0D0;
+    color: #FF6414;
+  }
+
+  .adminPage .customBtn {
+    background: #F2F2F2;
+    color: #3A3A3A;
+    font-weight: 500;
+  }
+
+  .adminPage .customBtn:hover {
+    background: #FFE0D0;
+    color: #FF6414;
+  }
+
+  .adminPage .customBtn2 {
+    background: #F2F2F2;
+    color: #3A3A3A;
+    font-weight: 500;
+  }
+
+  .adminPage .customBtn2:hover {
+    background: #FFE0D0;
+    color: #FF6414;
+  }
+
+  .adCardBody2 form input,
+  .adCardBody2 form select {
+    border-color: #CCCCCC;
+  }
+
+  .adCardBody2 form input::placeholder,
+  .adCardBody2 form input,
+  .adCardBody2 form select,
+  .adCardBody2 form select option {
+    color: #3A3A3A;
+    font-weight: 500;
+  }
+
+  table tbody th {
+    color: #3A3A3A !important;
+    font-weight: bold !important;
+    font-size: 14px !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .tablePgNation a {
+    color: #3A3A3A !important;
+    font-weight: bold;
+    border-bottom: 2px solid #3A3A3A !important;
+  }
+
+  .modal-footer .customBtn {
+    background: #FF6414  !important;
+    color: #FFFFFF  !important;
+    font-weight: 500;
+  }
+
+  #searchDeptName {
+    color: #777777 !important;
+  }
+  #searchUserName {
+    color: #777777 !important;
+  }
+  #searchDeptName::placeholder {
+    color: #777777 !important;
+  }
+  #searchUserName::placeholder {
+    color: #777777 !important;
+  }
+
+  #sign_employee_id {
+    background: #F2F3F5 !important;
+    color: #3A3A3A !important;
+  }
+
+  #sign_employee_id:focus {
+    border: 1px solid #CCCCCC !important;
+  }
+
+</style>
+
 <!-- Content wrapper -->
 <div class="content-wrapper adminPage">
   <!-- Content -->
+
+  <!--
   <div class="container-xxl flex-grow-1 py-0">
+  -->
+  <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+  <div class="flex-grow-1 py-0" style="padding: 0 50px;">
+
     {% if user.is_superuser %}
 
 
@@ -286,7 +422,13 @@ table tbody td {
           <div class="col-md-12 mt-4 d-flex align-items-center justify-content-center">
             <!-- Align items vertically and horizontally center -->
             <input type="hidden" name="manage_token_id" value="{{manageToken.id}}" />
+
+            <!--
             <button type="submit" class="customBtn btn w-25">조회</button>
+            -->
+            <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+            <button type="submit" class="customBtn btn "  style="background-color: #FF6414; padding: 8px 60px; color: #FCFCFC;">조회</button>
+
           </div>
 
         </div>
@@ -297,13 +439,24 @@ table tbody td {
       <div class="card-header adCardHeader d-flex justify-content-between">
         <span class="badge">가입내역 상세</span>
         
+        <!--
         <div class="text-end" style="width:95px; height:29px;">
           <button type="button" style="background: url(/static/assets/img/icon_excelDown.png) no-repeat center/auto 100%; width: 100%;
           height:100%; padding:0; margin:0; border:0;" onclick='javascript:exportToExcel("table_member")'></button>
         </div>
+        -->
+        <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+        <div class="text-end">
+          <button type="button" style="background: url(/static/assets/img/vti/down-load-excel.png); background-position-x: center; background-repeat: no-repeat; background-size:contain; padding:0; margin:0; border:0; width: 145px; height: 32px;" onclick='javascript:exportToExcel("table_member")'></button>
+        </div>
+
       </div>
 
+      <!--
       <div class="card-body pb-3 px-0">
+      -->
+      <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+      <div class="card-body pb-3">
 
 
         <div class="table-responsive">
@@ -324,7 +477,12 @@ table tbody td {
                 
               </colgroup>
 
+              <!--
               <tr class="text-center text-dark fs-5">
+              -->
+              <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+              <tr class="text-center text-dark fs-5" style="background-color: #FAFAF9;">
+
                 <th>관리</th>
                 <th>프로필</th>
                 <th>부서</th>
@@ -338,6 +496,7 @@ table tbody td {
               {% for part in posts %}
               <tr class="text-center fs-6">
                 <td>
+                  <!--
                   <button class="btn btn-sm" style="background: #006ed5; color:#fff;"
                    data-bs-toggle="modal" data-bs-target="#signprofileModifyModal"
                     data-part-id="{{ part.id }}" data-part-image="{{ part.image }}"
@@ -347,6 +506,18 @@ table tbody td {
                     data-part-department-id="{{ part.department_id }}"
                     data-part-department-name="{{ part.department_name }}">변경
                   </button>
+                  -->
+                  <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+                  <button class="btn btn-sm" style="background: #777777; color:#FFF;"
+                   data-bs-toggle="modal" data-bs-target="#signprofileModifyModal"
+                    data-part-id="{{ part.id }}" data-part-image="{{ part.image }}"
+                    data-part-image-yn="{{ part.image_yn }}" data-part-employee-id="{{ part.employee_id }}"
+                    data-part-employee-name="{{ part.employee_name }}" data-part-position-id="{{ part.position_id }}"
+                    data-part-position-name="{{ part.position_name }}"
+                    data-part-department-id="{{ part.department_id }}"
+                    data-part-department-name="{{ part.department_name }}">변경
+                  </button>
+
                 </td>
                 <td>
                   {% if part.image_yn == 'Y' %}
@@ -395,7 +566,12 @@ table tbody td {
 
     <div class="card mb-2">
       <div class="card-header adCardHeader"><span class="badge">계열사별 가입자 수</span></div>
+      
+      <!--
       <div class="card-body py-3 px-0">
+      -->
+      <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+      <div class="card-body">
 
         {% for dept in companyInfo %}
         <table class="table" style="table-layout:fixed">
@@ -415,7 +591,13 @@ table tbody td {
     {% endif %}
   </div>
   <div id="footer">
+
+    <!--
     <div class="footer w-100 text-center fw-med fs-6" style="color:#418dd4;">ⓒ 2024, made 땡큐토큰</div>
+    -->
+    <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+    <div class="footer w-100 text-center fw-med fs-6 color-03" style="color:#418dd4;">ⓒ 2024, made 땡큐토큰</div>
+    
   </div>
   <script>
     window.onload = function () {
@@ -450,7 +632,13 @@ table tbody td {
             <div class="modal-body">
               <div id="porfileUplaodBox" class="d-flex align-items-end justify-content-center">
                 <div class="profileNowImg me-1" style="width:40%;">
+
+                  <!--
                   <img src="{% static 'assets/img/profile_bee_01.png' %}" id="poto_img2" alt="user-avatar" class="d-block rounded" height="100" width="100">
+                  -->
+                  <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+                  <img src="{% static 'assets/img/profile_bee_01.png' %}" id="poto_img2" alt="user-avatar" class="d-block" height="100" width="100" style="border-radius: 50% !important;">
+
                 </div>
                 <div class="forPc upload d-flex forMo">
                   <style>
@@ -467,17 +655,33 @@ table tbody td {
                       }
                     }
                   </style>
+
+                  <!--
                   <label for="sign_formFile" class="btn px-3 py-2 upLoadBox" tabindex="0"
                   style="border-radius: 30px; background: #016ed5; margin-right:10px; height:39px;">
                    <p class="text-white fw-bold d-flex m-0 align-items-center"><span class="d-block me-2"
                         style="width:20px"><img class="w-100" src="{% static 'assets/img/icon_upload.png' %}"></span>사진
                       업로드</p>
+                  -->
+                  <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+                  <label for="sign_formFile" class="btn px-3 py-2 upLoadBox" tabindex="0"
+                  style="border-radius: 8px; background: #FF6414; margin-right:10px; height:39px; width:180px">
+                   <p class="text-white fw-bold d-flex m-0 align-items-center"><span class="d-block me-2"
+                        style="width:20px"><img class="w-100" src="{% static 'assets/img/vti/Upload.png' %}"></span>프로필 사진변경</p>
+
                   <input type="file" id="sign_formFile" name="sign_formFile" onChange="setPotoManagerImg(event);"
                     class="account-file-input" hidden accept="image/png, image/jpeg" />
                 </label>
                   <div style="height:39px;">
+
+                    <!--
                     <button id="profileBtn" type="submit" class="btn fw-bold colorCustom_03 m-0 w-100"
                       style="border-radius: 30px; background: #c8edff;">변경</button>
+                    -->
+                    <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+                    <button id="profileBtn" type="submit" class="btn fw-bold m-0"
+                      style="border-radius: 8px; background: #FFF; color: #FF6414; border: 1px solid #FF6414; width: 180px">변경</button>
+
                   </div>
                 </div>
               </div>
@@ -511,43 +715,96 @@ table tbody td {
 
               <div class="mt-3">
                 <div>
+
+                  <!--
                   <span style="background: #222;border-radius: 5px;"
                     class="py-1 px-2 d-inline-block text-white fw-med fs-6">관리자 전용기능</span>
+                  -->
+                  <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+                  <span style="background: #D0E4FF;border-radius: 5px; color: #3A3A3A"
+                    class="py-1 px-2 d-inline-block fw-med fs-6">관리자 전용기능</span>
+
                   <input type="hidden" id="sign_id" name="sign_id" value="" />
                 </div>
 
                 <div>
                   <div class="mt-2">
+
+                    <!--
                     <span class="ms-1 d-inline-block fw-med colorCustom_01">ID</span>
                     <input class="form-control colorCustom_05" style="border-color: #9fc4e7;" readonly type="text"
                       value="" id="sign_employee_id" name="sign_employee_id" readonly=""
                       onfocusin="this.style.borderColor=''" onfocusout="this.style.borderColor=''">
+                    -->
+                    <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+                    <span class="ms-1 d-inline-block fw-med" style="color: #0F0F0F">ID</span>
+                    <input class="form-control colorCustom_05" style="color: #747475 !important;" readonly type="text"
+                      value="" id="sign_employee_id" name="sign_employee_id" readonly=""
+                      onfocusin="this.style.borderColor=''" onfocusout="this.style.borderColor=''">
+                      
                   </div>
                   <div class="mt-2">
+
+                    <!--
                     <span class="ms-1 d-inline-block fw-med colorCustom_01">이름</span>
                     <input class="form-control colorCustom_05" style="border-color: #9fc4e7;" type="text"
                       value="" id="sign_employee_name" name="sign_employee_name"
                       onfocusin="this.style.borderColor=''" onfocusout="this.style.borderColor=''">
+                    -->
+                    <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+                    <span class="ms-1 d-inline-block fw-med" style="color: #0F0F0F">이름</span>
+                    <input class="form-control colorCustom_05" style="color: #747475 !important;" type="text"
+                      value="" id="sign_employee_name" name="sign_employee_name"
+                      onfocusin="this.style.borderColor=''" onfocusout="this.style.borderColor=''">
+
                   </div>
                   <div class="mt-2">
+                  
+                    <!--
                     <span class="ms-1 d-inline-block fw-med colorCustom_01">부서</span>
+                    -->
+                    <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+                    <span class="ms-1 d-inline-block fw-med" style="color: #0F0F0F">부서</span>
+                    
                     <div>
                       <span class="chkHiddenInput twitter-typeahead" style="position: relative; display: inline-block;">
                         <input type="hidden" id="sign_department_id" name="sign_department_id" value="" />
+
+                        <!--
                         <input name="sign_department_name" id="sign_department_name" type="text"
                           style="border-color: #9fc4e7;" class="form-control colorCustom_05"
                           value="">
+                        -->
+                        <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+                        <input name="sign_department_name" id="sign_department_name" type="text"
+                          style="color: #747475 !important;" class="form-control colorCustom_05"
+                          value="">
+
                       </span>
                     </div>
                   </div>
                   <div class="mt-2">
+                  
+                    <!--
                     <span class="ms-1 d-inline-block fw-med colorCustom_01">직위</span>
+                    -->
+                    <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+                    <span class="ms-1 d-inline-block fw-med" style="color: #0F0F0F">직위</span>
+
                     <div>
                       <span class="chkHiddenInput twitter-typeahead" style="position: relative; display: inline-block;">
                         <input type="hidden" id="sign_position_id" name="sign_position_id" value="" />
+                        
+                        <!--
                         <input type="text" style="border-color: #9fc4e7;" class="form-control colorCustom_05"
                           value="" id="sign_position_name" name="sign_position_name"
                           onfocusin="this.style.borderColor=''" onfocusout="this.style.borderColor=''">
+                        -->
+                        <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+                        <input type="text" style="color: #747475 !important;" class="form-control colorCustom_05"
+                          value="" id="sign_position_name" name="sign_position_name"
+                          onfocusin="this.style.borderColor=''" onfocusout="this.style.borderColor=''">
+
                       </span>
                     </div>
 

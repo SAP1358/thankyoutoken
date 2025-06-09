@@ -1,3 +1,9 @@
+<!--
+####################################################################
+# 2024-05-30 VTI: Changed theme for PC mode and updated color concept
+####################################################################
+-->
+
 {% extends 'base.html' %}
 {% block body %}
 {% load static %}
@@ -161,12 +167,107 @@ table tbody td {
 /* 관리자 공통 css 끝 */
 </style>
 
+<!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+<style>
+
+  #adminInfo>div {
+    background: #FFE0D0 !important;
+    border-radius: 10px;
+  }
+
+  #adminInfo>div h5 {
+    color: #FF6414 !important;
+    font-weight: bold;
+  }
+
+  .adCardHeader span {
+    font-weight: 700 !important;
+    padding: 5px !important;
+    color: #3A3A3A !important;
+    font-size: 18px !important;
+    background: none !important;
+  }
+
+  .adCardBody>div a {
+    background: #F2F2F2 !important;
+    color: #3A3A3A !important;
+    font-weight: 500;
+    border: 1px solid #CCCCCC !important;
+  }
+
+  .adCardBody>div a:hover {
+    background: #FFE0D0;
+    color: #FF6414;
+  }
+
+  .adminPage .customBtn {
+    background: #F2F2F2;
+    color: #3A3A3A;
+    font-weight: 500;
+  }
+
+  .adminPage .customBtn:hover {
+    background: #FFE0D0;
+    color: #FF6414;
+  }
+
+  .adminPage .customBtn2 {
+    background: #F2F2F2;
+    color: #3A3A3A;
+    font-weight: 500;
+  }
+
+  .adminPage .customBtn2:hover {
+    background: #FFE0D0;
+    color: #FF6414;
+  }
+
+  .adCardBody2 form input,
+  .adCardBody2 form select {
+    border-color: #CCCCCC;
+  }
+
+  .adCardBody2 form input::placeholder,
+  .adCardBody2 form input,
+  .adCardBody2 form select,
+  .adCardBody2 form select option {
+    color: #3A3A3A;
+    font-weight: 500;
+  }
+
+  table tbody th {
+    color: #3A3A3A !important;
+    font-weight: bold !important;
+    font-size: 14px !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .tablePgNation a {
+    color: #3A3A3A !important;
+    font-weight: bold;
+    border-bottom: 2px solid #3A3A3A !important;
+  }
+
+  .modal-footer .customBtn {
+    background: #FF6414  !important;
+    color: #FFFFFF  !important;
+    font-weight: 500;
+  }
+
+</style>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
 
 <!-- Content wrapper -->
 <div class="content-wrapper adminPage">
   <!-- Content -->
+
+  <!--
   <div class="container-xxl flex-grow-1 py-1">
+  -->
+  <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+  <div class="flex-grow-1 py-1" style="padding: 0 50px;">
 
     <div id="adminInfo" class="col-12">
       <div class="card mb-2">
@@ -248,10 +349,19 @@ table tbody td {
 
           <span class="">
             {% if token_prev > 0 %}
+
+            <!--
             <button class="btn px-0"
               style="background:url(/static/assets/img/icon_leftArrow_02.png) no-repeat center/contain; border:0; padding:0; width: 15px; height:15px;"
               onclick="window.location.href='/manageMain?manage_token_id={{ token_prev }}'">
             </button>
+            -->
+            <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+            <button class="btn px-0"
+              style="background:url(/static/assets/img/vti/CaretLeft.png) no-repeat center/contain; border:0; padding:0; width: 20px; height:20px;"
+              onclick="window.location.href='/manageMain?manage_token_id={{ token_prev }}'">
+            </button>
+
             {% else %}
             <i class='bx bx-left-arrow'></i>
             {% endif %}
@@ -259,15 +369,28 @@ table tbody td {
 
           <span class="fw-bold" style="color: #222;">
             {{ manageToken.start_date|slice:"0:4" }}-{{ manageToken.start_date|slice:"4:6" }}-{{ manageToken.start_date|slice:"6:8" }}
-            ~
+            
+            <!-- ~ -->
+            <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+            <img src="{% static 'assets/img/vti/right-arrow.png' %}"/>
+
             {{ manageToken.end_date|slice:"0:4" }}-{{ manageToken.end_date|slice:"4:6" }}-{{ manageToken.end_date|slice:"6:8" }}
           </span>
           <span class="">
             {% if token_next > 0 %}
+
+            <!--
             <button class="btn px-0"
               style="background:url(/static/assets/img/icon_rightArrow_02.png) no-repeat center/contain; border:0; padding:0; width: 15px; height:15px;"
               onclick="window.location.href='/manageMain?manage_token_id={{ token_next }}'">
             </button>
+            -->
+            <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+            <button class="btn px-0"
+              style="background:url(/static/assets/img/vti/CaretRight.png) no-repeat center/contain; border:0; padding:0; width: 20px; height:20px;"
+              onclick="window.location.href='/manageMain?manage_token_id={{ token_next }}'">
+            </button>
+
             {% else %}
             <i class='bx bx-right-arrow'></i>
             {% endif %}
@@ -285,47 +408,99 @@ table tbody td {
         <div class="d-flex justify-content-center row">
           <div class="d-flex col-6 col-md-3 p-2" style="align-items: center;">
             <div style="width:25%; max-width: 50px; min-width: 35px; margin-right:10px;">
+
+              <!--
               <div><img style="width:100%; height:100%; object-fit: cover;" src="/static/assets/img/icon_data_01.png">
               </div>
+              -->
+              <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+              <div><img style="width:100%; height:100%; object-fit: cover;" src="/static/assets/img/vti/vti-icon-data-01.png"></div>
+
             </div>
             <div>
               <h6 class="mb-0" style="color:#222; font-weight: bold; font-size: 16px;">{{login_count|intcomma }}</h6>
+
+              <!--
               <p style="margin-top:5px; margin-bottom:0; color:#9fc4e7; font-size: 14px; font-weight: 500;">누적 로그인</p>
+              -->
+              <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+              <p style="margin-top:5px; margin-bottom:0; color:#3A3A3A; font-size: 14px; font-weight: 500;">누적 로그인</p>
+
             </div>
           </div>
           <div class="d-flex col-6 col-md-3 p-2" style="align-items: center;">
             <div style="width:25%; max-width: 50px; min-width: 35px; margin-right:10px;">
+
+              <!--
               <div><img style="width:100%; height:100%; object-fit: cover;" src="/static/assets/img/icon_data_02.png">
               </div>
+              -->
+              <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+              <div><img style="width:100%; height:100%; object-fit: cover;" src="/static/assets/img/vti/vti-icon-data-02.png">
+              </div>
+
             </div>
             <div>
               <h6 class="mb-0" style="color:#222; font-weight: bold; font-size: 16px;">
                 {{ user_tokens_count|add:4100|intcomma }}
               </h6>
+
+              <!--
               <p style="margin-top:5px; margin-bottom:0; color:#9fc4e7; font-size: 14px; font-weight: 500;">누적 참여자수</p>
+              -->
+              <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+              <p style="margin-top:5px; margin-bottom:0; color:#3A3A3A; font-size: 14px; font-weight: 500;">누적 참여자수</p>
+
             </div>
           </div>
           <div class="d-flex col-6 col-md-3 p-2" style="align-items: center;">
             <div style="width:25%; max-width: 50px; min-width: 35px; margin-right:10px;">
+
+              <!--
               <div><img style="width:100%; height:100%; object-fit: cover;" src="/static/assets/img/icon_data_03.png">
               </div>
+              -->
+              <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+              <div><img style="width:100%; height:100%; object-fit: cover;" src="/static/assets/img/vti/vti-icon-data-03.png">
+              </div>
+
             </div>
             <div>
               <h6 class="mb-0" style="color:#222; font-weight: bold; font-size: 16px;">
                 {{ praise_tokens_count|add:3500|intcomma }}
               </h6>
+
+              <!--
               <p style="margin-top:5px; margin-bottom:0; color:#9fc4e7; font-size: 14px; font-weight: 500;">누적 칭찬건수</p>
+              -->
+              <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+              <p style="margin-top:5px; margin-bottom:0; color:#3A3A3A; font-size: 14px; font-weight: 500;">누적 칭찬건수</p>
+
             </div>
           </div>
           <div class="d-flex col-6 col-md-3 p-2" style="align-items: center;">
             <div style="width:25%; max-width: 50px; min-width: 35px; margin-right:10px;">
+              
+              <!--
               <div><img style="width:100%; height:100%; object-fit: cover;" src="/static/assets/img/icon_data_04.png">
               </div>
+              -->
+              <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+              <div><img style="width:100%; height:100%; object-fit: cover;" src="/static/assets/img/vti/vti-icon-data-04.png">
+              </div>
+
             </div>
             <div>
               <h6 class="mb-0" style="color:#222; font-weight: bold; font-size: 16px;">{{send_10_count|intcomma }}</h6>
+              
+              <!--
               <p style="margin-top:5px; margin-bottom:0; color:#9fc4e7; font-size: 14px; font-weight: 500;">월별 전송완료 직원
               </p>
+              -->
+              <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+              <p style="margin-top:5px; margin-bottom:0; color:#3A3A3A; font-size: 14px; font-weight: 500;">월별 전송완료 직원
+              </p>
+
             </div>
           </div>
         </div>
@@ -335,7 +510,12 @@ table tbody td {
       <div class="card-header adCardHeader">
         <span class="badge">계열사별 누적 칭찬건수</span>
       </div>
-      <div class="card-body py-3 px-0">
+      
+      <!--
+      <div class="card-body">
+      -->
+      <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+      <div class="card-body">
 
         <table class="table ">
           <thead class="table table-dark">
@@ -346,7 +526,12 @@ table tbody td {
               <col style="width: 100px;">
             </colgroup>
 
+            <!--
             <tr class="text-center text-dark fs-5 ">
+            -->
+            <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+            <tr class="text-center text-dark fs-5 " style="background-color: #FAFAF9;">
+
               <th>계열사명</th>
               <th>참여수(명)</th>
               <th>받은수(건)</th>
@@ -392,7 +577,12 @@ table tbody td {
       <div class="card-header pb-0">
         <span class="badge">우리은행(피어) 누적 칭찬건수</span>
       </div>
+
+      <!--
       <div class="card-body py-3 px-0">
+      -->
+      <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+      <div class="card-body">
 
         <table class="table ">
           <thead class="table table-dark">
@@ -403,7 +593,12 @@ table tbody td {
               <col style="width: 100px;">
             </colgroup>
 
+            <!--
             <tr class="text-center text-dark fs-5 ">
+            -->
+            <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+            <tr class="text-center text-dark fs-5 " style="background-color: #FAFAF9;">
+
               <th>피어그룹</th>
               <th>참여수(명)</th>
               <th>받은수(건)</th>
@@ -437,7 +632,13 @@ table tbody td {
       <div class="card-header pb-0">
         <span class="badge">일별 접속현황</span>
       </div>
+
+      <!--
       <div class="card-body py-3 px-0">
+      -->
+      <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+      <div class="card-body">
+
         <div class="table-responsive">
 
 
@@ -448,7 +649,12 @@ table tbody td {
                 <col style="width: 100px;">
               </colgroup>
 
+              <!--
               <tr class="text-center text-dark fs-5">
+              -->
+              <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+              <tr class="text-center text-dark fs-5" style="background-color: #FAFAF9;">
+
                 <th>일자</th>
                 <th>건수</th>
               </tr>
@@ -539,7 +745,13 @@ table tbody td {
   </div>
 
   <div id="footer">
+
+    <!--
     <div class="footer w-100 text-center fw-med fs-6" style="color:#418dd4;">ⓒ 2024, made 땡큐토큰</div>
+    -->
+    <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+    <div class="footer w-100 text-center fw-med fs-6 color-03" style="color:#418dd4;">ⓒ 2024, made 땡큐토큰</div>
+
   </div>
   <script>
     window.onload = function () {

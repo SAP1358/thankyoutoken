@@ -1,3 +1,9 @@
+<!--
+####################################################################
+# 2024-05-30 VTI: Changed theme for PC mode and updated color concept
+####################################################################
+-->
+
 {% extends 'base.html' %}
 {% block body %}
 {% load static %}
@@ -31,13 +37,20 @@
 <!-- Content wrapper -->
 <div id="bestPage" class="allPage layout-container flex-column">
   <!-- Content -->
+
+  <!--
   <div id="con" class="container-xxl mt-2">
+  -->
+  <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+  <div id="con" class=" mt-2">
+
     <div class="row">
       <div id="loadingdiv" class="col-12 mb-2 position-relative" style="z-index: 0; visibility: hidden;">
         <div class="card py-3 px-2">
           <div class="card-header p-0 pb-2">
             <div class="mb-0 d-flex justify-content-between align-items-center">
 
+              <!--
               <span class="">
                 {% if token_prev > 0 %}
                 <button style="background:none; border:0; padding:0; width: auto; height:30px; padding-left:10px;"><img class="w-100"
@@ -48,15 +61,40 @@
                     src="{% static 'assets/img/icon_leftArrow_02.png' %}" alt=""></button>
                 {% endif %}
               </span>
+              -->
+              <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+              <span class="">
+                {% if token_prev > 0 %}
+                <button style="background:none; border:0; padding:0; width: auto; height:30px; padding-left:10px;"><img class="w-100"
+                    src="{% static 'assets/img/vti/CaretLeft.png' %}" alt=""
+                    onclick="window.location.href='/rankList?manage_token_id={{ token_prev }}'"></button>
+                {% else %}
+                <button style="background:none; border:0; padding:0; width: auto; height:30px; padding-left:10px;"><img class="w-100"
+                    src="{% static 'assets/img/vti/CaretLeft.png' %}" alt=""></button>
+                {% endif %}
+              </span>
+
 
               <h5 class="m-0 fw-med colorCustom_01" style="line-height: 1; ">
+                
+                <!--
                 <span id="originalDate">
                   {{ manageToken.start_date|slice:"0:4" }}-{{ manageToken.start_date|slice:"4:6" }}-{{ manageToken.start_date|slice:"6:8" }}
                   ~
                   {{ manageToken.end_date|slice:"0:4" }}-{{ manageToken.end_date|slice:"4:6" }}-{{ manageToken.end_date|slice:"6:8" }}
                 </span>
+                -->
+                <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+                <span id="originalDate" style="color: #3A3A3A !important;">
+                  {{ manageToken.start_date|slice:"0:4" }}-{{ manageToken.start_date|slice:"4:6" }}-{{ manageToken.start_date|slice:"6:8" }}
+                 <img src="{% static 'assets/img/vti/right-arrow.png' %}"/>
+                  {{ manageToken.end_date|slice:"0:4" }}-{{ manageToken.end_date|slice:"4:6" }}-{{ manageToken.end_date|slice:"6:8" }}
+                </span>
+
                 <span id="tokensGroupDate" style="display: none;">2024-07-01 ~ 2024-12-31</span>
               </h5>
+
+              <!--
               <span class="">
                 {% if token_next > 0 %}
                 <button style="background:none; border:0; padding:0; width: auto; height:30px; padding-right:10px;"><img class="w-100"
@@ -65,6 +103,18 @@
                 {% else %}
                 <button style="background:none; border:0; padding:0; width: auto; height:30px; padding-right:10px;"><img class="w-100"
                     src="{% static 'assets/img/icon_rightArrow_02.png' %}" alt=""></button>
+                {% endif %}
+              </span>
+              -->
+              <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+              <span class="">
+                {% if token_next > 0 %}
+                <button style="background:none; border:0; padding:0; width: auto; height:30px; padding-right:10px;"><img class="w-100"
+                    src="{% static 'assets/img/vti/CaretRight.png' %}" alt=""
+                    onclick="window.location.href='/rankList?manage_token_id={{ token_next }}'"></button>
+                {% else %}
+                <button style="background:none; border:0; padding:0; width: auto; height:30px; padding-right:10px;"><img class="w-100"
+                    src="{% static 'assets/img/vti/CaretRight.png' %}" alt=""></button>
                 {% endif %}
               </span>
 
@@ -148,11 +198,21 @@
                     <div id="rankInfo" class="accordion card-footer p-0" id="accordionExample">
                       <div class="accordion-item p-2">
                         <h2 class="accordion-header px-0" id="headingOne">
+
+                          <!--
                           <button class="accordion-button colorCustom_06 fw-bold mb-1 p-0" type="button"
                             data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
                             aria-controls="collapseOne">
                             ⓘ {{user.company_name}} 이용안내
                           </button>
+                          -->
+                          <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+                          <button class="accordion-button color-03 fw-bold mb-1 p-0" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" style="color: #3A3A3A !important;"
+                            aria-controls="collapseOne">
+                            ⓘ {{user.company_name}} 이용안내
+                          </button>
+
                         </h2>
                         <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
                           data-bs-parent="#accordionExample">
@@ -179,11 +239,21 @@
                             <div id="rankInfo" class="accordion card-footer p-0" id="accordionExample">
                               <div class="accordion-item p-2">
                                 <h2 class="accordion-header px-0" id="headingOne">
+                                  
+                                  <!--
                                   <button class="accordion-button colorCustom_06 fw-bold mb-1 p-0" type="button"
                                     data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
                                     aria-controls="collapseOne">
                                     ⓘ {{user.company_name}} 이용안내
                                   </button>
+                                  -->
+                                  <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+                                  <button class="accordion-button color-03 fw-bold mb-1 p-0" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
+                                    aria-controls="collapseOne">
+                                    ⓘ {{user.company_name}} 이용안내
+                                  </button>
+
                                 </h2>
                                 <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
                                   data-bs-parent="#accordionExample">
@@ -217,11 +287,21 @@
                                     <div id="rankInfo" class="accordion card-footer p-0" id="accordionExample">
                                       <div class="accordion-item p-2">
                                         <h2 class="accordion-header px-0" id="headingOne">
+                                          
+                                          <!--
                                           <button class="accordion-button colorCustom_06 fw-bold mb-1 p-0" type="button"
                                             data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
                                             aria-controls="collapseOne">
                                             ⓘ {{user.company_name}} 이용안내
                                           </button>
+                                          -->
+                                          <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+                                          <button class="accordion-button color-03 fw-bold mb-1 p-0" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
+                                            aria-controls="collapseOne">
+                                            ⓘ {{user.company_name}} 이용안내
+                                          </button>
+
                                         </h2>
                                         <div id="collapseOne" class="accordion-collapse collapse"
                                           aria-labelledby="headingOne" data-bs-parent="#accordionExample">
@@ -246,11 +326,21 @@
                                     <div id="rankInfo" class="accordion card-footer p-0" id="accordionExample">
                                       <div class="accordion-item p-2">
                                         <h2 class="accordion-header px-0" id="headingOne">
+                                          
+                                          <!--
                                           <button class="accordion-button colorCustom_06 fw-bold mb-1 p-0" type="button"
                                             data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
                                             aria-controls="collapseOne">
                                             ⓘ {{user.company_name}} 이용안내
                                           </button>
+                                          -->
+                                          <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+                                          <button class="accordion-button color-03 fw-bold mb-1 p-0" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
+                                            aria-controls="collapseOne">
+                                            ⓘ {{user.company_name}} 이용안내
+                                          </button>
+
                                         </h2>
                                         <div id="collapseOne" class="accordion-collapse collapse"
                                           aria-labelledby="headingOne" data-bs-parent="#accordionExample">
@@ -276,11 +366,21 @@
                                     <div id="rankInfo" class="accordion card-footer p-0" id="accordionExample">
                                       <div class="accordion-item p-2">
                                         <h2 class="accordion-header px-0" id="headingOne">
+                                          
+                                          <!--
                                           <button class="accordion-button colorCustom_06 fw-bold mb-1 p-0" type="button"
                                             data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
                                             aria-controls="collapseOne">
                                             ⓘ {{user.company_name}} 이용안내
                                           </button>
+                                          -->
+                                          <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+                                          <button class="accordion-button color-03 fw-bold mb-1 p-0" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
+                                            aria-controls="collapseOne">
+                                            ⓘ {{user.company_name}} 이용안내
+                                          </button>
+
                                         </h2>
                                         <div id="collapseOne" class="accordion-collapse collapse"
                                           aria-labelledby="headingOne" data-bs-parent="#accordionExample">
@@ -305,11 +405,21 @@
                                     <div id="rankInfo" class="accordion card-footer p-0" id="accordionExample">
                                       <div class="accordion-item p-2">
                                         <h2 class="accordion-header px-0" id="headingOne">
+
+                                          <!--
                                           <button class="accordion-button colorCustom_06 fw-bold mb-1 p-0" type="button"
                                             data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
                                             aria-controls="collapseOne">
                                             ⓘ {{user.company_name}} 이용안내
                                           </button>
+                                          -->
+                                          <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+                                          <button class="accordion-button color-03 fw-bold mb-1 p-0" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
+                                            aria-controls="collapseOne">
+                                            ⓘ {{user.company_name}} 이용안내
+                                          </button>
+
                                         </h2>
                                         <div id="collapseOne" class="accordion-collapse collapse"
                                           aria-labelledby="headingOne" data-bs-parent="#accordionExample">
@@ -845,8 +955,18 @@
         let html = '';
         
         // Create wrapper div based on rank
+        
+        /*
         html += `
           <div ${counter <= 3 ? `id="best_0${counter}"` : ''} class="d-flex align-items-center" data-user-id="${part.user_id}">
+              <div class="user_logo">
+                  <img src="/static/assets/img/rank_wing${counter}.png" class="w-100" alt="rankImg" />
+              </div>
+        `;
+        */
+        /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+        html += `
+          <div ${counter <= 3 ? `id="best_0${counter}"` : ''} class="d-flex align-items-center" data-user-id="${part.user_id}" style="border: 1px solid #CCCCCC">
               <div class="user_logo">
                   <img src="/static/assets/img/rank_wing${counter}.png" class="w-100" alt="rankImg" />
               </div>
@@ -1016,8 +1136,15 @@ function loaddivpage()
 	// 모든 페이지 footer 태그 출력 시작 - 240223
     const footer = document.querySelector('#footer');
     if (footer) {
+      
+      /*
       footer.innerHTML =
         '<div class="footer w-100 text-center fw-med fs-6" style="color:#418dd4;">ⓒ 2024, made 땡큐토큰</div>';
+      */
+      /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+      footer.innerHTML =
+        '<div class="footer w-100 text-center fw-med fs-6 color-03" style="color:#418dd4;">ⓒ 2024, made 땡큐토큰</div>';
+
     }
     // 모든 페이지 footer 태그 출력 끝 - 240223
 	document.getElementById("loadingdiv").style.visibility = 'visible';
@@ -1128,6 +1255,8 @@ function loaddivpage()
     #bestPage .bestBtnBox {
       overflow: hidden;
     }
+
+  /*
   #bestPage .bestBtnBox button {
     width: 100%;
     padding: clamp(5px, 3.4vw, 10px);
@@ -1153,8 +1282,39 @@ function loaddivpage()
     background-color: #fff;
     color: #006ed5;
   }
+  */
+  /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+  #bestPage .bestBtnBox button {
+    width: 100%;
+    padding: clamp(5px, 3.4vw, 10px);
+    background: #F2F2F2;
+    color: #3A3A3A;
+    word-break: keep-all;
+    font-size: clamp(10px, 2vw, 14px) !important;
+  }
+
+  #bestPage .bestBtnBox button.clicked {
+    background: #FFE0D0 !important;
+    color: #FF6414 !important;
+  }
+
+  #bestPage .bestBtnBox button span {
+    top: auto;
+    background: #F2F2F2;
+    color: #3A3A3A;
+    border: 1px solid #FFF;
+    z-index: 1;
+  }
+
+  #bestPage .bestBtnBox button.clicked span {
+    background: #FFE0D0;
+    color: #FF6414;
+    border: 1px solid #FFF;
+  }
 
   /* 1등~3등 개별 테두리 배경 시작 */
+
+  /*
   #bestPage #best_01 {
     background: #fff url(/static/assets/img/rank_bg01.png) no-repeat center/100% 100%;
   }
@@ -1166,16 +1326,40 @@ function loaddivpage()
   #bestPage #best_03 {
     background: #fff url(/static/assets/img/rank_bg03.png) no-repeat center/100% 100%;
   }
+  */
+  /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+  #bestPage #best_01 {
+    background: #fff url(/static/assets/img/vti/vti-rank-bg01.png) no-repeat center/100% 100%;
+  }
+
+  #bestPage #best_02 {
+    background: #fff url(/static/assets/img/vti/vti-rank-bg02.png) no-repeat center/100% 100%;
+  }
+  
+  #bestPage #best_03 {
+    background: #fff url(/static/assets/img/vti/vti-rank-bg03.png) no-repeat center/100% 100%;
+  }
 
   /* 1등~3등 개별 테두리 배경 끝 */
 
   /* 4~10등 공통 배경 시작  */
+  
+  /*
   #bestPage .rankList>div {
     margin-top: 7px;
     border-radius: 10px;
     background: #e8f7ff;
     padding: 15px 2%;
   }
+  */
+  /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+  #bestPage .rankList>div {
+    margin-top: 7px;
+    border-radius: 10px;
+    background: #FFF;
+    padding: 15px 2%;
+  }
+
   @media (max-width:500px) {
   #bestPage .rankList>div {
     padding-right:10px;
@@ -1271,11 +1455,20 @@ function loaddivpage()
     font-size: 24px;
   }
 
+  /*
   #bestPage #best_01 .totalToken span,
   #bestPage #best_02 .totalToken span,
   #bestPage #best_03 .totalToken span {
     color: #006ed5;
   }
+  */
+  /* 2024-05-30 VTI: Changed theme for PC mode and updated color concept */
+  #bestPage #best_01 .totalToken span,
+  #bestPage #best_02 .totalToken span,
+  #bestPage #best_03 .totalToken span {
+    color: #FF6414;
+  }
+
 
   #bestPage .totalToken span {
     color: #14a8ea;

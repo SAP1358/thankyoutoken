@@ -1,5 +1,50 @@
+<!--
+####################################################################
+# 2024-05-30 VTI: Changed theme for PC mode and updated color concept
+####################################################################
+-->
+
 {% block body %}
 {% load static %}
+
+<!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+<style>
+  body {
+    background: url(/static/assets/img/vti/vti-bg.png) no-repeat center center !important;
+    background-size: cover !important;
+  }
+
+  .auth-form {
+    max-width: 600px;
+    margin: 20px auto;
+  }
+
+  .form-control {
+    display: block;
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.375rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  }
+
+  .form-control:focus {
+    border-color: #86b7fe;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+  }
+
+  .form-check {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+</style>
 
   <!-- 드림 사용 소스 -->
   <!--
@@ -31,8 +76,12 @@
     <!-- Content -->
 
     <div id="header" class="w-100 p-3 py-4 position-relative">
-<span class="allBg"></span>
 
+<!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+<!--
+<span class="allBg"></span>
+-->
+{% comment %}
 </div>
     <div class="container-xxl" style=" max-width: 980px;" >
       <div class="authentication-wrapper authentication-basic" >
@@ -162,6 +211,57 @@
 	</div>
 </div>
 <!-- storyModal view modal -->
+{% endcomment %}
+  <!-- 2024-05-30 VTI: Changed theme for PC mode and updated color concept -->
+  </div>
+    <div class="logo-container" style="text-align: center; margin-top: 5rem;">
+      <a href="#" class="app-brand-link" style="margin: 20px 20px;">
+        <span class="app-brand-logo demo">
+          <span class="app-brand-text demo menu-text fw-bolder ms-0">
+            <a href="#" class="menu-link">
+              <img class="img-fluid mx-auto mx-0 my-0" src="{% static 'assets/img/vti/vti-logo-light.png' %}"
+                style="height: 45px; width: 210px;" alt="Card image cap" /></a>
+          </span>
+        </span>
+      </a> 
+    </div>
+
+    <div class="card">
+      <div class="authentication-wrapper authentication-basic" >
+        <div class="authentication-inner">
+          <div class="auth-form">
+            <div class="pt-3 mt-3">
+            <form id="formAuthentication" class="mb-3" action="{% url 'signin' %}" method="POST">{% csrf_token %}
+              {% if error %} <div class="alert alert-danger" role="alert"> {{ error }} </div> {% endif %}
+              <div style="align-self: stretch; padding-left: 24px; padding-right: 24px; padding-top: 16px; padding-bottom: 16px; background: white; box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.24); border-radius: 8px; outline: 1px #CCCCCC solid; outline-offset: -1px; flex-direction: column; justify-content: flex-start; align-items: center; gap: 12px; display: flex">
+                <img style="width: 90.58px; height: 85.95px" src="/static/assets/img/icon_token.png" />
+                <img style="width: 134.88px; height: 34.05px" src="/static/assets/img/text_thanku.png" />
+                <div style="align-self: stretch; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 16px; display: flex">
+                  <input class="form-control" type="text" id="email" name="username" placeholder="ID" autofocus style="flex: 1 1 0; color: #3A3A3A; font-size: 16px; font-family: Noto Sans; font-weight: 400; line-height: 24px; word-wrap: break-word"/>
+                  <input class="form-control" type="password" id="password" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password" style="flex: 1 1 0; color: #3A3A3A; font-size: 16px; font-family: Noto Sans; font-weight: 400; line-height: 24px; word-wrap: break-word" />
+                  <div class="mb-3" style="margin: 20px 0px;">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="remember-me" style="width: 20px; height: 20px; border-radius: 8px;"/>
+                      <label class="form-check-label" for="remember-me"> 자동 로그인 </label> {{user.username}}
+                    </div>
+                  </div>
+                  <div style="align-self: stretch; height: 48px; flex-direction: column; justify-content: flex-start; align-items: center; gap: 10px; display: flex">
+                    <button style="color: var(--button-solid-text, #FCFCFC); font-size: 16px; font-weight: 700; line-height: 24px; word-wrap: break-word; width: 196px; padding-left: 32px; padding-right: 32px; padding-top: 12px; padding-bottom: 12px; background: #FF6414; border-radius: 8px; justify-content: center; align-items: center; gap: 8px; display: inline-flex; border: none; cursor: pointer;">Submit</button>
+                  </div>
+                </div>
+                <div style="align-self: stretch; height: 0px; outline: 1px #CCCCCC solid; outline-offset: -0.50px"></div>
+                <div style="align-self: stretch; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 8px; display: flex">
+                  <div style="align-self: stretch"><span style="color: #3A3A3A; font-size: 18px; font-family: Noto Sans; font-weight: 600; line-height: 26px; word-wrap: break-word">문의안내</span><span style="color: #3A3A3A; font-size: 18px; font-family: Noto Sans; font-weight: 400; line-height: 26px; word-wrap: break-word; margin-left:4px;">ⓘ</span></div>
+                  <div style="align-self: stretch; color: #3A3A3A; font-size: 14px; font-family: Noto Sans; font-weight: 400; line-height: 20px; word-wrap: break-word">비밀번호 초기화는 관리자에게 문의 주시면 됩니다.</div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 <style>
       /* 지마켓 폰트 추가 시작 - 240219 */
     @font-face {
